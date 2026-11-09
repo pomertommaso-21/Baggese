@@ -1,0 +1,9356 @@
+{
+ "settings": {
+  "girone": "Seconda Categoria Milano · Girone O",
+  "myTeamId": "t_baggese",
+  "season": "2026/27",
+  "tcLink": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeOMilano/Risultati"
+ },
+ "teams": [
+  {
+   "id": "t_baggese",
+   "name": "Baggese Calcio"
+  },
+  {
+   "id": "t_ardor",
+   "name": "Ardor Bollate"
+  },
+  {
+   "id": "t_artemide",
+   "name": "Artemide Football Club"
+  },
+  {
+   "id": "t_bonola",
+   "name": "Calcio Bonola"
+  },
+  {
+   "id": "t_cesano",
+   "name": "Cesano Boscone Idrostar"
+  },
+  {
+   "id": "t_concept",
+   "name": "Concept Football Club"
+  },
+  {
+   "id": "t_corsico",
+   "name": "Corsico"
+  },
+  {
+   "id": "t_novella",
+   "name": "Novella Calcio"
+  },
+  {
+   "id": "t_trezzano",
+   "name": "Nuova Trezzano"
+  },
+  {
+   "id": "t_seguro",
+   "name": "Seguro"
+  },
+  {
+   "id": "t_triestina",
+   "name": "Triestina 1946"
+  },
+  {
+   "id": "t_velasca",
+   "name": "Velasca"
+  },
+  {
+   "id": "t_vercellese",
+   "name": "Sport Club Vercellese"
+  },
+  {
+   "id": "t_vige",
+   "name": "Vige Milano"
+  },
+  {
+   "id": "t_villapizzone",
+   "name": "Villapizzone C.D.A."
+  },
+  {
+   "id": "t_viscontini",
+   "name": "Viscontini"
+  }
+ ],
+ "matches": [
+  {
+   "id": "m1_1",
+   "round": 1,
+   "date": "2026-09-13",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_triestina",
+   "hg": 0,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m16_1",
+   "round": 16,
+   "date": "2027-01-10",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m1_2",
+   "round": 1,
+   "date": "2026-09-13",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_bonola",
+   "hg": 0,
+   "ag": 8,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m16_2",
+   "round": 16,
+   "date": "2027-01-10",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m1_3",
+   "round": 1,
+   "date": "2026-09-13",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_vige",
+   "hg": 0,
+   "ag": 7,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m16_3",
+   "round": 16,
+   "date": "2027-01-10",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m1_4",
+   "round": 1,
+   "date": "2026-09-13",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_seguro",
+   "hg": 1,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m16_4",
+   "round": 16,
+   "date": "2027-01-10",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m1_5",
+   "round": 1,
+   "date": "2026-09-13",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_artemide",
+   "hg": 0,
+   "ag": 4,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m16_5",
+   "round": 16,
+   "date": "2027-01-10",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m1_6",
+   "round": 1,
+   "date": "2026-09-13",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_cesano",
+   "hg": 1,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m16_6",
+   "round": 16,
+   "date": "2027-01-10",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m1_7",
+   "round": 1,
+   "date": "2026-09-13",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_velasca",
+   "hg": 0,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m16_7",
+   "round": 16,
+   "date": "2027-01-10",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m1_8",
+   "round": 1,
+   "date": "2026-09-13",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_corsico",
+   "hg": 2,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m16_8",
+   "round": 16,
+   "date": "2027-01-10",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m2_1",
+   "round": 2,
+   "date": "2026-09-20",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_novella",
+   "hg": 3,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m17_1",
+   "round": 17,
+   "date": "2027-01-17",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m2_2",
+   "round": 2,
+   "date": "2026-09-20",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_trezzano",
+   "hg": 2,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m17_2",
+   "round": 17,
+   "date": "2027-01-17",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m2_3",
+   "round": 2,
+   "date": "2026-09-20",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_cesano",
+   "hg": 4,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m17_3",
+   "round": 17,
+   "date": "2027-01-17",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m2_4",
+   "round": 2,
+   "date": "2026-09-20",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_vercellese",
+   "hg": 2,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m17_4",
+   "round": 17,
+   "date": "2027-01-17",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m2_5",
+   "round": 2,
+   "date": "2026-09-20",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_ardor",
+   "hg": 2,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m17_5",
+   "round": 17,
+   "date": "2027-01-17",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m2_6",
+   "round": 2,
+   "date": "2026-09-20",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_concept",
+   "hg": 2,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m17_6",
+   "round": 17,
+   "date": "2027-01-17",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m2_7",
+   "round": 2,
+   "date": "2026-09-20",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_villapizzone",
+   "hg": 1,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m17_7",
+   "round": 17,
+   "date": "2027-01-17",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m2_8",
+   "round": 2,
+   "date": "2026-09-20",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_viscontini",
+   "hg": 2,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m17_8",
+   "round": 17,
+   "date": "2027-01-17",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m3_1",
+   "round": 3,
+   "date": "2026-09-27",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_bonola",
+   "hg": 2,
+   "ag": 5,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m18_1",
+   "round": 18,
+   "date": "2027-01-24",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m3_2",
+   "round": 3,
+   "date": "2026-09-27",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_artemide",
+   "hg": 4,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m18_2",
+   "round": 18,
+   "date": "2027-01-24",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m3_3",
+   "round": 3,
+   "date": "2026-09-27",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_ardor",
+   "hg": 0,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m18_3",
+   "round": 18,
+   "date": "2027-01-24",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m3_4",
+   "round": 3,
+   "date": "2026-09-27",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_vige",
+   "hg": 1,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m18_4",
+   "round": 18,
+   "date": "2027-01-24",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m3_5",
+   "round": 3,
+   "date": "2026-09-27",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_corsico",
+   "hg": 1,
+   "ag": 5,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m18_5",
+   "round": 18,
+   "date": "2027-01-24",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m3_6",
+   "round": 3,
+   "date": "2026-09-27",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_velasca",
+   "hg": 0,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m18_6",
+   "round": 18,
+   "date": "2027-01-24",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m3_7",
+   "round": 3,
+   "date": "2026-09-27",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_baggese",
+   "hg": 3,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m18_7",
+   "round": 18,
+   "date": "2027-01-24",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m3_8",
+   "round": 3,
+   "date": "2026-09-27",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_seguro",
+   "hg": 4,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m18_8",
+   "round": 18,
+   "date": "2027-01-24",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m4_1",
+   "round": 4,
+   "date": "2026-10-04",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_vercellese",
+   "hg": 3,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m19_1",
+   "round": 19,
+   "date": "2027-01-31",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m4_2",
+   "round": 4,
+   "date": "2026-10-04",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_novella",
+   "hg": 1,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m19_2",
+   "round": 19,
+   "date": "2027-01-31",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m4_3",
+   "round": 4,
+   "date": "2026-10-04",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_cesano",
+   "hg": 4,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m19_3",
+   "round": 19,
+   "date": "2027-01-31",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m4_4",
+   "round": 4,
+   "date": "2026-10-04",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_viscontini",
+   "hg": 8,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m19_4",
+   "round": 19,
+   "date": "2027-01-31",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m4_5",
+   "round": 4,
+   "date": "2026-10-04",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_trezzano",
+   "hg": 2,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m19_5",
+   "round": 19,
+   "date": "2027-01-31",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m4_6",
+   "round": 4,
+   "date": "2026-10-04",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_villapizzone",
+   "hg": 2,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m19_6",
+   "round": 19,
+   "date": "2027-01-31",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m4_7",
+   "round": 4,
+   "date": "2026-10-04",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_triestina",
+   "hg": 0,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m19_7",
+   "round": 19,
+   "date": "2027-01-31",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m4_8",
+   "round": 4,
+   "date": "2026-10-04",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_concept",
+   "hg": 3,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m19_8",
+   "round": 19,
+   "date": "2027-01-31",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m5_1",
+   "round": 5,
+   "date": "2026-10-11",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_vige",
+   "hg": 0,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m20_1",
+   "round": 20,
+   "date": "2027-02-07",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m5_2",
+   "round": 5,
+   "date": "2026-10-11",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_bonola",
+   "hg": 1,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m20_2",
+   "round": 20,
+   "date": "2027-02-07",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m5_3",
+   "round": 5,
+   "date": "2026-10-11",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_corsico",
+   "hg": 2,
+   "ag": 4,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m20_3",
+   "round": 20,
+   "date": "2027-02-07",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m5_4",
+   "round": 5,
+   "date": "2026-10-11",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_trezzano",
+   "hg": 0,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m20_4",
+   "round": 20,
+   "date": "2027-02-07",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m5_5",
+   "round": 5,
+   "date": "2026-10-11",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_ardor",
+   "hg": 1,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m20_5",
+   "round": 20,
+   "date": "2027-02-07",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m5_6",
+   "round": 5,
+   "date": "2026-10-11",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_seguro",
+   "hg": 3,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m20_6",
+   "round": 20,
+   "date": "2027-02-07",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m5_7",
+   "round": 5,
+   "date": "2026-10-11",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_artemide",
+   "hg": 3,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m20_7",
+   "round": 20,
+   "date": "2027-02-07",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m5_8",
+   "round": 5,
+   "date": "2026-10-11",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_velasca",
+   "hg": 0,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m20_8",
+   "round": 20,
+   "date": "2027-02-07",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m6_1",
+   "round": 6,
+   "date": "2026-10-18",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_novella",
+   "hg": 6,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m21_1",
+   "round": 21,
+   "date": "2027-02-14",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m6_2",
+   "round": 6,
+   "date": "2026-10-18",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_cesano",
+   "hg": 4,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m21_2",
+   "round": 21,
+   "date": "2027-02-14",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m6_3",
+   "round": 6,
+   "date": "2026-10-18",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_vercellese",
+   "hg": 1,
+   "ag": 4,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m21_3",
+   "round": 21,
+   "date": "2027-02-14",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m6_4",
+   "round": 6,
+   "date": "2026-10-18",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_baggese",
+   "hg": 2,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m21_4",
+   "round": 21,
+   "date": "2027-02-14",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m6_5",
+   "round": 6,
+   "date": "2026-10-18",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_concept",
+   "hg": 3,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m21_5",
+   "round": 21,
+   "date": "2027-02-14",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m6_6",
+   "round": 6,
+   "date": "2026-10-18",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_viscontini",
+   "hg": 2,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m21_6",
+   "round": 21,
+   "date": "2027-02-14",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m6_7",
+   "round": 6,
+   "date": "2026-10-18",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_triestina",
+   "hg": 1,
+   "ag": 6,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m21_7",
+   "round": 21,
+   "date": "2027-02-14",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m6_8",
+   "round": 6,
+   "date": "2026-10-18",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_villapizzone",
+   "hg": 4,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m21_8",
+   "round": 21,
+   "date": "2027-02-14",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m7_1",
+   "round": 7,
+   "date": "2026-10-25",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_viscontini",
+   "hg": 2,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m22_1",
+   "round": 22,
+   "date": "2027-02-21",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m7_2",
+   "round": 7,
+   "date": "2026-10-25",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_corsico",
+   "hg": 0,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m22_2",
+   "round": 22,
+   "date": "2027-02-21",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m7_3",
+   "round": 7,
+   "date": "2026-10-25",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_velasca",
+   "hg": 0,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m22_3",
+   "round": 22,
+   "date": "2027-02-21",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m7_4",
+   "round": 7,
+   "date": "2026-10-25",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_vige",
+   "hg": 1,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m22_4",
+   "round": 22,
+   "date": "2027-02-21",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m7_5",
+   "round": 7,
+   "date": "2026-10-25",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_artemide",
+   "hg": 0,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m22_5",
+   "round": 22,
+   "date": "2027-02-21",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m7_6",
+   "round": 7,
+   "date": "2026-10-25",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_trezzano",
+   "hg": 2,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m22_6",
+   "round": 22,
+   "date": "2027-02-21",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m7_7",
+   "round": 7,
+   "date": "2026-10-25",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_seguro",
+   "hg": 5,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m22_7",
+   "round": 22,
+   "date": "2027-02-21",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m7_8",
+   "round": 7,
+   "date": "2026-10-25",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_ardor",
+   "hg": 3,
+   "ag": 5,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m22_8",
+   "round": 22,
+   "date": "2027-02-21",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m8_1",
+   "round": 8,
+   "date": "2026-11-01",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_baggese",
+   "hg": 4,
+   "ag": 4,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m23_1",
+   "round": 23,
+   "date": "2027-02-28",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m8_2",
+   "round": 8,
+   "date": "2026-11-01",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_novella",
+   "hg": 3,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m23_2",
+   "round": 23,
+   "date": "2027-02-28",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m8_3",
+   "round": 8,
+   "date": "2026-11-01",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_concept",
+   "hg": 1,
+   "ag": 8,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m23_3",
+   "round": 23,
+   "date": "2027-02-28",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m8_4",
+   "round": 8,
+   "date": "2026-11-01",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_cesano",
+   "hg": 0,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m23_4",
+   "round": 23,
+   "date": "2027-02-28",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m8_5",
+   "round": 8,
+   "date": "2026-11-01",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_villapizzone",
+   "hg": 2,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m23_5",
+   "round": 23,
+   "date": "2027-02-28",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m8_6",
+   "round": 8,
+   "date": "2026-11-01",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_vercellese",
+   "hg": 1,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m23_6",
+   "round": 23,
+   "date": "2027-02-28",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m8_7",
+   "round": 8,
+   "date": "2026-11-01",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_bonola",
+   "hg": 3,
+   "ag": 2,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m23_7",
+   "round": 23,
+   "date": "2027-02-28",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m8_8",
+   "round": 8,
+   "date": "2026-11-01",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_triestina",
+   "hg": 1,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m23_8",
+   "round": 23,
+   "date": "2027-02-28",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m9_1",
+   "round": 9,
+   "date": "2026-11-08",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_viscontini",
+   "hg": 5,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m24_1",
+   "round": 24,
+   "date": "2027-03-07",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m9_2",
+   "round": 9,
+   "date": "2026-11-08",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_trezzano",
+   "hg": 5,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m24_2",
+   "round": 24,
+   "date": "2027-03-07",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m9_3",
+   "round": 9,
+   "date": "2026-11-08",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_ardor",
+   "hg": 1,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m24_3",
+   "round": 24,
+   "date": "2027-03-07",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m9_4",
+   "round": 9,
+   "date": "2026-11-08",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_corsico",
+   "hg": 2,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m24_4",
+   "round": 24,
+   "date": "2027-03-07",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m9_5",
+   "round": 9,
+   "date": "2026-11-08",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_vige",
+   "hg": 2,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m24_5",
+   "round": 24,
+   "date": "2027-03-07",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m9_6",
+   "round": 9,
+   "date": "2026-11-08",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_vercellese",
+   "hg": 2,
+   "ag": 1,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m24_6",
+   "round": 24,
+   "date": "2027-03-07",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m9_7",
+   "round": 9,
+   "date": "2026-11-08",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_velasca",
+   "hg": 3,
+   "ag": 0,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m24_7",
+   "round": 24,
+   "date": "2027-03-07",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m9_8",
+   "round": 9,
+   "date": "2026-11-08",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_artemide",
+   "hg": 1,
+   "ag": 3,
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m24_8",
+   "round": 24,
+   "date": "2027-03-07",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m10_1",
+   "round": 10,
+   "date": "2026-11-15",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m25_1",
+   "round": 25,
+   "date": "2027-03-14",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m10_2",
+   "round": 10,
+   "date": "2026-11-15",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m25_2",
+   "round": 25,
+   "date": "2027-03-14",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m10_3",
+   "round": 10,
+   "date": "2026-11-15",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m25_3",
+   "round": 25,
+   "date": "2027-03-14",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m10_4",
+   "round": 10,
+   "date": "2026-11-15",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m25_4",
+   "round": 25,
+   "date": "2027-03-14",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m10_5",
+   "round": 10,
+   "date": "2026-11-15",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m25_5",
+   "round": 25,
+   "date": "2027-03-14",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m10_6",
+   "round": 10,
+   "date": "2026-11-15",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m25_6",
+   "round": 25,
+   "date": "2027-03-14",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m10_7",
+   "round": 10,
+   "date": "2026-11-15",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m25_7",
+   "round": 25,
+   "date": "2027-03-14",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m10_8",
+   "round": 10,
+   "date": "2026-11-15",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m25_8",
+   "round": 25,
+   "date": "2027-03-14",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m11_1",
+   "round": 11,
+   "date": "2026-11-22",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m26_1",
+   "round": 26,
+   "date": "2027-03-21",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m11_2",
+   "round": 11,
+   "date": "2026-11-22",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m26_2",
+   "round": 26,
+   "date": "2027-03-21",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m11_3",
+   "round": 11,
+   "date": "2026-11-22",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m26_3",
+   "round": 26,
+   "date": "2027-03-21",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m11_4",
+   "round": 11,
+   "date": "2026-11-22",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m26_4",
+   "round": 26,
+   "date": "2027-03-21",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m11_5",
+   "round": 11,
+   "date": "2026-11-22",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m26_5",
+   "round": 26,
+   "date": "2027-03-21",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m11_6",
+   "round": 11,
+   "date": "2026-11-22",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m26_6",
+   "round": 26,
+   "date": "2027-03-21",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m11_7",
+   "round": 11,
+   "date": "2026-11-22",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m26_7",
+   "round": 26,
+   "date": "2027-03-21",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m11_8",
+   "round": 11,
+   "date": "2026-11-22",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m26_8",
+   "round": 26,
+   "date": "2027-03-21",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m12_1",
+   "round": 12,
+   "date": "2026-11-29",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m27_1",
+   "round": 27,
+   "date": "2027-04-04",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m12_2",
+   "round": 12,
+   "date": "2026-11-29",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m27_2",
+   "round": 27,
+   "date": "2027-04-04",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m12_3",
+   "round": 12,
+   "date": "2026-11-29",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m27_3",
+   "round": 27,
+   "date": "2027-04-04",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m12_4",
+   "round": 12,
+   "date": "2026-11-29",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m27_4",
+   "round": 27,
+   "date": "2027-04-04",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m12_5",
+   "round": 12,
+   "date": "2026-11-29",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m27_5",
+   "round": 27,
+   "date": "2027-04-04",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m12_6",
+   "round": 12,
+   "date": "2026-11-29",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m27_6",
+   "round": 27,
+   "date": "2027-04-04",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m12_7",
+   "round": 12,
+   "date": "2026-11-29",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m27_7",
+   "round": 27,
+   "date": "2027-04-04",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m12_8",
+   "round": 12,
+   "date": "2026-11-29",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m27_8",
+   "round": 27,
+   "date": "2027-04-04",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m13_1",
+   "round": 13,
+   "date": "2026-12-06",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m28_1",
+   "round": 28,
+   "date": "2027-04-11",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m13_2",
+   "round": 13,
+   "date": "2026-12-06",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m28_2",
+   "round": 28,
+   "date": "2027-04-11",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m13_3",
+   "round": 13,
+   "date": "2026-12-06",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m28_3",
+   "round": 28,
+   "date": "2027-04-11",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m13_4",
+   "round": 13,
+   "date": "2026-12-06",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m28_4",
+   "round": 28,
+   "date": "2027-04-11",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m13_5",
+   "round": 13,
+   "date": "2026-12-06",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m28_5",
+   "round": 28,
+   "date": "2027-04-11",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m13_6",
+   "round": 13,
+   "date": "2026-12-06",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m28_6",
+   "round": 28,
+   "date": "2027-04-11",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m13_7",
+   "round": 13,
+   "date": "2026-12-06",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m28_7",
+   "round": 28,
+   "date": "2027-04-11",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m13_8",
+   "round": 13,
+   "date": "2026-12-06",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m28_8",
+   "round": 28,
+   "date": "2027-04-11",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m14_1",
+   "round": 14,
+   "date": "2026-12-13",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m29_1",
+   "round": 29,
+   "date": "2027-04-18",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m14_2",
+   "round": 14,
+   "date": "2026-12-13",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m29_2",
+   "round": 29,
+   "date": "2027-04-18",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m14_3",
+   "round": 14,
+   "date": "2026-12-13",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m29_3",
+   "round": 29,
+   "date": "2027-04-18",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m14_4",
+   "round": 14,
+   "date": "2026-12-13",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m29_4",
+   "round": 29,
+   "date": "2027-04-18",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m14_5",
+   "round": 14,
+   "date": "2026-12-13",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m29_5",
+   "round": 29,
+   "date": "2027-04-18",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m14_6",
+   "round": 14,
+   "date": "2026-12-13",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m29_6",
+   "round": 29,
+   "date": "2027-04-18",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m14_7",
+   "round": 14,
+   "date": "2026-12-13",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m29_7",
+   "round": 29,
+   "date": "2027-04-18",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m14_8",
+   "round": 14,
+   "date": "2026-12-13",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m29_8",
+   "round": 29,
+   "date": "2027-04-18",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m15_1",
+   "round": 15,
+   "date": "2026-12-20",
+   "time": "",
+   "homeId": "t_novella",
+   "awayId": "t_villapizzone",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m30_1",
+   "round": 30,
+   "date": "2027-04-25",
+   "time": "",
+   "homeId": "t_villapizzone",
+   "awayId": "t_novella",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m15_2",
+   "round": 15,
+   "date": "2026-12-20",
+   "time": "",
+   "homeId": "t_triestina",
+   "awayId": "t_cesano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m30_2",
+   "round": 30,
+   "date": "2027-04-25",
+   "time": "",
+   "homeId": "t_cesano",
+   "awayId": "t_triestina",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m15_3",
+   "round": 15,
+   "date": "2026-12-20",
+   "time": "",
+   "homeId": "t_bonola",
+   "awayId": "t_vercellese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m30_3",
+   "round": 30,
+   "date": "2027-04-25",
+   "time": "",
+   "homeId": "t_vercellese",
+   "awayId": "t_bonola",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m15_4",
+   "round": 15,
+   "date": "2026-12-20",
+   "time": "",
+   "homeId": "t_vige",
+   "awayId": "t_trezzano",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m30_4",
+   "round": 30,
+   "date": "2027-04-25",
+   "time": "",
+   "homeId": "t_trezzano",
+   "awayId": "t_vige",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m15_5",
+   "round": 15,
+   "date": "2026-12-20",
+   "time": "",
+   "homeId": "t_artemide",
+   "awayId": "t_corsico",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m30_5",
+   "round": 30,
+   "date": "2027-04-25",
+   "time": "",
+   "homeId": "t_corsico",
+   "awayId": "t_artemide",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m15_6",
+   "round": 15,
+   "date": "2026-12-20",
+   "time": "",
+   "homeId": "t_seguro",
+   "awayId": "t_viscontini",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m30_6",
+   "round": 30,
+   "date": "2027-04-25",
+   "time": "",
+   "homeId": "t_viscontini",
+   "awayId": "t_seguro",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m15_7",
+   "round": 15,
+   "date": "2026-12-20",
+   "time": "",
+   "homeId": "t_baggese",
+   "awayId": "t_concept",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m30_7",
+   "round": 30,
+   "date": "2027-04-25",
+   "time": "",
+   "homeId": "t_concept",
+   "awayId": "t_baggese",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m15_8",
+   "round": 15,
+   "date": "2026-12-20",
+   "time": "",
+   "homeId": "t_velasca",
+   "awayId": "t_ardor",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  },
+  {
+   "id": "m30_8",
+   "round": 30,
+   "date": "2027-04-25",
+   "time": "",
+   "homeId": "t_ardor",
+   "awayId": "t_velasca",
+   "hg": "",
+   "ag": "",
+   "scorers": [],
+   "cards": []
+  }
+ ],
+ "players": [
+  {
+   "id": "p_bag_1",
+   "teamId": "t_baggese",
+   "name": "Albirdi Jonathan",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_2",
+   "teamId": "t_baggese",
+   "name": "Bergonzoni Francesco",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_3",
+   "teamId": "t_baggese",
+   "name": "Bielli Simone",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_4",
+   "teamId": "t_baggese",
+   "name": "Carrara Matteo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_5",
+   "teamId": "t_baggese",
+   "name": "Costa Giorgio",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_6",
+   "teamId": "t_baggese",
+   "name": "De Vecchis Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_7",
+   "teamId": "t_baggese",
+   "name": "Delgado Zevallos Christian Braya",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_8",
+   "teamId": "t_baggese",
+   "name": "Di Maggio Simone",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_9",
+   "teamId": "t_baggese",
+   "name": "Gambuto Jacopo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_10",
+   "teamId": "t_baggese",
+   "name": "Gualberto Tommaso",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_11",
+   "teamId": "t_baggese",
+   "name": "Karamoko Kevin",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_12",
+   "teamId": "t_baggese",
+   "name": "Kevin Loffredo pereira",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_13",
+   "teamId": "t_baggese",
+   "name": "La Rosa Lorenzo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_14",
+   "teamId": "t_baggese",
+   "name": "Lottaroli Matteo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_15",
+   "teamId": "t_baggese",
+   "name": "Montaperto Alessio",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_16",
+   "teamId": "t_baggese",
+   "name": "Montesano Alan",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 7,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_17",
+   "teamId": "t_baggese",
+   "name": "Orellana Vargas Jenner Andrey",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_18",
+   "teamId": "t_baggese",
+   "name": "Pintus Mattia",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 6,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_19",
+   "teamId": "t_baggese",
+   "name": "Pomer Tommaso",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 4,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_20",
+   "teamId": "t_baggese",
+   "name": "Pozzi Luca",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_21",
+   "teamId": "t_baggese",
+   "name": "Sciascia Ivan",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 6,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_22",
+   "teamId": "t_baggese",
+   "name": "Tartaglione Emil",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_23",
+   "teamId": "t_baggese",
+   "name": "Toma Nikolas Conrad",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_24",
+   "teamId": "t_baggese",
+   "name": "Vargas Orellana Jenner Andrey",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_25",
+   "teamId": "t_baggese",
+   "name": "Volta Cristian",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_26",
+   "teamId": "t_baggese",
+   "name": "Volta Marco",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bag_27",
+   "teamId": "t_baggese",
+   "name": "Zucchero Emanuele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_1",
+   "teamId": "t_ardor",
+   "name": "Alberton Riccardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_2",
+   "teamId": "t_ardor",
+   "name": "Baldo Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_3",
+   "teamId": "t_ardor",
+   "name": "Banfi Paolo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 4,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_4",
+   "teamId": "t_ardor",
+   "name": "Belotti Luca",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_5",
+   "teamId": "t_ardor",
+   "name": "Bianchi Niccolò",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_6",
+   "teamId": "t_ardor",
+   "name": "Boniardi Riccardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_7",
+   "teamId": "t_ardor",
+   "name": "Breda Christian",
+   "num": 1,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_8",
+   "teamId": "t_ardor",
+   "name": "Bruna Jacopo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_9",
+   "teamId": "t_ardor",
+   "name": "Casati Jonny",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_ard_10",
+   "teamId": "t_ardor",
+   "name": "Cascio Mattia",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_11",
+   "teamId": "t_ardor",
+   "name": "Cesaratto Andrea",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_12",
+   "teamId": "t_ardor",
+   "name": "Cigognini Simone",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_13",
+   "teamId": "t_ardor",
+   "name": "Ciriello Andrea",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_14",
+   "teamId": "t_ardor",
+   "name": "Codarri Gabriele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 7,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_15",
+   "teamId": "t_ardor",
+   "name": "Codegoni Andrea",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_16",
+   "teamId": "t_ardor",
+   "name": "Conti Riccardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_17",
+   "teamId": "t_ardor",
+   "name": "Dezuanni Tommaso",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_18",
+   "teamId": "t_ardor",
+   "name": "Favaron Mattia",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_19",
+   "teamId": "t_ardor",
+   "name": "Frassinelli Lorenzo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 4,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_20",
+   "teamId": "t_ardor",
+   "name": "Gentile Samuele",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_21",
+   "teamId": "t_ardor",
+   "name": "Macciola Matteo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 4,
+    "pres": 7,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_22",
+   "teamId": "t_ardor",
+   "name": "Marazzi Diego",
+   "num": 5,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_23",
+   "teamId": "t_ardor",
+   "name": "Martelli Leo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_24",
+   "teamId": "t_ardor",
+   "name": "Mingrone Antonio",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_25",
+   "teamId": "t_ardor",
+   "name": "Montagner Mattia",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 7,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_26",
+   "teamId": "t_ardor",
+   "name": "Ouanchi Abdellah",
+   "num": 4,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 3,
+    "pres": 7,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_27",
+   "teamId": "t_ardor",
+   "name": "Pagliato Gabriele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_28",
+   "teamId": "t_ardor",
+   "name": "Papaleo Alessandro",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_29",
+   "teamId": "t_ardor",
+   "name": "Paparella Luca",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_30",
+   "teamId": "t_ardor",
+   "name": "Papillo Simone",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_31",
+   "teamId": "t_ardor",
+   "name": "Pardeo Christian",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_32",
+   "teamId": "t_ardor",
+   "name": "Picca Riccardo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_33",
+   "teamId": "t_ardor",
+   "name": "Rocca Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_34",
+   "teamId": "t_ardor",
+   "name": "Sbarbaro Nicola",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_35",
+   "teamId": "t_ardor",
+   "name": "Silva Luca",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_36",
+   "teamId": "t_ardor",
+   "name": "Squeo Manuel",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_37",
+   "teamId": "t_ardor",
+   "name": "Troiano Marco",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_38",
+   "teamId": "t_ardor",
+   "name": "Zainaghi Emanuel",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ard_39",
+   "teamId": "t_ardor",
+   "name": "Loiodice Andrea",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_1",
+   "teamId": "t_artemide",
+   "name": "Abaterusso Alessandro",
+   "num": 7,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_2",
+   "teamId": "t_artemide",
+   "name": "Andreassi Tommaso",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_3",
+   "teamId": "t_artemide",
+   "name": "Cazzola Samuele",
+   "num": 44,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_4",
+   "teamId": "t_artemide",
+   "name": "Cetti Cristiano",
+   "num": 24,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 9,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_5",
+   "teamId": "t_artemide",
+   "name": "Chiesa Federico",
+   "num": 23,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 3,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_6",
+   "teamId": "t_artemide",
+   "name": "Coricelli Nicola Lucia",
+   "num": 90,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_7",
+   "teamId": "t_artemide",
+   "name": "Curreri Gionata",
+   "num": 22,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 8,
+    "pres": 9,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_8",
+   "teamId": "t_artemide",
+   "name": "De Agostini Enrico",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_9",
+   "teamId": "t_artemide",
+   "name": "Dotti Filippo",
+   "num": 56,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_10",
+   "teamId": "t_artemide",
+   "name": "Francia Riccardo",
+   "num": 9,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_11",
+   "teamId": "t_artemide",
+   "name": "Ganz Ruggero",
+   "num": 14,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_12",
+   "teamId": "t_artemide",
+   "name": "Grasselli Riccardo",
+   "num": 64,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_13",
+   "teamId": "t_artemide",
+   "name": "Guella Ernesto",
+   "num": 18,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_14",
+   "teamId": "t_artemide",
+   "name": "Kakkar Jacopo",
+   "num": 80,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 2,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_art_15",
+   "teamId": "t_artemide",
+   "name": "Longini Lorenzo",
+   "num": 3,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_16",
+   "teamId": "t_artemide",
+   "name": "Lutchmun Riktesh Adi",
+   "num": 10,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_17",
+   "teamId": "t_artemide",
+   "name": "Maira Safari",
+   "num": 1,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_18",
+   "teamId": "t_artemide",
+   "name": "Mantellini Pietro",
+   "num": 31,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_19",
+   "teamId": "t_artemide",
+   "name": "Manzato Andrea",
+   "num": 33,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_20",
+   "teamId": "t_artemide",
+   "name": "Marci Jacopo",
+   "num": 4,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 8,
+    "y": 3,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_21",
+   "teamId": "t_artemide",
+   "name": "Marini Ettore",
+   "num": 16,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_22",
+   "teamId": "t_artemide",
+   "name": "Marmo Andrea",
+   "num": 6,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_23",
+   "teamId": "t_artemide",
+   "name": "Masselli Lorenzo",
+   "num": 22,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_24",
+   "teamId": "t_artemide",
+   "name": "Mercuri Gabriele",
+   "num": 20,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_25",
+   "teamId": "t_artemide",
+   "name": "Prazzoli Edoardo",
+   "num": 21,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_26",
+   "teamId": "t_artemide",
+   "name": "Rizzo Simone",
+   "num": 17,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_27",
+   "teamId": "t_artemide",
+   "name": "Rotta Michele",
+   "num": 19,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_28",
+   "teamId": "t_artemide",
+   "name": "Ruberti Alessandro",
+   "num": 45,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_29",
+   "teamId": "t_artemide",
+   "name": "Sorrentino Giovanni",
+   "num": 5,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_30",
+   "teamId": "t_artemide",
+   "name": "Trallo Bryan",
+   "num": 77,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 9,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_art_31",
+   "teamId": "t_artemide",
+   "name": "Mbow Talla",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_1",
+   "teamId": "t_bonola",
+   "name": "Abate Mattia",
+   "num": 2,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_2",
+   "teamId": "t_bonola",
+   "name": "Anelli Leonardo",
+   "num": 19,
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 7,
+    "y": 2,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_bon_3",
+   "teamId": "t_bonola",
+   "name": "Benzi Alessandro",
+   "num": 20,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_4",
+   "teamId": "t_bonola",
+   "name": "Birolini Adriano",
+   "num": 4,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 9,
+    "y": 5,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_5",
+   "teamId": "t_bonola",
+   "name": "Bornacina Riccardo",
+   "num": 91,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_6",
+   "teamId": "t_bonola",
+   "name": "Braga Marco",
+   "num": 5,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 3,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_7",
+   "teamId": "t_bonola",
+   "name": "Cammarata Matteo",
+   "num": 8,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_8",
+   "teamId": "t_bonola",
+   "name": "Celeghin Maurizio",
+   "num": 13,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_9",
+   "teamId": "t_bonola",
+   "name": "Chiarelli Massimo",
+   "num": 44,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_10",
+   "teamId": "t_bonola",
+   "name": "Di Franco Filippo",
+   "num": 21,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_11",
+   "teamId": "t_bonola",
+   "name": "Doumbia Moussa",
+   "num": 97,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_12",
+   "teamId": "t_bonola",
+   "name": "Giammetta Vasco",
+   "num": 70,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_13",
+   "teamId": "t_bonola",
+   "name": "Giorno Sasha",
+   "num": 6,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_14",
+   "teamId": "t_bonola",
+   "name": "Lasku Klaudio",
+   "num": 22,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_15",
+   "teamId": "t_bonola",
+   "name": "Mancin Pietro",
+   "num": 3,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_16",
+   "teamId": "t_bonola",
+   "name": "Montrasi Nicolo",
+   "num": 10,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_17",
+   "teamId": "t_bonola",
+   "name": "Ouerghui Khaled",
+   "num": 11,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 9,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_18",
+   "teamId": "t_bonola",
+   "name": "Palmieri Francesco",
+   "num": 14,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_19",
+   "teamId": "t_bonola",
+   "name": "Pizzi Tommaso",
+   "num": 1,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_20",
+   "teamId": "t_bonola",
+   "name": "Pozzoni Lorenzo",
+   "num": 27,
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 8,
+    "y": 3,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_21",
+   "teamId": "t_bonola",
+   "name": "Rainoldi Simone",
+   "num": 12,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_22",
+   "teamId": "t_bonola",
+   "name": "Raschi Gianluigi",
+   "num": 23,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_23",
+   "teamId": "t_bonola",
+   "name": "Sigolo Christian",
+   "num": 17,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_24",
+   "teamId": "t_bonola",
+   "name": "Spadafora Lorenzo Mattia",
+   "num": 18,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_25",
+   "teamId": "t_bonola",
+   "name": "Tabit Ihab",
+   "num": 9,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 9,
+    "pres": 9,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_26",
+   "teamId": "t_bonola",
+   "name": "Vayno Giulio",
+   "num": 36,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_27",
+   "teamId": "t_bonola",
+   "name": "Veronesi Giovanni",
+   "num": 7,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 6,
+    "pres": 9,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_28",
+   "teamId": "t_bonola",
+   "name": "Villani Antonio Mario",
+   "num": 53,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 9,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_bon_29",
+   "teamId": "t_bonola",
+   "name": "Muzzi Alessandro",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_1",
+   "teamId": "t_cesano",
+   "name": "Abatianni Federico",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_2",
+   "teamId": "t_cesano",
+   "name": "Amoroso Tommaso",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_3",
+   "teamId": "t_cesano",
+   "name": "Argentiero Andrea",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_4",
+   "teamId": "t_cesano",
+   "name": "Bandello Alberto",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_5",
+   "teamId": "t_cesano",
+   "name": "Bandello Lorenzo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 2,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_6",
+   "teamId": "t_cesano",
+   "name": "Casetta Andrea",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_7",
+   "teamId": "t_cesano",
+   "name": "Croce Manuel",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_8",
+   "teamId": "t_cesano",
+   "name": "Dargenio Fabio",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_9",
+   "teamId": "t_cesano",
+   "name": "De Giosa Simone",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 5,
+    "pres": 6,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_10",
+   "teamId": "t_cesano",
+   "name": "De Milato Giuseppe",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_11",
+   "teamId": "t_cesano",
+   "name": "Dell'Orti Alberto",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 5,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_12",
+   "teamId": "t_cesano",
+   "name": "Fiorini Marco",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 2,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_13",
+   "teamId": "t_cesano",
+   "name": "Franzetto Filippo Nestore",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_14",
+   "teamId": "t_cesano",
+   "name": "Frazzetto Filippo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_15",
+   "teamId": "t_cesano",
+   "name": "Gasparini Christian",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_16",
+   "teamId": "t_cesano",
+   "name": "Giurato Francesco",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_17",
+   "teamId": "t_cesano",
+   "name": "Ianni Manuel",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_18",
+   "teamId": "t_cesano",
+   "name": "Mattacola Domenico",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_19",
+   "teamId": "t_cesano",
+   "name": "Morano Davide",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_20",
+   "teamId": "t_cesano",
+   "name": "Mussapp Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_21",
+   "teamId": "t_cesano",
+   "name": "Nidasio Marco",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_22",
+   "teamId": "t_cesano",
+   "name": "Panettieri Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_23",
+   "teamId": "t_cesano",
+   "name": "Portochese Simone Riccardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_24",
+   "teamId": "t_cesano",
+   "name": "Russo Salvatore",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_25",
+   "teamId": "t_cesano",
+   "name": "Spinazzè Andrea",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_26",
+   "teamId": "t_cesano",
+   "name": "Stampacchia Mattia",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_27",
+   "teamId": "t_cesano",
+   "name": "Teta Gabriele",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_28",
+   "teamId": "t_cesano",
+   "name": "Teta Simone",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_29",
+   "teamId": "t_cesano",
+   "name": "Villa Jonathan",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 2,
+    "pres": 5,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ces_30",
+   "teamId": "t_cesano",
+   "name": "Vivaldini William",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 7,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_1",
+   "teamId": "t_concept",
+   "name": "Abo El Ata Karim",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 4,
+    "y": 1,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_con_2",
+   "teamId": "t_concept",
+   "name": "Aprea Vittorio",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 1,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_con_3",
+   "teamId": "t_concept",
+   "name": "Badjie Foday",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_4",
+   "teamId": "t_concept",
+   "name": "Bah Ebrima",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_5",
+   "teamId": "t_concept",
+   "name": "Beijoca Afonso",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_6",
+   "teamId": "t_concept",
+   "name": "Bocapine Luigi",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_7",
+   "teamId": "t_concept",
+   "name": "Brenna Edoardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_8",
+   "teamId": "t_concept",
+   "name": "Brenna Francesco",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_9",
+   "teamId": "t_concept",
+   "name": "Cardani Luca",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_con_10",
+   "teamId": "t_concept",
+   "name": "Casalnuovo Pasquale",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 2,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_11",
+   "teamId": "t_concept",
+   "name": "Consoli Carlo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 2,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_12",
+   "teamId": "t_concept",
+   "name": "Daffeh Abdoulie",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_13",
+   "teamId": "t_concept",
+   "name": "Gjergji Klevis",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 6,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_14",
+   "teamId": "t_concept",
+   "name": "Mezei Abraham",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_15",
+   "teamId": "t_concept",
+   "name": "Nichetti Marco",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_16",
+   "teamId": "t_concept",
+   "name": "Paone Alberto",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 7,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_17",
+   "teamId": "t_concept",
+   "name": "Preil Maximilian",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_18",
+   "teamId": "t_concept",
+   "name": "Ramadan Ala Naser",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_19",
+   "teamId": "t_concept",
+   "name": "Saletti Riccardo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_20",
+   "teamId": "t_concept",
+   "name": "Sansone Gennaro Mauro",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_21",
+   "teamId": "t_concept",
+   "name": "Santinho Andre",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 2,
+    "pres": 4,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_22",
+   "teamId": "t_concept",
+   "name": "Stadnichuk Maksim",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 7,
+    "y": 0,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_con_23",
+   "teamId": "t_concept",
+   "name": "Valdivia Reny",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 3,
+    "y": 1,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_con_24",
+   "teamId": "t_concept",
+   "name": "Barry Alseny",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 2,
+    "r": 2
+   }
+  },
+  {
+   "id": "p_con_25",
+   "teamId": "t_concept",
+   "name": "Chacra Joao",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_26",
+   "teamId": "t_concept",
+   "name": "Cotrina Gianfranco",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_27",
+   "teamId": "t_concept",
+   "name": "Fall Ouldou",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_28",
+   "teamId": "t_concept",
+   "name": "Ferrari Carlo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_29",
+   "teamId": "t_concept",
+   "name": "Gonzales R. Javier",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_30",
+   "teamId": "t_concept",
+   "name": "Gueye Mouhamed",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_31",
+   "teamId": "t_concept",
+   "name": "Ivone Davide",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_32",
+   "teamId": "t_concept",
+   "name": "Jallow Abdoulie",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_33",
+   "teamId": "t_concept",
+   "name": "Larjani Nouerddine",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_34",
+   "teamId": "t_concept",
+   "name": "Malpica Julio",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_35",
+   "teamId": "t_concept",
+   "name": "Nichetti Nicolò",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_con_36",
+   "teamId": "t_concept",
+   "name": "Tamba Malang",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_1",
+   "teamId": "t_corsico",
+   "name": "Andreatta Federico",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_2",
+   "teamId": "t_corsico",
+   "name": "Andreatta Francesco",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_3",
+   "teamId": "t_corsico",
+   "name": "Belfi Simone",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_4",
+   "teamId": "t_corsico",
+   "name": "Convertino Andrea",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 6,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_5",
+   "teamId": "t_corsico",
+   "name": "Cuni Eugen",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_6",
+   "teamId": "t_corsico",
+   "name": "Degli Esposti Andrea",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_7",
+   "teamId": "t_corsico",
+   "name": "Di Stasio Simone",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_8",
+   "teamId": "t_corsico",
+   "name": "El Hanana Moussa",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_9",
+   "teamId": "t_corsico",
+   "name": "Fiore Mattia",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_10",
+   "teamId": "t_corsico",
+   "name": "Fracchiolla Christian",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_11",
+   "teamId": "t_corsico",
+   "name": "Lombardi Riccardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_12",
+   "teamId": "t_corsico",
+   "name": "Martini Federico",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_13",
+   "teamId": "t_corsico",
+   "name": "Marzoni Davide",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_14",
+   "teamId": "t_corsico",
+   "name": "Miola Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_15",
+   "teamId": "t_corsico",
+   "name": "Monni Samuele",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_16",
+   "teamId": "t_corsico",
+   "name": "Montaruli Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_17",
+   "teamId": "t_corsico",
+   "name": "Oltean Robert",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 4,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_18",
+   "teamId": "t_corsico",
+   "name": "Rizzini Christian",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_19",
+   "teamId": "t_corsico",
+   "name": "Solazzo Mirko",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_20",
+   "teamId": "t_corsico",
+   "name": "Steri Simone",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_21",
+   "teamId": "t_corsico",
+   "name": "Vecchione Luca",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_22",
+   "teamId": "t_corsico",
+   "name": "Veratti Gabriele",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_23",
+   "teamId": "t_corsico",
+   "name": "Veratti Nicolò",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 9,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_24",
+   "teamId": "t_corsico",
+   "name": "Vizzielli Luca",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_cor_25",
+   "teamId": "t_corsico",
+   "name": "Vizzielli Roberto",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_cor_26",
+   "teamId": "t_corsico",
+   "name": "Zambetta Davide",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 5,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_1",
+   "teamId": "t_novella",
+   "name": "Angilica Daniel",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_2",
+   "teamId": "t_novella",
+   "name": "Anzaldi Giulio",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_3",
+   "teamId": "t_novella",
+   "name": "Badda Nassim",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_4",
+   "teamId": "t_novella",
+   "name": "Baldacci Luca",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_5",
+   "teamId": "t_novella",
+   "name": "Bellopede Antonio",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_6",
+   "teamId": "t_novella",
+   "name": "Brazzoli Riccardo",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_7",
+   "teamId": "t_novella",
+   "name": "Casella Gianluca",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_8",
+   "teamId": "t_novella",
+   "name": "Cattini Luca",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_9",
+   "teamId": "t_novella",
+   "name": "Cattini Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_10",
+   "teamId": "t_novella",
+   "name": "Cislaghi Davide",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_11",
+   "teamId": "t_novella",
+   "name": "Currà Jacopo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_12",
+   "teamId": "t_novella",
+   "name": "Dalla Longa Alessio",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_nov_13",
+   "teamId": "t_novella",
+   "name": "Di Benedetto Davide",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_14",
+   "teamId": "t_novella",
+   "name": "Di Palma Roberto",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_15",
+   "teamId": "t_novella",
+   "name": "Evangelista Simone",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_16",
+   "teamId": "t_novella",
+   "name": "Fumarola Ivan",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_17",
+   "teamId": "t_novella",
+   "name": "Gilardi Luigi",
+   "num": 9,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_18",
+   "teamId": "t_novella",
+   "name": "Grego Mattia",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_19",
+   "teamId": "t_novella",
+   "name": "Ierardi Luigi",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_20",
+   "teamId": "t_novella",
+   "name": "Liccardo Gabriele Antonio",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_21",
+   "teamId": "t_novella",
+   "name": "Losa Davide",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_22",
+   "teamId": "t_novella",
+   "name": "Massa Stefano",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 7,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_23",
+   "teamId": "t_novella",
+   "name": "Nicoletto Simone",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_24",
+   "teamId": "t_novella",
+   "name": "Oldani Cristian",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_25",
+   "teamId": "t_novella",
+   "name": "Restelli Davide",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 4,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_26",
+   "teamId": "t_novella",
+   "name": "Santambrogio Andrea",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_27",
+   "teamId": "t_novella",
+   "name": "Schlatter Mattia",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_nov_28",
+   "teamId": "t_novella",
+   "name": "Simone Alessandro",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_nov_29",
+   "teamId": "t_novella",
+   "name": "Valente Armando",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_1",
+   "teamId": "t_trezzano",
+   "name": "Bellagente Davide",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_2",
+   "teamId": "t_trezzano",
+   "name": "Biagini Elio",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_3",
+   "teamId": "t_trezzano",
+   "name": "Bottieri Alessio",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_4",
+   "teamId": "t_trezzano",
+   "name": "Buca Luca Ioan",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_5",
+   "teamId": "t_trezzano",
+   "name": "Dalmasso Claudio",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_6",
+   "teamId": "t_trezzano",
+   "name": "Di Bartolo Giancarlo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_7",
+   "teamId": "t_trezzano",
+   "name": "Di Falco Simone",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_8",
+   "teamId": "t_trezzano",
+   "name": "Dushkaj Amarildo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_9",
+   "teamId": "t_trezzano",
+   "name": "Farina Luca",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_10",
+   "teamId": "t_trezzano",
+   "name": "Freddi Nicolò",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_11",
+   "teamId": "t_trezzano",
+   "name": "Fucito Michele",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_12",
+   "teamId": "t_trezzano",
+   "name": "Luongo Simone",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_13",
+   "teamId": "t_trezzano",
+   "name": "Mancini Riccardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_14",
+   "teamId": "t_trezzano",
+   "name": "Mannino Stefano",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_15",
+   "teamId": "t_trezzano",
+   "name": "Michelini Alessandro",
+   "num": 4,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_16",
+   "teamId": "t_trezzano",
+   "name": "Pischedda Marco",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 2,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_17",
+   "teamId": "t_trezzano",
+   "name": "Ruberto Edoardo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 8,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_18",
+   "teamId": "t_trezzano",
+   "name": "Rubino Andrea",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_19",
+   "teamId": "t_trezzano",
+   "name": "Trevisan Luca",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_20",
+   "teamId": "t_trezzano",
+   "name": "Trevisan Marco",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 9,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_21",
+   "teamId": "t_trezzano",
+   "name": "Ferrante Federico",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_22",
+   "teamId": "t_trezzano",
+   "name": "Ghiorghies Andrei",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tre_23",
+   "teamId": "t_trezzano",
+   "name": "Papa Augusto",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_1",
+   "teamId": "t_seguro",
+   "name": "Barera Marco",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_2",
+   "teamId": "t_seguro",
+   "name": "Bassoli Emanuele",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_3",
+   "teamId": "t_seguro",
+   "name": "Bezzi Mattia",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_4",
+   "teamId": "t_seguro",
+   "name": "Bezzi Simone",
+   "num": 10,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_5",
+   "teamId": "t_seguro",
+   "name": "Bilotta Tommaso",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 2,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_6",
+   "teamId": "t_seguro",
+   "name": "Bruzzese Leonardo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_7",
+   "teamId": "t_seguro",
+   "name": "Carrara Diego",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_8",
+   "teamId": "t_seguro",
+   "name": "Catalano Cristian",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_9",
+   "teamId": "t_seguro",
+   "name": "Ceschiat Fabio",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_10",
+   "teamId": "t_seguro",
+   "name": "Claus Francesco",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_11",
+   "teamId": "t_seguro",
+   "name": "Corteggiano Andrea",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_12",
+   "teamId": "t_seguro",
+   "name": "Costanza Antonio",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_13",
+   "teamId": "t_seguro",
+   "name": "Dello Preite Lorenzo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_14",
+   "teamId": "t_seguro",
+   "name": "Ghedini Matteo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_15",
+   "teamId": "t_seguro",
+   "name": "Jouini Neder",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_16",
+   "teamId": "t_seguro",
+   "name": "Magri Davide",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_17",
+   "teamId": "t_seguro",
+   "name": "Martelli Thomas",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_18",
+   "teamId": "t_seguro",
+   "name": "Morabito Riccardo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 4,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_19",
+   "teamId": "t_seguro",
+   "name": "Natta Lorenzo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_20",
+   "teamId": "t_seguro",
+   "name": "Nervi Gabriele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_21",
+   "teamId": "t_seguro",
+   "name": "Pappalettera Alessio",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_22",
+   "teamId": "t_seguro",
+   "name": "Piacenza Alessio",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_23",
+   "teamId": "t_seguro",
+   "name": "Pilato Mirko",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_24",
+   "teamId": "t_seguro",
+   "name": "Rinaldi Daniele",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 6,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_25",
+   "teamId": "t_seguro",
+   "name": "Romano Federico",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_26",
+   "teamId": "t_seguro",
+   "name": "Santoro Alessio",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_27",
+   "teamId": "t_seguro",
+   "name": "Savarese Ivan",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_28",
+   "teamId": "t_seguro",
+   "name": "Scicchitano Diego",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_29",
+   "teamId": "t_seguro",
+   "name": "Sergi Francesco",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_30",
+   "teamId": "t_seguro",
+   "name": "Urbano Francesco Paolo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_31",
+   "teamId": "t_seguro",
+   "name": "Wasef Mina",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_seg_32",
+   "teamId": "t_seguro",
+   "name": "Zaia Alessandro",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_1",
+   "teamId": "t_triestina",
+   "name": "Azzalin Marco",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_2",
+   "teamId": "t_triestina",
+   "name": "Bergonzi Lorenzo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_3",
+   "teamId": "t_triestina",
+   "name": "Bizzotto Tommaso",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_4",
+   "teamId": "t_triestina",
+   "name": "Carrara Michele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_5",
+   "teamId": "t_triestina",
+   "name": "Cartoni Loris",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_6",
+   "teamId": "t_triestina",
+   "name": "Cassano Nicholas",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 4,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_7",
+   "teamId": "t_triestina",
+   "name": "Chavez Vera Steven",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_8",
+   "teamId": "t_triestina",
+   "name": "Colaluce Nicolò",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_9",
+   "teamId": "t_triestina",
+   "name": "Croari Luca",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_10",
+   "teamId": "t_triestina",
+   "name": "D'Adda Andrea Luciano",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_11",
+   "teamId": "t_triestina",
+   "name": "De Felice Alessandro",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_12",
+   "teamId": "t_triestina",
+   "name": "Di Paola Matteo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_13",
+   "teamId": "t_triestina",
+   "name": "Di Placido Simone",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_14",
+   "teamId": "t_triestina",
+   "name": "Diomandé Ibrahim Kader",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_15",
+   "teamId": "t_triestina",
+   "name": "Doria Davide",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_16",
+   "teamId": "t_triestina",
+   "name": "Fusetti Giacomo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_17",
+   "teamId": "t_triestina",
+   "name": "Gab Alla Ahmed",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 1,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_tri_18",
+   "teamId": "t_triestina",
+   "name": "Gianola Alberto",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 10,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_19",
+   "teamId": "t_triestina",
+   "name": "Khomeri El Mahdi",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_20",
+   "teamId": "t_triestina",
+   "name": "La Grutta Vito",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 5,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_21",
+   "teamId": "t_triestina",
+   "name": "Lucarelli Francesco",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_22",
+   "teamId": "t_triestina",
+   "name": "Madera Filippo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_23",
+   "teamId": "t_triestina",
+   "name": "Mera Filippo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_24",
+   "teamId": "t_triestina",
+   "name": "Nidasio Luca",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_25",
+   "teamId": "t_triestina",
+   "name": "Paiusco Francesco",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_26",
+   "teamId": "t_triestina",
+   "name": "Panaccio Riccardo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_27",
+   "teamId": "t_triestina",
+   "name": "Pini Christian",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_28",
+   "teamId": "t_triestina",
+   "name": "Re Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_29",
+   "teamId": "t_triestina",
+   "name": "Sala Edoardo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_30",
+   "teamId": "t_triestina",
+   "name": "Sobacchi Andrea Alessandro",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_31",
+   "teamId": "t_triestina",
+   "name": "Verzicco Marco",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_32",
+   "teamId": "t_triestina",
+   "name": "Vivaldi Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_tri_33",
+   "teamId": "t_triestina",
+   "name": "Frontera Manuel",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_1",
+   "teamId": "t_velasca",
+   "name": "Abouhashem Ahmed Hashem Said",
+   "num": 72,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_2",
+   "teamId": "t_velasca",
+   "name": "Asfary Ziyad",
+   "num": 63,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_3",
+   "teamId": "t_velasca",
+   "name": "Baggio Federico",
+   "num": 10,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_4",
+   "teamId": "t_velasca",
+   "name": "Bandara Manamperi Kevin",
+   "num": 4,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_5",
+   "teamId": "t_velasca",
+   "name": "Bazzocchi Roberto",
+   "num": 67,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_6",
+   "teamId": "t_velasca",
+   "name": "Belli Jacopo",
+   "num": 17,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_7",
+   "teamId": "t_velasca",
+   "name": "Bello Luigi",
+   "num": 80,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_8",
+   "teamId": "t_velasca",
+   "name": "Bghada Bouchta",
+   "num": 99,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_9",
+   "teamId": "t_velasca",
+   "name": "Bozzi Francesco",
+   "num": 29,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_10",
+   "teamId": "t_velasca",
+   "name": "Cirone Francesco",
+   "num": 23,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_11",
+   "teamId": "t_velasca",
+   "name": "Covino Tommaso",
+   "num": 19,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_12",
+   "teamId": "t_velasca",
+   "name": "D'Urso Christian",
+   "num": 3,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_13",
+   "teamId": "t_velasca",
+   "name": "D'Urso Fabio",
+   "num": 31,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_14",
+   "teamId": "t_velasca",
+   "name": "Damasco Vincenzo",
+   "num": 8,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_15",
+   "teamId": "t_velasca",
+   "name": "Del Torto Gabriele",
+   "num": 14,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_16",
+   "teamId": "t_velasca",
+   "name": "Domenico Virgilio",
+   "num": 13,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_17",
+   "teamId": "t_velasca",
+   "name": "Fazio Salvatore",
+   "num": 12,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_18",
+   "teamId": "t_velasca",
+   "name": "Fornari Pietro",
+   "num": 9,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 2,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_19",
+   "teamId": "t_velasca",
+   "name": "Galletta Alessandro",
+   "num": 11,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_20",
+   "teamId": "t_velasca",
+   "name": "Galletta Luigi",
+   "num": 97,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_21",
+   "teamId": "t_velasca",
+   "name": "Mahrous Elsayed Nourell",
+   "num": 15,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_22",
+   "teamId": "t_velasca",
+   "name": "Melegari Giulio",
+   "num": 5,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_23",
+   "teamId": "t_velasca",
+   "name": "Miraglia Davide",
+   "num": 2,
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_24",
+   "teamId": "t_velasca",
+   "name": "Paini Matteo",
+   "num": 6,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_25",
+   "teamId": "t_velasca",
+   "name": "Pettinari Andrea",
+   "num": 90,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_26",
+   "teamId": "t_velasca",
+   "name": "Plodari Pietro",
+   "num": 68,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_27",
+   "teamId": "t_velasca",
+   "name": "Postevka Marius",
+   "num": 7,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_28",
+   "teamId": "t_velasca",
+   "name": "Ritrivi Matteo",
+   "num": 22,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_29",
+   "teamId": "t_velasca",
+   "name": "Ruiz Nolasco Teotl",
+   "num": 1,
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_30",
+   "teamId": "t_velasca",
+   "name": "Sciliberto Giovanni",
+   "num": 66,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 2,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_31",
+   "teamId": "t_velasca",
+   "name": "Stringhetto Marco",
+   "num": 27,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vel_32",
+   "teamId": "t_velasca",
+   "name": "Vanetti Francesco",
+   "num": 20,
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_1",
+   "teamId": "t_vercellese",
+   "name": "Benzoni Andrea",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_2",
+   "teamId": "t_vercellese",
+   "name": "Bernabei Marco",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 2,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_3",
+   "teamId": "t_vercellese",
+   "name": "Bianchi Alessandro",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_4",
+   "teamId": "t_vercellese",
+   "name": "Bonfanti Filippo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_5",
+   "teamId": "t_vercellese",
+   "name": "Camisani Luca Luigi",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 2,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_6",
+   "teamId": "t_vercellese",
+   "name": "Cappone Andrea",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_7",
+   "teamId": "t_vercellese",
+   "name": "Casamassima Samuele",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_8",
+   "teamId": "t_vercellese",
+   "name": "Cattaneo Diego",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 3,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_9",
+   "teamId": "t_vercellese",
+   "name": "Corsini Lorenzo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 2,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_10",
+   "teamId": "t_vercellese",
+   "name": "El Fiki Gamil",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_11",
+   "teamId": "t_vercellese",
+   "name": "Ferrante Luigi",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_12",
+   "teamId": "t_vercellese",
+   "name": "Ferrigno Pellegrino",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_13",
+   "teamId": "t_vercellese",
+   "name": "Gomaa Moustafa Ossama",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_14",
+   "teamId": "t_vercellese",
+   "name": "Grecchi Tommaso",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_15",
+   "teamId": "t_vercellese",
+   "name": "Hassan Ahmed Allam",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_16",
+   "teamId": "t_vercellese",
+   "name": "Indaco Michele",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_17",
+   "teamId": "t_vercellese",
+   "name": "La Rosa Vittorio",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_18",
+   "teamId": "t_vercellese",
+   "name": "Maggio Emanuele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_19",
+   "teamId": "t_vercellese",
+   "name": "Masala Andrea",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_20",
+   "teamId": "t_vercellese",
+   "name": "Mazzitelli Roberto",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_21",
+   "teamId": "t_vercellese",
+   "name": "Mehany Hamada",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_22",
+   "teamId": "t_vercellese",
+   "name": "Mondo Luca",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_23",
+   "teamId": "t_vercellese",
+   "name": "Mooroogen Vincent",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_24",
+   "teamId": "t_vercellese",
+   "name": "Perego Luca",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_25",
+   "teamId": "t_vercellese",
+   "name": "Peverelli Edoardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_26",
+   "teamId": "t_vercellese",
+   "name": "Previ Riccardo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 7,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_27",
+   "teamId": "t_vercellese",
+   "name": "Prifti Teodor",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_28",
+   "teamId": "t_vercellese",
+   "name": "Rizzitelli Andrea",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_29",
+   "teamId": "t_vercellese",
+   "name": "Salah Ahmed",
+   "num": "",
+   "role": "",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_30",
+   "teamId": "t_vercellese",
+   "name": "Salam Nassar",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_31",
+   "teamId": "t_vercellese",
+   "name": "Santomauro Andrea",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_32",
+   "teamId": "t_vercellese",
+   "name": "Sbertoli Marco",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_33",
+   "teamId": "t_vercellese",
+   "name": "Seveso Nicolo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_34",
+   "teamId": "t_vercellese",
+   "name": "Spreafico Alessio",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_35",
+   "teamId": "t_vercellese",
+   "name": "Tascione Paolo",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_36",
+   "teamId": "t_vercellese",
+   "name": "Vigo Daniele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 6,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_37",
+   "teamId": "t_vercellese",
+   "name": "Zadotti Giovanni",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_ver_38",
+   "teamId": "t_vercellese",
+   "name": "Aniekan Favour",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_1",
+   "teamId": "t_vige",
+   "name": "Ardizzoni Lorenzo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_2",
+   "teamId": "t_vige",
+   "name": "Balladore Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_3",
+   "teamId": "t_vige",
+   "name": "Bruzzese Stefano",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_4",
+   "teamId": "t_vige",
+   "name": "Chindamo Francesco",
+   "num": 5,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_5",
+   "teamId": "t_vige",
+   "name": "Cibelli Thomas",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_6",
+   "teamId": "t_vige",
+   "name": "Donzelli Luca",
+   "num": "",
+   "role": "",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_7",
+   "teamId": "t_vige",
+   "name": "El Anbi Ismail",
+   "num": "",
+   "role": "",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_8",
+   "teamId": "t_vige",
+   "name": "Fossati Mattia",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 6,
+    "pres": 5,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_9",
+   "teamId": "t_vige",
+   "name": "Iagulli Domenico",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_10",
+   "teamId": "t_vige",
+   "name": "Le Donne Niccolò",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 1,
+    "y": 1,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_11",
+   "teamId": "t_vige",
+   "name": "Lucchetti Cigarini Loris",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_12",
+   "teamId": "t_vige",
+   "name": "Magno Mattia",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 4,
+    "pres": 5,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_13",
+   "teamId": "t_vige",
+   "name": "Martelli Christian",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_14",
+   "teamId": "t_vige",
+   "name": "Martinelli Federico",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_15",
+   "teamId": "t_vige",
+   "name": "Mustica Samuele",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_16",
+   "teamId": "t_vige",
+   "name": "Muzio Massimo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_17",
+   "teamId": "t_vige",
+   "name": "Nigro Emiliano",
+   "num": "",
+   "role": "",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_18",
+   "teamId": "t_vige",
+   "name": "Palego Gianluigi",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_19",
+   "teamId": "t_vige",
+   "name": "Pappagallo Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_20",
+   "teamId": "t_vige",
+   "name": "Rasola Matteo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_21",
+   "teamId": "t_vige",
+   "name": "Sanfelici Andrea",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_22",
+   "teamId": "t_vige",
+   "name": "Sciolla Luigi",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_23",
+   "teamId": "t_vige",
+   "name": "Toscanella Alessandro",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 1,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_vig_24",
+   "teamId": "t_vige",
+   "name": "Valli Alessio",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vig_25",
+   "teamId": "t_vige",
+   "name": "Zito Christian",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 4,
+    "pres": 5,
+    "y": 1,
+    "r": 1
+   }
+  },
+  {
+   "id": "p_vil_1",
+   "teamId": "t_villapizzone",
+   "name": "Baldi Andrea",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_2",
+   "teamId": "t_villapizzone",
+   "name": "Barbaro Andrea",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 3,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_3",
+   "teamId": "t_villapizzone",
+   "name": "Belvedere Lorenzo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_4",
+   "teamId": "t_villapizzone",
+   "name": "Bensi Leonardo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_5",
+   "teamId": "t_villapizzone",
+   "name": "Bertinelli Alessandro",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_6",
+   "teamId": "t_villapizzone",
+   "name": "Calogero Tommaso",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_7",
+   "teamId": "t_villapizzone",
+   "name": "Camporeale Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_8",
+   "teamId": "t_villapizzone",
+   "name": "Canestrari Andrea",
+   "num": 4,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_9",
+   "teamId": "t_villapizzone",
+   "name": "Carlin Alberto",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_10",
+   "teamId": "t_villapizzone",
+   "name": "Ceresoli Gabriele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_11",
+   "teamId": "t_villapizzone",
+   "name": "Faccincani Gabriele",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_12",
+   "teamId": "t_villapizzone",
+   "name": "Gargiulo Lorenzo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_13",
+   "teamId": "t_villapizzone",
+   "name": "Grillo Lorenzo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_14",
+   "teamId": "t_villapizzone",
+   "name": "Lila Ahmed",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_15",
+   "teamId": "t_villapizzone",
+   "name": "Marino Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_16",
+   "teamId": "t_villapizzone",
+   "name": "Meloni Francesco",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_17",
+   "teamId": "t_villapizzone",
+   "name": "Moro Visconti Michele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_18",
+   "teamId": "t_villapizzone",
+   "name": "Sabatino Filippo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_19",
+   "teamId": "t_villapizzone",
+   "name": "Saibene Emanuele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_20",
+   "teamId": "t_villapizzone",
+   "name": "Sale Daniel",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_21",
+   "teamId": "t_villapizzone",
+   "name": "Salvati Francesco",
+   "num": 8,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 3,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_22",
+   "teamId": "t_villapizzone",
+   "name": "Scarazzati Lorenzo",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_23",
+   "teamId": "t_villapizzone",
+   "name": "Todisco Alessandro",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_24",
+   "teamId": "t_villapizzone",
+   "name": "Vergeat Filippo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vil_25",
+   "teamId": "t_villapizzone",
+   "name": "Zaffelli Gabriele",
+   "num": 8,
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 2,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_1",
+   "teamId": "t_viscontini",
+   "name": "Abdelmohseen Osama",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_2",
+   "teamId": "t_viscontini",
+   "name": "Arcamone Federico",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_3",
+   "teamId": "t_viscontini",
+   "name": "Bozic Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_4",
+   "teamId": "t_viscontini",
+   "name": "Caenazzo Leonardo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_5",
+   "teamId": "t_viscontini",
+   "name": "Caenazzo Matteo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_6",
+   "teamId": "t_viscontini",
+   "name": "Casneda Riccardo",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_7",
+   "teamId": "t_viscontini",
+   "name": "Cislaghi Andrea",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_8",
+   "teamId": "t_viscontini",
+   "name": "Difrancia Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_9",
+   "teamId": "t_viscontini",
+   "name": "Duchoque Giulio Augusto",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 4,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_10",
+   "teamId": "t_viscontini",
+   "name": "Marcigot Samuele",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 2,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_11",
+   "teamId": "t_viscontini",
+   "name": "Miani Riccardo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_12",
+   "teamId": "t_viscontini",
+   "name": "Pecis Alessandro",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_13",
+   "teamId": "t_viscontini",
+   "name": "Personeni Davide",
+   "num": 9,
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_14",
+   "teamId": "t_viscontini",
+   "name": "Pugliese Niccolò",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_15",
+   "teamId": "t_viscontini",
+   "name": "Rampoldi Samuele",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_16",
+   "teamId": "t_viscontini",
+   "name": "Rana Valerio",
+   "num": "",
+   "role": "Portiere",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_17",
+   "teamId": "t_viscontini",
+   "name": "Scomparin Lorenzo",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_18",
+   "teamId": "t_viscontini",
+   "name": "Sisti Davide",
+   "num": "",
+   "role": "Centrocampista",
+   "tc": {
+    "gol": 1,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_19",
+   "teamId": "t_viscontini",
+   "name": "Tamborino Mirko",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 1,
+    "pres": 3,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_20",
+   "teamId": "t_viscontini",
+   "name": "Ungureanu Eduard",
+   "num": "",
+   "role": "Difensore",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_21",
+   "teamId": "t_viscontini",
+   "name": "Zakaria Mohnad",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 1,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_22",
+   "teamId": "t_viscontini",
+   "name": "Zazzi Tommaso",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 1,
+    "y": 0,
+    "r": 0
+   }
+  },
+  {
+   "id": "p_vis_23",
+   "teamId": "t_viscontini",
+   "name": "Zocco Michelangelo",
+   "num": "",
+   "role": "Attaccante",
+   "tc": {
+    "gol": 0,
+    "pres": 0,
+    "y": 0,
+    "r": 0
+   }
+  }
+ ],
+ "imported": {
+  "at": "2026-11-09T14:50:00+01:00",
+  "round": 9,
+  "source": "Tuttocampo, dopo la 9ª giornata",
+  "rows": [
+   {
+    "teamId": "t_triestina",
+    "pos": 1,
+    "pts": 21,
+    "g": 9,
+    "v": 6,
+    "n": 3,
+    "p": 0,
+    "gf": 23,
+    "gs": 6
+   },
+   {
+    "teamId": "t_corsico",
+    "pos": 2,
+    "pts": 21,
+    "g": 9,
+    "v": 7,
+    "n": 0,
+    "p": 2,
+    "gf": 25,
+    "gs": 12
+   },
+   {
+    "teamId": "t_ardor",
+    "pos": 3,
+    "pts": 19,
+    "g": 9,
+    "v": 6,
+    "n": 1,
+    "p": 2,
+    "gf": 27,
+    "gs": 11
+   },
+   {
+    "teamId": "t_bonola",
+    "pos": 4,
+    "pts": 18,
+    "g": 9,
+    "v": 5,
+    "n": 3,
+    "p": 1,
+    "gf": 25,
+    "gs": 8
+   },
+   {
+    "teamId": "t_vige",
+    "pos": 5,
+    "pts": 18,
+    "g": 9,
+    "v": 5,
+    "n": 3,
+    "p": 1,
+    "gf": 26,
+    "gs": 13
+   },
+   {
+    "teamId": "t_velasca",
+    "pos": 6,
+    "pts": 17,
+    "g": 9,
+    "v": 5,
+    "n": 2,
+    "p": 2,
+    "gf": 14,
+    "gs": 11
+   },
+   {
+    "teamId": "t_artemide",
+    "pos": 7,
+    "pts": 15,
+    "g": 9,
+    "v": 4,
+    "n": 3,
+    "p": 2,
+    "gf": 17,
+    "gs": 13
+   },
+   {
+    "teamId": "t_baggese",
+    "pos": 8,
+    "pts": 13,
+    "g": 9,
+    "v": 3,
+    "n": 4,
+    "p": 2,
+    "gf": 20,
+    "gs": 18
+   },
+   {
+    "teamId": "t_seguro",
+    "pos": 9,
+    "pts": 12,
+    "g": 9,
+    "v": 4,
+    "n": 0,
+    "p": 5,
+    "gf": 15,
+    "gs": 25
+   },
+   {
+    "teamId": "t_vercellese",
+    "pos": 10,
+    "pts": 10,
+    "g": 9,
+    "v": 3,
+    "n": 1,
+    "p": 5,
+    "gf": 13,
+    "gs": 14
+   },
+   {
+    "teamId": "t_cesano",
+    "pos": 11,
+    "pts": 10,
+    "g": 9,
+    "v": 3,
+    "n": 1,
+    "p": 5,
+    "gf": 19,
+    "gs": 21
+   },
+   {
+    "teamId": "t_novella",
+    "pos": 12,
+    "pts": 9,
+    "g": 9,
+    "v": 3,
+    "n": 0,
+    "p": 6,
+    "gf": 11,
+    "gs": 21
+   },
+   {
+    "teamId": "t_trezzano",
+    "pos": 13,
+    "pts": 7,
+    "g": 9,
+    "v": 2,
+    "n": 1,
+    "p": 6,
+    "gf": 10,
+    "gs": 21
+   },
+   {
+    "teamId": "t_villapizzone",
+    "pos": 14,
+    "pts": 6,
+    "g": 9,
+    "v": 1,
+    "n": 3,
+    "p": 5,
+    "gf": 12,
+    "gs": 17
+   },
+   {
+    "teamId": "t_concept",
+    "pos": 15,
+    "pts": 6,
+    "g": 9,
+    "v": 2,
+    "n": 0,
+    "p": 7,
+    "gf": 17,
+    "gs": 27
+   },
+   {
+    "teamId": "t_viscontini",
+    "pos": 16,
+    "pts": 1,
+    "g": 9,
+    "v": 0,
+    "n": 1,
+    "p": 8,
+    "gf": 5,
+    "gs": 41
+   }
+  ]
+ },
+ "updatedAt": "2026-11-09T14:50:00+01:00"
+}
