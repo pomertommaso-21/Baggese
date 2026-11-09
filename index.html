@@ -14,7 +14,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Baggese 2026/27</title>
-<style>@font-face{font-family:"Inter";src:url(fonts/Inter-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(fonts/Inter-Medium.woff) format("woff");font-weight:500;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(fonts/Inter-SemiBold.woff) format("woff");font-weight:600;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(fonts/Inter-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(fonts/Inter-ExtraBold.woff) format("woff");font-weight:800;font-style:normal;font-display:swap}@font-face{font-family:"Inter Display";src:url(fonts/InterDisplay-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}@font-face{font-family:"Inter Display";src:url(fonts/InterDisplay-ExtraBold.woff) format("woff");font-weight:800;font-style:normal;font-display:swap}</style>
+<style>@font-face{font-family:"Inter";src:url(Inter-Regular.woff) format("woff"),url(fonts/Inter-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(Inter-Medium.woff) format("woff"),url(fonts/Inter-Medium.woff) format("woff");font-weight:500;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(Inter-SemiBold.woff) format("woff"),url(fonts/Inter-SemiBold.woff) format("woff");font-weight:600;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(Inter-Bold.woff) format("woff"),url(fonts/Inter-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(Inter-ExtraBold.woff) format("woff"),url(fonts/Inter-ExtraBold.woff) format("woff");font-weight:800;font-style:normal;font-display:swap}@font-face{font-family:"Inter Display";src:url(InterDisplay-Bold.woff) format("woff"),url(fonts/InterDisplay-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}@font-face{font-family:"Inter Display";src:url(InterDisplay-ExtraBold.woff) format("woff"),url(fonts/InterDisplay-ExtraBold.woff) format("woff");font-weight:800;font-style:normal;font-display:swap}</style>
 <style>
 /* Layout: app a colonna unica su telefono (barra in basso), barra laterale da 232px sopra i 960px. Colori della Baggese: rosso e bianco; grafite per le altre squadre; stemmi in cornice tonda uniforme */
 :root{
@@ -449,7 +449,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 <script>
 (function(){
 "use strict";
-var APP_VERSION = "2026-11-09.10";
+var APP_VERSION = "2026-11-09.11";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
@@ -980,7 +980,7 @@ function saveLocalLogos(){ var o={}; Object.keys(LOGOS).forEach(function(k){ if(
 function loadLocalLogos(){
   try{ var o=JSON.parse(localStorage.getItem(LS_KEY+"-logos")||"{}"); Object.keys(o).forEach(function(k){ if(/^data:image\//.test(o[k])) LOGOS[k]=o[k]; }); }catch(e){}
   if(window.claude) return;
-  S.teams.forEach(function(t){ if(LOGOS[t.id]) return; var im=new Image(); im.onload=function(){ if(!LOGOS[t.id]){ LOGOS[t.id]="logos/"+t.id+".png"; render(); } }; im.src="logos/"+t.id+".png"; });
+  S.teams.forEach(function(t){ if(LOGOS[t.id]) return; (function tryLogo(paths){ if(!paths.length) return; var im=new Image(); im.onload=function(){ if(!LOGOS[t.id]){ LOGOS[t.id]=paths[0]; render(); } }; im.onerror=function(){ tryLogo(paths.slice(1)); }; im.src=paths[0]; })([t.id+".png","logos/"+t.id+".png"]); });
 }
 
 /* ---------- match editor ---------- */

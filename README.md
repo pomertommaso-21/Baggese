@@ -6,15 +6,17 @@ App personale per seguire il Girone O di Seconda Categoria Milano: risultati, ca
 
 ## File
 
+Tutti i file stanno nella cartella principale del repository, senza sottocartelle.
+
 | File | Cosa contiene |
 |---|---|
 | `index.html` | L'app |
-| `data.json` | I dati della stagione: squadre, 30 giornate, rose, classifica |
-| `logos/` | Gli stemmi delle 16 squadre, già ritagliati e centrati tutti allo stesso modo (`t_baggese.png`, `t_corsico.png`…) |
-| `fonts/` | I caratteri Inter e Inter Display (licenza libera SIL OFL, in `fonts/LICENSE.txt`), così l'app non dipende da Google Fonts |
-| `icon.svg`, `icon-*.png`, `favicon-32.png`, `manifest.webmanifest` | L'icona dell'app (pallone rosso e bianco) per browser, iPhone e Android |
+| `data.json` | I dati della stagione: squadre, 30 giornate, rose, classifica, marcatori |
+| `t_baggese.png`, `t_corsico.png`… (16 file `t_*.png`) | Gli stemmi delle squadre, ritagliati e centrati tutti allo stesso modo |
+| `Inter-*.woff`, `InterDisplay-*.woff` | I caratteri dell'app (licenza libera SIL OFL, in `LICENSE-fonts.txt`) |
+| `icon.svg`, `icon-180.png`, `icon-192.png`, `icon-512.png`, `favicon-32.png`, `manifest.webmanifest` | L'icona dell'app per browser, iPhone e Android |
 
-Per cambiare uno stemma basta sostituire il file corrispondente in `logos/` con un PNG quadrato a sfondo trasparente.
+Per cambiare uno stemma basta sostituire il file `t_<squadra>.png` con un PNG quadrato a sfondo trasparente.
 
 ## Pubblicarla con GitHub Pages
 
@@ -37,7 +39,7 @@ Attenzione: con un repository pubblico (o GitHub Pages gratuito) chiunque abbia 
 ## Caricare una nuova versione
 
 1. Su GitHub apri il repository e scegli *Add file → Upload files*.
-2. Trascina **i file** (non la cartella che li contiene): `index.html`, `data.json` e il resto. Devono stare nella cartella principale, accanto a dove c'era la versione precedente.
+2. Seleziona tutti i file dello zip e trascinali insieme. Finiscono nella cartella principale, accanto a quelli della versione precedente.
 3. Conferma con *Commit changes* e aspetta 1–2 minuti che GitHub Pages pubblichi (scheda *Actions*, il pallino diventa verde).
 4. Sull'iPhone chiudi l'app del tutto (scorri via dal multitasking) e riaprila.
 5. In **Gestione**, in fondo, controlla la scritta *Versione app*: deve essere quella nuova.
