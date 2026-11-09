@@ -12,7 +12,7 @@ App personale per seguire il Girone O di Seconda Categoria Milano: risultati, ca
 | `data.json` | I dati della stagione: squadre, 30 giornate, rose, classifica |
 | `logos/` | Gli stemmi delle 16 squadre, già ritagliati e centrati tutti allo stesso modo (`t_baggese.png`, `t_corsico.png`…) |
 | `fonts/` | I caratteri Inter e Inter Display (licenza libera SIL OFL, in `fonts/LICENSE.txt`), così l'app non dipende da Google Fonts |
-| `icon.svg`, `icon-180.png` | Icone per il browser e per la schermata Home dell'iPhone |
+| `icon.svg`, `icon-*.png`, `favicon-32.png`, `manifest.webmanifest` | L'icona dell'app (pallone rosso e bianco) per browser, iPhone e Android |
 
 Per cambiare uno stemma basta sostituire il file corrispondente in `logos/` con un PNG quadrato a sfondo trasparente.
 
