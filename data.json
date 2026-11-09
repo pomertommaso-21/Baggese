@@ -105,7 +105,49 @@
    "awayId": "t_bonola",
    "hg": 0,
    "ag": 8,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_27",
+     "min": "15' 1T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_27",
+     "min": "34' 1T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_27",
+     "min": "25' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "26' 1T",
+     "pen": true
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "33' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_2",
+     "min": "7' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_20",
+     "min": "31' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_17",
+     "min": "39' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -129,7 +171,36 @@
    "awayId": "t_vige",
    "hg": 0,
    "ag": 7,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_12"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_25"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_25"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_2"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_24"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_19"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_8"
+    }
+   ],
    "cards": []
   },
   {
@@ -153,7 +224,23 @@
    "awayId": "t_seguro",
    "hg": 1,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_9",
+     "min": "27' 1T"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_24",
+     "min": "20' 1T"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_24",
+     "min": "3' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -177,7 +264,28 @@
    "awayId": "t_artemide",
    "hg": 0,
    "ag": 4,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_1",
+     "min": "38' 1T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_7",
+     "min": "4' 2T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_20",
+     "min": "7' 2T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_30",
+     "min": "34' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -201,7 +309,18 @@
    "awayId": "t_cesano",
    "hg": 1,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_19",
+     "min": "20' 1T"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_21",
+     "min": "30' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -225,7 +344,12 @@
    "awayId": "t_velasca",
    "hg": 0,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_20"
+    }
+   ],
    "cards": []
   },
   {
@@ -249,7 +373,24 @@
    "awayId": "t_corsico",
    "hg": 2,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_22",
+     "min": "20' 1T"
+    },
+    {
+     "teamId": "t_ardor",
+     "og": true,
+     "name": "Autogol",
+     "min": "46' 2T"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_17",
+     "pen": true
+    }
+   ],
    "cards": []
   },
   {
@@ -273,7 +414,28 @@
    "awayId": "t_novella",
    "hg": 3,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18",
+     "min": "21' 1T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18",
+     "min": "33' 1T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_15",
+     "min": "5' 2T"
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_22",
+     "pen": true
+    }
+   ],
    "cards": []
   },
   {
@@ -297,7 +459,21 @@
    "awayId": "t_trezzano",
    "hg": 2,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_10"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_17",
+     "pen": true
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_14"
+    }
+   ],
    "cards": []
   },
   {
@@ -321,7 +497,29 @@
    "awayId": "t_cesano",
    "hg": 4,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "28' 1T",
+     "pen": true
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "12' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_16",
+     "min": "26' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_28",
+     "min": "38' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -345,7 +543,16 @@
    "awayId": "t_vercellese",
    "hg": 2,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_14"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_8"
+    }
+   ],
    "cards": []
   },
   {
@@ -369,7 +576,23 @@
    "awayId": "t_ardor",
    "hg": 2,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_7",
+     "min": "20' 2T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_5",
+     "min": "24' 2T"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_21",
+     "min": "12' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -393,7 +616,21 @@
    "awayId": "t_concept",
    "hg": 2,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_7"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_24"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_1",
+     "min": "45' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -417,7 +654,13 @@
    "awayId": "t_villapizzone",
    "hg": 1,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_18",
+     "min": "43' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -441,7 +684,25 @@
    "awayId": "t_viscontini",
    "hg": 2,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_19"
+    },
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_18"
+    },
+    {
+     "teamId": "t_viscontini",
+     "playerId": "p_vis_7"
+    },
+    {
+     "teamId": "t_viscontini",
+     "og": true,
+     "name": "Autogol"
+    }
+   ],
    "cards": []
   },
   {
@@ -465,7 +726,43 @@
    "awayId": "t_bonola",
    "hg": 2,
    "ag": 5,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_11",
+     "min": "46' 1T"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_21",
+     "min": "48' 1T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_23",
+     "min": "18' 1T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "40' 1T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "37' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_28",
+     "min": "33' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_16",
+     "min": "38' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -489,7 +786,29 @@
    "awayId": "t_artemide",
    "hg": 4,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18",
+     "min": "5' 1T",
+     "pen": true
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18",
+     "min": "16' 1T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_20",
+     "min": "33' 1T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_20",
+     "min": "44' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -513,7 +832,20 @@
    "awayId": "t_ardor",
    "hg": 0,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_25"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_3"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_19"
+    }
+   ],
    "cards": []
   },
   {
@@ -537,7 +869,22 @@
    "awayId": "t_vige",
    "hg": 1,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_13",
+     "min": "17' 1T"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_25"
+    },
+    {
+     "teamId": "t_vige",
+     "og": true,
+     "name": "Autogol"
+    }
+   ],
    "cards": []
   },
   {
@@ -561,7 +908,34 @@
    "awayId": "t_corsico",
    "hg": 1,
    "ag": 5,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_viscontini",
+     "playerId": "p_vis_19"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_4",
+     "min": "36' 1T"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_17",
+     "min": "2' 2T"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_23"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_26"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_15"
+    }
+   ],
    "cards": []
   },
   {
@@ -609,7 +983,28 @@
    "awayId": "t_baggese",
    "hg": 3,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_22",
+     "min": "7' 1T"
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_22",
+     "min": "35' 1T"
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_25",
+     "min": "1' 2T"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_25",
+     "min": "40' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -633,7 +1028,32 @@
    "awayId": "t_seguro",
    "hg": 4,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_9",
+     "min": "16' 1T"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_29",
+     "min": "42' 1T"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_29",
+     "min": "7' 2T"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_11",
+     "min": "34' 2T"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_18"
+    }
+   ],
    "cards": []
   },
   {
@@ -657,7 +1077,33 @@
    "awayId": "t_vercellese",
    "hg": 3,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_4",
+     "min": "3' 1T"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_4",
+     "min": "29' 2T"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_26",
+     "min": "43' 1T"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_8",
+     "min": "42' 1T"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_24",
+     "min": "15' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -681,7 +1127,13 @@
    "awayId": "t_novella",
    "hg": 1,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "41' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -705,7 +1157,37 @@
    "awayId": "t_cesano",
    "hg": 4,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_24"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_24"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_12",
+     "pen": true
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_12"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_26"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_11"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_30"
+    }
+   ],
    "cards": []
   },
   {
@@ -729,7 +1211,41 @@
    "awayId": "t_viscontini",
    "hg": 8,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_22",
+     "pen": true
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_24"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_24"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_24"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_37"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_37"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_21"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_14"
+    }
+   ],
    "cards": []
   },
   {
@@ -753,7 +1269,28 @@
    "awayId": "t_trezzano",
    "hg": 2,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_30",
+     "min": "28' 1T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_1",
+     "min": "10' 2T"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_10",
+     "min": "13' 1T"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_20",
+     "min": "39' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -777,7 +1314,16 @@
    "awayId": "t_villapizzone",
    "hg": 2,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_5"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_6"
+    }
+   ],
    "cards": []
   },
   {
@@ -801,7 +1347,23 @@
    "awayId": "t_triestina",
    "hg": 0,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_26",
+     "min": "30' 1T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_32",
+     "min": "3' 2T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_20",
+     "min": "7' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -825,7 +1387,20 @@
    "awayId": "t_concept",
    "hg": 3,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_1"
+    },
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_1"
+    },
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_1"
+    }
+   ],
    "cards": []
   },
   {
@@ -873,7 +1448,19 @@
    "awayId": "t_bonola",
    "hg": 1,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18",
+     "min": "9' 1T",
+     "pen": true
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_17",
+     "min": "40' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -897,7 +1484,32 @@
    "awayId": "t_corsico",
    "hg": 2,
    "ag": 4,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_13"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_23"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_26"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_26"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_4"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_14"
+    }
+   ],
    "cards": []
   },
   {
@@ -921,7 +1533,18 @@
    "awayId": "t_trezzano",
    "hg": 0,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_16",
+     "min": "7' 1T"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_20",
+     "min": "40' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -945,7 +1568,24 @@
    "awayId": "t_ardor",
    "hg": 1,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_24"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_21"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_26"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_9"
+    }
+   ],
    "cards": []
   },
   {
@@ -969,7 +1609,29 @@
    "awayId": "t_seguro",
    "hg": 3,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_2",
+     "min": "21' 1T"
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_22",
+     "min": "35' 1T",
+     "pen": true
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_4",
+     "min": "35' 2T"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_18",
+     "min": "10' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -993,7 +1655,38 @@
    "awayId": "t_artemide",
    "hg": 3,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16",
+     "min": "7' 1T"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16",
+     "min": "22' 2T"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_20",
+     "min": "13' 1T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_7",
+     "min": "12' 2T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_7",
+     "min": "29' 2T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_7",
+     "min": "45' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1017,7 +1710,13 @@
    "awayId": "t_velasca",
    "hg": 0,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_11",
+     "min": "25' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1041,7 +1740,42 @@
    "awayId": "t_novella",
    "hg": 6,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_10"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_8"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_8"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_8"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_25"
+    },
+    {
+     "teamId": "t_vige",
+     "name": "Indellicato Manuel"
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_22",
+     "min": "22' 1T"
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_4",
+     "min": "35' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1065,7 +1799,28 @@
    "awayId": "t_cesano",
    "hg": 4,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_15"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_4"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_18"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_13"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_11"
+    }
+   ],
    "cards": []
   },
   {
@@ -1089,7 +1844,34 @@
    "awayId": "t_vercellese",
    "hg": 1,
    "ag": 4,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_18",
+     "min": "6' 2T",
+     "pen": true
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_9",
+     "min": "32' 1T"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_8",
+     "min": "3' 2T"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_24",
+     "min": "20' 2T"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_13",
+     "min": "35' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1113,7 +1895,30 @@
    "awayId": "t_baggese",
    "hg": 2,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "5' 2T",
+     "pen": true
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_25",
+     "min": "22' 2T",
+     "pen": true
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_1",
+     "min": "26' 2T"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_19",
+     "min": "43' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1137,7 +1942,28 @@
    "awayId": "t_concept",
    "hg": 3,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_3",
+     "min": "24' 2T"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_3",
+     "min": "36' 2T"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_21",
+     "min": "28' 2T"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_13",
+     "min": "30' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1161,7 +1987,18 @@
    "awayId": "t_viscontini",
    "hg": 2,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_30",
+     "min": "28' 1T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_7",
+     "min": "20' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1185,7 +2022,43 @@
    "awayId": "t_triestina",
    "hg": 1,
    "ag": 6,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_24",
+     "min": "35' 1T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18",
+     "min": "2' 1T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18",
+     "min": "12' 2T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_20",
+     "min": "6' 2T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_20",
+     "min": "10' 2T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_8",
+     "min": "42' 2T"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_6",
+     "min": "45' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1209,7 +2082,37 @@
    "awayId": "t_villapizzone",
    "hg": 4,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_27",
+     "min": "8' 1T"
+    },
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_30"
+    },
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_19"
+    },
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_23"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_2"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_2"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_10"
+    }
+   ],
    "cards": []
   },
   {
@@ -1233,7 +2136,19 @@
    "awayId": "t_viscontini",
    "hg": 2,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_2",
+     "min": "28' 2T"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_28",
+     "min": "45' 2T",
+     "pen": true
+    }
+   ],
    "cards": []
   },
   {
@@ -1257,7 +2172,16 @@
    "awayId": "t_corsico",
    "hg": 0,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_16"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_7"
+    }
+   ],
    "cards": []
   },
   {
@@ -1281,7 +2205,17 @@
    "awayId": "t_velasca",
    "hg": 0,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_30",
+     "pen": true
+    },
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_30"
+    }
+   ],
    "cards": []
   },
   {
@@ -1305,7 +2239,18 @@
    "awayId": "t_vige",
    "hg": 1,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_6",
+     "min": "20' 2T"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_8",
+     "min": "44' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1353,7 +2298,33 @@
    "awayId": "t_trezzano",
    "hg": 2,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_22",
+     "min": "23' 1T"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_13",
+     "min": "13' 2T"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_18",
+     "min": "0' 2T"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_15",
+     "min": "0' 2T"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_20",
+     "min": "35' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1377,7 +2348,36 @@
    "awayId": "t_seguro",
    "hg": 5,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_1"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_1"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_12"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_21"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_18"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_18"
+    }
+   ],
    "cards": []
   },
   {
@@ -1401,7 +2401,40 @@
    "awayId": "t_ardor",
    "hg": 3,
    "ag": 5,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_11"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_5"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_5"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_19"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_19"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_19"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_37"
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_26"
+    }
+   ],
    "cards": []
   },
   {
@@ -1425,7 +2458,43 @@
    "awayId": "t_baggese",
    "hg": 4,
    "ag": 4,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_11",
+     "min": "4' 1T",
+     "pen": true
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_11"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_11"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_12"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_19"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16",
+     "pen": true
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16"
+    }
+   ],
    "cards": []
   },
   {
@@ -1449,7 +2518,28 @@
    "awayId": "t_novella",
    "hg": 3,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_26",
+     "min": "1' 1T"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_17",
+     "min": "43' 1T"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_18",
+     "min": "10' 2T"
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_22",
+     "min": "4' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1473,7 +2563,44 @@
    "awayId": "t_concept",
    "hg": 1,
    "ag": 8,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_viscontini",
+     "playerId": "p_vis_21"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_13"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_13"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_10"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_16"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_11"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_11"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_21"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_21"
+    }
+   ],
    "cards": []
   },
   {
@@ -1497,7 +2624,16 @@
    "awayId": "t_cesano",
    "hg": 0,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_9"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_12"
+    }
+   ],
    "cards": []
   },
   {
@@ -1521,7 +2657,25 @@
    "awayId": "t_villapizzone",
    "hg": 2,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_26",
+     "pen": true
+    },
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_3"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_2"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_21"
+    }
+   ],
    "cards": []
   },
   {
@@ -1545,7 +2699,23 @@
    "awayId": "t_vercellese",
    "hg": 1,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_5",
+     "pen": true
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_2",
+     "min": "45' 2T"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_22",
+     "pen": true
+    }
+   ],
    "cards": []
   },
   {
@@ -1569,7 +2739,33 @@
    "awayId": "t_bonola",
    "hg": 3,
    "ag": 2,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_21",
+     "min": "42' 1T"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_24",
+     "min": "7' 2T"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_4",
+     "min": "31' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_27",
+     "min": "41' 1T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_27",
+     "min": "1' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1593,7 +2789,25 @@
    "awayId": "t_triestina",
    "hg": 1,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_18"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_6"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18",
+     "pen": true
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18"
+    }
+   ],
    "cards": []
   },
   {
@@ -1617,7 +2831,33 @@
    "awayId": "t_viscontini",
    "hg": 5,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_9"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_9"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_9"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_11",
+     "pen": true
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_27"
+    },
+    {
+     "teamId": "t_viscontini",
+     "playerId": "p_vis_18"
+    }
+   ],
    "cards": []
   },
   {
@@ -1641,7 +2881,33 @@
    "awayId": "t_trezzano",
    "hg": 5,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_4"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_21"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_25"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_25"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "og": true,
+     "name": "Autogol"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_16"
+    }
+   ],
    "cards": []
   },
   {
@@ -1665,7 +2931,14 @@
    "awayId": "t_ardor",
    "hg": 1,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_22",
+     "min": "24' 2T",
+     "pen": true
+    }
+   ],
    "cards": []
   },
   {
@@ -1689,7 +2962,20 @@
    "awayId": "t_corsico",
    "hg": 2,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_18"
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_6"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_4"
+    }
+   ],
    "cards": []
   },
   {
@@ -1713,7 +2999,18 @@
    "awayId": "t_vige",
    "hg": 2,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_27",
+     "min": "1' 2T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_4",
+     "min": "45' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1737,7 +3034,23 @@
    "awayId": "t_vercellese",
    "hg": 2,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_19",
+     "min": "13' 1T"
+    },
+    {
+     "teamId": "t_concept",
+     "playerId": "p_con_10",
+     "min": "45' 1T"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_8",
+     "min": "10' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -1761,7 +3074,20 @@
    "awayId": "t_velasca",
    "hg": 3,
    "ag": 0,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_19"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_9"
+    }
+   ],
    "cards": []
   },
   {
@@ -1785,7 +3111,28 @@
    "awayId": "t_artemide",
    "hg": 1,
    "ag": 3,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_24",
+     "min": "5' 1T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_7",
+     "min": "23' 1T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_7",
+     "min": "45' 1T"
+    },
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_5",
+     "min": "32' 2T"
+    }
+   ],
    "cards": []
   },
   {
