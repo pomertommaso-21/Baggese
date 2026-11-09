@@ -368,6 +368,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 <script>
 (function(){
 "use strict";
+var APP_VERSION = "2026-11-09.3";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
@@ -434,9 +435,27 @@ function fallbackLocal(){
   if (mode==="local") return;
   mode="local"; docRef=null;
   var raw=null; try { raw=localStorage.getItem(LS_KEY); } catch(e){}
-  if (raw){ try { S=normalize(JSON.parse(raw)); } catch(e){ S=blank(); } ensureMyTeam(); loadLocalLogos(); render(); return; }
-  loadSeed(false);
+  if (raw){ try { S=normalize(JSON.parse(raw)); } catch(e){ S=blank(); } ensureMyTeam(); loadLocalLogos(); render(); checkNewer(); return; }
+  loadSeed(false); checkNewer();
 }
+/* versione pubblicata su GitHub: dati e app più recenti sostituiscono quelli tenuti dal telefono */
+function stamp(x){ var t=Date.parse(x||""); return isNaN(t)?0:t; }
+function checkNewer(){
+  if (window.claude) return;
+  fetch("data.json?t="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+    if (d && Array.isArray(d.teams) && stamp(d.updatedAt) > stamp(S.updatedAt)){
+      S=normalize(d); ensureMyTeam();
+      try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch(e){}
+      render(); toast("Dati aggiornati");
+    }
+  }).catch(function(){});
+  fetch(location.pathname+"?t="+Date.now(),{cache:"no-store"}).then(function(r){ return r.ok?r.text():""; }).then(function(t){
+    var m=t.match(/APP_VERSION = "([^"]+)"/); if(!m || m[1]===APP_VERSION) return;
+    var k="baggese-reload-"+m[1]; try { if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,"1"); } catch(e){ return; }
+    location.replace(location.pathname+"?v="+encodeURIComponent(m[1]));
+  }).catch(function(){});
+}
+document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="visible" && mode==="local") checkNewer(); });
 function loadSeed(manual){
   fetch("data.json",{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
     S=normalize(d); ensureMyTeam(); loadLocalLogos();
@@ -804,7 +823,7 @@ function vGestione(){
   h+='<section class="card"><div class="card-head"><h2>Squadre e stemmi</h2><span class="meta num">'+S.teams.length+'</span></div><p class="small muted" style="margin:0">Ogni squadra ha uno stemma generato con due colori e un disegno di maglia. Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id); return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '+esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '+esc(t.name)+'" data-kpat="'+t.id+'">'+PATS.map(function(p){return '<option value="'+p[0]+'"'+(p[0]===k.pat?' selected':'')+'>'+p[1]+'</option>';}).join("")+'</select><label class="btn sm" for="logo_'+t.id+'">Carica logo</label><input class="sr" id="logo_'+t.id+'" type="file" accept="image/*" data-logo="'+t.id+'">'+(LOGOS[t.id]?'<button class="btn sm" type="button" data-unlogo="'+t.id+'">Togli logo</button>':'')+'<button class="btn sm danger" type="button" aria-label="Elimina '+esc(t.name)+'" data-delteam="'+t.id+'"'+(t.id===me()?' disabled':'')+'>'+icon("x")+'</button></div></div>'; }).join("")+'</div><form class="row" id="addTeamForm"><input id="newTeam" aria-label="Nuova squadra" placeholder="Nome nuova squadra"><button class="btn" type="submit">'+icon("plus")+'Aggiungi</button></form><div id="delTeamConfirm"></div></section>';
   h+='<section class="card"><h2>Squadra e girone</h2><div class="grid2"><label class="f">La tua squadra<select id="setMy">'+S.teams.slice().sort(byName).map(function(t){return '<option value="'+t.id+'"'+(t.id===me()?' selected':'')+'>'+esc(t.name)+'</option>';}).join("")+'</select></label><label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label></div><label class="f">Campionato e girone<input id="setGirone" value="'+esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'+esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></section>';
   h+='<section class="card"><h2>Copia di sicurezza</h2><p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'+((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')+'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></section>';
-  h+=syncChip();
+  h+=syncChip()+'<span class="tiny muted">Versione app '+APP_VERSION+'</span>';
   return h;
 }
 

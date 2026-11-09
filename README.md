@@ -28,9 +28,18 @@ Attenzione: con un repository pubblico (o GitHub Pages gratuito) chiunque abbia 
 ## Dove finiscono le modifiche
 
 - Al primo avvio l'app carica `data.json`.
+- A ogni apertura controlla se sul sito c'è un `data.json` più recente dei dati del telefono e, se c'è, lo usa. Controlla anche se `index.html` è cambiato e, in quel caso, si ricarica da sola.
 - Le modifiche che fai nell'app (risultati inseriti, giocatori, testo incollato) restano salvate **nel browser di quel dispositivo**. Non si sincronizzano tra telefono e computer.
 - **Gestione → Ricarica data.json** sostituisce i dati del dispositivo con quelli del file sul sito. Le modifiche fatte solo nel browser vanno perse.
 - **Gestione → Scarica copia** salva i dati attuali in un file `data.json`.
+
+## Caricare una nuova versione
+
+1. Su GitHub apri il repository e scegli *Add file → Upload files*.
+2. Trascina **i file** (non la cartella che li contiene): `index.html`, `data.json` e il resto. Devono stare nella cartella principale, accanto a dove c'era la versione precedente.
+3. Conferma con *Commit changes* e aspetta 1–2 minuti che GitHub Pages pubblichi (scheda *Actions*, il pallino diventa verde).
+4. Sull'iPhone chiudi l'app del tutto (scorri via dal multitasking) e riaprila.
+5. In **Gestione**, in fondo, controlla la scritta *Versione app*: deve essere quella nuova.
 
 ## Aggiornare i dati per tutti i dispositivi
 
