@@ -486,7 +486,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-10.1";
+var APP_VERSION = "2026-11-10.2";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
@@ -751,7 +751,7 @@ var IC={
 function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'; }
 
 /* ---------- render ---------- */
-var partView = "mine", selRound = null, slideDir = 0;
+var partView = "mine", selRound = null, slideDir = 0, calJump = false;
 
 /* stemmi: stessa cornice tonda per tutti; logo caricato o scudetto generato con i colori sociali */
 var KITS={t_baggese:["#C8202A","#FFFFFF","stripes"],t_ardor:["#C8102E","#FFFFFF","halves"],t_artemide:["#6B2FB3","#F2C230","sash"],t_bonola:["#0B8A4B","#FFFFFF","hoops"],t_cesano:["#E36414","#1F2A44","stripes"],t_concept:["#111827","#D1D5DB","quarters"],t_corsico:["#0F766E","#F5F5F4","sash"],t_novella:["#B91C1C","#FACC15","stripes"],t_trezzano:["#1D4ED8","#FACC15","hoops"],t_seguro:["#9F1239","#93C5FD","halves"],t_triestina:["#DC2626","#FFFFFF","solid"],t_velasca:["#2563EB","#F8FAFC","sash"],t_vercellese:["#F8FAFC","#DC2626","hoops"],t_vige:["#0369A1","#F59E0B","quarters"],t_villapizzone:["#15803D","#FDE047","halves"],t_viscontini:["#7C2D12","#FDBA74","stripes"]};
@@ -795,6 +795,7 @@ function header(title,sub,right){ return '<div class="row between" style="align-
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
   crestN=0; HIST=null;
+  if(calJump){ calJump=false; requestAnimationFrame(function(){ requestAnimationFrame(function(){ var el=document.getElementById("calNext"); if(el && tab==="partite" && partView==="mine") window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-76)); }); }); }
   $("tabs").innerHTML=TABS.map(function(t){ return '<button type="button" data-tab="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'><span>'+icon(t[2])+'</span>'+t[1]+'</button>'; }).join("");
   $("brand").innerHTML=crest(me(),36)+'<b>'+esc(shortName(me()))+'<br><span class="tiny muted" style="font-family:var(--body);font-weight:600;text-transform:none">'+esc(S.settings.season)+'</span></b>';
   var v={home:vHome,partite:vPartite,classifica:vClassifica,rosa:vRosa,gestione:vGestione}[tab];
@@ -891,17 +892,17 @@ function vPartite(){
     return h;
   }
   var list=S.matches.filter(function(m){return involves(m,my);}).sort(sortMatches);
-  var fut=list.filter(function(m){return !played(m);}), past=list.filter(played).reverse(), nx=fut[0];
+  var fut=list.filter(function(m){return !played(m);}), past=list.filter(played), nx=fut[0];
   function byMonth(arr){ var g=[], cur=null; arr.forEach(function(m){ var k=(m.date||"").slice(0,7)||"x"; if(!cur||cur.k!==k){ cur={k:k,ms:[]}; g.push(cur); } cur.ms.push(m); }); return g; }
   function monLabel(k){ if(k==="x") return "Data da fissare"; var p=k.split("-"); return ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"][+p[1]-1]+" "+p[0]; }
+  if(past.length){
+    h+='<h2 style="margin-bottom:-4px">Già giocate</h2>';
+    byMonth(past).forEach(function(g){ h+='<div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,false); }).join("")+'</div></section>'; });
+  }
   if(fut.length){
     var dated=fut.filter(function(m){return m.date;}).length;
-    h+='<div class="row between" style="margin-bottom:-4px"><h2>Prossime partite</h2>'+(dated?'<button class="linkbtn" type="button" data-ics="all">'+icon("calplus")+'Aggiungi tutte al calendario</button>':'')+'</div>';
+    h+='<div class="row between" id="calNext" style="margin-bottom:-4px'+(past.length?';margin-top:10px':'')+'"><h2>Prossime partite</h2>'+(dated?'<button class="linkbtn" type="button" data-ics="all">'+icon("calplus")+'Aggiungi tutte al calendario</button>':'')+'</div>';
     byMonth(fut).forEach(function(g){ h+='<div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,m===nx); }).join("")+'</div></section>'; });
-  }
-  if(past.length){
-    h+='<h2 style="margin:10px 0 -4px">Già giocate</h2>';
-    byMonth(past).forEach(function(g){ h+='<div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,false); }).join("")+'</div></section>'; });
   }
   return h;
 }
@@ -1324,7 +1325,7 @@ function applyPaste(){
 document.addEventListener("click", function(e){
   var b=e.target.closest("button,[data-tab],[data-go]"); if(!b) return;
   var ds=b.dataset;
-  if(ds.tab){ var nt=ds.tab; smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); return; }
+  if(ds.tab){ var nt=ds.tab; if(nt==="partite") calJump=true; smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); return; }
   if(ds.ics){ addToCalendar(ds.ics); return; }
   if(ds.themeset){ try { localStorage.setItem("baggese-theme",ds.themeset); } catch(e){} var tv=ds.themeset; smooth(function(){ applyTheme(tv); render(); }); return; }
   if(ds.go){ tab="gestione"; render(); var target=$(ds.go==="teams"?"newTeam":"pasteBox"); if(target){ target.scrollIntoView({block:"center"}); target.focus(); } return; }
@@ -1338,7 +1339,7 @@ document.addEventListener("click", function(e){
   if(ds.team){ var tt2=ds.team; closeDlg(); smooth(function(){ rosaTeam=tt2; tab="rosa"; render(); window.scrollTo(0,0); }); return; }
   if(ds.rstep){ stepRound(+ds.rstep); return; }
   if(ds.pedit){ openPlayer(ds.pedit); return; }
-  if(ds.pv){ var pv=ds.pv; smooth(function(){ partView=pv; render(); }); return; }
+  if(ds.pv){ var pv=ds.pv; if(pv==="mine") calJump=true; smooth(function(){ partView=pv; render(); }); return; }
   if(ds.round){ selRound=+ds.round; render(); return; }
   if(ds.unlogo){ setLogo(ds.unlogo,null); return; }
   if(ds.view){ openMatchView(ds.view); return; }
