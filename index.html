@@ -373,6 +373,39 @@ body.scrolled .topbar{opacity:1;transform:none;visibility:visible;transition:opa
 .sk-wrap{display:flex;flex-direction:column;gap:16px}
 .sk-top{display:flex;align-items:center;gap:14px}
 
+/* calendario per mese */
+.mon{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:2px 2px -6px}
+.cal-row{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line)}
+.list>.cal-row:first-child{border-top:0}
+.cal-row.next{background:var(--mine);border-radius:16px;border-top-color:transparent;margin:2px 0}
+.cal-row.next+.cal-row{border-top-color:transparent}
+.cal-main{flex:1;min-width:0;display:grid;grid-template-columns:46px minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 4px 10px 6px;background:none;border:0;color:inherit;text-align:left;font:inherit}
+.dtile{display:flex;flex-direction:column;align-items:center;justify-content:center;height:50px;border-radius:12px;background:var(--surface-2)}
+.dtile b{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.02em;line-height:1}
+.dtile span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:2px}
+.cal-row.next .dtile{background:var(--brand);color:var(--on-brand)}
+.cal-row.next .dtile span{color:rgba(255,255,255,.85)}
+.cal-main .t{display:flex;align-items:center;gap:8px;font-size:15px}
+.ical{flex:none;width:40px;height:40px;margin-right:6px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--brand);display:inline-flex;align-items:center;justify-content:center}
+.linkbtn svg.i{width:16px;height:16px;margin-right:4px;vertical-align:-3px}
+/* trascina giù per aggiornare */
+.ptr{position:fixed;top:calc(env(safe-area-inset-top,0px) + 4px);left:50%;z-index:7;width:38px;height:38px;border-radius:50%;background:var(--surface);box-shadow:0 4px 14px -4px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;transform:translate(-50%,-60px);opacity:0;transition:opacity .15s,transform .25s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.ptr.show{opacity:1;transition:opacity .15s}
+.ptr .spin{width:20px;height:20px;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--brand)}
+.ptr.ready .spin{border-color:var(--brand);border-top-color:var(--line)}
+.ptr.spinning{transition:transform .25s}
+.ptr.spinning .spin{animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* passaggi tra le sezioni */
+nav.tabs{view-transition-name:tabs}
+.topbar{view-transition-name:topbar}
+::view-transition-old(root){animation:vtOut .16s ease-out both}
+::view-transition-new(root){animation:vtIn .26s cubic-bezier(.2,.8,.2,1) both}
+@keyframes vtOut{to{opacity:0}}
+@keyframes vtIn{from{opacity:0;transform:translateY(10px)}}
+@supports (view-transition-name:none){.view{animation:none}}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+
 /* navigazione */
 svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--glass-line);padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));padding-left:max(4px,env(safe-area-inset-left,0px));padding-right:max(4px,env(safe-area-inset-right,0px))}
@@ -444,12 +477,16 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 <nav class="tabs" aria-label="Sezioni"><div class="brand" id="brand"></div><div class="in" id="tabs"></div></nav>
 <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
 <div class="topbar" id="topbar" aria-hidden="true"></div>
+<div class="ptr" id="ptr" aria-hidden="true"><span class="spin"></span></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
 (function(){
 "use strict";
-var APP_VERSION = "2026-11-09.11";
+function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
+function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); }
+applyTheme(getTheme());
+var APP_VERSION = "2026-11-10.1";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
@@ -521,20 +558,21 @@ function fallbackLocal(){
 }
 /* versione pubblicata su GitHub: dati e app più recenti sostituiscono quelli tenuti dal telefono */
 function stamp(x){ var t=Date.parse(x||""); return isNaN(t)?0:t; }
-function checkNewer(){
-  if (window.claude) return;
-  fetch("data.json?t="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+function checkNewer(manual){
+  if (window.claude){ if(manual){ render(); toast("Dati aggiornati"); } return Promise.resolve(); }
+  var p1=fetch("data.json?t="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
     if (S.teams.length && d && Array.isArray(d.teams) && stamp(d.updatedAt) > stamp(S.updatedAt)){
       S=normalize(d); ensureMyTeam();
       try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch(e){}
       render(); toast("Dati aggiornati");
-    }
-  }).catch(function(){});
-  fetch(location.pathname+"?t="+Date.now(),{cache:"no-store"}).then(function(r){ return r.ok?r.text():""; }).then(function(t){
+    } else if (manual) toast("Hai già i dati più recenti");
+  }).catch(function(){ if(manual) toast("Non riesco a controllare: sei offline?"); });
+  var p2=fetch(location.pathname+"?t="+Date.now(),{cache:"no-store"}).then(function(r){ return r.ok?r.text():""; }).then(function(t){
     var m=t.match(/APP_VERSION = "([^"]+)"/); if(!m || m[1]===APP_VERSION) return;
     var k="baggese-reload-"+m[1]; try { if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,"1"); } catch(e){ return; }
     location.replace(location.pathname+"?v="+encodeURIComponent(m[1]));
   }).catch(function(){});
+  return Promise.all([p1,p2]);
 }
 document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="visible" && mode==="local") checkNewer(); });
 function loadSeed(manual){
@@ -707,7 +745,7 @@ var IC={
  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
  plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="M6 6l12 12M18 6 6 18"/>',
  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.6 2.6-1.4 4.2H9.8L8.4 10.1z"/>',
- left:'<path d="M15 5l-7 7 7 7"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>',
+ left:'<path d="M15 5l-7 7 7 7"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>',
  paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6"/>'
 };
 function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'; }
@@ -853,9 +891,54 @@ function vPartite(){
     return h;
   }
   var list=S.matches.filter(function(m){return involves(m,my);}).sort(sortMatches);
-  var and=list.filter(function(m){return !m.round||+m.round<=15;}), rit=list.filter(function(m){return +m.round>15;});
-  h+='<section class="card flush">'+(and.length?'<div class="split"><span class="eyebrow muted">Andata</span></div><div class="list">'+and.map(fixtureRow).join("")+'</div>':'')+(rit.length?'<div class="split" style="margin-top:14px"><span class="eyebrow muted">Ritorno</span></div><div class="list">'+rit.map(fixtureRow).join("")+'</div>':'')+'</section>';
+  var fut=list.filter(function(m){return !played(m);}), past=list.filter(played).reverse(), nx=fut[0];
+  function byMonth(arr){ var g=[], cur=null; arr.forEach(function(m){ var k=(m.date||"").slice(0,7)||"x"; if(!cur||cur.k!==k){ cur={k:k,ms:[]}; g.push(cur); } cur.ms.push(m); }); return g; }
+  function monLabel(k){ if(k==="x") return "Data da fissare"; var p=k.split("-"); return ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"][+p[1]-1]+" "+p[0]; }
+  if(fut.length){
+    var dated=fut.filter(function(m){return m.date;}).length;
+    h+='<div class="row between" style="margin-bottom:-4px"><h2>Prossime partite</h2>'+(dated?'<button class="linkbtn" type="button" data-ics="all">'+icon("calplus")+'Aggiungi tutte al calendario</button>':'')+'</div>';
+    byMonth(fut).forEach(function(g){ h+='<div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,m===nx); }).join("")+'</div></section>'; });
+  }
+  if(past.length){
+    h+='<h2 style="margin:10px 0 -4px">Già giocate</h2>';
+    byMonth(past).forEach(function(g){ h+='<div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,false); }).join("")+'</div></section>'; });
+  }
   return h;
+}
+function calRow(m,isNext){
+  var my=me(), home=m.homeId===my, opp=home?m.awayId:m.homeId, r=resultFor(m,my), dt=null;
+  if(m.date){ var p=m.date.split("-"); dt=new Date(+p[0],+p[1]-1,+p[2]); }
+  var wl=whenLabel(m.date), meta=[(m.round?m.round+'ª giornata':''),(home?'in casa':'in trasferta'),(m.time?esc(m.time):''),(isNext&&wl?wl.toLowerCase():'')].filter(Boolean).join(' · ');
+  return '<div class="cal-row'+(isNext?' next':'')+'"><button type="button" class="cal-main" data-view="'+m.id+'"><span class="dtile">'+(dt?'<b>'+dt.getDate()+'</b><span>'+["dom","lun","mar","mer","gio","ven","sab"][dt.getDay()]+'</span>':'<b>–</b>')+'</span><span class="col" style="min-width:0;gap:2px"><span class="t">'+crest(opp,28)+'<b class="ellipsis">'+esc(tname(opp))+'</b></span><span class="meta">'+meta+'</span></span>'+(played(m)?'<span class="fx-score"><span class="num">'+esc(m.hg)+'–'+esc(m.ag)+'</span><span class="res-dot r-'+r+'">'+r+'</span></span>':'')+'</button>'+(!played(m)&&m.date?'<button type="button" class="ical" data-ics="'+m.id+'" aria-label="Aggiungi al calendario">'+icon("calplus")+'</button>':'')+'</div>';
+}
+function icsEsc(t){ return String(t).replace(/\\/g,"\\\\").replace(/;/g,"\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"); }
+function pad2(n){ return (n<10?"0":"")+n; }
+function icsText(ms){
+  var now=new Date(), st=now.getUTCFullYear()+pad2(now.getUTCMonth()+1)+pad2(now.getUTCDate())+"T"+pad2(now.getUTCHours())+pad2(now.getUTCMinutes())+"00Z";
+  var L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Baggese app//IT","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:"+icsEsc(tname(me()))];
+  ms.forEach(function(m){
+    var p=m.date.split("-"), d=new Date(+p[0],+p[1]-1,+p[2]);
+    function ymd(x){ return x.getFullYear()+pad2(x.getMonth()+1)+pad2(x.getDate()); }
+    L.push("BEGIN:VEVENT","UID:"+m.id+"-"+String(S.settings.season).replace(/\W/g,"")+"@baggese-app","DTSTAMP:"+st,"SUMMARY:"+icsEsc(tname(m.homeId)+" – "+tname(m.awayId)),"DESCRIPTION:"+icsEsc((m.round?m.round+"ª giornata · ":"")+S.settings.girone));
+    var tm=(m.time||"").match(/^(\d{1,2})[:.](\d{2})$/);
+    if(tm){ var s1=new Date(d); s1.setHours(+tm[1],+tm[2]); var e1=new Date(s1.getTime()+105*60000); L.push("DTSTART;TZID=Europe/Rome:"+ymd(s1)+"T"+pad2(s1.getHours())+pad2(s1.getMinutes())+"00","DTEND;TZID=Europe/Rome:"+ymd(e1)+"T"+pad2(e1.getHours())+pad2(e1.getMinutes())+"00"); }
+    else { var n1=new Date(d); n1.setDate(n1.getDate()+1); L.push("DTSTART;VALUE=DATE:"+ymd(d),"DTEND;VALUE=DATE:"+ymd(n1)); }
+    L.push("END:VEVENT");
+  });
+  L.push("END:VCALENDAR"); return L.join("\r\n");
+}
+function addToCalendar(which){
+  var my=me(), ms=which==="all" ? S.matches.filter(function(m){return involves(m,my)&&!played(m)&&m.date;}).sort(sortMatches) : S.matches.filter(function(m){return m.id===which;});
+  if(!ms.length) return;
+  if(which==="all" && mode==="local" && /^https?:$/.test(location.protocol)){
+    // sul sito: iscrizione al calendario pubblicato, che si aggiorna da solo
+    location.href="webcal://"+location.host+location.pathname.replace(/[^\/]*$/,"")+"baggese.ics"; return;
+  }
+  var name=which==="all"?"baggese-partite.ics":("baggese-"+ms[0].round+"-giornata.ics");
+  var url=URL.createObjectURL(new Blob([icsText(ms)],{type:"text/calendar;charset=utf-8"}));
+  var a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); },2000);
+  toast(which==="all"?"Calendario delle partite scaricato":"Partita aggiunta: aprila per salvarla nel calendario");
 }
 function fixtureRow(m){
   var my=me(), r=resultFor(m,my), home=m.homeId===my, opp=home?m.awayId:m.homeId;
@@ -953,6 +1036,7 @@ function vGestione(){
   h+='<section class="card"><div class="card-head"><h2>Squadre e stemmi</h2><span class="meta num">'+S.teams.length+'</span></div><p class="small muted" style="margin:0">Ogni squadra ha uno stemma generato con due colori e un disegno di maglia. Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id); return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '+esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '+esc(t.name)+'" data-kpat="'+t.id+'">'+PATS.map(function(p){return '<option value="'+p[0]+'"'+(p[0]===k.pat?' selected':'')+'>'+p[1]+'</option>';}).join("")+'</select><label class="btn sm" for="logo_'+t.id+'">Carica logo</label><input class="sr" id="logo_'+t.id+'" type="file" accept="image/*" data-logo="'+t.id+'">'+(LOGOS[t.id]?'<button class="btn sm" type="button" data-unlogo="'+t.id+'">Togli logo</button>':'')+'<button class="btn sm danger" type="button" aria-label="Elimina '+esc(t.name)+'" data-delteam="'+t.id+'"'+(t.id===me()?' disabled':'')+'>'+icon("x")+'</button></div></div>'; }).join("")+'</div><form class="row" id="addTeamForm"><input id="newTeam" aria-label="Nuova squadra" placeholder="Nome nuova squadra"><button class="btn" type="submit">'+icon("plus")+'Aggiungi</button></form><div id="delTeamConfirm"></div></section>';
   h+='<section class="card"><h2>Squadra e girone</h2><div class="grid2"><label class="f">La tua squadra<select id="setMy">'+S.teams.slice().sort(byName).map(function(t){return '<option value="'+t.id+'"'+(t.id===me()?' selected':'')+'>'+esc(t.name)+'</option>';}).join("")+'</select></label><label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label></div><label class="f">Campionato e girone<input id="setGirone" value="'+esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'+esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></section>';
   h+='<section class="card"><h2>Copia di sicurezza</h2><p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'+((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')+'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></section>';
+  var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div><span class="tiny muted">Automatico segue le impostazioni dell’iPhone. La scelta vale solo su questo dispositivo.</span></section>';
   h+=syncChip()+'<span class="tiny muted">Versione app '+APP_VERSION+'</span>';
   return h;
 }
@@ -1067,6 +1151,11 @@ function closeDlg(){
   if(reduce){ d.close(); return; }
   d.classList.add("closing"); clearTimeout(closeDlg._t);
   closeDlg._t=setTimeout(function(){ d.classList.remove("closing"); d.style.transform=""; d.close(); },180);
+}
+function smooth(fn){
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(document.startViewTransition && !reduce){ try { document.startViewTransition(fn); return; } catch(e){} }
+  fn();
 }
 function stepRound(dir){ var rs=rounds(), i=rs.indexOf(selRound)+dir; if(i<0||i>=rs.length) return; selRound=rs[i]; slideDir=dir; render(); }
 
@@ -1235,19 +1324,21 @@ function applyPaste(){
 document.addEventListener("click", function(e){
   var b=e.target.closest("button,[data-tab],[data-go]"); if(!b) return;
   var ds=b.dataset;
-  if(ds.tab){ tab=ds.tab; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); return; }
+  if(ds.tab){ var nt=ds.tab; smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); return; }
+  if(ds.ics){ addToCalendar(ds.ics); return; }
+  if(ds.themeset){ try { localStorage.setItem("baggese-theme",ds.themeset); } catch(e){} var tv=ds.themeset; smooth(function(){ applyTheme(tv); render(); }); return; }
   if(ds.go){ tab="gestione"; render(); var target=$(ds.go==="teams"?"newTeam":"pasteBox"); if(target){ target.scrollIntoView({block:"center"}); target.focus(); } return; }
   if(ds.filter){ filterMine=ds.filter==="mine"; render(); return; }
   if(ds.src){ tableSrc=ds.src; render(); return; }
-  if(ds.cls){ clsView=ds.cls; render(); return; }
+  if(ds.cls){ var cv=ds.cls; smooth(function(){ clsView=cv; render(); }); return; }
   if(ds.fside){ openClsFilter.side=ds.fside; document.querySelectorAll("[data-fside]").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.fside===ds.fside)); }); return; }
   if(ds.fpre){ var lpp=lastPlayedRound(); if(ds.fpre==="and"){ $("fFrom").value=1; $("fTo").value=Math.min(15,lpp); } else { $("fFrom").value=Math.max(1,lpp-(+ds.fpre)+1); $("fTo").value=lpp; } return; }
-  if(ds.rteam){ rosaTeam=ds.rteam; render(); return; }
+  if(ds.rteam){ var rt=ds.rteam; smooth(function(){ rosaTeam=rt; render(); }); return; }
   if(ds.exp){ var cr=b.closest(".crow"); if(cr){ var o=cr.classList.toggle("open"); b.setAttribute("aria-expanded",String(o)); } return; }
-  if(ds.team){ rosaTeam=ds.team; tab="rosa"; closeDlg(); render(); window.scrollTo(0,0); return; }
+  if(ds.team){ var tt2=ds.team; closeDlg(); smooth(function(){ rosaTeam=tt2; tab="rosa"; render(); window.scrollTo(0,0); }); return; }
   if(ds.rstep){ stepRound(+ds.rstep); return; }
   if(ds.pedit){ openPlayer(ds.pedit); return; }
-  if(ds.pv){ partView=ds.pv; render(); return; }
+  if(ds.pv){ var pv=ds.pv; smooth(function(){ partView=pv; render(); }); return; }
   if(ds.round){ selRound=+ds.round; render(); return; }
   if(ds.unlogo){ setLogo(ds.unlogo,null); return; }
   if(ds.view){ openMatchView(ds.view); return; }
@@ -1327,9 +1418,13 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
   d.addEventListener("touchmove",function(e){ if(sy===null) return; dy=e.touches[0].clientY-sy; if(dy>0 && d.scrollTop<=0){ d.classList.add("drag"); d.style.transform="translateY("+dy+"px)"; } },{passive:true});
   d.addEventListener("touchend",function(){ if(sy===null) return; d.classList.remove("drag"); if(dy>110){ closeDlg(); } else { d.classList.add("snap"); d.style.transform=""; } sy=null; });
   var app=$("app"), tx=null, ty=null;
-  app.addEventListener("touchstart",function(e){ tx=null; if(tab!=="partite"||partView!=="round"||e.target.closest("#roundChips,.pchart")) return; tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
+  app.addEventListener("touchstart",function(e){ tx=null; if(tab!=="partite"||partView!=="round"||(e.target.closest&&e.target.closest("#roundChips,.pchart"))) return; tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
   app.addEventListener("touchend",function(e){ if(tx===null) return; var t=e.changedTouches[0], dx=t.clientX-tx, dyy=t.clientY-ty; tx=null; if(Math.abs(dx)>60 && Math.abs(dx)>1.6*Math.abs(dyy)) stepRound(dx<0?1:-1); },{passive:true});
   var lastW=window.innerWidth; window.addEventListener("resize",function(){ clearTimeout(window._rz); window._rz=setTimeout(function(){ if(Math.abs(window.innerWidth-lastW)>60){ lastW=window.innerWidth; render(); } },200); });
+  var py=null, pdy=0, ptr=$("ptr"), busy=false;
+  window.addEventListener("touchstart",function(e){ py=null; var tg=e.target; if(busy||$("dlg").open||(window.scrollY||0)>0||(tg&&tg.closest&&tg.closest(".chips,.pchart,#roundCard"))) return; py=e.touches[0].clientY; pdy=0; },{passive:true});
+  window.addEventListener("touchmove",function(e){ if(py===null) return; pdy=e.touches[0].clientY-py; if(pdy<=0||(window.scrollY||0)>0){ ptr.style.transform=""; ptr.classList.remove("show","ready"); return; } var d=Math.min(pdy*0.5,70); ptr.classList.add("show"); ptr.style.transform="translate(-50%,"+(d-50)+"px) rotate("+(d*5)+"deg)"; ptr.classList.toggle("ready",pdy>110); },{passive:true});
+  window.addEventListener("touchend",function(){ if(py===null) return; py=null; if(pdy>110 && !busy){ busy=true; ptr.classList.add("spinning"); ptr.style.transform="translate(-50%,20px)"; var t0=Date.now(); Promise.resolve(checkNewer(true)).then(function(){ setTimeout(done,Math.max(0,700-(Date.now()-t0))); }); } else done(); function done(){ busy=false; ptr.classList.remove("show","ready","spinning"); ptr.style.transform=""; } });
   var ticking=false;
   function onScroll(){ if(ticking) return; ticking=true; requestAnimationFrame(function(){ document.body.classList.toggle("scrolled", (window.scrollY||0)>70); ticking=false; }); }
   window.addEventListener("scroll",onScroll,{passive:true});

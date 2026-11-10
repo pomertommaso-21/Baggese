@@ -14,6 +14,7 @@ Tutti i file stanno nella cartella principale del repository, senza sottocartell
 | `data.json` | I dati della stagione: squadre, 30 giornate, rose, classifica, marcatori |
 | `t_baggese.png`, `t_corsico.png`… (16 file `t_*.png`) | Gli stemmi delle squadre, ritagliati e centrati tutti allo stesso modo |
 | `Inter-*.woff`, `InterDisplay-*.woff` | I caratteri dell'app (licenza libera SIL OFL, in `LICENSE-fonts.txt`) |
+| `baggese.ics` | Il calendario di tutte le partite della Baggese: da **Partite → Aggiungi tutte al calendario** l'iPhone si iscrive e lo tiene aggiornato da solo |
 | `icon.svg`, `icon-180.png`, `icon-192.png`, `icon-512.png`, `favicon-32.png`, `manifest.webmanifest` | L'icona dell'app per browser, iPhone e Android |
 
 Per cambiare uno stemma basta sostituire il file `t_<squadra>.png` con un PNG quadrato a sfondo trasparente.
