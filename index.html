@@ -214,6 +214,9 @@ tr.me .posn{color:var(--mine-ink)}
 .pl{display:grid;grid-template-columns:34px minmax(0,1fr) 40px 40px 52px;align-items:center;gap:8px;padding:10px 2px;border-top:1px solid var(--line);width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:inherit;text-align:left;font-size:14px}
 .pl-head{border-top:0;padding-top:0;padding-bottom:4px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .pl-head span,.pl>span:nth-child(n+3){text-align:center}
+.shirt{width:32px;height:32px;display:block;justify-self:center}
+.pav{width:34px;height:34px;border-radius:50%;background:var(--surface-2);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;letter-spacing:.02em}
+.pav.mine{background:var(--mine);color:var(--mine-ink)}
 .num-badge{width:32px;height:32px;border-radius:10px;background:var(--surface-2);display:inline-flex;align-items:center;justify-content:center;font-family:var(--display);letter-spacing:-.02em;font-weight:800;font-size:14px}
 .pl b{font-weight:700}
 .goal{font-family:var(--display);letter-spacing:-.02em;font-weight:800;font-size:17px}
@@ -339,11 +342,14 @@ tr[data-z] td:first-child{box-shadow:inset 4px 0 0 var(--zc)}
 .mk .tm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mk .pts{text-align:center}
 
+/* copertura fissa dell'area dell'ora/batteria: il contenuto non ci passa sotto sfocato */
+.sbar{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:8;pointer-events:none}
+
 /* titolo compatto in alto quando si scorre (stile iOS) */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 9px) 16px 9px;background:var(--glass-strong);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--glass-line);font-family:var(--display);letter-spacing:-.02em;font-weight:700;font-size:17px;line-height:1;opacity:0;transform:translateY(-100%);visibility:hidden;pointer-events:none;transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s .25s}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 9px) 16px 9px;background:var(--bg);border-bottom:1px solid var(--line);font-family:var(--display);letter-spacing:-.02em;font-weight:700;font-size:17px;line-height:1;opacity:0;transform:translateY(-100%);visibility:hidden;pointer-events:none;transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s .25s}
 .topbar .crest{--s:26px}
 body.scrolled .topbar{opacity:1;transform:none;visibility:visible;transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){nav.tabs,.topbar{background:var(--surface)}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){nav.tabs{background:var(--surface)}}
 @media (min-width:960px){.topbar{left:232px}}
 @media (prefers-reduced-motion:reduce){.topbar{transition:none}}
 
@@ -476,6 +482,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 </main>
 <nav class="tabs" aria-label="Sezioni"><div class="brand" id="brand"></div><div class="in" id="tabs"></div></nav>
 <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+<div class="sbar" aria-hidden="true"></div>
 <div class="topbar" id="topbar" aria-hidden="true"></div>
 <div class="ptr" id="ptr" aria-hidden="true"><span class="spin"></span></div>
 <div class="toast" id="toast" hidden></div>
@@ -486,7 +493,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-10.2";
+var APP_VERSION = "2026-11-10.4";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
@@ -754,9 +761,9 @@ function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">
 var partView = "mine", selRound = null, slideDir = 0, calJump = false;
 
 /* stemmi: stessa cornice tonda per tutti; logo caricato o scudetto generato con i colori sociali */
-var KITS={t_baggese:["#C8202A","#FFFFFF","stripes"],t_ardor:["#C8102E","#FFFFFF","halves"],t_artemide:["#6B2FB3","#F2C230","sash"],t_bonola:["#0B8A4B","#FFFFFF","hoops"],t_cesano:["#E36414","#1F2A44","stripes"],t_concept:["#111827","#D1D5DB","quarters"],t_corsico:["#0F766E","#F5F5F4","sash"],t_novella:["#B91C1C","#FACC15","stripes"],t_trezzano:["#1D4ED8","#FACC15","hoops"],t_seguro:["#9F1239","#93C5FD","halves"],t_triestina:["#DC2626","#FFFFFF","solid"],t_velasca:["#2563EB","#F8FAFC","sash"],t_vercellese:["#F8FAFC","#DC2626","hoops"],t_vige:["#0369A1","#F59E0B","quarters"],t_villapizzone:["#15803D","#FDE047","halves"],t_viscontini:["#7C2D12","#FDBA74","stripes"]};
+var KITS={t_baggese:["#C8202A","#FFFFFF","stripes"],t_ardor:["#1A1A1A","#F08A24","sleeves"],t_artemide:["#F2D21B","#111111","sleeves"],t_bonola:["#178F4A","#F2D43A","sleeves"],t_cesano:["#2A1FA8","#F2E21B","sleeves"],t_concept:["#4B5563","#FFFFFF","sleeves"],t_corsico:["#5A1430","#FFFFFF","sleeves"],t_novella:["#C81E2B","#1A1A1A","sleeves"],t_trezzano:["#A77BC0","#FFFFFF","sleeves"],t_seguro:["#5AA9D6","#FFFFFF","sleeves"],t_triestina:["#D52B32","#FFFFFF","sleeves"],t_velasca:["#D9161B","#FFFFFF","sleeves"],t_vercellese:["#D9262B","#23439A","halves"],t_vige:["#1F2A5C","#D62B35","sleeves"],t_villapizzone:["#F7D90A","#5E1C78","sleeves"],t_viscontini:["#0E4A78","#F2D43A","sleeves"]};
 var SHORT={t_baggese:"BAG",t_ardor:"ARD",t_artemide:"ART",t_bonola:"BON",t_cesano:"CES",t_concept:"CON",t_corsico:"COR",t_novella:"NOV",t_trezzano:"TRE",t_seguro:"SEG",t_triestina:"TRI",t_velasca:"VEL",t_vercellese:"VER",t_vige:"VIG",t_villapizzone:"VIL",t_viscontini:"VIS"};
-var PATS=[["stripes","Strisce verticali"],["hoops","Strisce orizzontali"],["halves","Metà e metà"],["sash","Banda diagonale"],["quarters","Quarti"],["solid","Tinta unita"]];
+var PATS=[["sleeves","Maniche colorate"],["stripes","Strisce verticali"],["hoops","Strisce orizzontali"],["halves","Metà e metà"],["sash","Banda diagonale"],["quarters","Quarti"],["solid","Tinta unita"]];
 var LOGOS={}, crestN=0;
 function hex(c,d){ return /^#[0-9a-f]{6}$/i.test(c||"")?c:d; }
 function autoKit(id){ var pal=[["#1E4FC2","#FFFFFF"],["#C8102E","#FFFFFF"],["#0B8A4B","#FFFFFF"],["#111827","#E5E7EB"],["#E36414","#1F2A44"],["#6B2FB3","#F2C230"],["#0369A1","#F59E0B"]], h=0; String(id).split("").forEach(function(c){h=(h*31+c.charCodeAt(0))>>>0;}); var p=pal[h%pal.length]; return [p[0],p[1],PATS[h%PATS.length][0]]; }
@@ -774,6 +781,21 @@ function crestSvg(id){
     default: body='<rect width="40" height="48" fill="'+c1+'"/><rect y="3" width="40" height="5" fill="'+c2+'"/>';
   }
   return '<svg viewBox="0 0 40 48" aria-hidden="true"><defs><clipPath id="'+n+'"><path d="'+shield+'"/></clipPath></defs><g clip-path="url(#'+n+')">'+body+'<rect y="17.5" width="40" height="11.5" fill="#0D1524" opacity=".92"/></g><path d="'+shield+'" fill="none" stroke="#0D1524" stroke-opacity=".35" stroke-width="1.2"/><text x="20" y="26.6" text-anchor="middle" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="800" font-size="9.4" letter-spacing=".5" fill="#FFFFFF">'+esc(shortName(id))+'</text></svg>';
+}
+var shirtN=0;
+function shirtSvg(id){
+  var k=kit(id), c1=k.c1, c2=k.c2, n="sh"+(++shirtN), b;
+  var P="M11 4 L6 6 L2 11 L5.5 15 L8 13.5 L8 28 L24 28 L24 13.5 L26.5 15 L30 11 L26 6 L21 4 Q16 8 11 4 Z";
+  switch(k.pat){
+    case "stripes": b='<rect width="32" height="32" fill="'+c1+'"/><rect x="9.6" width="2.6" height="32" fill="'+c2+'"/><rect x="14.7" width="2.6" height="32" fill="'+c2+'"/><rect x="19.8" width="2.6" height="32" fill="'+c2+'"/>'; break;
+    case "hoops": b='<rect width="32" height="32" fill="'+c1+'"/><rect y="12" width="32" height="3" fill="'+c2+'"/><rect y="18" width="32" height="3" fill="'+c2+'"/><rect y="24" width="32" height="3" fill="'+c2+'"/>'; break;
+    case "halves": b='<rect width="16" height="32" fill="'+c1+'"/><rect x="16" width="16" height="32" fill="'+c2+'"/>'; break;
+    case "sash": b='<rect width="32" height="32" fill="'+c1+'"/><path d="M6 4 L11 4 L27 28 L22 28 Z" fill="'+c2+'"/>'; break;
+    case "quarters": b='<rect width="32" height="32" fill="'+c1+'"/><rect x="16" width="16" height="16" fill="'+c2+'"/><rect y="16" width="16" height="16" fill="'+c2+'"/>'; break;
+    case "sleeves": b='<rect width="32" height="32" fill="'+c1+'"/><path d="M0 0 L8 0 L8 32 L0 32 Z M24 0 L32 0 L32 32 L24 32 Z" fill="'+c2+'"/><path d="M11 4 Q16 8 21 4" fill="none" stroke="'+c2+'" stroke-width="2.4"/>'; break;
+    default: b='<rect width="32" height="32" fill="'+c1+'"/><path d="M11 4 Q16 8 21 4" fill="none" stroke="'+c2+'" stroke-width="2.4"/>';
+  }
+  return '<svg class="shirt" viewBox="0 0 32 32" aria-hidden="true"><defs><clipPath id="'+n+'"><path d="'+P+'"/></clipPath></defs><g clip-path="url(#'+n+')">'+b+'</g><path d="'+P+'" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1" stroke-linejoin="round"/></svg>';
 }
 function crest(id,size,extra){ var src=LOGOS[id]; return '<span class="crest'+(extra?' '+extra:'')+'" style="--s:'+(size||32)+'px">'+(src?'<img src="'+esc(src)+'" alt="">':crestSvg(id))+'</span>'; }
 
@@ -794,7 +816,7 @@ function header(title,sub,right){ return '<div class="row between" style="align-
 
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
-  crestN=0; HIST=null;
+  crestN=0; shirtN=0; HIST=null;
   if(calJump){ calJump=false; requestAnimationFrame(function(){ requestAnimationFrame(function(){ var el=document.getElementById("calNext"); if(el && tab==="partite" && partView==="mine") window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-76)); }); }); }
   $("tabs").innerHTML=TABS.map(function(t){ return '<button type="button" data-tab="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'><span>'+icon(t[2])+'</span>'+t[1]+'</button>'; }).join("");
   $("brand").innerHTML=crest(me(),36)+'<b>'+esc(shortName(me()))+'<br><span class="tiny muted" style="font-family:var(--body);font-weight:600;text-transform:none">'+esc(S.settings.season)+'</span></b>';
@@ -845,6 +867,7 @@ function sName(s,short){ if(s.og) return "Autogol"; var p=s.playerId&&S.players.
 function minKey(s){ var m=String(s.min||"").match(/(\d+)'\s*(1T|2T)?/); if(!m) return 999; return (m[2]==="2T"?100:0)+(+m[1]); }
 function minLabel(s){ var m=String(s.min||"").match(/(\d+)'\s*(1T|2T)?/); if(!m) return s.min?esc(s.min)+"'":""; return (m[2]==="2T"? (45+(+m[1])) : (+m[1]))+"'"; }
 function groupScorers(list){ var o=[], idx={}; list.forEach(function(s){ var k=s.og?"og":(s.playerId||s.name); if(idx[k]==null){ idx[k]=o.length; o.push({s:s,n:0,pen:0}); } o[idx[k]].n++; if(s.pen) o[idx[k]].pen++; }); return o; }
+function initials(n){ var a=String(n||'').trim().split(/\s+/).filter(function(w){ return !/^(de|di|da|la|lo|del|della|dell'?)$/i.test(w); }); return ((a[0]||'')[0]||'').toUpperCase()+((a[1]||'')[0]||'').toUpperCase(); }
 function pname(x){ return x.playerId&&!x.og ? '<button type="button" class="plink" data-player="'+esc(x.playerId)+'">'+esc(sName(x))+'</button>' : '<b>'+esc(sName(x))+'</b>'; }
 function scorerText(list){ return groupScorers(list).map(function(g){ return esc(sName(g.s,true))+(g.n>1?' ×'+g.n:''); }).join(", "); }
 function tsc(m,t){ var g=groupScorers((m.scorers||[]).filter(function(x){return sTeam(x)===t;})); return g.length?'<span class="t-sc">'+g.map(function(o){ return esc(sName(o.s,true))+(o.n>1?' ×'+o.n:''); }).join('<br>')+'</span>':''; }
@@ -1009,7 +1032,7 @@ function vRosa(){
   groups.forEach(function(g){
     var ps=list.filter(function(p){ return g[0] ? p.role===g[0] : ["Portiere","Difensore","Centrocampista","Attaccante"].indexOf(p.role)<0; }).sort(function(a,b){ return st[b.id].pres-st[a.id].pres || st[b.id].gol-st[a.id].gol || a.name.localeCompare(b.name); });
     if(!ps.length) return;
-    h+='<section class="card"><div class="card-head"><h2>'+g[1]+'</h2><span class="meta">'+ps.length+'</span></div><div class="list"><div class="pl pl-head"><span></span><span>Giocatore</span><span>Pres</span><span>Gol</span><span>Cart.</span></div>'+ps.map(function(p){ var s=st[p.id]; return '<button type="button" class="pl" data-player="'+p.id+'"><span class="num-badge">'+esc(p.num||"–")+'</span><b class="ellipsis">'+esc(p.name)+'</b><span class="num">'+(s.pres||'–')+'</span><span class="goal num">'+(s.gol||'<span class="muted" style="font-family:var(--body);font-size:14px;font-weight:500">–</span>')+'</span><span class="cards">'+(s.y?'<span class="card-y"></span>'+s.y:'')+(s.r?' <span class="card-r"></span>'+s.r:'')+(!s.y&&!s.r?'<span class="muted">–</span>':'')+'</span></button>'; }).join("")+'</div></section>';
+    h+='<section class="card"><div class="card-head"><h2>'+g[1]+'</h2><span class="meta">'+ps.length+'</span></div><div class="list"><div class="pl pl-head"><span></span><span>Giocatore</span><span>Pres</span><span>Gol</span><span>Cart.</span></div>'+ps.map(function(p){ var s=st[p.id]; return '<button type="button" class="pl" data-player="'+p.id+'">'+shirtSvg(pTeam(p))+'<span class="col" style="min-width:0;gap:1px"><b class="ellipsis">'+esc(p.name)+'</b>'+(p.num?'<span class="meta">Maglia n. '+esc(p.num)+'</span>':'')+'</span><span class="num">'+(s.pres||'–')+'</span><span class="goal num">'+(s.gol||'<span class="muted" style="font-family:var(--body);font-size:14px;font-weight:500">–</span>')+'</span><span class="cards">'+(s.y?'<span class="card-y"></span>'+s.y:'')+(s.r?' <span class="card-r"></span>'+s.r:'')+(!s.y&&!s.r?'<span class="muted">–</span>':'')+'</span></button>'; }).join("")+'</div></section>';
   });
   h+='<span class="tiny muted">'+list.length+' giocatori, '+gol+' gol attribuiti. '+(S.imported&&S.imported.round?'Presenze, gol e cartellini dalle schede dei giocatori fino alla '+S.imported.round+'ª giornata, più quelli che segni tu nelle partite successive; le presenze di alcune squadre sono incomplete.':'')+'</span>';
   return h;
@@ -1034,7 +1057,7 @@ function teamCards(tid){
 function vGestione(){
   var h=header("Gestione",S.settings.season);
   h+='<section class="card" id="import"><h2>Incolla risultati e classifica</h2><p class="small muted" style="margin:0">Apri il comunicato del giovedì della Delegazione di Milano oppure la pagina del girone su Tuttocampo, seleziona tutto (Ctrl+A), copia e incolla qui sotto. Vengono presi solo i dati del tuo girone.</p>'+(S.settings.tcLink?'<a class="btn" href="'+esc(S.settings.tcLink)+'" target="_blank" rel="noopener">Apri la pagina su Tuttocampo</a>':'')+'<label class="f">Testo copiato<textarea id="pasteBox" placeholder="Incolla qui il testo della pagina"></textarea></label><div class="grid2"><label class="f">Cosa contiene<select id="pasteMode"><option value="auto">Riconosci da solo</option><option value="res">Risultati o calendario</option><option value="tab">Classifica</option></select></label><label class="f">Giornata, se non indicata<input id="pasteRound" type="number" min="1" max="40" inputmode="numeric" placeholder="Es. 10"></label></div><button class="btn dark" type="button" data-act="parse">Analizza il testo</button><div id="preview"></div></section>';
-  h+='<section class="card"><div class="card-head"><h2>Squadre e stemmi</h2><span class="meta num">'+S.teams.length+'</span></div><p class="small muted" style="margin:0">Ogni squadra ha uno stemma generato con due colori e un disegno di maglia. Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id); return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '+esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '+esc(t.name)+'" data-kpat="'+t.id+'">'+PATS.map(function(p){return '<option value="'+p[0]+'"'+(p[0]===k.pat?' selected':'')+'>'+p[1]+'</option>';}).join("")+'</select><label class="btn sm" for="logo_'+t.id+'">Carica logo</label><input class="sr" id="logo_'+t.id+'" type="file" accept="image/*" data-logo="'+t.id+'">'+(LOGOS[t.id]?'<button class="btn sm" type="button" data-unlogo="'+t.id+'">Togli logo</button>':'')+'<button class="btn sm danger" type="button" aria-label="Elimina '+esc(t.name)+'" data-delteam="'+t.id+'"'+(t.id===me()?' disabled':'')+'>'+icon("x")+'</button></div></div>'; }).join("")+'</div><form class="row" id="addTeamForm"><input id="newTeam" aria-label="Nuova squadra" placeholder="Nome nuova squadra"><button class="btn" type="submit">'+icon("plus")+'Aggiungi</button></form><div id="delTeamConfirm"></div></section>';
+  h+='<section class="card"><div class="card-head"><h2>Squadre e stemmi</h2><span class="meta num">'+S.teams.length+'</span></div><p class="small muted" style="margin:0">Ogni squadra ha due colori e un disegno di maglia, usati per la maglietta nelle rose (e per lo stemma, se manca quello vero). Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id); return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '+esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '+esc(t.name)+'" data-kpat="'+t.id+'">'+PATS.map(function(p){return '<option value="'+p[0]+'"'+(p[0]===k.pat?' selected':'')+'>'+p[1]+'</option>';}).join("")+'</select><label class="btn sm" for="logo_'+t.id+'">Carica logo</label><input class="sr" id="logo_'+t.id+'" type="file" accept="image/*" data-logo="'+t.id+'">'+(LOGOS[t.id]?'<button class="btn sm" type="button" data-unlogo="'+t.id+'">Togli logo</button>':'')+'<button class="btn sm danger" type="button" aria-label="Elimina '+esc(t.name)+'" data-delteam="'+t.id+'"'+(t.id===me()?' disabled':'')+'>'+icon("x")+'</button></div></div>'; }).join("")+'</div><form class="row" id="addTeamForm"><input id="newTeam" aria-label="Nuova squadra" placeholder="Nome nuova squadra"><button class="btn" type="submit">'+icon("plus")+'Aggiungi</button></form><div id="delTeamConfirm"></div></section>';
   h+='<section class="card"><h2>Squadra e girone</h2><div class="grid2"><label class="f">La tua squadra<select id="setMy">'+S.teams.slice().sort(byName).map(function(t){return '<option value="'+t.id+'"'+(t.id===me()?' selected':'')+'>'+esc(t.name)+'</option>';}).join("")+'</select></label><label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label></div><label class="f">Campionato e girone<input id="setGirone" value="'+esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'+esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></section>';
   h+='<section class="card"><h2>Copia di sicurezza</h2><p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'+((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')+'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></section>';
   var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div><span class="tiny muted">Automatico segue le impostazioni dell’iPhone. La scelta vale solo su questo dispositivo.</span></section>';
