@@ -538,7 +538,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-11.3";
+var APP_VERSION = "2026-11-11.4";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
@@ -769,7 +769,7 @@ function goalBlock(tb){
     w=ref.pts?Math.max(4,Math.min(100,Math.round(r.pts/ref.pts*100))):0;
   }
   need=left&&ref.g?Math.max(0,((ref.pts/ref.g*tot)-r.pts)/left):null;
-  sub=need!=null?((r.pos<=P?'Per restarci ':'Servono ')+'<b>'+dec(need)+'</b> punti a partita · finora '+dec(now)):'';
+  var proj=Math.round(now*tot); sub='Proiezione <b>'+proj+' pt</b>'+(need!=null?' · '+(r.pos<=P?'per restarci ':'servono ')+'<b>'+dec(need)+'</b> a partita':'');
   return '<button type="button" class="goal" data-act="goalEdit" style="--gc:'+G.col+'" aria-label="'+esc('Obiettivo '+G.short+': '+num+' '+lab+'. Tocca per cambiarlo')+'"><span class="goal-n">'+num+'</span><b class="goal-l">'+lab+'</b><span class="goal-tag"><i></i>'+esc(G.short)+icon("right")+'</span>'+(sub?'<small class="goal-sub">'+sub+'</small>':'')+'<span class="goal-bar"><i style="width:'+w+'%"></i></span></button>';
 }
 function openGoal(){
