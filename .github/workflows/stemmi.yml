@@ -1,0 +1,34 @@
+name: Scarica stemmi
+on:
+  push:
+    paths: ['.github/workflows/stemmi.yml']
+permissions:
+  contents: write
+jobs:
+  stemmi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scarica e ridimensiona
+        run: |
+          pip install pillow >/dev/null
+          python3 - <<'PY'
+          import urllib.request, io
+          from PIL import Image
+          T={"pa_ausonia1931": 675726, "pa_buccinasco": 676162, "pa_centroschuster": 59010, "pa_frogmilano": 676023, "pa_garibaldina193": 68339, "pa_iris1914": 61071, "pa_leonexiiisport": 26110, "pa_nevadacalcio": 1057685, "pa_orpas": 1023166, "pa_partizanbonola": 1097228, "pa_polisportivadi": 65244, "pa_propeschierabo": 1000449, "pa_quintoromano": 77214, "pa_sangiulianocvs": 1000367, "pa_settimomilanes": 78762, "pa_villa": 33480, "pg_albuzzano": 934217, "pg_asvarzi": 1163199, "pg_casorateprimo": 59011, "pg_cassolese": 10870, "pg_castelnovetto": 934123, "pg_gropellosangio": 930018, "pg_nizzacalcio": 71241, "pg_oratoriostrade": 1000645, "pg_psabressana191": 917105, "pg_realcertosa": 12390, "pg_realtrezzano": 1079206, "pg_rondine1924": 1097787, "pg_rozzanocalcio": 675366, "pg_valversa": 1166166, "pg_virtusbinasco": 60811, "pg_zibidosangiaco": 60177}
+          for k,i in T.items():
+              req=urllib.request.Request("https://b2-content.tuttocampo.it/Teams/200/%d.png"%i, headers={"User-Agent":"Mozilla/5.0"})
+              im=Image.open(io.BytesIO(urllib.request.urlopen(req,timeout=30).read())).convert("RGBA")
+              bb=im.getbbox(); im=im.crop(bb) if bb else im
+              s=88/max(im.size); im=im.resize((max(1,round(im.width*s)),max(1,round(im.height*s))),Image.LANCZOS)
+              out=Image.new("RGBA",(96,96),(0,0,0,0)); out.paste(im,((96-im.width)//2,(96-im.height)//2),im)
+              out.save(k+".png",optimize=True); print(k, out.size)
+          PY
+      - name: Salva
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add pa_*.png pg_*.png
+          git rm -q .github/workflows/stemmi.yml
+          git commit -m "Stemmi dei Gironi A e G di Prima Categoria"
+          git push
