@@ -423,7 +423,7 @@ nav.tabs{view-transition-name:tabs}
 @keyframes vtFadeOut{to{opacity:0}}
 @keyframes vtFadeIn{from{opacity:0}}
 /* cambio di scheda: scorrimento orizzontale, la pagina vecchia esce mentre la nuova entra */
-html[data-vt]::view-transition-old(root),html[data-vt]::view-transition-new(root){animation-duration:.34s;animation-timing-function:cubic-bezier(.32,.72,0,1);animation-fill-mode:both}
+html[data-vt]::view-transition-old(root),html[data-vt]::view-transition-new(root){animation-duration:.5s;animation-timing-function:cubic-bezier(.32,.72,0,1);animation-fill-mode:both}
 html[data-vt="fwd"]::view-transition-old(root){animation-name:vtOutL}
 html[data-vt="fwd"]::view-transition-new(root){animation-name:vtInR}
 html[data-vt="back"]::view-transition-old(root){animation-name:vtOutR}
@@ -555,8 +555,8 @@ body.other .view{--mine:transparent;--mine-ink:inherit}
 ::view-transition-old(*.segvt){display:none}
 ::view-transition-new(*.segvt){animation:none}
 .seg button{position:relative;z-index:1}
-.seg-ind{position:absolute;left:0;top:0;z-index:0;border-radius:10px;background:var(--active);pointer-events:none;transition:transform .34s cubic-bezier(.32,.72,0,1),width .34s cubic-bezier(.32,.72,0,1)}
-.seg.has-ind button[aria-pressed="true"]{background:transparent;box-shadow:none}
+.seg-ind{position:absolute;left:0;top:0;z-index:0;border-radius:10px;background:var(--active);pointer-events:none;transition:transform .42s cubic-bezier(.3,.8,.3,1),width .42s cubic-bezier(.3,.8,.3,1)}
+.seg.has-ind button[aria-pressed="true"],html.segjs .seg button[aria-pressed="true"]{background:transparent;box-shadow:none}
 .seg.sm .seg-ind{border-radius:8px;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.14)}
 @media (prefers-reduced-motion:reduce){.seg-ind{transition:none}}
 .tp small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:2px}
@@ -657,13 +657,14 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
   @keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
   @keyframes sheetDown{to{transform:translateY(100%)}}
 }
-#splash{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:#C8202A;transition:opacity .35s ease,visibility .35s}
-#splash img{width:104px;height:104px;padding:16px;border-radius:50%;background:#fff;object-fit:contain;box-shadow:0 10px 40px rgba(0,0,0,.25);animation:splashIn .5s cubic-bezier(.2,.8,.2,1)}
+#splash{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:#C8202A;transition:opacity .7s ease,visibility .7s}
+#splash img{width:104px;height:104px;padding:16px;border-radius:50%;background:#fff;object-fit:contain;box-shadow:0 10px 40px rgba(0,0,0,.25);animation:splashIn .8s cubic-bezier(.2,.8,.2,1)}
 #splash.out{opacity:0;visibility:hidden}
+#splash.out img{transform:scale(1.08);transition:transform .7s ease}
 @keyframes splashIn{from{opacity:0;transform:scale(.85)}}
 </style>
 <div id="splash" aria-hidden="true"><img alt="" onerror="this.remove()"></div>
-<script>(function(){ try { var s=document.getElementById("splash"), a=localStorage.getItem("baggese-acc"), t=localStorage.getItem("baggese-myteam")||"t_baggese"; if(a) s.style.background=a; s.firstChild.src=t+".png"; } catch(e){} })();</script>
+<script>document.documentElement.classList.add("segjs");(function(){ try { var s=document.getElementById("splash"), a=localStorage.getItem("baggese-acc"), t=localStorage.getItem("baggese-myteam")||"t_baggese"; if(a) s.style.background=a; s.firstChild.src=t+".png"; } catch(e){} })();</script>
 </head>
 <body>
 <main class="wrap" id="app" aria-live="polite">
@@ -682,7 +683,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.16";
+var APP_VERSION = "2026-11-12.17";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1188,7 +1189,7 @@ function header(title,sub,right){ if(sub===1) return '<div class="row between" s
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
   crestN=0; shirtN=0; HIST=null; setAccent();
-  var spl=$("splash"); if(spl&&!spl.dataset.going){ spl.dataset.going="1"; var fr=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve(); Promise.race([fr,new Promise(function(r){ setTimeout(r,900); })]).then(function(){ requestAnimationFrame(function(){ spl.classList.add("out"); setTimeout(function(){ if(spl.parentNode) spl.parentNode.removeChild(spl); },400); }); }); } document.body.classList.toggle("other",G!==MYG);
+  var spl=$("splash"); if(spl&&!spl.dataset.going){ spl.dataset.going="1"; var fr=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve(); var wait=Math.max(0,1500-(performance.now?performance.now():0)); Promise.all([Promise.race([fr,new Promise(function(r){ setTimeout(r,1500); })]),new Promise(function(r){ setTimeout(r,wait); })]).then(function(){ requestAnimationFrame(function(){ spl.classList.add("out"); setTimeout(function(){ if(spl.parentNode) spl.parentNode.removeChild(spl); },800); }); }); } document.body.classList.toggle("other",G!==MYG);
   if(!askedTeam && S.teams.length>1 && mode!=="loading"){ askedTeam=true; var seen=null; try { seen=localStorage.getItem("baggese-myteam"); } catch(e){ seen="x"; } if(!seen) setTimeout(function(){ openTeamPicker(true); },400); }
   if(calJump){ calJump=false; requestAnimationFrame(function(){ requestAnimationFrame(function(){ var el=document.getElementById("calNext"); if(el && tab==="partite" && partView==="mine") window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-76)); }); }); }
   $("tabs").innerHTML=TABS.map(function(t){ return '<button type="button" data-tab="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'><span>'+icon(t[2])+'</span>'+t[1]+'</button>'; }).join("");
@@ -1198,6 +1199,7 @@ function render(){
   var tt={home:[me(),tname(me())],partite:[null,"Partite"],classifica:[null,"Classifica"],rosa:[curRosaTeam(),tname(curRosaTeam())],gestione:[null,"Gestione"]}[tab];
   $("topbar").innerHTML=(tt[0]?crest(tt[0],26):'')+'<span class="ellipsis">'+esc(tt[1])+'</span>';
   var cc=document.querySelector('#clsChips .rchip[aria-pressed="true"]'), cs=$("clsChips"); if(cc&&cs) cs.scrollLeft=cc.offsetLeft-cs.clientWidth/2+cc.clientWidth/2;
+  if(typeof segInd==="function"){ segInd(document); tabInd(); }
   var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips");
   if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2;
 }
@@ -1587,7 +1589,7 @@ function openPlayerView(id){
   h+='<button class="btn" type="button" data-pedit="'+p.id+'">'+icon("edit")+'Modifica giocatore</button>';
   $("dlgBody").innerHTML=h; showDlg();
 }
-function showDlg(){ var d=$("dlg"); clearTimeout(closeDlg._t); d.classList.remove("closing"); d.style.transform=""; if(!d.open) d.showModal(); d.scrollTop=0; }
+function showDlg(){ setTimeout(function(){ if(typeof segInd==="function") segInd(document); },0); var d=$("dlg"); clearTimeout(closeDlg._t); d.classList.remove("closing"); d.style.transform=""; if(!d.open) d.showModal(); d.scrollTop=0; }
 function closeDlg(){
   var d=$("dlg"); if(!d.open) return;
   var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1767,7 +1769,7 @@ function applyPaste(){
 document.addEventListener("click", function(e){
   var b=e.target.closest("button,[data-tab],[data-go],[data-view]"); if(!b) return;
   var ds=b.dataset;
-  if(ds.tab){ var nt=ds.tab, ti=function(k){ for(var q=0;q<TABS.length;q++) if(TABS[q][0]===k) return q; return 0; }; if(nt!==tab){ document.documentElement.dataset.vt=ti(nt)>ti(tab)?"fwd":"back"; clearTimeout(smooth.vt); smooth.vt=setTimeout(function(){ delete document.documentElement.dataset.vt; },600); } if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
+  if(ds.tab){ var nt=ds.tab, ti=function(k){ for(var q=0;q<TABS.length;q++) if(TABS[q][0]===k) return q; return 0; }; if(nt!==tab){ document.documentElement.dataset.vt=ti(nt)>ti(tab)?"fwd":"back"; clearTimeout(smooth.vt); smooth.vt=setTimeout(function(){ delete document.documentElement.dataset.vt; },800); } if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
   if(ds.gir){ var ng=ds.gir; closeDlg(); switchGirone(ng,function(){ smooth(function(){ if(tab==="home"&&ng!==MYG) tab="classifica"; render(); window.scrollTo(0,0); }); }); return; }
   if(ds.unfol){ var uf=ds.unfol; FOL=FOL.filter(function(x){return x!==uf;}); saveFol(); if(uf===MYT&&FOL.length){ var nf=FOL[0]; closeDlg(); setMyTeam(nf); switchGirone(IDX[nf].g,function(){ tab="home"; partView="mine"; render(); }); return; } openFollow(); return; }
   if(ds.star){ toggleFav(ds.star); return; }
@@ -1902,11 +1904,14 @@ function segInd(root){
   (root||document).querySelectorAll(".seg").forEach(function(sg,i){
     var on=sg.querySelector('button[aria-pressed="true"]'); if(!on) return;
     if(!sg.closest("dialog")){ sg.style.viewTransitionName="seg"+i; sg.style.viewTransitionClass="segvt"; }
-    var key=(sg.getAttribute("aria-label")||"seg")+"|"+sg.children.length, ind=sg.querySelector(".seg-ind");
+    var key=(sg.getAttribute("aria-label")||"seg")+"|"+sg.querySelectorAll("button").length, ind=sg.querySelector(".seg-ind");
     if(!ind){ ind=document.createElement("i"); ind.className="seg-ind"; ind.setAttribute("aria-hidden","true"); sg.insertBefore(ind,sg.firstChild); sg.classList.add("has-ind"); }
     var pos=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight], old=SEGPOS[key];
     var put=function(p){ ind.style.transform="translate("+p[0]+"px,"+p[1]+"px)"; ind.style.width=p[2]+"px"; ind.style.height=p[3]+"px"; };
-    if(old && (old[0]!==pos[0]||old[2]!==pos[2])){ ind.style.transition="none"; put(old); ind.getBoundingClientRect(); ind.style.transition=""; put(pos); } else { ind.style.transition="none"; put(pos); ind.getBoundingClientRect(); ind.style.transition=""; }
+    var prevP=ind.dataset.p, cur=pos.join(",");
+    if(!prevP && old && (old[0]!==pos[0]||old[2]!==pos[2])){ ind.style.transition="none"; put(old); ind.getBoundingClientRect(); ind.style.transition=""; put(pos); }
+    else if(prevP!==cur){ ind.style.transition="none"; put(pos); ind.getBoundingClientRect(); ind.style.transition=""; }
+    ind.dataset.p=cur;
     SEGPOS[key]=pos;
   });
 }
@@ -1919,7 +1924,7 @@ function tabInd(){
   ind.style.width=w+"px"; ind.style.transform="translateX("+x+"px)";
   if(old && old[0]!==x && ind.animate && !(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)){
     var mid=(old[0]+x)/2, stretch=Math.min(1.35,1+Math.abs(x-old[0])/(w*4));
-    ind.animate([{transform:"translateX("+old[0]+"px) scale(1,1)"},{transform:"translateX("+mid+"px) scale("+stretch+",.92)",offset:.45},{transform:"translateX("+x+"px) scale(1,1)"}],{duration:480,easing:"cubic-bezier(.3,.9,.3,1.05)"});
+    ind.animate([{transform:"translateX("+old[0]+"px) scale(1,1)"},{transform:"translateX("+mid+"px) scale("+stretch+",.92)",offset:.45},{transform:"translateX("+x+"px) scale(1,1)"}],{duration:560,easing:"cubic-bezier(.3,.9,.3,1.05)"});
   }
   TABPOS=[x,w];
 }
