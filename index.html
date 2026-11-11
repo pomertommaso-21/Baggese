@@ -519,7 +519,10 @@ body.other .view{--mine:transparent;--mine-ink:inherit}
 .hero[data-view]{cursor:pointer}
 .mv-vs{border-top:1px solid var(--line);padding-top:14px;margin-top:4px;display:flex;flex-direction:column;gap:14px}
 .mv-vs .cmp-head{padding:3px 0}
-html{touch-action:manipulation}
+html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,img,.crest,nav.tabs{-webkit-touch-callout:none}
+button,nav.tabs,.seg,.chips{-webkit-user-select:none;user-select:none}
+img{-webkit-user-drag:none}
 .tp-w{position:relative;display:flex}
 .tp-w .tp{width:100%}
 .tp-star,.hero-star{border:0;background:none;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;flex:none}
@@ -606,7 +609,7 @@ nav.tabs button span{transition:transform .15s}
 nav.tabs button:active span{transform:scale(.9)}
 
 dialog{border:0;border-radius:22px;padding:0;width:min(560px,calc(100vw - 24px));max-height:calc(100vh - 40px);background:var(--surface);color:var(--fg);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
-dialog::backdrop{background:rgba(5,10,20,.6)}
+dialog::backdrop{background:rgba(5,10,20,.6);opacity:var(--bd,1)}
 dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 @media (max-width:719px){
   dialog{width:100%;max-width:100%;margin:auto 0 0;border-radius:24px 24px 0 0;max-height:90vh;max-height:90dvh;padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -653,22 +656,21 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
   dialog[open]::backdrop{animation:fade .22s ease-out}
   dialog.closing{animation:popOut .17s ease-in forwards}
   dialog.closing::backdrop{animation:fade .17s ease-in reverse forwards}
-  dialog.drag{transition:none} dialog.snap{transition:transform .2s ease-out}
+  dialog.drag{transition:none} dialog.snap{transition:transform .5s cubic-bezier(.32,.72,0,1)}
+  dialog.swap>.dlg{animation:swapIn .32s cubic-bezier(.32,.72,0,1)}
+  @keyframes swapIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
   @keyframes popOut{to{opacity:0;transform:translateY(16px) scale(.98)}}
   @keyframes fade{from{opacity:0}to{opacity:1}}
-  @media (max-width:719px){
-    dialog[open]{animation:sheetIn .42s cubic-bezier(.32,.72,0,1)}
-    dialog.closing{animation:sheetOut .26s cubic-bezier(.4,0,1,1) forwards}
-    @keyframes sheetIn{from{transform:translateY(100%)}to{transform:none}}
-    @keyframes sheetOut{to{transform:translateY(100%)}}
-  }
   .seg button,.rchip,nav.tabs button span,.btn{transition:background-color .18s,color .18s,transform .12s}
   .btn:active,.rchip:active,.board:active,.fx:active,.pl:active,.gl:active{transform:scale(.985)}
 }
 @media (prefers-reduced-motion:no-preference) and (max-width:719px){
-  dialog[open]{animation:sheetUp .3s cubic-bezier(.2,.85,.25,1)}
-  dialog.closing{animation:sheetDown .2s ease-in forwards}
+  dialog[open]{animation:sheetUp .5s cubic-bezier(.32,.72,0,1)}
+  dialog[open]::backdrop{animation:fade .5s cubic-bezier(.32,.72,0,1)}
+  dialog.closing{animation:sheetDown .36s cubic-bezier(.32,.72,0,1) forwards}
+  dialog.closing::backdrop{animation:fadeOut .36s ease forwards}
+  @keyframes fadeOut{to{opacity:0}}
   @keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
   @keyframes sheetDown{to{transform:translateY(100%)}}
 }
@@ -701,7 +703,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.22";
+var APP_VERSION = "2026-11-12.23";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -760,7 +762,8 @@ var CATS=["Prima","Seconda","Terza"];
 function isFav(id){ return FOL.indexOf(id)>=0; }
 function starBtn(id,cls){ var f=isFav(id); return '<button type="button" class="'+cls+'" data-star="'+id+'" aria-pressed="'+f+'" aria-label="'+(f?'Togli dalle preferite ':'Aggiungi alle preferite ')+esc(tname(id))+'">'+icon("star")+'</button>'; }
 function tpBtn(id,sub){ return '<div class="tp-w"><button type="button" class="tp'+(isFav(id)?' on':'')+'" data-openteam="'+id+'">'+crest(id,48)+'<span>'+esc(tname(id))+(sub?'<small>'+esc(sub)+'</small>':'')+'</span></button>'+starBtn(id,"tp-star")+'</div>'; }
-function toggleFav(id){
+function haptic(){ try { if(navigator.vibrate){ navigator.vibrate(8); return; } var l=document.createElement("label"); l.setAttribute("aria-hidden","true"); l.style.display="none"; var i=document.createElement("input"); i.type="checkbox"; i.setAttribute("switch",""); l.appendChild(i); document.head.appendChild(l); l.click(); document.head.removeChild(l); } catch(e){} }
+function toggleFav(id){ haptic();
   if(isFav(id)){
     if(FOL.length<2){ toast("Serve almeno una squadra preferita"); return; }
     FOL=FOL.filter(function(x){return x!==id;}); saveFol();
@@ -1188,7 +1191,7 @@ function shirtSvg(id){
   }
   return '<svg class="shirt" viewBox="0 0 32 32" aria-hidden="true"><defs><clipPath id="'+n+'"><path d="'+P+'"/></clipPath></defs><g clip-path="url(#'+n+')">'+b+'</g><path d="'+P+'" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1" stroke-linejoin="round"/></svg>';
 }
-function crest(id,size,extra){ var src=LOGOS[id], rem=!src&&IDX[id]&&IDX[id].logo; if(rem) src=IDX[id].logo; if(!src&&LOCALCREST&&IDX[id]){ src=id+".png"; rem=true; } return '<span class="crest'+(extra?' '+extra:'')+'" style="--s:'+(size||32)+'px">'+(src?'<img src="'+esc(src)+'" alt=""'+(rem?' referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'contents\'"':'')+'>'+(rem?'<span style="display:none">'+crestSvg(id)+'</span>':''):crestSvg(id))+'</span>'; }
+function crest(id,size,extra){ var src=LOGOS[id], rem=!src&&IDX[id]&&IDX[id].logo; if(rem) src=IDX[id].logo; if(!src&&LOCALCREST&&IDX[id]){ src=id+".png"; rem=true; } return '<span class="crest'+(extra?' '+extra:'')+'" style="--s:'+(size||32)+'px">'+(src?'<img src="'+esc(src)+'" alt="" decoding="async"'+(rem?' referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'contents\'"':'')+'>'+(rem?'<span style="display:none">'+crestSvg(id)+'</span>':''):crestSvg(id))+'</span>'; }
 
 /* helpers */
 var TABS=[["home","Home","home"],["partite","Partite","cal"],["classifica","Classifica","table"],["rosa","Squadre","team"],["gestione","Gestione","edit"]];
@@ -1609,13 +1612,15 @@ function openPlayerView(id){
   h+='<button class="btn" type="button" data-pedit="'+p.id+'">'+icon("edit")+'Modifica giocatore</button>';
   $("dlgBody").innerHTML=h; showDlg();
 }
-function showDlg(){ setTimeout(function(){ if(typeof segInd==="function") segInd(document); },0); var d=$("dlg"); clearTimeout(closeDlg._t); d.classList.remove("closing"); d.style.transform=""; if(!d.open) d.showModal(); d.scrollTop=0; }
+function showDlg(){ setTimeout(function(){ if(typeof segInd==="function") segInd(document); },0); var d=$("dlg"); clearTimeout(closeDlg._t); d.classList.remove("closing"); d.style.transform=""; if(!d.open) d.showModal(); else if(!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)){ d.classList.remove("swap"); void d.offsetWidth; d.classList.add("swap"); clearTimeout(showDlg._s); showDlg._s=setTimeout(function(){ d.classList.remove("swap"); },400); } d.scrollTop=0; }
 function closeDlg(){
   var d=$("dlg"); if(!d.open) return;
   var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
   if(reduce){ d.close(); return; }
   d.classList.add("closing"); clearTimeout(closeDlg._t);
-  closeDlg._t=setTimeout(function(){ d.classList.remove("closing"); d.style.transform=""; d.close(); },180);
+  var fin=function(){ clearTimeout(closeDlg._t); d.removeEventListener("animationend",onEnd); d.classList.remove("closing","snap"); d.style.transform=""; d.style.removeProperty("--bd"); if(d.open) d.close(); };
+  var onEnd=function(e){ if(e.target===d) fin(); };
+  d.addEventListener("animationend",onEnd); closeDlg._t=setTimeout(fin,480);
 }
 function smooth(fn){
   var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1789,6 +1794,7 @@ function applyPaste(){
 document.addEventListener("click", function(e){
   var b=e.target.closest("button,[data-tab],[data-go],[data-view]"); if(!b) return;
   var ds=b.dataset;
+  if((ds.tab&&ds.tab!==tab) || (b.matches("[data-cls],[data-srt],[data-pv],[data-cmode],[data-pv2],[data-pr],[data-fside],[data-filter],[data-themeset]") && b.getAttribute("aria-pressed")!=="true")) haptic();
   if(ds.tab){ var nt=ds.tab, ti=function(k){ for(var q=0;q<TABS.length;q++) if(TABS[q][0]===k) return q; return 0; }; if(nt!==tab){ document.documentElement.dataset.vt=ti(nt)>ti(tab)?"fwd":"back"; clearTimeout(smooth.vt); smooth.vt=setTimeout(function(){ delete document.documentElement.dataset.vt; },800); } if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
   if(ds.gir){ var ng=ds.gir; closeDlg(); switchGirone(ng,function(){ smooth(function(){ if(tab==="home"&&ng!==MYG) tab="classifica"; render(); window.scrollTo(0,0); }); }); return; }
   if(ds.unfol){ var uf=ds.unfol; FOL=FOL.filter(function(x){return x!==uf;}); saveFol(); if(uf===MYT&&FOL.length){ var nf=FOL[0]; closeDlg(); setMyTeam(nf); switchGirone(IDX[nf].g,function(){ tab="home"; partView="mine"; render(); }); return; } openFollow(); return; }
@@ -1901,9 +1907,12 @@ document.addEventListener("submit", function(e){
 $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); });
 (function(){
   var d=$("dlg"), sy=null, dy=0;
-  d.addEventListener("touchstart",function(e){ if(window.innerWidth>=720||d.scrollTop>0||e.target.closest("input,select,textarea")){ sy=null; return; } sy=e.touches[0].clientY; dy=0; d.classList.remove("snap"); },{passive:true});
-  d.addEventListener("touchmove",function(e){ if(sy===null) return; dy=e.touches[0].clientY-sy; if(dy>0 && d.scrollTop<=0){ d.classList.add("drag"); d.style.transform="translateY("+dy+"px)"; } },{passive:true});
-  d.addEventListener("touchend",function(){ if(sy===null) return; d.classList.remove("drag"); if(dy>110){ closeDlg(); } else { d.classList.add("snap"); d.style.transform=""; } sy=null; });
+  var lt=0, ly=0, vel=0;
+  d.addEventListener("touchstart",function(e){ if(window.innerWidth>=720||d.scrollTop>0||e.target.closest("input,select,textarea,.chips,.pchart")){ sy=null; return; } sy=e.touches[0].clientY; dy=0; vel=0; ly=sy; lt=e.timeStamp; d.classList.remove("snap"); },{passive:true});
+  d.addEventListener("touchmove",function(e){ if(sy===null) return; var y=e.touches[0].clientY; dy=y-sy; var dt=e.timeStamp-lt; if(dt>0){ vel=.7*vel+.3*((y-ly)/dt); ly=y; lt=e.timeStamp; }
+    if(dy>0 && d.scrollTop<=0){ d.classList.add("drag"); d.style.transform="translateY("+dy+"px)"; d.style.setProperty("--bd",String(Math.max(.25,1-dy/(d.offsetHeight||600)))); } },{passive:true});
+  d.addEventListener("touchend",function(){ if(sy===null) return; var was=d.classList.contains("drag"); d.classList.remove("drag"); sy=null; if(!was) return;
+    if(dy>110 || (vel>.5 && dy>24)){ haptic(); closeDlg(); } else { d.classList.add("snap"); d.style.transform=""; d.style.removeProperty("--bd"); } });
   var app=$("app"), tx=null, ty=null;
   app.addEventListener("touchstart",function(e){ tx=null; if(tab!=="partite"||partView!=="round"||(e.target.closest&&e.target.closest("#roundChips,.pchart"))) return; tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
   app.addEventListener("touchend",function(e){ if(tx===null) return; var t=e.changedTouches[0], dx=t.clientX-tx, dyy=t.clientY-ty; tx=null; if(Math.abs(dx)>60 && Math.abs(dx)>1.6*Math.abs(dyy)) stepRound(dx<0?1:-1); },{passive:true});
@@ -1911,7 +1920,7 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
   var py=null, pdy=0, ptr=$("ptr"), busy=false;
   window.addEventListener("touchstart",function(e){ py=null; var tg=e.target; if(busy||$("dlg").open||(window.scrollY||0)>0||(tg&&tg.closest&&tg.closest(".chips,.pchart,#roundCard"))) return; py=e.touches[0].clientY; pdy=0; },{passive:true});
   window.addEventListener("touchmove",function(e){ if(py===null) return; pdy=e.touches[0].clientY-py; if(pdy<=0||(window.scrollY||0)>0){ ptr.style.transform=""; ptr.classList.remove("show","ready"); return; } var d=Math.min(pdy*0.5,70); ptr.classList.add("show"); ptr.style.transform="translate(-50%,"+(d-50)+"px) rotate("+(d*5)+"deg)"; ptr.classList.toggle("ready",pdy>110); },{passive:true});
-  window.addEventListener("touchend",function(){ if(py===null) return; py=null; if(pdy>110 && !busy){ busy=true; ptr.classList.add("spinning"); ptr.style.transform="translate(-50%,20px)"; var t0=Date.now(); Promise.resolve(checkNewer(true)).then(function(){ setTimeout(done,Math.max(0,700-(Date.now()-t0))); }); } else done(); function done(){ busy=false; ptr.classList.remove("show","ready","spinning"); ptr.style.transform=""; } });
+  window.addEventListener("touchend",function(){ if(py===null) return; py=null; if(pdy>110 && !busy){ busy=true; haptic(); ptr.classList.add("spinning"); ptr.style.transform="translate(-50%,20px)"; var t0=Date.now(); Promise.resolve(checkNewer(true)).then(function(){ setTimeout(done,Math.max(0,700-(Date.now()-t0))); }); } else done(); function done(){ busy=false; ptr.classList.remove("show","ready","spinning"); ptr.style.transform=""; } });
   var ticking=false;
   function onScroll(){ if(ticking) return; ticking=true; requestAnimationFrame(function(){ document.body.classList.toggle("scrolled", (window.scrollY||0)>70); ticking=false; }); }
   window.addEventListener("scroll",onScroll,{passive:true});
