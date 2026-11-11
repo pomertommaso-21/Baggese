@@ -523,6 +523,22 @@ body.other .view{--mine:transparent;--mine-ink:inherit}
 .srt{align-self:flex-start;margin-top:-6px}
 .srt-gf .ct-head span:nth-child(4),.srt-gf .crow .c:nth-child(4){color:var(--fg);font-weight:800}
 .srt-gs .ct-head span:nth-child(5),.srt-gs .crow .c:nth-child(5){color:var(--fg);font-weight:800}
+#clsChips{margin:-4px -2px -4px}
+#clsChips .rchip{min-width:36px;height:36px;border-radius:10px;font-size:15px}
+.pg-wrap{overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none}
+.pg{border-collapse:separate;border-spacing:3px;font-size:12px;font-variant-numeric:tabular-nums}
+.pg th{font-size:10.5px;font-weight:700;color:var(--muted);text-align:center;padding:0 0 2px}
+.pg td{width:26px;min-width:26px;height:26px;text-align:center;border-radius:6px;font-weight:700;color:var(--muted);background:var(--surface-2)}
+.pg td.z{background:color-mix(in srgb,var(--zc) 22%,transparent);color:var(--fg)}
+.pg .pg-n{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;padding:0 6px 0 0}
+.pg-t{display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;color:inherit;font:inherit;font-size:12.5px;font-weight:600;width:104px;text-align:left}
+.pg-t span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pg tr.me .pg-t{color:var(--brand);font-weight:800}
+.pg tr.me td{box-shadow:inset 0 0 0 1.5px var(--brand);color:var(--fg)}
+#progChips .rchip{min-width:36px;height:36px;border-radius:10px;font-size:15px}
+.pg-card{border:0;box-shadow:none;padding:0;background:none}
+.pg-card .card-head{display:none}
+.dlg .seg.sm{align-self:flex-start}
 .tp small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:2px}
 #tpSearch{margin:2px 0 12px}
 .tpsteps{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
@@ -635,7 +651,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.12";
+var APP_VERSION = "2026-11-12.13";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -906,14 +922,14 @@ function openClsFilter(){
 function lastPlayedRound(){ var r=0; S.matches.forEach(function(m){ if(played(m)&&+m.round>r) r=+m.round; }); return r; }
 var HIST=null;
 function history(){ if(HIST) return HIST; var L=lastPlayedRound(), o={}; for(var r=1;r<=L;r++) standings(r).forEach(function(x){ (o[x.id]=o[x.id]||[]).push({r:r,pos:x.pos,pts:x.pts}); }); HIST={L:L,by:o}; return HIST; }
-function prevPos(id){ var h=history(); if(h.L<2) return null; var a=h.by[id]; return a&&a[h.L-2]?a[h.L-2].pos:null; }
+function prevPos(id){ var h=history(), L=MVR||h.L; if(L<2) return null; var a=h.by[id]; return a&&a[L-2]?a[L-2].pos:null; }
 var ZLAB={promo:"Promozione",po:"Playoff",pl:"Playout"};
 function zoneOf(pos){ var n=S.teams.length; if(n<8||!pos) return null; if(pos===1) return "promo"; if(pos<=5) return "po"; if(pos===n) return "rel"; if(pos>n-5) return "pl"; return null; }
 function zAttr(pos){ if(ZOFF) return ''; var z=zoneOf(pos); return z?' data-z="'+z+'" style="--zc:var(--z-'+z+')"':''; }
 function zLegend(){ var n=S.teams.length; return '<div class="zleg"><span><i style="background:var(--z-promo)"></i>Promozione · 1°</span><span><i style="background:var(--z-po)"></i>Playoff · 2°–5°</span><span><i style="background:var(--z-pl)"></i>Playout · '+(n-4)+'°–'+(n-1)+'°</span><span><i style="background:var(--z-rel)"></i>Retrocessione · '+n+'°</span></div>'; }
 function showArrows(){ try { return localStorage.getItem("baggese-arrows")!=="0"; } catch(e){ return true; } }
 function mvHtml(id,pos){ if(ZOFF||!showArrows()) return ''; var p=prevPos(id); if(p==null||!pos) return ''; var d=p-pos; if(d>0) return '<span class="mv up" title="Sale di '+d+' rispetto alla giornata prima">▲'+d+'</span>'; if(d<0) return '<span class="mv dn" title="Scende di '+(-d)+' rispetto alla giornata prima">▼'+(-d)+'</span>'; return ''; }
-function prevLabel(id,pos){ if(ZOFF) return ''; var p=prevPos(id), h=history(); if(p==null||!pos) return ''; return '<span class="box">Dopo la '+(h.L-1)+'ª: '+p+'°</span>'; }
+function prevLabel(id,pos){ if(ZOFF) return ''; var p=prevPos(id), h=history(); if(p==null||!pos) return ''; return '<span class="box">Dopo la '+((MVR||h.L)-1)+'ª: '+p+'°</span>'; }
 function posChart(id,half){
   var h=history(), a=h.by[id]; if(!a||a.length<2) return '<p class="meta" style="margin:0">Il grafico compare dopo la seconda giornata.</p>';
   var n=Math.max(2,S.teams.length), vw=window.innerWidth||390, cw=vw>=960?Math.min(vw-232,1120)-70:vw-70; if(half&&vw>=720) cw=(cw-16)/2; var W=Math.round(Math.max(280,Math.min(cw,900))), H=W<480?190:220, L=36, R=40, T=16, B=28, iw=W-L-R, ih=H-T-B, step=ih/(n-1);
@@ -1074,13 +1090,13 @@ var IC={
  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
  plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="M6 6l12 12M18 6 6 18"/>',
  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.6 2.6-1.4 4.2H9.8L8.4 10.1z"/>',
- left:'<path d="M15 5l-7 7 7 7"/>', swap:'<path d="M7 4v13M3.5 13.5L7 17l3.5-3.5M17 20V7M13.5 10.5L17 7l3.5 3.5"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', chev:'<path d="M7 10l5 5 5-5"/>', updn:'<path d="M12 4.5l4 5H8z" stroke-linejoin="round"/><path d="M12 19.5l-4-5h8z" stroke-linejoin="round"/>', star:'<path d="M12 3.8l2.5 5.1 5.6.8-4.05 3.95.96 5.6L12 16.6l-5 2.65.96-5.6L3.9 9.7l5.6-.8z" stroke-linejoin="round"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>',
+ left:'<path d="M15 5l-7 7 7 7"/>', swap:'<path d="M7 4v13M3.5 13.5L7 17l3.5-3.5M17 20V7M13.5 10.5L17 7l3.5 3.5"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', chev:'<path d="M7 10l5 5 5-5"/>', clock:'<circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2"/>', updn:'<path d="M12 4.5l4 5H8z" stroke-linejoin="round"/><path d="M12 19.5l-4-5h8z" stroke-linejoin="round"/>', star:'<path d="M12 3.8l2.5 5.1 5.6.8-4.05 3.95.96 5.6L12 16.6l-5 2.65.96-5.6L3.9 9.7l5.6-.8z" stroke-linejoin="round"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>',
  paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6"/>'
 };
 function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'; }
 
 /* ---------- render ---------- */
-var clsSort = "pts", partView = "mine", selRound = null, slideDir = 0, calJump = false;
+var clsSort = "pts", clsRound = null, MVR = null, partView = "mine", selRound = null, slideDir = 0, calJump = false;
 
 /* stemmi: stessa cornice tonda per tutti; logo caricato o scudetto generato con i colori sociali */
 var KITS={t_baggese:["#C8202A","#FFFFFF","stripes"],t_ardor:["#1A1A1A","#F08A24","sleeves"],t_artemide:["#F2D21B","#111111","sleeves"],t_bonola:["#178F4A","#F2D43A","sleeves"],t_cesano:["#2A1FA8","#F2E21B","sleeves"],t_concept:["#4B5563","#FFFFFF","sleeves"],t_corsico:["#5A1430","#FFFFFF","sleeves"],t_novella:["#C81E2B","#1A1A1A","sleeves"],t_trezzano:["#A77BC0","#FFFFFF","sleeves"],t_seguro:["#5AA9D6","#FFFFFF","sleeves"],t_triestina:["#D52B32","#FFFFFF","sleeves"],t_velasca:["#D9161B","#FFFFFF","sleeves"],t_vercellese:["#D9262B","#23439A","halves"],t_vige:["#1F2A5C","#D62B35","sleeves"],t_villapizzone:["#F7D90A","#5E1C78","sleeves"],t_viscontini:["#0E4A78","#F2D43A","sleeves"],"pb_schiaffino":["#E02020","#FFFFFF","sleeves"],"pb_briantea":["#111111","#C8A26A","sleeves"],"pb_cassina":["#1F2366","#F2D21B","sleeves"],"pb_cantu":["#F5DC0A","#0B3D63","sleeves"],"pb_zeta":["#111111","#D9201E","sleeves"],"pb_giussano":["#FFFFFF","#E01E1E","halves"],"pb_itala":["#FFFFFF","#111111","sleeves"],"pb_dominante":["#111111","#2E7DC0","stripes"],"pb_leoteam":["#FFFFFF","#E01E1E","sleeves"],"pb_lomazzo":["#FFFFFF","#2060C0","sleeves"],"pb_luisago":["#F5D90A","#111111","sleeves"],"pb_montesolaro":["#9CC3EF","#1F5F9F","sleeves"],"pb_cadorago":["#1C1F45","#F5D90A","sleeves"],"pb_lissone":["#0B2463","#FFFFFF","sleeves"],"pb_triuggese":["#E01E1E","#FFFFFF","sleeves"],"pb_cermenate":["#FFFFFF","#111111","sleeves"],"pa_ausonia1931":["#111111", "#1E7A3E", "stripes"],"pa_buccinasco":["#D2232A", "#1F3F8F", "sleeves"],"pa_centroschuster":["#1E8F4E", "#111111", "quarters"],"pa_frogmilano":["#F2D21B", "#1E7A3E", "sleeves"],"pa_garibaldina193":["#D2232A", "#1E8F4E", "halves"],"pa_iris1914":["#FFFFFF", "#111111", "halves"],"pa_leonexiiisport":["#FFFFFF", "#C8A23C", "sleeves"],"pa_nevadacalcio":["#FFFFFF", "#111111", "sleeves"],"pa_orpas":["#2E9E3E", "#F2D21B", "sleeves"],"pa_partizanbonola":["#111111", "#FFFFFF", "sleeves"],"pa_polisportivadi":["#F26A1B", "#FFFFFF", "sleeves"],"pa_propeschierabo":["#7A1F2B", "#3A8FD0", "sleeves"],"pa_quintoromano":["#1E8F4E", "#FFFFFF", "sleeves"],"pa_sangiulianocvs":["#1F3F8F", "#D2232A", "sleeves"],"pa_settimomilanes":["#D2232A", "#FFFFFF", "stripes"],"pa_villa":["#FFFFFF", "#111111", "sleeves"],"pg_albuzzano":["#7A1F2B", "#FFFFFF", "sleeves"],"pg_asvarzi":["#FFFFFF", "#7A1F2B", "stripes"],"pg_casorateprimo":["#2A6FD0", "#F2D21B", "sleeves"],"pg_cassolese":["#5AA9D6", "#FFFFFF", "stripes"],"pg_castelnovetto":["#7EC8E3", "#0F1E3D", "sleeves"],"pg_gropellosangio":["#FFFFFF", "#6A3FA0", "halves"],"pg_nizzacalcio":["#E01E1E", "#F2D21B", "sleeves"],"pg_oratoriostrade":["#F2D21B", "#111111", "stripes"],"pg_psabressana191":["#1E8F4E", "#FFFFFF", "stripes"],"pg_realcertosa":["#7A1F2B", "#FFFFFF", "sleeves"],"pg_realtrezzano":["#111111", "#F2D21B", "sleeves"],"pg_rondine1924":["#D2232A", "#FFFFFF", "sleeves"],"pg_rozzanocalcio":["#2E9E3E", "#F2D21B", "sleeves"],"pg_valversa":["#1E7A3E", "#FFFFFF", "sleeves"],"pg_virtusbinasco":["#1F3F8F", "#D2232A", "halves"],"pg_zibidosangiaco":["#D2232A", "#F2D21B", "stripes"]};
@@ -1149,7 +1165,8 @@ function render(){
   $("app").innerHTML='<div class="view">'+v()+'</div>';
   var tt={home:[me(),tname(me())],partite:[null,"Partite"],classifica:[null,"Classifica"],rosa:[curRosaTeam(),tname(curRosaTeam())],gestione:[null,"Gestione"]}[tab];
   $("topbar").innerHTML=(tt[0]?crest(tt[0],26):'')+'<span class="ellipsis">'+esc(tt[1])+'</span>';
-  var rc=document.querySelector('.rchip[aria-pressed="true"]'), strip=$("roundChips");
+  var cc=document.querySelector('#clsChips .rchip[aria-pressed="true"]'), cs=$("clsChips"); if(cc&&cs) cs.scrollLeft=cc.offsetLeft-cs.clientWidth/2+cc.clientWidth/2;
+  var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips");
   if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2;
 }
 
@@ -1306,7 +1323,7 @@ function sameTables(a,b){ if(a.length!==b.length) return false; for(var i=0;i<a.
 function vClassifica(){
   var tb=currentTable(), my=me();
   var cf=clsRange();
-  var fbtn=(clsView==="squadre"&&clsSort==="pts")?'<button class="iconbtn arrbtn'+(showArrows()?' on':'')+'" type="button" data-act="arrows" aria-pressed="'+showArrows()+'" aria-label="'+(showArrows()?'Nascondi':'Mostra')+' le frecce di posizione">'+icon("updn")+'</button><button class="iconbtn'+(cf.active?' on':'')+'" type="button" data-act="clsFilter" aria-label="Filtra la classifica'+(cf.active?' (filtro attivo)':'')+'">'+icon("filter")+'</button>':'';
+  var fbtn=(clsView==="squadre"&&clsSort==="pts")?'<button class="iconbtn" type="button" data-act="prog" aria-label="Classifica giornata per giornata">'+icon("clock")+'</button><button class="iconbtn arrbtn'+(showArrows()?' on':'')+'" type="button" data-act="arrows" aria-pressed="'+showArrows()+'" aria-label="'+(showArrows()?'Nascondi':'Mostra')+' le frecce di posizione">'+icon("updn")+'</button><button class="iconbtn'+(cf.active?' on':'')+'" type="button" data-act="clsFilter" aria-label="Filtra la classifica'+(cf.active?' (filtro attivo)':'')+'">'+icon("filter")+'</button>':'';
   var h=header("Classifica",1);
   if (S.players.some(function(p){return p.teamId && p.teamId!==my;})){
     h+='<div class="seg" role="group" aria-label="Classifica"><button type="button" data-cls="squadre" aria-pressed="'+(clsView==="squadre")+'">Squadre</button><button type="button" data-cls="marcatori" aria-pressed="'+(clsView==="marcatori")+'">Marcatori</button>'+'</div>';
@@ -1320,25 +1337,44 @@ function vClassifica(){
   var calc=standings(), imp=importedRows();
   h+='<div class="seg sm srt" role="group" aria-label="Ordina">'+[["pts","Punti"],["gf","Attacco"],["gs","Difesa"]].map(function(o){ return '<button type="button" data-srt="'+o[0]+'" aria-pressed="'+(clsSort===o[0])+'">'+o[1]+'</button>'; }).join("")+'</div>';
   if (clsSort!=="pts"){ var k=clsSort, rs=tb.rows.slice().sort(function(a,b){ return k==="gf"? (b.gf-a.gf||a.gs-b.gs) : (a.gs-b.gs||b.gf-a.gf); }); return h+'<section class="card"><div class="card-head"><h2>'+(k==="gf"?'Miglior attacco':'Miglior difesa')+'</h2><span class="meta">'+(k==="gf"?'gol fatti':'gol subiti')+'</span></div>'+statList(rs,k)+'</section><span class="tiny muted">'+(k==="gf"?'Ordinata per gol fatti; a parità conta chi ne ha subiti meno.':'Ordinata per gol subiti, dal meno battuto; a parità conta chi ne ha fatti di più.')+' Tocca una squadra per aprirne la scheda.</span>'; }
+  var CR=null;
   if (cf.active){ tb={src:"calc", rows:filteredTable(cf.from,cf.to,cf.side)}; calc=tb.rows; ZOFF=true; }
-  if (!cf.active && imp.length && !sameTables(calc,imp)){
+  if (!cf.active && !CR && imp.length && !sameTables(calc,imp)){
     h+='<div class="seg" role="group" aria-label="Origine classifica"><button type="button" data-src="calc" aria-pressed="'+(tb.src==="calc")+'">Dai risultati</button><button type="button" data-src="imp" aria-pressed="'+(tb.src==="imp")+'">Importata</button></div>';
   }
   var forms={}; if(tb.src==="calc") calc.forEach(function(r){ forms[r.id]=(r.form||[]).slice(-5); });
   h+=compactTable(tb,forms);
   h+='<section class="card flush only-wide"><div class="tbl"><table><thead><tr><th>#</th><th class="name">Squadra</th><th>Pt</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th><th>DR</th>'+(tb.src==="calc"?'<th>Forma</th>':'')+'</tr></thead><tbody>'+tb.rows.map(function(r){ var dr=(+r.gf||0)-(+r.gs||0); return '<tr'+(r.id===my?' class="me"':'')+zAttr(r.pos)+'><td><span class="pcell"><span class="posn">'+r.pos+'</span></span></td><td class="name"><button type="button" class="tbtn" data-team="'+r.id+'">'+crest(r.id,30)+'<span>'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</button></td><td class="pts">'+r.pts+'</td><td>'+r.g+'</td><td>'+r.v+'</td><td>'+r.n+'</td><td>'+r.p+'</td><td>'+r.gf+':'+r.gs+'</td><td>'+(dr>0?"+":dr<0?"−":"")+Math.abs(dr)+'</td>'+(tb.src==="calc"?'<td><span class="fdots">'+(forms[r.id]||[]).map(function(f){return '<span class="r-'+f+'">'+f+'</span>';}).join("")+'</span></td>':'')+'</tr>'; }).join("")+'</tbody></table></div></section>';
-  ZOFF=false;
+  ZOFF=false; MVR=null;
   if(cf.active) h+='<span class="tiny muted">Classifica calcolata solo sulle partite dalla '+cf.from+'ª alla '+cf.to+'ª giornata, '+SIDE_LAB[cf.side]+'. Niente zone e frecce, perché non è la classifica ufficiale.</span>';
   else h+=zLegend();
   if(!cf.active) h+='<span class="tiny muted">'+(tb.src==="calc"?"Calcolata dai risultati: 3 punti a vittoria, 1 a pareggio. A parità contano differenza reti e gol fatti. Le frecce confrontano con la giornata precedente. Forma: ultime 5 partite, la più recente a destra.":"Copiata dalla fonte così com’era al momento dell’importazione.")+' <span class="only-wide" style="display:inline">Tocca una squadra per aprirne la scheda.</span><span class="only-narrow" style="display:inline">G partite giocate, GF gol fatti, GS gol subiti, DR differenza reti. Tocca una squadra per vedere vittorie, pareggi, sconfitte e forma.</span></span>';
   h+='<section class="card"><div class="card-head"><h2>Andamento</h2><div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div></div>'+(chartMode==="pts"?ptsChart(my):posChart(my))+'</section>';
   return h;
 }
+var progView="round", progRound=null;
+function openProg(keep){
+  var L=lastPlayedRound(); if(L<2){ toast("Serve almeno la seconda giornata"); return; }
+  var r=(progRound&&progRound<=L)?progRound:L, body='';
+  if(progView==="round"){
+    MVR=r; var tb={src:"calc",rows:standings(r)}, forms={}; tb.rows.forEach(function(x){ forms[x.id]=(x.form||[]).slice(-5); });
+    body='<div class="chips" id="progChips" role="group" aria-label="Giornata">'+Array.from({length:L},function(_,i){ var q=i+1; return '<button type="button" class="rchip" data-pr="'+q+'" aria-pressed="'+(q===r)+'">'+q+'</button>'; }).join("")+'</div>'+compactTable(tb,forms).replace('only-narrow','').replace(/ style="view-transition-name:[^"]*"/g,'')+zLegend();
+    MVR=null;
+  } else body=posGrid().replace(/^<section class="card">/,'<section class="card pg-card">');
+  $("dlgBody").innerHTML='<div class="row between"><h2>Classifica nel tempo</h2><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div><div class="seg sm" role="group" aria-label="Vista"><button type="button" data-pv2="round" aria-pressed="'+(progView==="round")+'">Giornata per giornata</button><button type="button" data-pv2="grid" aria-pressed="'+(progView==="grid")+'">Tabellone</button></div>'+(progView==="round"?'<p class="small muted" style="margin:0">Classifica dopo la '+r+'ª giornata. Le frecce confrontano con la giornata prima.</p>':'')+body;
+  if(!keep) showDlg();
+  var pc=document.querySelector('#progChips .rchip[aria-pressed="true"]'), ps=$("progChips"); if(pc&&ps) ps.scrollLeft=pc.offsetLeft-ps.clientWidth/2+pc.clientWidth/2;
+}
+function posGrid(){
+  var h=history(), L=h.L, my=me(); if(L<2) return '';
+  var now=standings(); 
+  return '<section class="card"><div class="card-head"><h2>Tabellone</h2><span class="meta">posizione dopo ogni giornata</span></div><div class="pg-wrap"><table class="pg"><thead><tr><th class="pg-n"></th>'+Array.from({length:L},function(_,i){return '<th>'+(i+1)+'</th>';}).join("")+'</tr></thead><tbody>'+now.map(function(r){ var a=h.by[r.id]||[]; return '<tr'+(r.id===my?' class="me"':'')+'><th class="pg-n"><button type="button" class="pg-t" data-team="'+r.id+'">'+crest(r.id,18)+'<span>'+esc(tname(r.id))+'</span></button></th>'+a.map(function(x){ var z=zoneOf(x.pos); return '<td'+(z?' style="--zc:var(--z-'+z+')" class="z"':'')+'>'+x.pos+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></section>';
+}
 function compactTable(tb,forms){
   var my=me();
   return '<section class="card flush only-narrow"><div class="ct-head"><span>#</span><span style="text-align:left">Squadra</span><span>G</span><span>GF</span><span>GS</span><span>DR</span><span>Pt</span></div><div class="list">'+tb.rows.map(function(r){
     var dr=(+r.gf||0)-(+r.gs||0), f=forms[r.id]||[];
-    return '<div class="crow'+(r.id===my?' me':'')+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,26)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span><span class="c">'+r.g+'</span><span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span><span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span><span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
+    return '<div class="crow'+(r.id===my?' me':'')+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" style="view-transition-name:vt_'+r.id+'" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,26)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span><span class="c">'+r.g+'</span><span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span><span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span><span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
   }).join("")+'</div></section>';
 }
 function hsplit(){ var o={}; S.matches.forEach(function(m){ if(!played(m)) return; var hg=+m.hg, ag=+m.ag; [[m.homeId,"c",hg,ag],[m.awayId,"t",ag,hg]].forEach(function(x){ var r=o[x[0]]=o[x[0]]||{cgf:0,cgs:0,tgf:0,tgs:0}; r[x[1]+"gf"]+=x[2]; r[x[1]+"gs"]+=x[3]; }); }); return o; }
@@ -1714,6 +1750,8 @@ document.addEventListener("click", function(e){
   if(ds.myteam){ var nt3=ds.myteam, g3=IDX[nt3]?IDX[nt3].g:G; closeDlg(); setMyTeam(nt3); switchGirone(g3,function(){ smooth(function(){ tab="home"; partView="mine"; render(); window.scrollTo(0,0); }); }); toast("Ora segui "+tname(nt3)); return; }
   if(ds.goal){ try { localStorage.setItem("baggese-goal",ds.goal); } catch(e){} closeDlg(); render(); return; }
   if(ds.cmode){ chartMode=ds.cmode; render(); return; }
+  if(ds.pr){ progRound=+ds.pr; openProg(true); return; }
+  if(ds.pv2){ progView=ds.pv2; openProg(true); return; }
   if(ds.srt){ var sv=ds.srt; smooth(function(){ clsSort=sv; render(); }); return; }
   if(ds.cls){ var cv=ds.cls; smooth(function(){ clsView=cv; render(); }); return; }
   if(ds.fside){ openClsFilter.side=ds.fside; document.querySelectorAll("[data-fside]").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.fside===ds.fside)); }); return; }
@@ -1745,6 +1783,7 @@ document.addEventListener("click", function(e){
     case "follow": openFollow(); break;
     case "addFollow": openTeamPicker(false); break;
     case "pickGirone": openGironi(); break;
+    case "prog": progRound=null; openProg(); break;
     case "arrows": try { localStorage.setItem("baggese-arrows",showArrows()?"0":"1"); } catch(e){} render(); toast(showArrows()?"Frecce visibili":"Frecce nascoste"); break;
     case "clsApply": var ff=+$("fFrom").value, ft=+$("fTo").value; if(ff>ft){ var tmp=ff; ff=ft; ft=tmp; } clsF={from:ff,to:ft,side:openClsFilter.side||"all"}; closeDlg(); render(); break;
     case "clsReset": clsF={from:0,to:0,side:"all"}; closeDlg(); render(); break;
