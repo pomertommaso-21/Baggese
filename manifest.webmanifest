@@ -3,7 +3,7 @@
   "short_name": "Baggese",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#A8172A",
+  "background_color": "#F1F1F3",
   "theme_color": "#F1F1F3",
   "icons": [
     {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
