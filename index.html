@@ -413,14 +413,20 @@ body.scrolled .topbar{opacity:1;transform:none;visibility:visible;transition:opa
 /* passaggi tra le sezioni */
 nav.tabs{view-transition-name:tabs}
 .topbar{view-transition-name:topbar}
-::view-transition-old(root){animation:vtOut .16s ease-out both}
-::view-transition-new(root){animation:vtIn .26s cubic-bezier(.2,.8,.2,1) both}
-@keyframes vtOut{to{opacity:0}}
-@keyframes vtIn{from{opacity:0;transform:translateY(10px)}}
-html[data-vt="fwd"]::view-transition-new(root){animation:vtInF .3s cubic-bezier(.2,.8,.2,1) both}
-html[data-vt="back"]::view-transition-new(root){animation:vtInB .3s cubic-bezier(.2,.8,.2,1) both}
-@keyframes vtInF{from{opacity:0;transform:translateX(28px)}}
-@keyframes vtInB{from{opacity:0;transform:translateX(-28px)}}
+::view-transition-old(root){animation:vtFadeOut .16s ease-out both}
+::view-transition-new(root){animation:vtFadeIn .2s ease-out both}
+@keyframes vtFadeOut{to{opacity:0}}
+@keyframes vtFadeIn{from{opacity:0}}
+/* cambio di scheda: scorrimento orizzontale, la pagina vecchia esce mentre la nuova entra */
+html[data-vt]::view-transition-old(root),html[data-vt]::view-transition-new(root){animation-duration:.34s;animation-timing-function:cubic-bezier(.32,.72,0,1);animation-fill-mode:both}
+html[data-vt="fwd"]::view-transition-old(root){animation-name:vtOutL}
+html[data-vt="fwd"]::view-transition-new(root){animation-name:vtInR}
+html[data-vt="back"]::view-transition-old(root){animation-name:vtOutR}
+html[data-vt="back"]::view-transition-new(root){animation-name:vtInL}
+@keyframes vtOutL{to{transform:translateX(-22%);opacity:0}}
+@keyframes vtInR{from{transform:translateX(22%);opacity:0}}
+@keyframes vtOutR{to{transform:translateX(22%);opacity:0}}
+@keyframes vtInL{from{transform:translateX(-22%);opacity:0}}
 @supports (view-transition-name:none){.view{animation:none}}
 @media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 
@@ -598,7 +604,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
   .toast{bottom:32px;left:calc(50% + 116px)}
 }
 @media (prefers-reduced-motion:no-preference){
-  .view{animation:in .22s ease-out}
+  .view{animation:fade .2s ease-out}
   @keyframes in{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
   .slide-l{animation:slideL .24s cubic-bezier(.2,.8,.2,1)} .slide-r{animation:slideR .24s cubic-bezier(.2,.8,.2,1)}
   @keyframes slideL{from{opacity:.2;transform:translateX(36px)}to{opacity:1;transform:none}}
@@ -651,7 +657,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.13";
+var APP_VERSION = "2026-11-12.14";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1374,7 +1380,7 @@ function compactTable(tb,forms){
   var my=me();
   return '<section class="card flush only-narrow"><div class="ct-head"><span>#</span><span style="text-align:left">Squadra</span><span>G</span><span>GF</span><span>GS</span><span>DR</span><span>Pt</span></div><div class="list">'+tb.rows.map(function(r){
     var dr=(+r.gf||0)-(+r.gs||0), f=forms[r.id]||[];
-    return '<div class="crow'+(r.id===my?' me':'')+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" style="view-transition-name:vt_'+r.id+'" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,26)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span><span class="c">'+r.g+'</span><span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span><span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span><span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
+    return '<div class="crow'+(r.id===my?' me':'')+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,26)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span><span class="c">'+r.g+'</span><span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span><span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span><span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
   }).join("")+'</div></section>';
 }
 function hsplit(){ var o={}; S.matches.forEach(function(m){ if(!played(m)) return; var hg=+m.hg, ag=+m.ag; [[m.homeId,"c",hg,ag],[m.awayId,"t",ag,hg]].forEach(function(x){ var r=o[x[0]]=o[x[0]]||{cgf:0,cgs:0,tgf:0,tgs:0}; r[x[1]+"gf"]+=x[2]; r[x[1]+"gs"]+=x[3]; }); }); return o; }
@@ -1735,7 +1741,7 @@ function applyPaste(){
 document.addEventListener("click", function(e){
   var b=e.target.closest("button,[data-tab],[data-go],[data-view]"); if(!b) return;
   var ds=b.dataset;
-  if(ds.tab){ var nt=ds.tab, ti=function(k){ for(var q=0;q<TABS.length;q++) if(TABS[q][0]===k) return q; return 0; }; document.documentElement.dataset.vt=ti(nt)>=ti(tab)?"fwd":"back"; if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
+  if(ds.tab){ var nt=ds.tab, ti=function(k){ for(var q=0;q<TABS.length;q++) if(TABS[q][0]===k) return q; return 0; }; if(nt!==tab){ document.documentElement.dataset.vt=ti(nt)>ti(tab)?"fwd":"back"; clearTimeout(smooth.vt); smooth.vt=setTimeout(function(){ delete document.documentElement.dataset.vt; },600); } if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
   if(ds.gir){ var ng=ds.gir; closeDlg(); switchGirone(ng,function(){ smooth(function(){ if(tab==="home"&&ng!==MYG) tab="classifica"; render(); window.scrollTo(0,0); }); }); return; }
   if(ds.unfol){ var uf=ds.unfol; FOL=FOL.filter(function(x){return x!==uf;}); saveFol(); if(uf===MYT&&FOL.length){ var nf=FOL[0]; closeDlg(); setMyTeam(nf); switchGirone(IDX[nf].g,function(){ tab="home"; partView="mine"; render(); }); return; } openFollow(); return; }
   if(ds.star){ toggleFav(ds.star); return; }
