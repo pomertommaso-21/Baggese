@@ -273,9 +273,9 @@ textarea{padding:10px 12px;min-height:150px;resize:vertical;font-size:13px}
 tr[data-z] td:first-child{box-shadow:inset 2px 0 0 var(--zc)}
 .mini-row[data-z]{box-shadow:inset 2px 0 0 var(--zc)}
 .pcell{position:relative;display:inline-flex;flex-direction:column;align-items:center;min-width:26px}
-.pcell .mv{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:1px}
-.mv{font-size:10.5px;font-weight:800;line-height:1;white-space:nowrap}
-.mv.up{color:var(--win)} .mv.dn{color:var(--loss)} .mv.eq{color:var(--muted);font-weight:600}
+
+.mv{flex:none;font-size:10.5px;font-weight:800;line-height:1;white-space:nowrap;padding:3px 5px;border-radius:6px;margin-left:2px}
+.mv.up{color:var(--win);background:color-mix(in srgb,var(--win) 13%,transparent)} .mv.dn{color:var(--loss);background:color-mix(in srgb,var(--loss) 13%,transparent)} .mv.eq{color:var(--muted);font-weight:600}
 .zleg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted);font-weight:600}
 .zleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .tbtn{display:flex;align-items:center;gap:10px;font-weight:600;background:none;border:0;padding:0;color:inherit;text-align:left;min-height:34px}
@@ -328,7 +328,7 @@ tr[data-z] td:first-child{box-shadow:inset 2px 0 0 var(--zc)}
 .crow{border-top:1px solid var(--line);box-shadow:inset 2px 0 0 var(--zc,transparent)}
 .crow-main{width:100%;background:none;border:0;color:inherit;padding:9px 0;text-align:left;font:inherit;font-size:14px;font-variant-numeric:tabular-nums}
 .crow .nm{display:flex;align-items:center;gap:7px;min-width:0;font-weight:600;font-size:13.5px;line-height:1.2}
-.crow .nm>span:last-child{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:normal;hyphens:none}
+.crow .nm>.tn{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:normal;hyphens:none}
 .crow .c.dr{font-weight:700}
 .crow .pts{text-align:center}
 .crow.me .nm,.crow.me .pts,.crow.me .posn{color:var(--brand)} .crow.me .nm{font-weight:800}
@@ -616,7 +616,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.8";
+var APP_VERSION = "2026-11-12.9";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -892,7 +892,8 @@ var ZLAB={promo:"Promozione",po:"Playoff",pl:"Playout"};
 function zoneOf(pos){ var n=S.teams.length; if(n<8||!pos) return null; if(pos===1) return "promo"; if(pos<=5) return "po"; if(pos===n) return "rel"; if(pos>n-5) return "pl"; return null; }
 function zAttr(pos){ if(ZOFF) return ''; var z=zoneOf(pos); return z?' data-z="'+z+'" style="--zc:var(--z-'+z+')"':''; }
 function zLegend(){ var n=S.teams.length; return '<div class="zleg"><span><i style="background:var(--z-promo)"></i>Promozione · 1°</span><span><i style="background:var(--z-po)"></i>Playoff · 2°–5°</span><span><i style="background:var(--z-pl)"></i>Playout · '+(n-4)+'°–'+(n-1)+'°</span><span><i style="background:var(--z-rel)"></i>Retrocessione · '+n+'°</span></div>'; }
-function mvHtml(id,pos){ if(ZOFF) return ''; var p=prevPos(id); if(p==null||!pos) return ''; var d=p-pos; if(d>=2) return '<span class="mv up" title="Sale di '+d+' rispetto alla giornata prima">▲'+d+'</span>'; if(d<=-2) return '<span class="mv dn" title="Scende di '+(-d)+' rispetto alla giornata prima">▼'+(-d)+'</span>'; return ''; }
+function mvHtml(id,pos){ if(ZOFF) return ''; var p=prevPos(id); if(p==null||!pos) return ''; var d=p-pos; if(d>0) return '<span class="mv up" title="Sale di '+d+' rispetto alla giornata prima">▲'+d+'</span>'; if(d<0) return '<span class="mv dn" title="Scende di '+(-d)+' rispetto alla giornata prima">▼'+(-d)+'</span>'; return ''; }
+function prevLabel(id,pos){ if(ZOFF) return ''; var p=prevPos(id), h=history(); if(p==null||!pos) return ''; return '<span class="box">Dopo la '+(h.L-1)+'ª: '+p+'°</span>'; }
 function posChart(id,half){
   var h=history(), a=h.by[id]; if(!a||a.length<2) return '<p class="meta" style="margin:0">Il grafico compare dopo la seconda giornata.</p>';
   var n=Math.max(2,S.teams.length), vw=window.innerWidth||390, cw=vw>=960?Math.min(vw-232,1120)-70:vw-70; if(half&&vw>=720) cw=(cw-16)/2; var W=Math.round(Math.max(280,Math.min(cw,900))), H=W<480?190:220, L=36, R=40, T=16, B=28, iw=W-L-R, ih=H-T-B, step=ih/(n-1);
@@ -1303,7 +1304,7 @@ function vClassifica(){
   }
   var forms={}; if(tb.src==="calc") calc.forEach(function(r){ forms[r.id]=(r.form||[]).slice(-5); });
   h+=compactTable(tb,forms);
-  h+='<section class="card flush only-wide"><div class="tbl"><table><thead><tr><th>#</th><th class="name">Squadra</th><th>Pt</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th><th>DR</th>'+(tb.src==="calc"?'<th>Forma</th>':'')+'</tr></thead><tbody>'+tb.rows.map(function(r){ var dr=(+r.gf||0)-(+r.gs||0); return '<tr'+(r.id===my?' class="me"':'')+zAttr(r.pos)+'><td><span class="pcell"><span class="posn">'+r.pos+'</span>'+mvHtml(r.id,r.pos)+'</span></td><td class="name"><button type="button" class="tbtn" data-team="'+r.id+'">'+crest(r.id,30)+'<span>'+esc(tname(r.id))+'</span></button></td><td class="pts">'+r.pts+'</td><td>'+r.g+'</td><td>'+r.v+'</td><td>'+r.n+'</td><td>'+r.p+'</td><td>'+r.gf+':'+r.gs+'</td><td>'+(dr>0?"+":dr<0?"−":"")+Math.abs(dr)+'</td>'+(tb.src==="calc"?'<td><span class="fdots">'+(forms[r.id]||[]).map(function(f){return '<span class="r-'+f+'">'+f+'</span>';}).join("")+'</span></td>':'')+'</tr>'; }).join("")+'</tbody></table></div></section>';
+  h+='<section class="card flush only-wide"><div class="tbl"><table><thead><tr><th>#</th><th class="name">Squadra</th><th>Pt</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th><th>DR</th>'+(tb.src==="calc"?'<th>Forma</th>':'')+'</tr></thead><tbody>'+tb.rows.map(function(r){ var dr=(+r.gf||0)-(+r.gs||0); return '<tr'+(r.id===my?' class="me"':'')+zAttr(r.pos)+'><td><span class="pcell"><span class="posn">'+r.pos+'</span></span></td><td class="name"><button type="button" class="tbtn" data-team="'+r.id+'">'+crest(r.id,30)+'<span>'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</button></td><td class="pts">'+r.pts+'</td><td>'+r.g+'</td><td>'+r.v+'</td><td>'+r.n+'</td><td>'+r.p+'</td><td>'+r.gf+':'+r.gs+'</td><td>'+(dr>0?"+":dr<0?"−":"")+Math.abs(dr)+'</td>'+(tb.src==="calc"?'<td><span class="fdots">'+(forms[r.id]||[]).map(function(f){return '<span class="r-'+f+'">'+f+'</span>';}).join("")+'</span></td>':'')+'</tr>'; }).join("")+'</tbody></table></div></section>';
   ZOFF=false;
   if(cf.active) h+='<span class="tiny muted">Classifica calcolata solo sulle partite dalla '+cf.from+'ª alla '+cf.to+'ª giornata, '+SIDE_LAB[cf.side]+'. Niente zone e frecce, perché non è la classifica ufficiale.</span>';
   else h+=zLegend();
@@ -1315,7 +1316,7 @@ function compactTable(tb,forms){
   var my=me();
   return '<section class="card flush only-narrow"><div class="ct-head"><span>#</span><span style="text-align:left">Squadra</span><span>G</span><span>GF</span><span>GS</span><span>DR</span><span>Pt</span></div><div class="list">'+tb.rows.map(function(r){
     var dr=(+r.gf||0)-(+r.gs||0), f=forms[r.id]||[];
-    return '<div class="crow'+(r.id===my?' me':'')+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span>'+mvHtml(r.id,r.pos)+'</span><span class="nm">'+crest(r.id,26)+'<span>'+esc(tname(r.id))+'</span></span><span class="c">'+r.g+'</span><span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span><span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span><span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
+    return '<div class="crow'+(r.id===my?' me':'')+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,26)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span><span class="c">'+r.g+'</span><span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span><span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span><span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
   }).join("")+'</div></section>';
 }
 function vMarcatori(){
