@@ -343,8 +343,10 @@ tr[data-z] td:first-child{box-shadow:inset 4px 0 0 var(--zc)}
 .mk .tm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mk .pts{text-align:center}
 
-/* copertura fissa dell'area dell'ora/batteria: il contenuto non ci passa sotto sfocato */
-.sbar{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:8;pointer-events:none}
+/* Barra fissa in cima, a tinta piena, larga tutto lo schermo e che riceve i tocchi.
+   iOS 26 toglie la sfocatura del bordo alto solo quando, 4px sotto il bordo, trova un elemento così
+   (niente pointer-events:none, niente backdrop-filter o maschere): allora estende quel colore invece di sfocare. */
+.sbar{position:fixed;top:0;left:0;right:0;height:calc(env(safe-area-inset-top,0px) + 8px);background:var(--bg);z-index:8}
 
 /* titolo compatto in alto quando si scorre (stile iOS) */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 9px) 16px 9px;background:var(--bg);border-bottom:1px solid var(--line);font-family:var(--display);letter-spacing:-.02em;font-weight:700;font-size:17px;line-height:1;opacity:0;transform:translateY(-100%);visibility:hidden;pointer-events:none;transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s .25s}
@@ -494,7 +496,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-10.5";
+var APP_VERSION = "2026-11-11.1";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
