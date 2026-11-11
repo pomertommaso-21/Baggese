@@ -16,6 +16,7 @@ Tutti i file stanno nella cartella principale del repository, senza sottocartell
 | `prima-a.json`, `prima-g.json` | Prima Categoria Lombardia, Girone A (Quinto Romano) e Girone G (Real Trezzano) |
 | `pa_*.png`, `pb_*.png`, `pg_*.png` | Stemmi delle squadre di Prima Categoria |
 | `sw.js` | Tiene una copia dell'app sul telefono: si apre subito, anche senza rete |
+| `startup-*.jpg` | Schermata d'avvio dell'iPhone (pallone su fondo rosso), una per ogni misura di schermo |
 | `t_baggese.png`, `t_corsico.png`… (16 file `t_*.png`) | Gli stemmi delle squadre, ritagliati e centrati tutti allo stesso modo |
 | `Inter-*.woff`, `InterDisplay-*.woff` | I caratteri dell'app (licenza libera SIL OFL, in `LICENSE-fonts.txt`) |
 | `baggese.ics` | Il calendario di tutte le partite della Baggese: da **Partite → Aggiungi tutte al calendario** l'iPhone si iscrive e lo tiene aggiornato da solo |
