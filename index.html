@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="robots" content="noindex, nofollow">
@@ -256,6 +256,7 @@ button,.btn{font:inherit;cursor:pointer}
 .linkbtn{background:none;border:0;color:var(--fg);font-weight:700;font-size:13px;min-height:36px;padding:0 4px;text-decoration:underline;text-decoration-color:var(--brand);text-decoration-thickness:2px;text-underline-offset:4px}
 :focus-visible{outline:3px solid var(--fg);outline-offset:2px}
 .hero :focus-visible{outline-color:#FFFFFF}
+@media (hover:none) and (pointer:coarse){:focus-visible{outline:none}}
 .seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface);border:1px solid var(--card-border);box-shadow:var(--shadow);border-radius:14px;padding:4px;gap:4px}
 .seg button{min-height:38px;border:0;border-radius:10px;background:transparent;color:var(--muted);font-weight:700;font-size:13.5px}
 .seg button[aria-pressed="true"]{background:var(--active);color:var(--on-active)}
@@ -516,7 +517,9 @@ body.other .view{--mine:transparent;--mine-ink:inherit}
 .gdet[open]>summary svg.i{transform:rotate(90deg)}
 .gdet-body{display:flex;flex-direction:column;gap:12px;padding:0 16px 16px}
 .hero[data-view]{cursor:pointer}
-.mv-vs{border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.mv-vs{border-top:1px solid var(--line);padding-top:14px;margin-top:4px;display:flex;flex-direction:column;gap:14px}
+.mv-vs .cmp-head{padding:3px 0}
+html{touch-action:manipulation}
 .tp-w{position:relative;display:flex}
 .tp-w .tp{width:100%}
 .tp-star,.hero-star{border:0;background:none;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;flex:none}
@@ -687,9 +690,18 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 (function(){
 "use strict";
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
+(function(){ var stop=function(e){ e.preventDefault(); }; document.addEventListener("gesturestart",stop,{passive:false}); document.addEventListener("gesturechange",stop,{passive:false}); document.addEventListener("touchmove",function(e){ if(e.scale!==undefined && e.scale!==1) e.preventDefault(); },{passive:false}); })();
+/* barra di stato scurita insieme allo sfondo dei fogli */
+(function(){ if(!window.HTMLDialogElement) return; var sm=HTMLDialogElement.prototype.showModal;
+  function dim(on){ var dark=document.documentElement.getAttribute("data-theme")==="dark" || (document.documentElement.getAttribute("data-theme")!=="light" && matchMedia("(prefers-color-scheme: dark)").matches);
+    var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(on){ if(!ms[i].dataset.undim) ms[i].dataset.undim=ms[i].getAttribute("content"); ms[i].setAttribute("content",dark?"#070A11":"#63666D"); } else if(ms[i].dataset.undim){ ms[i].setAttribute("content",ms[i].dataset.undim); delete ms[i].dataset.undim; } } }
+  HTMLDialogElement.prototype.showModal=function(){ var r=sm.apply(this,arguments); dim(true); return r; };
+  document.addEventListener("close",function(){ setTimeout(function(){ if(!document.querySelector("dialog[open]")) dim(false); },0); },true);
+  new MutationObserver(function(ms){ ms.forEach(function(m){ if(m.target.classList&&m.target.classList.contains("closing")&&!document.querySelector("dialog[open]:not(.closing)")) dim(false); }); }).observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:["class"]});
+})();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.20";
+var APP_VERSION = "2026-11-12.21";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
