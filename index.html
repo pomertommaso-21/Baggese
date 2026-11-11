@@ -22,7 +22,7 @@
   --bg:#F1F1F3; --surface:#FFFFFF; --surface-2:#F4F4F6; --line:#E2E2E7; --card-border:transparent;
   --fg:#141418; --muted:#5D5D68;
   --night:#18181C; --night-2:#27272D; --on-night:#F6F6F8; --on-night-muted:#B4B4BE; --night-line:rgba(255,255,255,.08);
-  --brand:#C8202A; --brand-deep:#991620; --on-brand:#FFFFFF; --mine:#FCEAEB; --mine-ink:#991620;
+  --brand:var(--a-brand,#C8202A); --brand-deep:var(--a-deep,#991620); --on-brand:#FFFFFF; --mine:var(--a-mine,#FCEAEB); --mine-ink:var(--a-ink,#991620);
   --z-promo:#0E9F6E; --z-po:#2F6FDB; --z-pl:#E8890C;
   --gm1:#F6C2C5; --gm1-ink:#8E141D; --gm3:#7A0F17; --gm3-ink:#FFFFFF;
   --win:#16934F; --draw:#73737F; --loss:#D63F2D; --yellow:#F2B705; --red:#D93025;
@@ -38,7 +38,7 @@
   --bg:#0B0B0D; --surface:#161618; --surface-2:#202024; --line:#2D2D33; --card-border:#232328;
   --fg:#EDEDF1; --muted:#A0A0AC;
   --night:#1C1C21; --night-2:#2A2A31; --on-night:#F6F6F8; --on-night-muted:#B4B4BE; --night-line:rgba(255,255,255,.08);
-  --brand:#D42F39; --brand-deep:#A61C26; --on-brand:#FFFFFF; --mine:#3A1C1F; --mine-ink:#FF9CA2;
+  --brand:var(--a-brand-d,#D42F39); --brand-deep:var(--a-deep-d,#A61C26); --on-brand:#FFFFFF; --mine:var(--a-mine-d,#3A1C1F); --mine-ink:var(--a-ink-d,#FF9CA2);
   --z-promo:#1FA874; --z-po:#5B8EF0; --z-pl:#C47410;
   --gm1:#5A2327; --gm1-ink:#FFB6BB; --gm3:#8E141D; --gm3-ink:#FFFFFF;
   --win:#2DB56B; --draw:#8A8A96; --loss:#F2604C; --yellow:#F2B705; --red:#E5483D;
@@ -51,7 +51,7 @@
   --bg:#0B0B0D; --surface:#161618; --surface-2:#202024; --line:#2D2D33; --card-border:#232328;
   --fg:#EDEDF1; --muted:#A0A0AC;
   --night:#1C1C21; --night-2:#2A2A31; --on-night:#F6F6F8; --on-night-muted:#B4B4BE; --night-line:rgba(255,255,255,.08);
-  --brand:#D42F39; --brand-deep:#A61C26; --on-brand:#FFFFFF; --mine:#3A1C1F; --mine-ink:#FF9CA2;
+  --brand:var(--a-brand-d,#D42F39); --brand-deep:var(--a-deep-d,#A61C26); --on-brand:#FFFFFF; --mine:var(--a-mine-d,#3A1C1F); --mine-ink:var(--a-ink-d,#FF9CA2);
   --z-promo:#1FA874; --z-po:#5B8EF0; --z-pl:#C47410;
   --gm1:#5A2327; --gm1-ink:#FFB6BB; --gm3:#8E141D; --gm3-ink:#FFFFFF;
   --win:#2DB56B; --draw:#8A8A96; --loss:#F2604C; --yellow:#F2B705; --red:#E5483D;
@@ -444,7 +444,7 @@ nav.tabs{view-transition-name:tabs}
 .gmap i::before{content:"";flex:none;width:4px;height:4px;border-radius:50%;background:var(--line)}
 .gmap i.g1::before,.gmap i.g2::before,.gmap i.g3::before{width:12px;height:12px;background:var(--brand)}
 .gmap i.g2::before{width:17px;height:17px}
-.gmap i.g3::before{width:21px;height:21px;background:var(--gm3)}
+.gmap i.g3::before{width:21px;height:21px;background:var(--brand-deep)}
 .gmap i.g2,.gmap i.g3{color:#fff}
 .gmap i.g1{font-size:0}
 .gmap i span{position:absolute}
@@ -456,6 +456,16 @@ nav.tabs{view-transition-name:tabs}
 .seg.sm button{min-height:30px;padding:0 12px;font-size:13px;border-radius:8px}
 .zleg.mini{font-size:12px;gap:4px 14px;font-weight:500}
 .zleg.mini i{width:8px;height:8px;border-radius:50%}
+
+/* squadra preferita */
+.crestbtn{position:relative;background:none;border:0;padding:0;border-radius:50%;flex:none}
+.crestbtn .swap{position:absolute;right:-4px;bottom:-4px;width:24px;height:24px;border-radius:50%;background:var(--surface);box-shadow:0 0 0 1px var(--line),0 2px 6px -2px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;color:var(--brand)}
+.crestbtn .swap svg.i{width:14px;height:14px}
+.tpick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (min-width:720px){.tpick{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tp{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px 12px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:inherit;font:inherit;font-size:12.5px;font-weight:600;line-height:1.2;text-align:center;min-height:118px}
+.tp>span:last-child{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tp.on{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand);background:var(--mine)}
 
 /* navigazione */
 svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
@@ -538,7 +548,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-11.4";
+var APP_VERSION = "2026-11-11.5";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
@@ -552,7 +562,32 @@ function $(id){ return document.getElementById(id); }
 function team(id){ for (var i=0;i<S.teams.length;i++) if (S.teams[i].id===id) return S.teams[i]; return null; }
 function tname(id){ var t=team(id); return t? t.name : "?"; }
 function initials(name){ var w=String(name||"?").replace(/[^A-Za-zÀ-ÿ0-9 ]/g," ").trim().split(/\s+/).filter(function(x){return x.length>1 && !/^(asd|ssd|us|usd|ac|fc|ss|pol|calcio)$/i.test(x);}); if(!w.length) w=[name||"?"]; return (w.length>1? w[0][0]+w[1][0] : w[0].slice(0,2)).toUpperCase(); }
-function me(){ return S.settings.myTeamId; }
+var MYT=null; try { MYT=localStorage.getItem("baggese-myteam"); } catch(e){}
+function me(){ return (MYT && team(MYT)) ? MYT : S.settings.myTeamId; }
+/* colore dell'app preso dalla squadra preferita */
+var ACC={t_baggese:"#C8202A",t_ardor:"#C0620E",t_artemide:"#8C6D00",t_bonola:"#157F42",t_cesano:"#2A1FA8",t_concept:"#4B5563",t_corsico:"#6B1838",t_novella:"#B8182A",t_trezzano:"#7C4FA0",t_seguro:"#2C78A8",t_triestina:"#C62630",t_velasca:"#C8161C",t_vercellese:"#23439A",t_vige:"#1F2A5C",t_villapizzone:"#5E1C78",t_viscontini:"#0E4A78"};
+function rgbOf(h){ h=h.replace("#",""); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+function hexOf(c){ return "#"+c.map(function(v){ v=Math.max(0,Math.min(255,Math.round(v))); return (v<16?"0":"")+v.toString(16); }).join("").toUpperCase(); }
+function mixC(a,b,t){ return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]; }
+function lumC(c){ var v=c.map(function(x){ x/=255; return x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4); }); return .2126*v[0]+.7152*v[1]+.0722*v[2]; }
+function toHsl(c){ var r=c[0]/255,g=c[1]/255,b=c[2]/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),h=0,s=0,l=(mx+mn)/2; if(mx!==mn){ var d=mx-mn; s=l>.5?d/(2-mx-mn):d/(mx+mn); h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4; h/=6; } return [h,s,l]; }
+function fromHsl(h,s,l){ function f(p,q,t){ if(t<0)t+=1; if(t>1)t-=1; if(t<1/6) return p+(q-p)*6*t; if(t<1/2) return q; if(t<2/3) return p+(q-p)*(2/3-t)*6; return p; } if(!s) return [l*255,l*255,l*255]; var q=l<.5?l*(1+s):l+s-l*s, p=2*l-q; return [f(p,q,h+1/3)*255,f(p,q,h)*255,f(p,q,h-1/3)*255]; }
+function fitL(c,lo,hi){ var x=toHsl(c), i=0; while(lumC(c)>hi && i<60){ x[2]-=.01; c=fromHsl(x[0],x[1],x[2]); i++; } while(lumC(c)<lo && i<120){ x[2]+=.01; x[1]=Math.max(0,x[1]-.006); c=fromHsl(x[0],x[1],x[2]); i++; } return c; }
+function setAccent(){
+  var id=me(), base=ACC[id]||kit(id).c1||"#C8202A", c=rgbOf(hex(base,"#C8202A")), r=document.documentElement.style;
+  var L=fitL(c,0,.18), D=fitL(c,.125,.18);
+  r.setProperty("--a-brand",hexOf(L)); r.setProperty("--a-deep",hexOf(mixC(L,[0,0,0],.25))); r.setProperty("--a-mine",hexOf(mixC(L,[255,255,255],.9))); r.setProperty("--a-ink",hexOf(mixC(L,[0,0,0],.3)));
+  r.setProperty("--a-brand-d",hexOf(D)); r.setProperty("--a-deep-d",hexOf(mixC(D,[0,0,0],.2))); r.setProperty("--a-mine-d",hexOf(mixC(D,[22,22,24],.74))); r.setProperty("--a-ink-d",hexOf(mixC(D,[255,255,255],.6)));
+}
+function setMyTeam(id){ MYT=id; try { localStorage.setItem("baggese-myteam",id); } catch(e){} rosaTeam=null; clsF={from:0,to:0,side:"all"}; }
+var askedTeam=false;
+function openTeamPicker(first){
+  var cur=me();
+  var list=S.teams.slice().sort(function(a,b){ return a.name.localeCompare(b.name); });
+  var h='<div class="row between"><h2 id="tpTitle" tabindex="-1" style="outline:none">'+(first?'Qual è la tua squadra?':'La tua squadra')+'</h2>'+(first?'':'<button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button>')+'</div><p class="small muted" style="margin:0">L’app si adatta alla squadra che scegli: Home, calendario, obiettivo e colori. Le altre squadre restano sempre consultabili.</p><div class="tpick">'+list.map(function(t){ return '<button type="button" class="tp'+(t.id===cur?' on':'')+'" data-myteam="'+t.id+'" aria-pressed="'+(t.id===cur)+'">'+crest(t.id,48)+'<span>'+esc(t.name)+'</span></button>'; }).join("")+'</div>';
+  $("dlgBody").innerHTML=h; showDlg(); try { $("tpTitle").focus({preventScroll:true}); } catch(e){}
+}
+
 function played(m){ return m.hg!=null && m.ag!=null && m.hg!=="" && m.ag!==""; }
 function involves(m,id){ return m.homeId===id || m.awayId===id; }
 function fmtDate(d,t){ if(!d) return t||""; var p=d.split("-"); if(p.length!==3) return d; var dt=new Date(+p[0],+p[1]-1,+p[2]); var gg=["Dom","Lun","Mar","Mer","Gio","Ven","Sab"][dt.getDay()]; var mm=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"][+p[1]-1]; return gg+" "+(+p[2])+" "+mm+(t? " · "+t : ""); }
@@ -876,7 +911,7 @@ var IC={
  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
  plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="M6 6l12 12M18 6 6 18"/>',
  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.6 2.6-1.4 4.2H9.8L8.4 10.1z"/>',
- left:'<path d="M15 5l-7 7 7 7"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>',
+ left:'<path d="M15 5l-7 7 7 7"/>', swap:'<path d="M7 4v13M3.5 13.5L7 17l3.5-3.5M17 20V7M13.5 10.5L17 7l3.5 3.5"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>',
  paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6"/>'
 };
 function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'; }
@@ -940,7 +975,8 @@ function header(title,sub,right){ return '<div class="row between" style="align-
 
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
-  crestN=0; shirtN=0; HIST=null;
+  crestN=0; shirtN=0; HIST=null; setAccent();
+  if(!askedTeam && S.teams.length>1 && mode!=="loading"){ askedTeam=true; var seen=null; try { seen=localStorage.getItem("baggese-myteam"); } catch(e){ seen="x"; } if(!seen) setTimeout(function(){ openTeamPicker(true); },400); }
   if(calJump){ calJump=false; requestAnimationFrame(function(){ requestAnimationFrame(function(){ var el=document.getElementById("calNext"); if(el && tab==="partite" && partView==="mine") window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-76)); }); }); }
   $("tabs").innerHTML=TABS.map(function(t){ return '<button type="button" data-tab="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'><span>'+icon(t[2])+'</span>'+t[1]+'</button>'; }).join("");
   $("brand").innerHTML=crest(me(),36)+'<b>'+esc(shortName(me()))+'<br><span class="tiny muted" style="font-family:var(--body);font-weight:600;text-transform:none">'+esc(S.settings.season)+'</span></b>';
@@ -955,7 +991,7 @@ function render(){
 /* ---------- home ---------- */
 function vHome(){
   var my=me(), myName=tname(my), myRow=tableRow(my);
-  var h='<header class="top">'+crest(my,56)+'<div class="col grow"><span class="eyebrow muted">'+esc(S.settings.girone)+'</span><h1>'+esc(myName)+'</h1></div>'+(myRow&&myRow.g?'<div class="pos-chip"><b>'+myRow.pos+'°</b><span>'+myRow.pts+' pt</span></div>':'')+'</header>';
+  var h='<header class="top"><button type="button" class="crestbtn" data-act="pickTeam" aria-label="Cambia squadra preferita">'+crest(my,56)+'</button><div class="col grow"><span class="eyebrow muted">'+esc(S.settings.girone)+'</span><h1>'+esc(myName)+'</h1></div>'+(myRow&&myRow.g?'<div class="pos-chip"><b>'+myRow.pos+'°</b><span>'+myRow.pts+' pt</span></div>':'')+'</header>';
   if (S.teams.length<2 && !S.matches.length){
     return h+'<div class="empty"><h2>Prepara il girone</h2><ol class="steps small"><li>Apri la classifica del girone su Tuttocampo o il comunicato del giovedì.</li><li>Seleziona tutto e copia.</li><li>Incolla in Gestione: squadre, risultati e classifica si creano da soli.</li></ol><button class="btn primary" type="button" data-go="import">'+icon("paste")+'Incolla i dati</button></div>';
   }
@@ -1080,7 +1116,7 @@ function icsText(ms){
 function addToCalendar(which){
   var my=me(), ms=which==="all" ? S.matches.filter(function(m){return involves(m,my)&&!played(m)&&m.date;}).sort(sortMatches) : S.matches.filter(function(m){return m.id===which;});
   if(!ms.length) return;
-  if(which==="all" && mode==="local" && /^https?:$/.test(location.protocol)){
+  if(which==="all" && mode==="local" && me()===S.settings.myTeamId && /^https?:$/.test(location.protocol)){
     // sul sito: iscrizione al calendario pubblicato, che si aggiorna da solo
     location.href="webcal://"+location.host+location.pathname.replace(/[^\/]*$/,"")+"baggese.ics"; return;
   }
@@ -1187,6 +1223,7 @@ function vGestione(){
   h+='<section class="card"><div class="card-head"><h2>Squadre e stemmi</h2><span class="meta num">'+S.teams.length+'</span></div><p class="small muted" style="margin:0">Ogni squadra ha due colori e un disegno di maglia, usati per la maglietta nelle rose (e per lo stemma, se manca quello vero). Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id); return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '+esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '+esc(t.name)+'" data-kpat="'+t.id+'">'+PATS.map(function(p){return '<option value="'+p[0]+'"'+(p[0]===k.pat?' selected':'')+'>'+p[1]+'</option>';}).join("")+'</select><label class="btn sm" for="logo_'+t.id+'">Carica logo</label><input class="sr" id="logo_'+t.id+'" type="file" accept="image/*" data-logo="'+t.id+'">'+(LOGOS[t.id]?'<button class="btn sm" type="button" data-unlogo="'+t.id+'">Togli logo</button>':'')+'<button class="btn sm danger" type="button" aria-label="Elimina '+esc(t.name)+'" data-delteam="'+t.id+'"'+(t.id===me()?' disabled':'')+'>'+icon("x")+'</button></div></div>'; }).join("")+'</div><form class="row" id="addTeamForm"><input id="newTeam" aria-label="Nuova squadra" placeholder="Nome nuova squadra"><button class="btn" type="submit">'+icon("plus")+'Aggiungi</button></form><div id="delTeamConfirm"></div></section>';
   h+='<section class="card"><h2>Squadra e girone</h2><div class="grid2"><label class="f">La tua squadra<select id="setMy">'+S.teams.slice().sort(byName).map(function(t){return '<option value="'+t.id+'"'+(t.id===me()?' selected':'')+'>'+esc(t.name)+'</option>';}).join("")+'</select></label><label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label></div><label class="f">Campionato e girone<input id="setGirone" value="'+esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'+esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></section>';
   h+='<section class="card"><h2>Copia di sicurezza</h2><p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'+((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')+'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></section>';
+  h+='<section class="card"><h2>La tua squadra</h2><div class="row" style="gap:12px">'+crest(me(),44)+'<div class="col grow" style="gap:2px"><b>'+esc(tname(me()))+'</b><span class="meta">Home, calendario, obiettivo e colori seguono questa squadra</span></div><button class="btn sm" type="button" data-act="pickTeam">Cambia</button></div></section>';
   var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div><span class="tiny muted">Automatico segue le impostazioni dell’iPhone. La scelta vale solo su questo dispositivo.</span></section>';
   h+=syncChip()+'<span class="tiny muted">Versione app '+APP_VERSION+'</span>';
   return h;
@@ -1481,6 +1518,7 @@ document.addEventListener("click", function(e){
   if(ds.go){ tab="gestione"; render(); var target=$(ds.go==="teams"?"newTeam":"pasteBox"); if(target){ target.scrollIntoView({block:"center"}); target.focus(); } return; }
   if(ds.filter){ filterMine=ds.filter==="mine"; render(); return; }
   if(ds.src){ tableSrc=ds.src; render(); return; }
+  if(ds.myteam){ var nt3=ds.myteam; closeDlg(); smooth(function(){ setMyTeam(nt3); render(); window.scrollTo(0,0); }); toast("Ora segui "+tname(nt3)); return; }
   if(ds.goal){ try { localStorage.setItem("baggese-goal",ds.goal); } catch(e){} closeDlg(); render(); return; }
   if(ds.cmode){ chartMode=ds.cmode; render(); return; }
   if(ds.cls){ var cv=ds.cls; smooth(function(){ clsView=cv; render(); }); return; }
@@ -1509,6 +1547,7 @@ document.addEventListener("click", function(e){
     case "close": closeDlg(); break;
     case "clsFilter": openClsFilter(); break;
     case "goalEdit": openGoal(); break;
+    case "pickTeam": openTeamPicker(false); break;
     case "clsApply": var ff=+$("fFrom").value, ft=+$("fTo").value; if(ff>ft){ var tmp=ff; ff=ft; ft=tmp; } clsF={from:ff,to:ft,side:openClsFilter.side||"all"}; closeDlg(); render(); break;
     case "clsReset": clsF={from:0,to:0,side:"all"}; closeDlg(); render(); break;
     case "addSc": readDraft(); openMatch.draft.scorers.push({playerId:"",min:"",teamId:me()}); drawMatch(); break;
