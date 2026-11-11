@@ -52,6 +52,12 @@ Attenzione: con un repository pubblico (o GitHub Pages gratuito) chiunque abbia 
 3. Su GitHub sostituisci `data.json` con quello scaricato (*Add file → Upload files*).
 4. Sugli altri dispositivi tocca **Ricarica data.json**.
 
+## Aggiornare i dati con Claude
+
+In una chat con Claude scrivi **"aggiorna la Baggese"**. Claude legge risultati, marcatori e classifica da Tuttocampo (con Chrome sul tuo computer acceso), aggiorna `data.json` e `baggese.ics` e li carica qui. L'app sul telefono si aggiorna da sola alla prossima apertura.
+
+Il lavoro sui dati lo fa `aggiorna_dati.py`: riceve un file con quello che è stato letto da Tuttocampo, mostra prima cosa cambierebbe e poi salva (`python3 aggiorna_dati.py aggiornamento.json --scrivi`).
+
 ## Fonti dei dati
 
 Risultati, calendario, classifica e rose da Tuttocampo (aggiornati al 9 novembre 2026, dopo la 9ª giornata). Le presenze sulle schede Tuttocampo non sono sempre complete.

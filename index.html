@@ -548,7 +548,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-11.5";
+var APP_VERSION = "2026-11-11.6";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 var S = blank();
@@ -618,7 +618,7 @@ function normalize(d){
   var b=blank(); d=d||{};
   b.settings=Object.assign(b.settings, d.settings||{});
   b.teams=Array.isArray(d.teams)?d.teams:[]; b.matches=Array.isArray(d.matches)?d.matches:[];
-  b.players=Array.isArray(d.players)?d.players:[]; b.imported=d.imported||null; b.updatedAt=d.updatedAt||null;
+  b.players=Array.isArray(d.players)?d.players:[]; b.imported=d.imported||null; b.updatedAt=d.updatedAt||null; if(d.tcRound!=null) b.tcRound=d.tcRound;
   return b;
 }
 function boot(){
@@ -892,7 +892,7 @@ function vsCard(next){
 
 /* ---------- player stats ---------- */
 function playerStats(){
-  var st={}, cut=(S.imported&&S.imported.round)||0;
+  var st={}, cut=(S.tcRound!=null?+S.tcRound:((S.imported&&S.imported.round)||0));
   S.players.forEach(function(p){ var t=p.tc||{}; st[p.id]={gol:+t.gol||0,y:+t.y||0,r:+t.r||0,pres:+t.pres||0}; });
   S.matches.forEach(function(m){
     if(cut && m.round && +m.round<=cut) return;
