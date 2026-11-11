@@ -12,6 +12,7 @@ Tutti i file stanno nella cartella principale del repository, senza sottocartell
 |---|---|
 | `index.html` | L'app |
 | `data.json` | I dati della stagione: squadre, 30 giornate, rose, classifica, marcatori |
+| `prima-b.json` | Prima Categoria Lombardia, Girone B (FC Zeta Milano): stessi dati, caricati solo quando apri quel girone |
 | `t_baggese.png`, `t_corsico.png`… (16 file `t_*.png`) | Gli stemmi delle squadre, ritagliati e centrati tutti allo stesso modo |
 | `Inter-*.woff`, `InterDisplay-*.woff` | I caratteri dell'app (licenza libera SIL OFL, in `LICENSE-fonts.txt`) |
 | `baggese.ics` | Il calendario di tutte le partite della Baggese: da **Partite → Aggiungi tutte al calendario** l'iPhone si iscrive e lo tiene aggiornato da solo |
@@ -54,7 +55,7 @@ Attenzione: con un repository pubblico (o GitHub Pages gratuito) chiunque abbia 
 
 ## Aggiornare i dati con Claude
 
-In una chat con Claude scrivi **"aggiorna la Baggese"**. Claude legge risultati, marcatori e classifica da Tuttocampo (con Chrome sul tuo computer acceso), aggiorna `data.json` e `baggese.ics` e li carica qui. L'app sul telefono si aggiorna da sola alla prossima apertura.
+In una chat con Claude scrivi **"aggiorna la Baggese"**. Claude legge risultati, marcatori e classifica da Tuttocampo (con Chrome sul tuo computer acceso), aggiorna `data.json` e `baggese.ics` e li carica qui. Per l'altro girone scrivi **"aggiorna il girone della Zeta"**: aggiorna `prima-b.json`. L'app sul telefono si aggiorna da sola alla prossima apertura.
 
 Il lavoro sui dati lo fa `aggiorna_dati.py`: riceve un file con quello che è stato letto da Tuttocampo, mostra prima cosa cambierebbe e poi salva (`python3 aggiorna_dati.py aggiornamento.json --scrivi`).
 

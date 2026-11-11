@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Aggiorna data.json (e baggese.ics) con i dati letti da Tuttocampo.
+"""Aggiorna i dati di un girone (data.json e baggese.ics per il Girone O) con i dati letti da Tuttocampo.
 
 Uso:
     python3 aggiorna_dati.py aggiornamento.json            # prova: mostra cosa cambierebbe
@@ -7,6 +7,7 @@ Uso:
 
 Formato di aggiornamento.json (tutte le chiavi sono facoltative tranne "partite"):
 {
+  "girone": "O",
   "giornata": 10,
   "partite": [
     {"casa": "FC Corsico", "ospite": "Baggese", "gol_casa": 1, "gol_ospite": 2,
@@ -18,6 +19,8 @@ Formato di aggiornamento.json (tutte le chiavi sono facoltative tranne "partite"
   "giocatori_fino_a": 10
 }
 
+- "girone": "O" = Seconda Categoria Milano Girone O (data.json, predefinito),
+             "PB" = Prima Categoria Lombardia Girone B (prima-b.json).
 - "marcatori" e' la frase "Sulla partita" della pagina della partita su Tuttocampo, copiata cosi' com'e'.
 - "giocatori" sono i totali delle schede giocatore; "giocatori_fino_a" dice fino a quale giornata
   li comprendono (serve all'app per non contare due volte i gol).
@@ -30,6 +33,7 @@ import unicodedata
 
 DATA = "data.json"
 ICS = "baggese.ics"
+GIRONI = {"O": "data.json", "PB": "prima-b.json"}
 
 
 def norm(s):
@@ -53,7 +57,7 @@ class Book:
     def team(self, name):
         n = norm(name)
         for t in self.teams:
-            if norm(t["name"]) == n or norm(t["id"].replace("t_", "")) == n:
+            if norm(t["name"]) == n or norm(re.sub(r"^(t|pb)_", "", t["id"])) == n:
                 return t["id"]
         w = set(words(name))
         best, score = None, 0
@@ -174,8 +178,13 @@ def write_ics(d):
 def main():
     if len(sys.argv) < 2:
         raise SystemExit(__doc__)
+    global DATA
     up = json.load(open(sys.argv[1], encoding="utf-8"))
     write = "--scrivi" in sys.argv
+    g = str(up.get("girone", "O")).upper()
+    if g not in GIRONI:
+        raise SystemExit(f"Girone sconosciuto: {g} (validi: {', '.join(GIRONI)})")
+    DATA = GIRONI[g]
     d = json.load(open(DATA, encoding="utf-8"))
     book = Book(d)
     T = {t["id"]: t["name"] for t in d["teams"]}
@@ -248,8 +257,11 @@ def main():
     print("\n".join(report) or "Niente da aggiornare")
     if write:
         json.dump(d, open(DATA, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-        write_ics(d)
-        print(f"\nScritti {DATA} e {ICS}.")
+        if DATA == "data.json":
+            write_ics(d)
+            print(f"\nScritti {DATA} e {ICS}.")
+        else:
+            print(f"\nScritto {DATA}.")
     else:
         print("\nProva: nessun file modificato. Aggiungi --scrivi per salvare.")
 

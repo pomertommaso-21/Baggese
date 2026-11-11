@@ -466,6 +466,25 @@ nav.tabs{view-transition-name:tabs}
 .tp{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px 12px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:inherit;font:inherit;font-size:12.5px;font-weight:600;line-height:1.2;text-align:center;min-height:118px}
 .tp>span:last-child{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .tp.on{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand);background:var(--mine)}
+body.other .view{--mine:transparent;--mine-ink:inherit}
+.tp small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:2px}
+#tpSearch{margin:2px 0 12px}
+.tpsteps{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.tpsteps .seg.sm{align-self:flex-start}
+.gchips{display:flex;gap:6px;flex-wrap:wrap}
+.gchips button{min-height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);font-weight:700;font-size:13px}
+.gchips button span{font-weight:600;color:var(--muted)}
+.gchips button[aria-pressed="true"]{background:var(--active);color:var(--on-active);border-color:transparent}
+.gchips button[aria-pressed="true"] span{color:inherit;opacity:.7}
+.gline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.gsel{display:inline-flex;align-items:center;gap:2px;background:none;border:0;padding:0;min-height:24px;color:var(--muted);font:inherit;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.gsel svg.i{width:14px;height:14px}
+.gback{min-height:24px;font-size:12px}
+.gcat{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.grow-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:inherit;font:inherit;margin-bottom:6px}
+.grow-btn>span{display:flex;flex-direction:column;gap:2px}
+.grow-btn.on{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.grow-btn svg.i{color:var(--brand)}
 
 /* navigazione */
 svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
@@ -548,9 +567,20 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-11.6";
+var APP_VERSION = "2026-11-12.1";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
+/* gironi: uno per file, caricato solo quando serve */
+var GIRONI = [{"id":"O","cat":"Seconda","area":"Milano","name":"Girone O","file":"data.json","teams":[["t_ardor","Ardor Bollate"],["t_artemide","Artemide Football Club"],["t_baggese","Baggese Calcio"],["t_bonola","Calcio Bonola"],["t_cesano","Cesano Boscone Idrostar"],["t_concept","Concept Football Club"],["t_corsico","Corsico"],["t_novella","Novella Calcio"],["t_trezzano","Nuova Trezzano"],["t_seguro","Seguro"],["t_vercellese","Sport Club Vercellese"],["t_triestina","Triestina 1946"],["t_velasca","Velasca"],["t_vige","Vige Milano"],["t_villapizzone","Villapizzone C.D.A."],["t_viscontini","Viscontini"]]},{"id":"PB","cat":"Prima","area":"Lombardia","name":"Girone B","file":"prima-b.json","teams":[["pb_schiaffino","Atletico Schiaffino","https://b2-content.tuttocampo.it/Teams/200/1163824.png"],["pb_briantea","Briantea Calcio","https://b2-content.tuttocampo.it/Teams/200/1001099.png"],["pb_cassina","Cassina Rizzardi","https://b2-content.tuttocampo.it/Teams/200/1000652.png"],["pb_cantu","Castello Città di Cantù","https://b2-content.tuttocampo.it/Teams/200/918791.png"],["pb_zeta","FC Zeta Milano","https://b2-content.tuttocampo.it/Teams/200/1238264.png"],["pb_giussano","Giussano Calcio","https://b2-content.tuttocampo.it/Teams/200/1022364.png"],["pb_itala","Itala","https://b2-content.tuttocampo.it/Teams/200/23660.png"],["pb_dominante","La Dominante","https://b2-content.tuttocampo.it/Teams/200/62198.png"],["pb_leoteam","Leo Team","https://b2-content.tuttocampo.it/Teams/200/917241.png"],["pb_lomazzo","Lomazzo Calcio","https://b2-content.tuttocampo.it/Teams/200/1323683.png"],["pb_luisago","Luisago Grandate","https://b2-content.tuttocampo.it/Teams/200/935546.png"],["pb_montesolaro","Montesolaro","https://b2-content.tuttocampo.it/Teams/200/71196.png"],["pb_cadorago","Olimpia Calcio Cadorago","https://b2-content.tuttocampo.it/Teams/200/1238092.png"],["pb_lissone","Pro Lissone","https://b2-content.tuttocampo.it/Teams/200/40240.png"],["pb_triuggese","Triuggese","https://b2-content.tuttocampo.it/Teams/200/675808.png"],["pb_cermenate","Virtus Calcio Cermenate","https://b2-content.tuttocampo.it/Teams/200/1000659.png"]]}];
+var IDX={}; GIRONI.forEach(function(g){ g.teams.forEach(function(t){ IDX[t[0]]={name:t[1],g:g.id,logo:t[2]||""}; }); });
+function gir(id){ for(var i=0;i<GIRONI.length;i++) if(GIRONI[i].id===id) return GIRONI[i]; return GIRONI[0]; }
+function girLabel(id){ var g=gir(id); return g.cat+" · "+g.name; }
+var MYG="O"; try { MYG=localStorage.getItem("baggese-mygirone")||"O"; } catch(e){}
+if(!GIRONI.some(function(g){return g.id===MYG;})) MYG="O";
+var G=MYG;
+function lsKey(){ return G==="O"?LS_KEY:LS_KEY+"-"+G; }
+function docPath(){ return G==="O"?DOC_PATH:DOC_PATH+"-"+G.toLowerCase(); }
+function gFile(){ return gir(G).file; }
 var S = blank();
 var db = null, docRef = null, downloads = null, mode = "loading";
 var tab = "home", filterMine = true, tableSrc = null, rosaTeam = null, clsView = "squadre", chartMode = "pos", clsF = {from:0,to:0,side:"all"}, ZOFF = false, parsed = null, saveTimer = null, pendingWrite = false;
@@ -560,12 +590,12 @@ function uid(p){ return (p||"x") + Math.random().toString(36).slice(2,9); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); }
 function $(id){ return document.getElementById(id); }
 function team(id){ for (var i=0;i<S.teams.length;i++) if (S.teams[i].id===id) return S.teams[i]; return null; }
-function tname(id){ var t=team(id); return t? t.name : "?"; }
+function tname(id){ var t=team(id); return t? t.name : (IDX[id]?IDX[id].name:"?"); }
 function initials(name){ var w=String(name||"?").replace(/[^A-Za-zÀ-ÿ0-9 ]/g," ").trim().split(/\s+/).filter(function(x){return x.length>1 && !/^(asd|ssd|us|usd|ac|fc|ss|pol|calcio)$/i.test(x);}); if(!w.length) w=[name||"?"]; return (w.length>1? w[0][0]+w[1][0] : w[0].slice(0,2)).toUpperCase(); }
 var MYT=null; try { MYT=localStorage.getItem("baggese-myteam"); } catch(e){}
 function me(){ return (MYT && team(MYT)) ? MYT : S.settings.myTeamId; }
 /* colore dell'app preso dalla squadra preferita */
-var ACC={t_baggese:"#C8202A",t_ardor:"#C0620E",t_artemide:"#8C6D00",t_bonola:"#157F42",t_cesano:"#2A1FA8",t_concept:"#4B5563",t_corsico:"#6B1838",t_novella:"#B8182A",t_trezzano:"#7C4FA0",t_seguro:"#2C78A8",t_triestina:"#C62630",t_velasca:"#C8161C",t_vercellese:"#23439A",t_vige:"#1F2A5C",t_villapizzone:"#5E1C78",t_viscontini:"#0E4A78"};
+var ACC={t_baggese:"#C8202A",t_ardor:"#C0620E",t_artemide:"#8C6D00",t_bonola:"#157F42",t_cesano:"#2A1FA8",t_concept:"#4B5563",t_corsico:"#6B1838",t_novella:"#B8182A",t_trezzano:"#7C4FA0",t_seguro:"#2C78A8",t_triestina:"#C62630",t_velasca:"#C8161C",t_vercellese:"#23439A",t_vige:"#1F2A5C",t_villapizzone:"#5E1C78",t_viscontini:"#0E4A78","pb_schiaffino":"#D21F26","pb_briantea":"#9A7438","pb_cassina":"#1F2366","pb_cantu":"#0B3D63","pb_zeta":"#D9201E","pb_giussano":"#E01E1E","pb_itala":"#222222","pb_dominante":"#1F5FA0","pb_leoteam":"#E01E1E","pb_lomazzo":"#2060C0","pb_luisago":"#B08C00","pb_montesolaro":"#2A6FB0","pb_cadorago":"#1C1F45","pb_lissone":"#0B2463","pb_triuggese":"#D01C1C","pb_cermenate":"#1F7A3E"};
 function rgbOf(h){ h=h.replace("#",""); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
 function hexOf(c){ return "#"+c.map(function(v){ v=Math.max(0,Math.min(255,Math.round(v))); return (v<16?"0":"")+v.toString(16); }).join("").toUpperCase(); }
 function mixC(a,b,t){ return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]; }
@@ -574,18 +604,35 @@ function toHsl(c){ var r=c[0]/255,g=c[1]/255,b=c[2]/255,mx=Math.max(r,g,b),mn=Ma
 function fromHsl(h,s,l){ function f(p,q,t){ if(t<0)t+=1; if(t>1)t-=1; if(t<1/6) return p+(q-p)*6*t; if(t<1/2) return q; if(t<2/3) return p+(q-p)*(2/3-t)*6; return p; } if(!s) return [l*255,l*255,l*255]; var q=l<.5?l*(1+s):l+s-l*s, p=2*l-q; return [f(p,q,h+1/3)*255,f(p,q,h)*255,f(p,q,h-1/3)*255]; }
 function fitL(c,lo,hi){ var x=toHsl(c), i=0; while(lumC(c)>hi && i<60){ x[2]-=.01; c=fromHsl(x[0],x[1],x[2]); i++; } while(lumC(c)<lo && i<120){ x[2]+=.01; x[1]=Math.max(0,x[1]-.006); c=fromHsl(x[0],x[1],x[2]); i++; } return c; }
 function setAccent(){
-  var id=me(), base=ACC[id]||kit(id).c1||"#C8202A", c=rgbOf(hex(base,"#C8202A")), r=document.documentElement.style;
+  var id=(MYT&&ACC[MYT])?MYT:me(), base=ACC[id]||kit(id).c1||"#C8202A", c=rgbOf(hex(base,"#C8202A")), r=document.documentElement.style;
   var L=fitL(c,0,.18), D=fitL(c,.125,.18);
   r.setProperty("--a-brand",hexOf(L)); r.setProperty("--a-deep",hexOf(mixC(L,[0,0,0],.25))); r.setProperty("--a-mine",hexOf(mixC(L,[255,255,255],.9))); r.setProperty("--a-ink",hexOf(mixC(L,[0,0,0],.3)));
   r.setProperty("--a-brand-d",hexOf(D)); r.setProperty("--a-deep-d",hexOf(mixC(D,[0,0,0],.2))); r.setProperty("--a-mine-d",hexOf(mixC(D,[22,22,24],.74))); r.setProperty("--a-ink-d",hexOf(mixC(D,[255,255,255],.6)));
 }
-function setMyTeam(id){ MYT=id; try { localStorage.setItem("baggese-myteam",id); } catch(e){} rosaTeam=null; clsF={from:0,to:0,side:"all"}; }
+function setMyTeam(id){ MYT=id; MYG=IDX[id]?IDX[id].g:G; try { localStorage.setItem("baggese-myteam",id); localStorage.setItem("baggese-mygirone",MYG); } catch(e){} rosaTeam=null; clsF={from:0,to:0,side:"all"}; }
 var askedTeam=false;
 function openTeamPicker(first){
-  var cur=me();
-  var list=S.teams.slice().sort(function(a,b){ return a.name.localeCompare(b.name); });
-  var h='<div class="row between"><h2 id="tpTitle" tabindex="-1" style="outline:none">'+(first?'Qual è la tua squadra?':'La tua squadra')+'</h2>'+(first?'':'<button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button>')+'</div><p class="small muted" style="margin:0">L’app si adatta alla squadra che scegli: Home, calendario, obiettivo e colori. Le altre squadre restano sempre consultabili.</p><div class="tpick">'+list.map(function(t){ return '<button type="button" class="tp'+(t.id===cur?' on':'')+'" data-myteam="'+t.id+'" aria-pressed="'+(t.id===cur)+'">'+crest(t.id,48)+'<span>'+esc(t.name)+'</span></button>'; }).join("")+'</div>';
-  $("dlgBody").innerHTML=h; showDlg(); try { $("tpTitle").focus({preventScroll:true}); } catch(e){}
+  var g=gir(IDX[me()]?IDX[me()].g:G); openTeamPicker.first=first; openTeamPicker.cat=g.cat; openTeamPicker.g=g.id; openTeamPicker.q="";
+  drawPicker(); showDlg(); try { $("tpTitle").focus({preventScroll:true}); } catch(e){}
+}
+var CATS=["Prima","Seconda","Terza"];
+function tpBtn(id,sub){ var cur=MYT||me(); return '<button type="button" class="tp'+(id===cur?' on':'')+'" data-myteam="'+id+'" aria-pressed="'+(id===cur)+'">'+crest(id,48)+'<span>'+esc(IDX[id]?IDX[id].name:tname(id))+(sub?'<small>'+esc(sub)+'</small>':'')+'</span></button>'; }
+function pickerList(){
+  var q=norm(openTeamPicker.q||"");
+  if(q){ var hits=[]; GIRONI.forEach(function(g){ g.teams.forEach(function(t){ if(norm(t[1]).indexOf(q)>=0) hits.push(tpBtn(t[0],g.cat+" · "+g.name)); }); });
+    return hits.length?'<div class="tpick">'+hits.join("")+'</div>':'<p class="small muted" style="margin:8px 0">Nessuna squadra trovata.</p>'; }
+  var cats=CATS.filter(function(c){ return GIRONI.some(function(g){return g.cat===c;}); }), gs=GIRONI.filter(function(g){return g.cat===openTeamPicker.cat;});
+  return '<div class="tpsteps">'+(cats.length>1?'<div class="seg sm" role="group" aria-label="Categoria">'+cats.map(function(c){ return '<button type="button" data-pcat="'+c+'" aria-pressed="'+(c===openTeamPicker.cat)+'">'+c+'</button>'; }).join("")+'</div>':'')+'<div class="gchips" role="group" aria-label="Girone">'+gs.map(function(g){ return '<button type="button" data-pg="'+g.id+'" aria-pressed="'+(g.id===openTeamPicker.g)+'">'+esc(g.name)+' <span>'+esc(g.area)+'</span></button>'; }).join("")+'</div></div><div class="tpick">'+gir(openTeamPicker.g).teams.map(function(t){ return tpBtn(t[0]); }).join("")+'</div>';
+}
+function drawPicker(){
+  var first=openTeamPicker.first, box=$("tpList");
+  if(box){ box.innerHTML=pickerList(); return; }
+  $("dlgBody").innerHTML='<div class="row between"><h2 id="tpTitle" tabindex="-1" style="outline:none">'+(first?'Qual è la tua squadra?':'La tua squadra')+'</h2>'+(first?'':'<button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button>')+'</div><input id="tpSearch" type="search" placeholder="Cerca squadra" autocomplete="off" aria-label="Cerca squadra"><div id="tpList">'+pickerList()+'</div>';
+}
+function openGironi(){
+  var cats=CATS.filter(function(c){ return GIRONI.some(function(g){return g.cat===c;}); });
+  $("dlgBody").innerHTML='<div class="row between"><h2>Gironi</h2><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div>'+cats.map(function(c){ return '<div class="gcat"><span class="eyebrow muted">'+c+' Categoria</span><div class="list">'+GIRONI.filter(function(g){return g.cat===c;}).map(function(g){ return '<button type="button" class="grow-btn'+(g.id===G?' on':'')+'" data-gir="'+g.id+'"><span><b>'+esc(g.name)+'</b><span class="meta">'+esc(g.area)+(g.id===MYG?' · il tuo girone':'')+'</span></span>'+(g.id===G?icon("check"):'')+'</button>'; }).join("")+'</div></div>'; }).join("");
+  showDlg();
 }
 
 function played(m){ return m.hg!=null && m.ag!=null && m.hg!=="" && m.ag!==""; }
@@ -608,7 +655,7 @@ function save(){
         toast(e && e.code==="invalid_argument" ? "Non hai i permessi per modificare questi dati." : "Salvataggio non riuscito, riprova tra poco.");
       });
     } else {
-      try { localStorage.setItem(LS_KEY, JSON.stringify(copy)); } catch(e){}
+      try { localStorage.setItem(lsKey(), JSON.stringify(copy)); } catch(e){}
       pendingWrite=false;
     }
   }, 350);
@@ -626,20 +673,40 @@ function boot(){
   useP.then(function(ns){
     db=ns;
     if (!db){ fallbackLocal(); return; }
-    docRef=db.doc(DOC_PATH); mode="db";
+    mode="db";
     db.collection("loghi").onSnapshot(function(q){ LOGOS={}; q.docs.forEach(function(x){ var v=x.data(); if(v&&typeof v.src==="string"&&/^data:image\/(png|jpeg|webp|gif);base64,/.test(v.src)) LOGOS[x.id]=v.src; }); render(); }, function(){});
-    docRef.onSnapshot(function(snap){
-      if (pendingWrite && snap.metadata && !snap.metadata.hasPendingWrites) return;
-      S = normalize(snap.exists ? snap.data() : null);
-      ensureMyTeam(); render();
-    }, function(){ fallbackLocal(); toast("Archivio non raggiungibile: dati salvati solo su questo dispositivo."); });
+    subscribeDoc();
   }).catch(fallbackLocal);
   if (window.claude && window.claude.use) window.claude.use("downloads").then(function(d){ downloads=d; if(tab==="gestione") render(); }).catch(function(){});
+}
+var unsub=null;
+function subscribeDoc(cb){
+  if(unsub){ try{ unsub(); }catch(e){} unsub=null; }
+  docRef=db.doc(docPath()); var first=true;
+  unsub=docRef.onSnapshot(function(snap){
+    if (pendingWrite && snap.metadata && !snap.metadata.hasPendingWrites) return;
+    S = normalize(snap.exists ? snap.data() : null);
+    ensureMyTeam(); render(); if(first&&cb){ first=false; cb(); }
+  }, function(){ fallbackLocal(); toast("Archivio non raggiungibile: dati salvati solo su questo dispositivo."); });
+}
+/* cambia il girone che stai guardando */
+function switchGirone(g,cb){
+  if(g===G && S.teams.length){ if(cb) cb(); return; }
+  G=g; rosaTeam=null; clsF={from:0,to:0,side:"all"}; selRound=null; partView=(G===MYG?"mine":"round"); tableSrc=null;
+  if(mode==="db"){ subscribeDoc(cb); return; }
+  var raw=null; try { raw=localStorage.getItem(lsKey()); } catch(e){}
+  if(raw){ try { S=normalize(JSON.parse(raw)); ensureMyTeam(); loadLocalLogos(); if(cb) cb(); else render(); checkNewer(); return; } catch(e){} }
+  fetch(gFile()+"?t="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+    if(G!==g) return;
+    S=normalize(d); ensureMyTeam(); loadLocalLogos();
+    try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
+    if(cb) cb(); else render();
+  }).catch(function(){ toast("Girone non disponibile offline"); });
 }
 function fallbackLocal(){
   if (mode==="local") return;
   mode="local"; docRef=null;
-  var raw=null; try { raw=localStorage.getItem(LS_KEY); } catch(e){}
+  var raw=null; try { raw=localStorage.getItem(lsKey()); } catch(e){}
   if (raw){ try { S=normalize(JSON.parse(raw)); } catch(e){ S=blank(); } ensureMyTeam(); loadLocalLogos(); render(); checkNewer(); return; }
   loadSeed(false); checkNewer();
 }
@@ -647,10 +714,10 @@ function fallbackLocal(){
 function stamp(x){ var t=Date.parse(x||""); return isNaN(t)?0:t; }
 function checkNewer(manual){
   if (window.claude){ if(manual){ render(); toast("Dati aggiornati"); } return Promise.resolve(); }
-  var p1=fetch("data.json?t="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
-    if (S.teams.length && d && Array.isArray(d.teams) && stamp(d.updatedAt) > stamp(S.updatedAt)){
+  var g0=G, p1=fetch(gFile()+"?t="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+    if (G===g0 && S.teams.length && d && Array.isArray(d.teams) && stamp(d.updatedAt) > stamp(S.updatedAt)){
       S=normalize(d); ensureMyTeam();
-      try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch(e){}
+      try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
       render(); toast("Dati aggiornati");
     } else if (manual) toast("Hai già i dati più recenti");
   }).catch(function(){ if(manual) toast("Non riesco a controllare: sei offline?"); });
@@ -663,16 +730,16 @@ function checkNewer(manual){
 }
 document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="visible" && mode==="local") checkNewer(); });
 function loadSeed(manual){
-  fetch("data.json",{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+  fetch(gFile(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
     S=normalize(d); ensureMyTeam(); loadLocalLogos();
-    try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch(e){}
+    try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
     render(); if(manual) toast("Dati ricaricati da data.json");
   }).catch(function(){ if(!manual){ S=blank(); ensureMyTeam(); render(); } else toast("data.json non trovato accanto all\u2019app"); });
 }
 function ensureMyTeam(){
   if (!S.settings.myTeamId || !team(S.settings.myTeamId)){
-    var t=findTeam("Baggese");
-    if (!t){ t={id:uid("t"), name:"Baggese"}; S.teams.push(t); }
+    var t=findTeam("Baggese")||S.teams[0];
+    if (!t){ if(G!=="O") return; t={id:uid("t"), name:"Baggese"}; S.teams.push(t); }
     S.settings.myTeamId=t.id;
   }
 }
@@ -911,7 +978,7 @@ var IC={
  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
  plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="M6 6l12 12M18 6 6 18"/>',
  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.6 2.6-1.4 4.2H9.8L8.4 10.1z"/>',
- left:'<path d="M15 5l-7 7 7 7"/>', swap:'<path d="M7 4v13M3.5 13.5L7 17l3.5-3.5M17 20V7M13.5 10.5L17 7l3.5 3.5"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>',
+ left:'<path d="M15 5l-7 7 7 7"/>', swap:'<path d="M7 4v13M3.5 13.5L7 17l3.5-3.5M17 20V7M13.5 10.5L17 7l3.5 3.5"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', chev:'<path d="M7 10l5 5 5-5"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>',
  paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6"/>'
 };
 function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'; }
@@ -920,8 +987,8 @@ function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">
 var partView = "mine", selRound = null, slideDir = 0, calJump = false;
 
 /* stemmi: stessa cornice tonda per tutti; logo caricato o scudetto generato con i colori sociali */
-var KITS={t_baggese:["#C8202A","#FFFFFF","stripes"],t_ardor:["#1A1A1A","#F08A24","sleeves"],t_artemide:["#F2D21B","#111111","sleeves"],t_bonola:["#178F4A","#F2D43A","sleeves"],t_cesano:["#2A1FA8","#F2E21B","sleeves"],t_concept:["#4B5563","#FFFFFF","sleeves"],t_corsico:["#5A1430","#FFFFFF","sleeves"],t_novella:["#C81E2B","#1A1A1A","sleeves"],t_trezzano:["#A77BC0","#FFFFFF","sleeves"],t_seguro:["#5AA9D6","#FFFFFF","sleeves"],t_triestina:["#D52B32","#FFFFFF","sleeves"],t_velasca:["#D9161B","#FFFFFF","sleeves"],t_vercellese:["#D9262B","#23439A","halves"],t_vige:["#1F2A5C","#D62B35","sleeves"],t_villapizzone:["#F7D90A","#5E1C78","sleeves"],t_viscontini:["#0E4A78","#F2D43A","sleeves"]};
-var SHORT={t_baggese:"BAG",t_ardor:"ARD",t_artemide:"ART",t_bonola:"BON",t_cesano:"CES",t_concept:"CON",t_corsico:"COR",t_novella:"NOV",t_trezzano:"TRE",t_seguro:"SEG",t_triestina:"TRI",t_velasca:"VEL",t_vercellese:"VER",t_vige:"VIG",t_villapizzone:"VIL",t_viscontini:"VIS"};
+var KITS={t_baggese:["#C8202A","#FFFFFF","stripes"],t_ardor:["#1A1A1A","#F08A24","sleeves"],t_artemide:["#F2D21B","#111111","sleeves"],t_bonola:["#178F4A","#F2D43A","sleeves"],t_cesano:["#2A1FA8","#F2E21B","sleeves"],t_concept:["#4B5563","#FFFFFF","sleeves"],t_corsico:["#5A1430","#FFFFFF","sleeves"],t_novella:["#C81E2B","#1A1A1A","sleeves"],t_trezzano:["#A77BC0","#FFFFFF","sleeves"],t_seguro:["#5AA9D6","#FFFFFF","sleeves"],t_triestina:["#D52B32","#FFFFFF","sleeves"],t_velasca:["#D9161B","#FFFFFF","sleeves"],t_vercellese:["#D9262B","#23439A","halves"],t_vige:["#1F2A5C","#D62B35","sleeves"],t_villapizzone:["#F7D90A","#5E1C78","sleeves"],t_viscontini:["#0E4A78","#F2D43A","sleeves"],"pb_schiaffino":["#E02020","#FFFFFF","sleeves"],"pb_briantea":["#111111","#C8A26A","sleeves"],"pb_cassina":["#1F2366","#F2D21B","sleeves"],"pb_cantu":["#F5DC0A","#0B3D63","sleeves"],"pb_zeta":["#111111","#D9201E","sleeves"],"pb_giussano":["#FFFFFF","#E01E1E","halves"],"pb_itala":["#FFFFFF","#111111","sleeves"],"pb_dominante":["#111111","#2E7DC0","stripes"],"pb_leoteam":["#FFFFFF","#E01E1E","sleeves"],"pb_lomazzo":["#FFFFFF","#2060C0","sleeves"],"pb_luisago":["#F5D90A","#111111","sleeves"],"pb_montesolaro":["#9CC3EF","#1F5F9F","sleeves"],"pb_cadorago":["#1C1F45","#F5D90A","sleeves"],"pb_lissone":["#0B2463","#FFFFFF","sleeves"],"pb_triuggese":["#E01E1E","#FFFFFF","sleeves"],"pb_cermenate":["#FFFFFF","#111111","sleeves"]};
+var SHORT={t_baggese:"BAG",t_ardor:"ARD",t_artemide:"ART",t_bonola:"BON",t_cesano:"CES",t_concept:"CON",t_corsico:"COR",t_novella:"NOV",t_trezzano:"TRE",t_seguro:"SEG",t_triestina:"TRI",t_velasca:"VEL",t_vercellese:"VER",t_vige:"VIG",t_villapizzone:"VIL",t_viscontini:"VIS","pb_schiaffino":"SCH","pb_briantea":"BRI","pb_cassina":"CAS","pb_cantu":"CAN","pb_zeta":"ZET","pb_giussano":"GIU","pb_itala":"ITA","pb_dominante":"DOM","pb_leoteam":"LEO","pb_lomazzo":"LOM","pb_luisago":"LUI","pb_montesolaro":"MON","pb_cadorago":"CAD","pb_lissone":"LIS","pb_triuggese":"TRI","pb_cermenate":"CER"};
 var PATS=[["sleeves","Maniche colorate"],["stripes","Strisce verticali"],["hoops","Strisce orizzontali"],["halves","Metà e metà"],["sash","Banda diagonale"],["quarters","Quarti"],["solid","Tinta unita"]];
 var LOGOS={}, crestN=0;
 function hex(c,d){ return /^#[0-9a-f]{6}$/i.test(c||"")?c:d; }
@@ -956,7 +1023,7 @@ function shirtSvg(id){
   }
   return '<svg class="shirt" viewBox="0 0 32 32" aria-hidden="true"><defs><clipPath id="'+n+'"><path d="'+P+'"/></clipPath></defs><g clip-path="url(#'+n+')">'+b+'</g><path d="'+P+'" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1" stroke-linejoin="round"/></svg>';
 }
-function crest(id,size,extra){ var src=LOGOS[id]; return '<span class="crest'+(extra?' '+extra:'')+'" style="--s:'+(size||32)+'px">'+(src?'<img src="'+esc(src)+'" alt="">':crestSvg(id))+'</span>'; }
+function crest(id,size,extra){ var src=LOGOS[id], rem=!src&&IDX[id]&&IDX[id].logo; if(rem) src=IDX[id].logo; return '<span class="crest'+(extra?' '+extra:'')+'" style="--s:'+(size||32)+'px">'+(src?'<img src="'+esc(src)+'" alt=""'+(rem?' referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'contents\'"':'')+'>'+(rem?'<span style="display:none">'+crestSvg(id)+'</span>':''):crestSvg(id))+'</span>'; }
 
 /* helpers */
 var TABS=[["home","Home","home"],["partite","Partite","cal"],["classifica","Classifica","table"],["rosa","Squadre","team"],["gestione","Gestione","edit"]];
@@ -971,11 +1038,12 @@ function nextRound(){ var r=null; S.matches.forEach(function(m){ if(!played(m)&&
 function rounds(){ var o={}; S.matches.forEach(function(m){ if(m.round) o[+m.round]=1; }); return Object.keys(o).map(Number).sort(function(a,b){return a-b;}); }
 function resLabel(r){ return {V:"Vittoria",N:"Pareggio",P:"Sconfitta"}[r]; }
 function syncChip(){ if(!S.updatedAt) return ""; var d=new Date(S.updatedAt); return '<span class="chip"><i></i>Dati aggiornati il '+d.toLocaleDateString("it-IT",{day:"numeric",month:"long"})+(mode==="local"?" · salvati su questo dispositivo":"")+'</span>'; }
-function header(title,sub,right){ return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:6px">'+(sub?'<span class="eyebrow muted">'+esc(sub)+'</span>':'')+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; }
+function girSel(){ return '<span class="gline"><button type="button" class="gsel" data-act="pickGirone" aria-label="Cambia girone">'+esc(girLabel(G))+icon("chev")+'</button>'+(G!==MYG?'<button type="button" class="linkbtn gback" data-gir="'+MYG+'">Il tuo girone</button>':'')+'</span>'; }
+function header(title,sub,right){ if(sub===1) return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:4px">'+girSel()+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:6px">'+(sub?'<span class="eyebrow muted">'+esc(sub)+'</span>':'')+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; }
 
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
-  crestN=0; shirtN=0; HIST=null; setAccent();
+  crestN=0; shirtN=0; HIST=null; setAccent(); document.body.classList.toggle("other",G!==MYG);
   if(!askedTeam && S.teams.length>1 && mode!=="loading"){ askedTeam=true; var seen=null; try { seen=localStorage.getItem("baggese-myteam"); } catch(e){ seen="x"; } if(!seen) setTimeout(function(){ openTeamPicker(true); },400); }
   if(calJump){ calJump=false; requestAnimationFrame(function(){ requestAnimationFrame(function(){ var el=document.getElementById("calNext"); if(el && tab==="partite" && partView==="mine") window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-76)); }); }); }
   $("tabs").innerHTML=TABS.map(function(t){ return '<button type="button" data-tab="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'><span>'+icon(t[2])+'</span>'+t[1]+'</button>'; }).join("");
@@ -1064,7 +1132,7 @@ function openMatchView(id){
 /* ---------- partite ---------- */
 function vPartite(){
   var my=me();
-  var h=header("Partite",S.settings.girone,'<button class="btn primary" type="button" data-new="1">'+icon("plus")+'Partita</button>');
+  var h=header("Partite",1,'<button class="btn primary" type="button" data-new="1">'+icon("plus")+'Partita</button>');
   h+='<div class="seg" role="group" aria-label="Vista partite"><button type="button" data-pv="mine" aria-pressed="'+(partView==="mine")+'">'+esc(tname(my))+'</button><button type="button" data-pv="round" aria-pressed="'+(partView==="round")+'">Per giornata</button></div>';
   if(!S.matches.length) return h+'<div class="empty"><span class="muted">Nessuna partita ancora. Incolla risultati o calendario in Gestione, oppure aggiungi una partita.</span><button class="btn" type="button" data-go="import">'+icon("paste")+'Incolla i dati</button></div>';
   if (partView==="round"){
@@ -1116,7 +1184,7 @@ function icsText(ms){
 function addToCalendar(which){
   var my=me(), ms=which==="all" ? S.matches.filter(function(m){return involves(m,my)&&!played(m)&&m.date;}).sort(sortMatches) : S.matches.filter(function(m){return m.id===which;});
   if(!ms.length) return;
-  if(which==="all" && mode==="local" && me()===S.settings.myTeamId && /^https?:$/.test(location.protocol)){
+  if(which==="all" && mode==="local" && G==="O" && me()===S.settings.myTeamId && /^https?:$/.test(location.protocol)){
     // sul sito: iscrizione al calendario pubblicato, che si aggiorna da solo
     location.href="webcal://"+location.host+location.pathname.replace(/[^\/]*$/,"")+"baggese.ics"; return;
   }
@@ -1140,7 +1208,7 @@ function vClassifica(){
   var tb=currentTable(), my=me();
   var cf=clsRange();
   var fbtn=clsView==="squadre"?'<button class="iconbtn'+(cf.active?' on':'')+'" type="button" data-act="clsFilter" aria-label="Filtra la classifica'+(cf.active?' (filtro attivo)':'')+'">'+icon("filter")+'</button>':'';
-  var h=header("Classifica",S.settings.girone+" · "+S.settings.season);
+  var h=header("Classifica",1);
   if (S.players.some(function(p){return p.teamId && p.teamId!==my;})){
     h+='<div class="seg" role="group" aria-label="Classifica"><button type="button" data-cls="squadre" aria-pressed="'+(clsView==="squadre")+'">Squadre</button><button type="button" data-cls="marcatori" aria-pressed="'+(clsView==="marcatori")+'">Marcatori</button></div>';
     h=h.replace(/<div class="seg" role="group" aria-label="Classifica">[\s\S]*<\/div>$/,function(x){ return '<div class="row" style="gap:6px"><div class="grow">'+x.replace('class="seg"','class="seg" style="width:100%"')+'</div>'+fbtn+'</div>'; });
@@ -1183,11 +1251,11 @@ function vMarcatori(){
 /* ---------- squadre ---------- */
 function vRosa(){
   var tid=curRosaTeam(), my=me(), st=playerStats(), row=tableRow(tid);
-  var h=header("Squadre",S.settings.season,'<button class="btn primary" type="button" data-player="new">'+icon("plus")+'Giocatore</button>');
+  var h=header("Squadre",1,'<button class="btn primary" type="button" data-player="new">'+icon("plus")+'Giocatore</button>');
   h+='<div class="crest-strip" role="group" aria-label="Scegli la squadra">'+S.teams.slice().sort(function(a,b){ return (a.id===my?-1:b.id===my?1:0) || a.name.localeCompare(b.name); }).map(function(t){ return '<button type="button" class="cpick" data-rteam="'+t.id+'" aria-pressed="'+(t.id===tid)+'" aria-label="'+esc(t.name)+'">'+crest(t.id,48,t.id===tid?'lit':'')+'<span>'+esc(shortName(t.id))+'</span></button>'; }).join("")+'</div>';
   var list=S.players.filter(function(p){return pTeam(p)===tid;});
   var gol=list.reduce(function(s,p){return s+st[p.id].gol;},0);
-  h+='<section class="night'+(tid===my?' hero':'')+' pitch team-hero"><div class="row" style="gap:16px">'+crest(tid,72,tid===my?'lit':'')+'<div class="col grow"><span class="eyebrow" style="color:var(--on-night-muted)">'+(tid===my?'La tua squadra':esc(S.settings.girone))+'</span><h1 style="font-size:clamp(26px,6vw,36px)">'+esc(tname(tid))+'</h1></div></div><div class="stats"><div class="stat"><b>'+(row&&row.g?row.pos+'°':'–')+'</b><span>Posizione</span></div><div class="stat"><b>'+(row?row.pts:'–')+'</b><span>Punti</span></div><div class="stat"><b>'+(row?row.v+'-'+row.n+'-'+row.p:'–')+'</b><span>V-N-P</span></div><div class="stat"><b>'+(row?row.gf+':'+row.gs:'–')+'</b><span>Gol</span></div></div></section>';
+  h+='<section class="night'+((tid===my&&G===MYG)?' hero':'')+' pitch team-hero"><div class="row" style="gap:16px">'+crest(tid,72,(tid===my&&G===MYG)?'lit':'')+'<div class="col grow"><span class="eyebrow" style="color:var(--on-night-muted)">'+((tid===my&&G===MYG)?'La tua squadra':esc(S.settings.girone))+'</span><h1 style="font-size:clamp(26px,6vw,36px)">'+esc(tname(tid))+'</h1></div></div><div class="stats"><div class="stat"><b>'+(row&&row.g?row.pos+'°':'–')+'</b><span>Posizione</span></div><div class="stat"><b>'+(row?row.pts:'–')+'</b><span>Punti</span></div><div class="stat"><b>'+(row?row.v+'-'+row.n+'-'+row.p:'–')+'</b><span>V-N-P</span></div><div class="stat"><b>'+(row?row.gf+':'+row.gs:'–')+'</b><span>Gol</span></div></div></section>';
   h+=teamCards(tid);
   if(!list.length) return h+'<div class="empty"><span class="muted">Nessun giocatore per questa squadra.</span><button class="btn primary" type="button" data-player="new">'+icon("plus")+'Aggiungi un giocatore</button></div>';
   var groups=[["Portiere","Portieri"],["Difensore","Difensori"],["Centrocampista","Centrocampisti"],["Attaccante","Attaccanti"],["","Altri"]];
@@ -1252,7 +1320,7 @@ function saveLocalLogos(){ var o={}; Object.keys(LOGOS).forEach(function(k){ if(
 function loadLocalLogos(){
   try{ var o=JSON.parse(localStorage.getItem(LS_KEY+"-logos")||"{}"); Object.keys(o).forEach(function(k){ if(/^data:image\//.test(o[k])) LOGOS[k]=o[k]; }); }catch(e){}
   if(window.claude) return;
-  S.teams.forEach(function(t){ if(LOGOS[t.id]) return; (function tryLogo(paths){ if(!paths.length) return; var im=new Image(); im.onload=function(){ if(!LOGOS[t.id]){ LOGOS[t.id]=paths[0]; render(); } }; im.onerror=function(){ tryLogo(paths.slice(1)); }; im.src=paths[0]; })([t.id+".png","logos/"+t.id+".png"]); });
+  S.teams.forEach(function(t){ if(LOGOS[t.id]||(IDX[t.id]&&IDX[t.id].logo)) return; (function tryLogo(paths){ if(!paths.length) return; var im=new Image(); im.onload=function(){ if(!LOGOS[t.id]){ LOGOS[t.id]=paths[0]; render(); } }; im.onerror=function(){ tryLogo(paths.slice(1)); }; im.src=paths[0]; })([t.id+".png","logos/"+t.id+".png"]); });
 }
 
 /* ---------- match editor ---------- */
@@ -1512,13 +1580,16 @@ function applyPaste(){
 document.addEventListener("click", function(e){
   var b=e.target.closest("button,[data-tab],[data-go]"); if(!b) return;
   var ds=b.dataset;
-  if(ds.tab){ var nt=ds.tab; if(nt==="partite") calJump=true; smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); return; }
+  if(ds.tab){ var nt=ds.tab; if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
+  if(ds.gir){ var ng=ds.gir; closeDlg(); switchGirone(ng,function(){ smooth(function(){ if(tab==="home"&&ng!==MYG) tab="classifica"; render(); window.scrollTo(0,0); }); }); return; }
+  if(ds.pcat){ openTeamPicker.cat=ds.pcat; openTeamPicker.g=GIRONI.filter(function(g){return g.cat===ds.pcat;})[0].id; drawPicker(); return; }
+  if(ds.pg){ openTeamPicker.g=ds.pg; drawPicker(); return; }
   if(ds.ics){ addToCalendar(ds.ics); return; }
   if(ds.themeset){ try { localStorage.setItem("baggese-theme",ds.themeset); } catch(e){} var tv=ds.themeset; smooth(function(){ applyTheme(tv); render(); }); return; }
   if(ds.go){ tab="gestione"; render(); var target=$(ds.go==="teams"?"newTeam":"pasteBox"); if(target){ target.scrollIntoView({block:"center"}); target.focus(); } return; }
   if(ds.filter){ filterMine=ds.filter==="mine"; render(); return; }
   if(ds.src){ tableSrc=ds.src; render(); return; }
-  if(ds.myteam){ var nt3=ds.myteam; closeDlg(); smooth(function(){ setMyTeam(nt3); render(); window.scrollTo(0,0); }); toast("Ora segui "+tname(nt3)); return; }
+  if(ds.myteam){ var nt3=ds.myteam, g3=IDX[nt3]?IDX[nt3].g:G; closeDlg(); setMyTeam(nt3); switchGirone(g3,function(){ smooth(function(){ tab="home"; partView="mine"; render(); window.scrollTo(0,0); }); }); toast("Ora segui "+tname(nt3)); return; }
   if(ds.goal){ try { localStorage.setItem("baggese-goal",ds.goal); } catch(e){} closeDlg(); render(); return; }
   if(ds.cmode){ chartMode=ds.cmode; render(); return; }
   if(ds.cls){ var cv=ds.cls; smooth(function(){ clsView=cv; render(); }); return; }
@@ -1548,6 +1619,7 @@ document.addEventListener("click", function(e){
     case "clsFilter": openClsFilter(); break;
     case "goalEdit": openGoal(); break;
     case "pickTeam": openTeamPicker(false); break;
+    case "pickGirone": openGironi(); break;
     case "clsApply": var ff=+$("fFrom").value, ft=+$("fTo").value; if(ff>ft){ var tmp=ff; ff=ft; ft=tmp; } clsF={from:ff,to:ft,side:openClsFilter.side||"all"}; closeDlg(); render(); break;
     case "clsReset": clsF={from:0,to:0,side:"all"}; closeDlg(); render(); break;
     case "addSc": readDraft(); openMatch.draft.scorers.push({playerId:"",min:"",teamId:me()}); drawMatch(); break;
@@ -1581,6 +1653,7 @@ document.addEventListener("click", function(e){
     case "cancelRestore": restorePending=null; $("restoreConfirm").innerHTML=""; break;
   }
 });
+document.addEventListener("input", function(e){ if(e.target.id==="tpSearch"){ openTeamPicker.q=e.target.value; drawPicker(); } });
 document.addEventListener("change", function(e){
   var t=e.target;
   if(t.dataset && t.dataset.pi!=null && parsed){ parsed.items[+t.dataset.pi].on=t.checked; return; }
