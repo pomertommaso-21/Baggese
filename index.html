@@ -586,7 +586,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.3";
+var APP_VERSION = "2026-11-12.4";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1352,7 +1352,8 @@ function saveLocalLogos(){ var o={}; Object.keys(LOGOS).forEach(function(k){ if(
 function loadLocalLogos(){
   try{ var o=JSON.parse(localStorage.getItem(LS_KEY+"-logos")||"{}"); Object.keys(o).forEach(function(k){ if(/^data:image\//.test(o[k])) LOGOS[k]=o[k]; }); }catch(e){}
   if(window.claude) return;
-  S.teams.forEach(function(t){ if(LOGOS[t.id]||(IDX[t.id]&&IDX[t.id].logo)) return; (function tryLogo(paths){ if(!paths.length) return; var im=new Image(); im.onload=function(){ if(!LOGOS[t.id]){ LOGOS[t.id]=paths[0]; render(); } }; im.onerror=function(){ tryLogo(paths.slice(1)); }; im.src=paths[0]; })([t.id+".png","logos/"+t.id+".png"]); });
+  var ids=Object.keys(IDX); S.teams.forEach(function(t){ if(!IDX[t.id]) ids.push(t.id); });
+  ids.map(function(id){ return {id:id}; }).forEach(function(t){ if(LOGOS[t.id]||(IDX[t.id]&&IDX[t.id].logo)) return; (function tryLogo(paths){ if(!paths.length) return; var im=new Image(); im.onload=function(){ if(!LOGOS[t.id]){ LOGOS[t.id]=paths[0]; clearTimeout(loadLocalLogos.t); loadLocalLogos.t=setTimeout(render,60); } }; im.onerror=function(){ tryLogo(paths.slice(1)); }; im.src=paths[0]; })([t.id+".png","logos/"+t.id+".png"]); });
 }
 
 /* ---------- match editor ---------- */
