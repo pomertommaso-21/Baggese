@@ -20,7 +20,9 @@ Formato di aggiornamento.json (tutte le chiavi sono facoltative tranne "partite"
 }
 
 - "girone": "O" = Seconda Categoria Milano Girone O (data.json, predefinito),
-             "PB" = Prima Categoria Lombardia Girone B (prima-b.json).
+             "PA" = Prima Categoria Lombardia Girone A (prima-a.json, Quinto Romano),
+             "PB" = Prima Categoria Lombardia Girone B (prima-b.json, FC Zeta Milano),
+             "PG" = Prima Categoria Lombardia Girone G (prima-g.json, Real Trezzano).
 - "marcatori" e' la frase "Sulla partita" della pagina della partita su Tuttocampo, copiata cosi' com'e'.
 - "giocatori" sono i totali delle schede giocatore; "giocatori_fino_a" dice fino a quale giornata
   li comprendono (serve all'app per non contare due volte i gol).
@@ -33,7 +35,7 @@ import unicodedata
 
 DATA = "data.json"
 ICS = "baggese.ics"
-GIRONI = {"O": "data.json", "PB": "prima-b.json"}
+GIRONI = {"O": "data.json", "PA": "prima-a.json", "PB": "prima-b.json", "PG": "prima-g.json"}
 
 
 def norm(s):
@@ -57,7 +59,7 @@ class Book:
     def team(self, name):
         n = norm(name)
         for t in self.teams:
-            if norm(t["name"]) == n or norm(re.sub(r"^(t|pb)_", "", t["id"])) == n:
+            if norm(t["name"]) == n or norm(re.sub(r"^(t|pa|pb|pg)_", "", t["id"])) == n:
                 return t["id"]
         w = set(words(name))
         best, score = None, 0

@@ -13,6 +13,8 @@ Tutti i file stanno nella cartella principale del repository, senza sottocartell
 | `index.html` | L'app |
 | `data.json` | I dati della stagione: squadre, 30 giornate, rose, classifica, marcatori |
 | `prima-b.json` | Prima Categoria Lombardia, Girone B (FC Zeta Milano): stessi dati, caricati solo quando apri quel girone |
+| `prima-a.json`, `prima-g.json` | Prima Categoria Lombardia, Girone A (Quinto Romano) e Girone G (Real Trezzano) |
+| `pa_*.png`, `pb_*.png`, `pg_*.png` | Stemmi delle squadre di Prima Categoria |
 | `sw.js` | Tiene una copia dell'app sul telefono: si apre subito, anche senza rete |
 | `t_baggese.png`, `t_corsico.png`… (16 file `t_*.png`) | Gli stemmi delle squadre, ritagliati e centrati tutti allo stesso modo |
 | `Inter-*.woff`, `InterDisplay-*.woff` | I caratteri dell'app (licenza libera SIL OFL, in `LICENSE-fonts.txt`) |
