@@ -504,6 +504,11 @@ body.other .view{--mine:transparent;--mine-ink:inherit}
 .hero-star svg.i{width:22px;height:22px}
 .tp-star[aria-pressed="true"],.hero-star[aria-pressed="true"]{color:#F2B705}
 .tp-star[aria-pressed="true"] svg,.hero-star[aria-pressed="true"] svg{fill:currentColor}
+.tgl-row{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;background:none;border:0;border-top:1px solid var(--line);padding:14px 0 2px;margin-top:4px;color:inherit;font:inherit;text-align:left}
+.tgl{flex:none;width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;transition:background .2s}
+.tgl::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.tgl-row[aria-checked="true"] .tgl{background:var(--brand)}
+.tgl-row[aria-checked="true"] .tgl::after{transform:translateX(18px)}
 .tp small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:2px}
 #tpSearch{margin:2px 0 12px}
 .tpsteps{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
@@ -616,7 +621,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.9";
+var APP_VERSION = "2026-11-12.10";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -892,7 +897,8 @@ var ZLAB={promo:"Promozione",po:"Playoff",pl:"Playout"};
 function zoneOf(pos){ var n=S.teams.length; if(n<8||!pos) return null; if(pos===1) return "promo"; if(pos<=5) return "po"; if(pos===n) return "rel"; if(pos>n-5) return "pl"; return null; }
 function zAttr(pos){ if(ZOFF) return ''; var z=zoneOf(pos); return z?' data-z="'+z+'" style="--zc:var(--z-'+z+')"':''; }
 function zLegend(){ var n=S.teams.length; return '<div class="zleg"><span><i style="background:var(--z-promo)"></i>Promozione · 1°</span><span><i style="background:var(--z-po)"></i>Playoff · 2°–5°</span><span><i style="background:var(--z-pl)"></i>Playout · '+(n-4)+'°–'+(n-1)+'°</span><span><i style="background:var(--z-rel)"></i>Retrocessione · '+n+'°</span></div>'; }
-function mvHtml(id,pos){ if(ZOFF) return ''; var p=prevPos(id); if(p==null||!pos) return ''; var d=p-pos; if(d>0) return '<span class="mv up" title="Sale di '+d+' rispetto alla giornata prima">▲'+d+'</span>'; if(d<0) return '<span class="mv dn" title="Scende di '+(-d)+' rispetto alla giornata prima">▼'+(-d)+'</span>'; return ''; }
+function showArrows(){ try { return localStorage.getItem("baggese-arrows")!=="0"; } catch(e){ return true; } }
+function mvHtml(id,pos){ if(ZOFF||!showArrows()) return ''; var p=prevPos(id); if(p==null||!pos) return ''; var d=p-pos; if(d>0) return '<span class="mv up" title="Sale di '+d+' rispetto alla giornata prima">▲'+d+'</span>'; if(d<0) return '<span class="mv dn" title="Scende di '+(-d)+' rispetto alla giornata prima">▼'+(-d)+'</span>'; return ''; }
 function prevLabel(id,pos){ if(ZOFF) return ''; var p=prevPos(id), h=history(); if(p==null||!pos) return ''; return '<span class="box">Dopo la '+(h.L-1)+'ª: '+p+'°</span>'; }
 function posChart(id,half){
   var h=history(), a=h.by[id]; if(!a||a.length<2) return '<p class="meta" style="margin:0">Il grafico compare dopo la seconda giornata.</p>';
@@ -1369,7 +1375,7 @@ var GOPEN={};
 function vGestione(){
   var h=header("Gestione",S.settings.season), my=me();
   h+='<section class="card"><button type="button" class="gme" data-act="follow">'+crest(my,44)+'<span class="col grow" style="gap:2px"><b>'+esc(tname(my))+'</b><span class="meta">'+(FOL.length>1?'Segui '+FOL.length+' squadre':'La tua squadra')+'</span></span><span class="gme-go">Cambia</span></button></section>';
-  var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div></section>';
+  var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div><button type="button" class="tgl-row" data-act="arrows" role="switch" aria-checked="'+showArrows()+'"><span class="col" style="gap:2px"><b>Frecce in classifica</b><span class="meta">Quante posizioni ha guadagnato o perso ogni squadra</span></span><span class="tgl"></span></button></section>';
   var up=S.updatedAt?new Date(S.updatedAt).toLocaleDateString("it-IT",{day:"numeric",month:"long"}):"";
   h+='<section class="card"><div class="row between" style="gap:12px"><div class="col" style="gap:2px"><b>Dati</b><span class="meta">'+(up?'Aggiornati il '+up:'Non ancora aggiornati')+' · '+esc(girLabel(G))+'</span></div>'+(mode==="local"?'<button class="btn sm" type="button" data-act="refresh">Controlla</button>':'')+'</div><span class="tiny muted">Li aggiorna Claude quando gli scrivi “aggiorna tutto”: l’app li scarica da sola.</span></section>';
   h+='<span class="eyebrow muted gadv">Avanzate · '+esc(girLabel(G))+'</span><section class="card flush gdets">';
@@ -1711,6 +1717,7 @@ document.addEventListener("click", function(e){
     case "follow": openFollow(); break;
     case "addFollow": openTeamPicker(false); break;
     case "pickGirone": openGironi(); break;
+    case "arrows": try { localStorage.setItem("baggese-arrows",showArrows()?"0":"1"); } catch(e){} render(); break;
     case "clsApply": var ff=+$("fFrom").value, ft=+$("fTo").value; if(ff>ft){ var tmp=ff; ff=ft; ft=tmp; } clsF={from:ff,to:ft,side:openClsFilter.side||"all"}; closeDlg(); render(); break;
     case "clsReset": clsF={from:0,to:0,side:"all"}; closeDlg(); render(); break;
     case "addSc": readDraft(); openMatch.draft.scorers.push({playerId:"",min:"",teamId:me()}); drawMatch(); break;
