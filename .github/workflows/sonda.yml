@@ -1,0 +1,14 @@
+name: Sonda Tuttocampo
+on:
+  push:
+    paths: ['tools/sonda.mjs', '.github/workflows/sonda.yml']
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm i --no-save playwright@1.48.2 && npx playwright install --with-deps chromium
+      - run: node tools/sonda.mjs
