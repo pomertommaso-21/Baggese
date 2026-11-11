@@ -16,7 +16,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Baggese 2026/27</title>
-<style>@font-face{font-family:"Inter";src:url(Inter-Regular.woff) format("woff"),url(fonts/Inter-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(Inter-Medium.woff) format("woff"),url(fonts/Inter-Medium.woff) format("woff");font-weight:500;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(Inter-SemiBold.woff) format("woff"),url(fonts/Inter-SemiBold.woff) format("woff");font-weight:600;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(Inter-Bold.woff) format("woff"),url(fonts/Inter-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}@font-face{font-family:"Inter";src:url(Inter-ExtraBold.woff) format("woff"),url(fonts/Inter-ExtraBold.woff) format("woff");font-weight:800;font-style:normal;font-display:swap}@font-face{font-family:"Inter Display";src:url(InterDisplay-Bold.woff) format("woff"),url(fonts/InterDisplay-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}@font-face{font-family:"Inter Display";src:url(InterDisplay-ExtraBold.woff) format("woff"),url(fonts/InterDisplay-ExtraBold.woff) format("woff");font-weight:800;font-style:normal;font-display:swap}</style>
+<link rel="preload" href="Inter-Regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="Inter-SemiBold.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="Inter-Bold.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="InterDisplay-ExtraBold.woff" as="font" type="font/woff" crossorigin><style>@font-face{font-family:"Inter";src:url(Inter-Regular.woff) format("woff"),url(fonts/Inter-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:block}@font-face{font-family:"Inter";src:url(Inter-Medium.woff) format("woff"),url(fonts/Inter-Medium.woff) format("woff");font-weight:500;font-style:normal;font-display:block}@font-face{font-family:"Inter";src:url(Inter-SemiBold.woff) format("woff"),url(fonts/Inter-SemiBold.woff) format("woff");font-weight:600;font-style:normal;font-display:block}@font-face{font-family:"Inter";src:url(Inter-Bold.woff) format("woff"),url(fonts/Inter-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:block}@font-face{font-family:"Inter";src:url(Inter-ExtraBold.woff) format("woff"),url(fonts/Inter-ExtraBold.woff) format("woff");font-weight:800;font-style:normal;font-display:block}@font-face{font-family:"Inter Display";src:url(InterDisplay-Bold.woff) format("woff"),url(fonts/InterDisplay-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:block}@font-face{font-family:"Inter Display";src:url(InterDisplay-ExtraBold.woff) format("woff"),url(fonts/InterDisplay-ExtraBold.woff) format("woff");font-weight:800;font-style:normal;font-display:block}</style>
 <style>
 /* Layout: app a colonna unica su telefono (barra in basso), barra laterale da 232px sopra i 960px. Colori della Baggese: rosso e bianco; grafite per le altre squadre; stemmi in cornice tonda uniforme */
 :root{
@@ -29,6 +29,7 @@
   --win:#16934F; --draw:#73737F; --loss:#D63F2D; --yellow:#F2B705; --red:#D93025;
   --win-bg:#E2F3E9; --win-ink:#11773F; --draw-bg:#EBEBEF; --draw-ink:#55555F; --loss-bg:#FBE5E2; --loss-ink:#B5301E;
   --glass:rgba(255,255,255,.72); --glass-strong:rgba(244,244,246,.94); --glass-line:rgba(20,20,24,.09);
+  --lg-bg:rgba(250,250,252,.62); --lg-line:rgba(255,255,255,.7); --lg-hi:rgba(255,255,255,.9); --lg-pill:color-mix(in srgb,var(--brand) 13%,rgba(255,255,255,.55)); --lg-pill-line:rgba(255,255,255,.75);
   --ring:rgba(20,20,24,.07); --active:#18181C; --on-active:#F6F6F8;
   --shadow:0 1px 2px rgba(20,20,24,.04),0 8px 24px -16px rgba(20,20,24,.16);
   --display:"Inter Display","Inter",-apple-system,"SF Pro Display",system-ui,sans-serif;
@@ -45,6 +46,7 @@
   --win:#2DB56B; --draw:#8A8A96; --loss:#F2604C; --yellow:#F2B705; --red:#E5483D;
   --win-bg:rgba(45,181,107,.17); --win-ink:#52D18F; --draw-bg:rgba(160,160,172,.16); --draw-ink:#B9B9C4; --loss-bg:rgba(242,96,76,.17); --loss-ink:#FF8270;
   --glass:rgba(24,24,27,.72); --glass-strong:rgba(14,14,16,.94); --glass-line:rgba(255,255,255,.08);
+  --lg-bg:rgba(30,30,34,.58); --lg-line:rgba(255,255,255,.1); --lg-hi:rgba(255,255,255,.14); --lg-pill:color-mix(in srgb,var(--brand) 26%,rgba(255,255,255,.08)); --lg-pill-line:rgba(255,255,255,.14);
   --ring:rgba(255,255,255,.16); --active:#EDEDF1; --on-active:#141418;
   --shadow:0 12px 30px -18px rgba(0,0,0,.8);
   color-scheme:dark}}
@@ -58,6 +60,7 @@
   --win:#2DB56B; --draw:#8A8A96; --loss:#F2604C; --yellow:#F2B705; --red:#E5483D;
   --win-bg:rgba(45,181,107,.17); --win-ink:#52D18F; --draw-bg:rgba(160,160,172,.16); --draw-ink:#B9B9C4; --loss-bg:rgba(242,96,76,.17); --loss-ink:#FF8270;
   --glass:rgba(24,24,27,.72); --glass-strong:rgba(14,14,16,.94); --glass-line:rgba(255,255,255,.08);
+  --lg-bg:rgba(30,30,34,.58); --lg-line:rgba(255,255,255,.1); --lg-hi:rgba(255,255,255,.14); --lg-pill:color-mix(in srgb,var(--brand) 26%,rgba(255,255,255,.08)); --lg-pill-line:rgba(255,255,255,.14);
   --ring:rgba(255,255,255,.16); --active:#EDEDF1; --on-active:#141418;
   --shadow:0 12px 30px -18px rgba(0,0,0,.8);
   color-scheme:dark}
@@ -412,6 +415,8 @@ body.scrolled .topbar{opacity:1;transform:none;visibility:visible;transition:opa
 @keyframes spin{to{transform:rotate(360deg)}}
 /* passaggi tra le sezioni */
 nav.tabs{view-transition-name:tabs}
+::view-transition-old(tabs){display:none}
+::view-transition-new(tabs){animation:none}
 .topbar{view-transition-name:topbar}
 ::view-transition-old(root){animation:vtFadeOut .16s ease-out both}
 ::view-transition-new(root){animation:vtFadeIn .2s ease-out both}
@@ -545,6 +550,15 @@ body.other .view{--mine:transparent;--mine-ink:inherit}
 .pg-card{border:0;box-shadow:none;padding:0;background:none}
 .pg-card .card-head{display:none}
 .dlg .seg.sm{align-self:flex-start}
+.seg{position:relative}
+::view-transition-group(*.segvt){animation-duration:0s}
+::view-transition-old(*.segvt){display:none}
+::view-transition-new(*.segvt){animation:none}
+.seg button{position:relative;z-index:1}
+.seg-ind{position:absolute;left:0;top:0;z-index:0;border-radius:10px;background:var(--active);pointer-events:none;transition:transform .34s cubic-bezier(.32,.72,0,1),width .34s cubic-bezier(.32,.72,0,1)}
+.seg.has-ind button[aria-pressed="true"]{background:transparent;box-shadow:none}
+.seg.sm .seg-ind{border-radius:8px;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+@media (prefers-reduced-motion:reduce){.seg-ind{transition:none}}
 .tp small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:2px}
 #tpSearch{margin:2px 0 12px}
 .tpsteps{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
@@ -590,6 +604,17 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
   .home-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
   .span2{grid-column:1/-1}
 }
+@media (max-width:959px){
+  nav.tabs{left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));padding:5px;border-radius:32px;border:0;background:var(--lg-bg);-webkit-backdrop-filter:saturate(190%) blur(22px);backdrop-filter:saturate(190%) blur(22px);box-shadow:inset 0 0 0 1px var(--lg-line),inset 0 1px 0 var(--lg-hi),0 10px 30px rgba(0,0,0,.14),0 2px 6px rgba(0,0,0,.06)}
+  nav.tabs .in{position:relative;justify-content:space-between}
+  nav.tabs button{position:relative;z-index:1;flex:1;min-width:0;min-height:52px;gap:2px;font-size:10.5px;border-radius:26px}
+  nav.tabs button span{padding:3px 0}
+  nav.tabs button:active span{transform:none}
+  .tab-ind{position:absolute;left:0;top:5px;z-index:0;height:52px;border-radius:26px;pointer-events:none;background:var(--lg-pill);box-shadow:inset 0 0 0 1px var(--lg-pill-line),inset 0 1px 0 var(--lg-hi)}
+  .tab-ind i{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.35),transparent 60%)}
+  .wrap{padding-block:20px calc(104px + env(safe-area-inset-bottom,0px))}
+}
+@media (min-width:960px){ .tab-ind{display:none} }
 @media (min-width:960px){
   body{padding-left:232px}
   .wrap{padding-block:32px 48px}
@@ -657,12 +682,13 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.14";
+var APP_VERSION = "2026-11-12.16";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
 var GIRONI = [{"id":"O","cat":"Seconda","area":"Milano","name":"Girone O","file":"data.json","teams":[["t_ardor","Ardor Bollate"],["t_artemide","Artemide Football Club"],["t_baggese","Baggese Calcio"],["t_bonola","Calcio Bonola"],["t_cesano","Cesano Boscone Idrostar"],["t_concept","Concept Football Club"],["t_corsico","Corsico"],["t_novella","Novella Calcio"],["t_trezzano","Nuova Trezzano"],["t_seguro","Seguro"],["t_vercellese","Sport Club Vercellese"],["t_triestina","Triestina 1946"],["t_velasca","Velasca"],["t_vige","Vige Milano"],["t_villapizzone","Villapizzone C.D.A."],["t_viscontini","Viscontini"]]},{"id":"PA","cat":"Prima","area":"Lombardia","name":"Girone A","file":"prima-a.json","teams":[["pa_ausonia1931","Ausonia 1931"],["pa_buccinasco","Buccinasco"],["pa_centroschuster","Centro Schuster"],["pa_frogmilano","Frog Milano"],["pa_garibaldina193","Garibaldina 1932"],["pa_iris1914","Iris 1914"],["pa_leonexiiisport","Leone XIII Sport"],["pa_nevadacalcio","Nevada Calcio"],["pa_orpas","Orpas"],["pa_partizanbonola","Partizan Bonola"],["pa_polisportivadi","Polisportiva di Nova"],["pa_propeschierabo","Pro Peschiera Borromeo"],["pa_quintoromano","Quinto Romano"],["pa_sangiulianocvs","Sangiuliano CVS"],["pa_settimomilanes","Settimo Milanese"],["pa_villa","Villa"]]},{"id":"PB","cat":"Prima","area":"Lombardia","name":"Girone B","file":"prima-b.json","teams":[["pb_schiaffino","Atletico Schiaffino"],["pb_briantea","Briantea Calcio"],["pb_cassina","Cassina Rizzardi"],["pb_cantu","Castello Città di Cantù"],["pb_zeta","FC Zeta Milano"],["pb_giussano","Giussano Calcio"],["pb_itala","Itala"],["pb_dominante","La Dominante"],["pb_leoteam","Leo Team"],["pb_lomazzo","Lomazzo Calcio"],["pb_luisago","Luisago Grandate"],["pb_montesolaro","Montesolaro"],["pb_cadorago","Olimpia Calcio Cadorago"],["pb_lissone","Pro Lissone"],["pb_triuggese","Triuggese"],["pb_cermenate","Virtus Calcio Cermenate"]]},{"id":"PG","cat":"Prima","area":"Lombardia","name":"Girone G","file":"prima-g.json","teams":[["pg_asvarzi","AS Varzi"],["pg_albuzzano","Albuzzano"],["pg_casorateprimo","Casorate Primo"],["pg_cassolese","Cassolese"],["pg_castelnovetto","Castelnovetto"],["pg_gropellosangio","Gropello San Giorgio"],["pg_nizzacalcio","Nizza Calcio"],["pg_oratoriostrade","Oratorio Stradella"],["pg_psabressana191","PSA Bressana 1918"],["pg_realcertosa","Real Certosa"],["pg_realtrezzano","Real Trezzano"],["pg_rondine1924","Rondine 1924"],["pg_rozzanocalcio","Rozzano Calcio"],["pg_valversa","Val Versa"],["pg_virtusbinasco","Virtus Binasco"],["pg_zibidosangiaco","Zibido San Giacomo"]]}];
 var IDX={}; GIRONI.forEach(function(g){ g.teams.forEach(function(t){ IDX[t[0]]={name:t[1],g:g.id,logo:t[2]||""}; }); });
+var LOCALCREST=!window.claude && /^https?:$/.test(location.protocol);
 function gir(id){ for(var i=0;i<GIRONI.length;i++) if(GIRONI[i].id===id) return GIRONI[i]; return GIRONI[0]; }
 function girLabel(id){ var g=gir(id); return g.cat+" · "+g.name; }
 var MYG="O"; try { MYG=localStorage.getItem("baggese-mygirone")||"O"; } catch(e){}
@@ -1141,7 +1167,7 @@ function shirtSvg(id){
   }
   return '<svg class="shirt" viewBox="0 0 32 32" aria-hidden="true"><defs><clipPath id="'+n+'"><path d="'+P+'"/></clipPath></defs><g clip-path="url(#'+n+')">'+b+'</g><path d="'+P+'" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1" stroke-linejoin="round"/></svg>';
 }
-function crest(id,size,extra){ var src=LOGOS[id], rem=!src&&IDX[id]&&IDX[id].logo; if(rem) src=IDX[id].logo; return '<span class="crest'+(extra?' '+extra:'')+'" style="--s:'+(size||32)+'px">'+(src?'<img src="'+esc(src)+'" alt=""'+(rem?' referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'contents\'"':'')+'>'+(rem?'<span style="display:none">'+crestSvg(id)+'</span>':''):crestSvg(id))+'</span>'; }
+function crest(id,size,extra){ var src=LOGOS[id], rem=!src&&IDX[id]&&IDX[id].logo; if(rem) src=IDX[id].logo; if(!src&&LOCALCREST&&IDX[id]){ src=id+".png"; rem=true; } return '<span class="crest'+(extra?' '+extra:'')+'" style="--s:'+(size||32)+'px">'+(src?'<img src="'+esc(src)+'" alt=""'+(rem?' referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'contents\'"':'')+'>'+(rem?'<span style="display:none">'+crestSvg(id)+'</span>':''):crestSvg(id))+'</span>'; }
 
 /* helpers */
 var TABS=[["home","Home","home"],["partite","Partite","cal"],["classifica","Classifica","table"],["rosa","Squadre","team"],["gestione","Gestione","edit"]];
@@ -1162,7 +1188,7 @@ function header(title,sub,right){ if(sub===1) return '<div class="row between" s
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
   crestN=0; shirtN=0; HIST=null; setAccent();
-  var spl=$("splash"); if(spl&&!spl.classList.contains("out")){ spl.classList.add("out"); setTimeout(function(){ if(spl.parentNode) spl.parentNode.removeChild(spl); },400); } document.body.classList.toggle("other",G!==MYG);
+  var spl=$("splash"); if(spl&&!spl.dataset.going){ spl.dataset.going="1"; var fr=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve(); Promise.race([fr,new Promise(function(r){ setTimeout(r,900); })]).then(function(){ requestAnimationFrame(function(){ spl.classList.add("out"); setTimeout(function(){ if(spl.parentNode) spl.parentNode.removeChild(spl); },400); }); }); } document.body.classList.toggle("other",G!==MYG);
   if(!askedTeam && S.teams.length>1 && mode!=="loading"){ askedTeam=true; var seen=null; try { seen=localStorage.getItem("baggese-myteam"); } catch(e){ seen="x"; } if(!seen) setTimeout(function(){ openTeamPicker(true); },400); }
   if(calJump){ calJump=false; requestAnimationFrame(function(){ requestAnimationFrame(function(){ var el=document.getElementById("calNext"); if(el && tab==="partite" && partView==="mine") window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-76)); }); }); }
   $("tabs").innerHTML=TABS.map(function(t){ return '<button type="button" data-tab="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'><span>'+icon(t[2])+'</span>'+t[1]+'</button>'; }).join("");
@@ -1481,7 +1507,7 @@ function loadLocalLogos(){
   try{ var o=JSON.parse(localStorage.getItem(LS_KEY+"-logos")||"{}"); Object.keys(o).forEach(function(k){ if(/^data:image\//.test(o[k])) LOGOS[k]=o[k]; }); }catch(e){}
   if(window.claude) return;
   var ids=Object.keys(IDX); S.teams.forEach(function(t){ if(!IDX[t.id]) ids.push(t.id); });
-  ids.map(function(id){ return {id:id}; }).forEach(function(t){ if(LOGOS[t.id]||(IDX[t.id]&&IDX[t.id].logo)) return; (function tryLogo(paths){ if(!paths.length) return; var im=new Image(); im.onload=function(){ if(!LOGOS[t.id]){ LOGOS[t.id]=paths[0]; clearTimeout(loadLocalLogos.t); loadLocalLogos.t=setTimeout(render,60); } }; im.onerror=function(){ tryLogo(paths.slice(1)); }; im.src=paths[0]; })([t.id+".png","logos/"+t.id+".png"]); });
+  ids.map(function(id){ return {id:id}; }).forEach(function(t){ if(LOGOS[t.id]||IDX[t.id]) return; (function tryLogo(paths){ if(!paths.length) return; var im=new Image(); im.onload=function(){ if(!LOGOS[t.id]){ LOGOS[t.id]=paths[0]; clearTimeout(loadLocalLogos.t); loadLocalLogos.t=setTimeout(render,60); } }; im.onerror=function(){ tryLogo(paths.slice(1)); }; im.src=paths[0]; })([t.id+".png","logos/"+t.id+".png"]); });
 }
 
 /* ---------- match editor ---------- */
@@ -1870,6 +1896,34 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
   document.addEventListener("pointermove",chartMove); document.addEventListener("pointerdown",chartMove);
 })();
 
+/* selettori: l'evidenziatore scivola dalla voce di prima a quella nuova */
+var SEGPOS={};
+function segInd(root){
+  (root||document).querySelectorAll(".seg").forEach(function(sg,i){
+    var on=sg.querySelector('button[aria-pressed="true"]'); if(!on) return;
+    if(!sg.closest("dialog")){ sg.style.viewTransitionName="seg"+i; sg.style.viewTransitionClass="segvt"; }
+    var key=(sg.getAttribute("aria-label")||"seg")+"|"+sg.children.length, ind=sg.querySelector(".seg-ind");
+    if(!ind){ ind=document.createElement("i"); ind.className="seg-ind"; ind.setAttribute("aria-hidden","true"); sg.insertBefore(ind,sg.firstChild); sg.classList.add("has-ind"); }
+    var pos=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight], old=SEGPOS[key];
+    var put=function(p){ ind.style.transform="translate("+p[0]+"px,"+p[1]+"px)"; ind.style.width=p[2]+"px"; ind.style.height=p[3]+"px"; };
+    if(old && (old[0]!==pos[0]||old[2]!==pos[2])){ ind.style.transition="none"; put(old); ind.getBoundingClientRect(); ind.style.transition=""; put(pos); } else { ind.style.transition="none"; put(pos); ind.getBoundingClientRect(); ind.style.transition=""; }
+    SEGPOS[key]=pos;
+  });
+}
+var TABPOS=null;
+function tabInd(){
+  var nav=document.querySelector("nav.tabs .in"), on=nav&&nav.querySelector('button[aria-current="page"]'); if(!on||window.innerWidth>=960) return;
+  var host=document.querySelector("nav.tabs"), ind=host.querySelector(".tab-ind");
+  if(!ind){ ind=document.createElement("div"); ind.className="tab-ind"; ind.setAttribute("aria-hidden","true"); ind.appendChild(document.createElement("i")); host.insertBefore(ind,host.firstChild); }
+  var x=on.offsetLeft+nav.offsetLeft, w=on.offsetWidth, old=TABPOS;
+  ind.style.width=w+"px"; ind.style.transform="translateX("+x+"px)";
+  if(old && old[0]!==x && ind.animate && !(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)){
+    var mid=(old[0]+x)/2, stretch=Math.min(1.35,1+Math.abs(x-old[0])/(w*4));
+    ind.animate([{transform:"translateX("+old[0]+"px) scale(1,1)"},{transform:"translateX("+mid+"px) scale("+stretch+",.92)",offset:.45},{transform:"translateX("+x+"px) scale(1,1)"}],{duration:480,easing:"cubic-bezier(.3,.9,.3,1.05)"});
+  }
+  TABPOS=[x,w];
+}
+(function(){ var pend=false; new MutationObserver(function(){ if(pend) return; pend=true; requestAnimationFrame(function(){ pend=false; segInd(document); tabInd(); }); }).observe(document.body,{childList:true,subtree:true}); window.addEventListener("resize",function(){ SEGPOS={}; TABPOS=null; segInd(document); tabInd(); }); })();
 render(); boot();
 /* app salvata sul telefono: si apre subito anche senza rete */
 if("serviceWorker" in navigator && !window.claude && (location.protocol==="https:"||location.hostname==="localhost")){ window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); }); }

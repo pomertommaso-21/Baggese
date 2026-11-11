@@ -1,8 +1,9 @@
 /* Baggese app: tiene una copia dell'app sul telefono.
-   - pagina e dati: si mostra subito la copia salvata e intanto si scarica quella nuova
+   - pagina: prima la rete (al massimo 1,2 s), poi la copia salvata
+   - dati: si mostra subito la copia salvata e intanto si scarica quella nuova
    - stemmi, font, icone: dalla copia salvata
    - richieste con ?t= (controllo aggiornamenti) e ?v= (ricarica dopo un aggiornamento): sempre dalla rete */
-var C = "baggese-v1";
+var C = "baggese-v2";
 var CORE = ["./", "index.html", "data.json", "manifest.webmanifest", "icon.svg", "icon-180.png", "icon-192.png",
   "Inter-Regular.woff", "Inter-Medium.woff", "Inter-SemiBold.woff", "Inter-Bold.woff", "Inter-ExtraBold.woff", "InterDisplay-Bold.woff", "InterDisplay-ExtraBold.woff"];
 self.addEventListener("install", function (e) {
@@ -20,6 +21,10 @@ self.addEventListener("fetch", function (e) {
   e.respondWith(caches.open(C).then(function (c) {
     return c.match(key, { ignoreSearch: true }).then(function (hit) {
       var net = fetch(r).then(function (res) { if (res && res.ok) c.put(key, res.clone()); return res; });
+      // pagina: prima la rete (versione nuova senza ricaricare), ma se tarda piu' di 1,2 s si apre la copia salvata
+      if (r.mode === "navigate" && hit) {
+        return Promise.race([net.catch(function () { return hit; }), new Promise(function (ok) { setTimeout(function () { ok(hit); }, 1200); })]);
+      }
       if (hit) { if (fresh) e.waitUntil(net.catch(function () {})); return hit; }
       return net;
     });
