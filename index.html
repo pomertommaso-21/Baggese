@@ -23,7 +23,7 @@
   --fg:#141418; --muted:#5D5D68;
   --night:#18181C; --night-2:#27272D; --on-night:#F6F6F8; --on-night-muted:#B4B4BE; --night-line:rgba(255,255,255,.08);
   --brand:var(--a-brand,#C8202A); --brand-deep:var(--a-deep,#991620); --on-brand:#FFFFFF; --mine:var(--a-mine,#FCEAEB); --mine-ink:var(--a-ink,#991620);
-  --z-promo:#0E9F6E; --z-po:#2F6FDB; --z-pl:#E8890C;
+  --z-promo:#0E9F6E; --z-po:#2F6FDB; --z-pl:#E8890C; --z-rel:#D64545;
   --gm1:#F6C2C5; --gm1-ink:#8E141D; --gm3:#7A0F17; --gm3-ink:#FFFFFF;
   --win:#16934F; --draw:#73737F; --loss:#D63F2D; --yellow:#F2B705; --red:#D93025;
   --win-bg:#E2F3E9; --win-ink:#11773F; --draw-bg:#EBEBEF; --draw-ink:#55555F; --loss-bg:#FBE5E2; --loss-ink:#B5301E;
@@ -39,7 +39,7 @@
   --fg:#EDEDF1; --muted:#A0A0AC;
   --night:#1C1C21; --night-2:#2A2A31; --on-night:#F6F6F8; --on-night-muted:#B4B4BE; --night-line:rgba(255,255,255,.08);
   --brand:var(--a-brand-d,#D42F39); --brand-deep:var(--a-deep-d,#A61C26); --on-brand:#FFFFFF; --mine:var(--a-mine-d,#3A1C1F); --mine-ink:var(--a-ink-d,#FF9CA2);
-  --z-promo:#1FA874; --z-po:#5B8EF0; --z-pl:#C47410;
+  --z-promo:#1FA874; --z-po:#5B8EF0; --z-pl:#C47410; --z-rel:#E06565;
   --gm1:#5A2327; --gm1-ink:#FFB6BB; --gm3:#8E141D; --gm3-ink:#FFFFFF;
   --win:#2DB56B; --draw:#8A8A96; --loss:#F2604C; --yellow:#F2B705; --red:#E5483D;
   --win-bg:rgba(45,181,107,.17); --win-ink:#52D18F; --draw-bg:rgba(160,160,172,.16); --draw-ink:#B9B9C4; --loss-bg:rgba(242,96,76,.17); --loss-ink:#FF8270;
@@ -52,7 +52,7 @@
   --fg:#EDEDF1; --muted:#A0A0AC;
   --night:#1C1C21; --night-2:#2A2A31; --on-night:#F6F6F8; --on-night-muted:#B4B4BE; --night-line:rgba(255,255,255,.08);
   --brand:var(--a-brand-d,#D42F39); --brand-deep:var(--a-deep-d,#A61C26); --on-brand:#FFFFFF; --mine:var(--a-mine-d,#3A1C1F); --mine-ink:var(--a-ink-d,#FF9CA2);
-  --z-promo:#1FA874; --z-po:#5B8EF0; --z-pl:#C47410;
+  --z-promo:#1FA874; --z-po:#5B8EF0; --z-pl:#C47410; --z-rel:#E06565;
   --gm1:#5A2327; --gm1-ink:#FFB6BB; --gm3:#8E141D; --gm3-ink:#FFFFFF;
   --win:#2DB56B; --draw:#8A8A96; --loss:#F2604C; --yellow:#F2B705; --red:#E5483D;
   --win-bg:rgba(45,181,107,.17); --win-ink:#52D18F; --draw-bg:rgba(160,160,172,.16); --draw-ink:#B9B9C4; --loss-bg:rgba(242,96,76,.17); --loss-ink:#FF8270;
@@ -467,6 +467,25 @@ nav.tabs{view-transition-name:tabs}
 .tp>span:last-child{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .tp.on{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand);background:var(--mine)}
 body.other .view{--mine:transparent;--mine-ink:inherit}
+.mv-edit{align-self:center;margin-top:4px;color:var(--muted);font-weight:600;text-decoration-color:var(--line)}
+.fol{gap:6px;margin:4px 0 12px}
+.fol-row{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding-right:6px}
+.fol-row.on{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.fol-main{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:10px 12px;background:none;border:0;color:inherit;font:inherit;text-align:left}
+.fol-main>span:not(.crest){display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.fol-main svg.i{color:var(--brand)}
+.fol-x{color:var(--muted)}
+.gme{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;padding:0;color:inherit;font:inherit;text-align:left}
+.gme-go{font-weight:700;font-size:13px;color:var(--brand)}
+.gadv{margin:6px 4px -6px}
+.gdets{padding:0 !important;overflow:hidden}
+.gdet+.gdet{border-top:1px solid var(--line)}
+.gdet>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer}
+.gdet>summary::-webkit-details-marker{display:none}
+.gdet>summary>span{display:flex;flex-direction:column;gap:2px}
+.gdet>summary svg.i{width:18px;height:18px;color:var(--muted);transition:transform .2s}
+.gdet[open]>summary svg.i{transform:rotate(90deg)}
+.gdet-body{display:flex;flex-direction:column;gap:12px;padding:0 16px 16px}
 .tp small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:2px}
 #tpSearch{margin:2px 0 12px}
 .tpsteps{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
@@ -567,7 +586,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto"; } catch(e){ return "auto"; } }
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.2";
+var APP_VERSION = "2026-11-12.3";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -576,6 +595,8 @@ var IDX={}; GIRONI.forEach(function(g){ g.teams.forEach(function(t){ IDX[t[0]]={
 function gir(id){ for(var i=0;i<GIRONI.length;i++) if(GIRONI[i].id===id) return GIRONI[i]; return GIRONI[0]; }
 function girLabel(id){ var g=gir(id); return g.cat+" · "+g.name; }
 var MYG="O"; try { MYG=localStorage.getItem("baggese-mygirone")||"O"; } catch(e){}
+var FOL=[]; try { FOL=JSON.parse(localStorage.getItem("baggese-follow")||"[]").filter(function(id){ return !!IDX[id]; }); } catch(e){ FOL=[]; }
+function saveFol(){ try { localStorage.setItem("baggese-follow",JSON.stringify(FOL)); } catch(e){} }
 if(!GIRONI.some(function(g){return g.id===MYG;})) MYG="O";
 var G=MYG;
 function lsKey(){ return G==="O"?LS_KEY:LS_KEY+"-"+G; }
@@ -609,7 +630,7 @@ function setAccent(){
   r.setProperty("--a-brand",hexOf(L)); r.setProperty("--a-deep",hexOf(mixC(L,[0,0,0],.25))); r.setProperty("--a-mine",hexOf(mixC(L,[255,255,255],.9))); r.setProperty("--a-ink",hexOf(mixC(L,[0,0,0],.3)));
   r.setProperty("--a-brand-d",hexOf(D)); r.setProperty("--a-deep-d",hexOf(mixC(D,[0,0,0],.2))); r.setProperty("--a-mine-d",hexOf(mixC(D,[22,22,24],.74))); r.setProperty("--a-ink-d",hexOf(mixC(D,[255,255,255],.6)));
 }
-function setMyTeam(id){ MYT=id; MYG=IDX[id]?IDX[id].g:G; try { localStorage.setItem("baggese-myteam",id); localStorage.setItem("baggese-mygirone",MYG); } catch(e){} rosaTeam=null; clsF={from:0,to:0,side:"all"}; }
+function setMyTeam(id){ var MYT0=MYT; MYT=id; MYG=IDX[id]?IDX[id].g:G; if(MYT0&&IDX[MYT0]&&FOL.indexOf(MYT0)<0) FOL.push(MYT0); if(FOL.indexOf(id)<0) FOL.push(id); saveFol(); try { localStorage.setItem("baggese-myteam",id); localStorage.setItem("baggese-mygirone",MYG); } catch(e){} rosaTeam=null; clsF={from:0,to:0,side:"all"}; }
 var askedTeam=false;
 function openTeamPicker(first){
   var g=gir(IDX[me()]?IDX[me()].g:G); openTeamPicker.first=first; openTeamPicker.cat=g.cat; openTeamPicker.g=g.id; openTeamPicker.q="";
@@ -627,7 +648,12 @@ function pickerList(){
 function drawPicker(){
   var first=openTeamPicker.first, box=$("tpList");
   if(box){ box.innerHTML=pickerList(); return; }
-  $("dlgBody").innerHTML='<div class="row between"><h2 id="tpTitle" tabindex="-1" style="outline:none">'+(first?'Qual è la tua squadra?':'La tua squadra')+'</h2>'+(first?'':'<button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button>')+'</div><input id="tpSearch" type="search" placeholder="Cerca squadra" autocomplete="off" aria-label="Cerca squadra"><div id="tpList">'+pickerList()+'</div>';
+  $("dlgBody").innerHTML='<div class="row between"><h2 id="tpTitle" tabindex="-1" style="outline:none">'+(first?'Qual è la tua squadra?':(FOL.length?'Segui una squadra':'La tua squadra'))+'</h2>'+(first?'':'<button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button>')+'</div><input id="tpSearch" type="search" placeholder="Cerca squadra" autocomplete="off" aria-label="Cerca squadra"><div id="tpList">'+pickerList()+'</div>';
+}
+function openFollow(){
+  var cur=MYT||me(); if(FOL.indexOf(cur)<0 && IDX[cur]){ FOL.unshift(cur); saveFol(); }
+  $("dlgBody").innerHTML='<div class="row between"><h2 id="tpTitle" tabindex="-1" style="outline:none">Le tue squadre</h2><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div><div class="list fol">'+FOL.map(function(id){ var g=gir(IDX[id].g); return '<div class="fol-row'+(id===cur?' on':'')+'"><button type="button" class="fol-main" data-myteam="'+id+'">'+crest(id,40)+'<span><b>'+esc(IDX[id].name)+'</b><span class="meta">'+esc(g.cat+' · '+g.name)+'</span></span>'+(id===cur?icon("check"):'')+'</button>'+(FOL.length>1?'<button type="button" class="iconbtn fol-x" data-unfol="'+id+'" aria-label="Smetti di seguire '+esc(IDX[id].name)+'">'+icon("x")+'</button>':'')+'</div>'; }).join("")+'</div><button class="btn" type="button" data-act="addFollow">'+icon("plus")+'Segui un’altra squadra</button>';
+  showDlg(); try { $("tpTitle").focus({preventScroll:true}); } catch(e){}
 }
 function openGironi(){
   var cats=CATS.filter(function(c){ return GIRONI.some(function(g){return g.cat===c;}); });
@@ -814,9 +840,9 @@ var HIST=null;
 function history(){ if(HIST) return HIST; var L=lastPlayedRound(), o={}; for(var r=1;r<=L;r++) standings(r).forEach(function(x){ (o[x.id]=o[x.id]||[]).push({r:r,pos:x.pos,pts:x.pts}); }); HIST={L:L,by:o}; return HIST; }
 function prevPos(id){ var h=history(); if(h.L<2) return null; var a=h.by[id]; return a&&a[h.L-2]?a[h.L-2].pos:null; }
 var ZLAB={promo:"Promozione",po:"Playoff",pl:"Playout"};
-function zoneOf(pos){ var n=S.teams.length; if(n<8||!pos) return null; if(pos===1) return "promo"; if(pos<=5) return "po"; if(pos>n-6) return "pl"; return null; }
+function zoneOf(pos){ var n=S.teams.length; if(n<8||!pos) return null; if(pos===1) return "promo"; if(pos<=5) return "po"; if(pos===n) return "rel"; if(pos>n-5) return "pl"; return null; }
 function zAttr(pos){ if(ZOFF) return ''; var z=zoneOf(pos); return z?' data-z="'+z+'" style="--zc:var(--z-'+z+')"':''; }
-function zLegend(){ var n=S.teams.length; return '<div class="zleg"><span><i style="background:var(--z-promo)"></i>Promozione · 1°</span><span><i style="background:var(--z-po)"></i>Playoff · 2°–5°</span><span><i style="background:var(--z-pl)"></i>Playout · '+(n-5)+'°–'+n+'°</span></div>'; }
+function zLegend(){ var n=S.teams.length; return '<div class="zleg"><span><i style="background:var(--z-promo)"></i>Promozione · 1°</span><span><i style="background:var(--z-po)"></i>Playoff · 2°–5°</span><span><i style="background:var(--z-pl)"></i>Playout · '+(n-4)+'°–'+(n-1)+'°</span><span><i style="background:var(--z-rel)"></i>Retrocessione · '+n+'°</span></div>'; }
 function mvHtml(id,pos){ if(ZOFF) return ''; var p=prevPos(id); if(p==null||!pos) return ''; var d=p-pos; if(d>0) return '<span class="mv up" title="Sale di '+d+' rispetto alla giornata prima">▲'+d+'</span>'; if(d<0) return '<span class="mv dn" title="Scende di '+(-d)+' rispetto alla giornata prima">▼'+(-d)+'</span>'; return '<span class="mv eq" title="Stessa posizione della giornata prima">=</span>'; }
 function posChart(id,half){
   var h=history(), a=h.by[id]; if(!a||a.length<2) return '<p class="meta" style="margin:0">Il grafico compare dopo la seconda giornata.</p>';
@@ -824,7 +850,7 @@ function posChart(id,half){
   function x(r){ return L+(h.L===1?iw/2:(r-1)/(h.L-1)*iw); }
   function y(p){ return T+(p-1)*step; }
   var col=id===me()?'var(--brand)':'var(--fg)', g='';
-  [["promo",1,1],["po",2,5],["pl",n-5,n]].forEach(function(z){ g+='<rect x="'+L+'" y="'+(y(z[1])-step/2).toFixed(1)+'" width="'+iw+'" height="'+((z[2]-z[1]+1)*step).toFixed(1)+'" fill="var(--z-'+z[0]+')" opacity=".09"/>'; });
+  [["promo",1,1],["po",2,5],["pl",n-4,n-1],["rel",n,n]].forEach(function(z){ g+='<rect x="'+L+'" y="'+(y(z[1])-step/2).toFixed(1)+'" width="'+iw+'" height="'+((z[2]-z[1]+1)*step).toFixed(1)+'" fill="var(--z-'+z[0]+')" opacity=".09"/>'; });
   [1,5,10,n].forEach(function(p){ g+='<line class="grid" x1="'+L+'" x2="'+(L+iw)+'" y1="'+y(p).toFixed(1)+'" y2="'+y(p).toFixed(1)+'"/><text class="ax" x="'+(L-8)+'" y="'+(y(p)+4).toFixed(1)+'" text-anchor="end">'+p+'°</text>'; });
   a.forEach(function(o){ g+='<text class="ax" x="'+x(o.r).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle">'+o.r+'</text>'; });
   g+='<line class="xh" x1="0" x2="0" y1="'+T+'" y2="'+(T+ih)+'"/>';
@@ -852,7 +878,7 @@ function goalsList(){ var n=S.teams.length||16; return [
   {k:"title",lab:"Vittoria del campionato",short:"Vittoria",pos:1,col:"var(--z-promo)",desc:"1° posto, promozione diretta",line:"promozione"},
   {k:"playoff",lab:"Playoff",short:"Playoff",pos:5,col:"var(--z-po)",desc:"Dal 2° al 5° posto",line:"playoff"},
   {k:"half",lab:"Prima metà",short:"Prima metà",pos:Math.floor(n/2),col:"var(--draw)",desc:"Almeno "+Math.floor(n/2)+"° posto",line:"metà classifica"},
-  {k:"safe",lab:"Salvezza diretta",short:"Salvezza",pos:Math.max(1,n-6),col:"var(--z-pl)",desc:"Almeno "+Math.max(1,n-6)+"°, senza passare dai playout",line:"salvezza"}
+  {k:"safe",lab:"Salvezza diretta",short:"Salvezza",pos:Math.max(1,n-5),col:"var(--z-pl)",desc:"Almeno "+Math.max(1,n-5)+"°, senza passare dai playout",line:"salvezza"}
 ]; }
 function getGoal(){ var k="playoff"; try { k=localStorage.getItem("baggese-goal")||k; } catch(e){} var gl=goalsList(); return gl.filter(function(g){return g.k===k;})[0]||gl[1]; }
 function dec(x){ return (Math.round(x*10)/10).toFixed(1).replace(".",","); }
@@ -1070,7 +1096,7 @@ function vHome(){
   if (next){
     var hr=tableRow(next.homeId), ar=tableRow(next.awayId), wl=whenLabel(next.date);
     function side(id,row){ return '<div class="side">'+crest(id,84,id===my?'lit':'')+'<strong>'+esc(tname(id))+'</strong><span>'+(row&&row.g?row.pos+'° · '+row.pts+' punti':'&nbsp;')+'</span></div>'; }
-    h+='<section class="block span2"><div class="night hero"><div class="hero-top"><span class="eyebrow">Prossima partita</span><span class="hero-where">'+(next.round?next.round+'ª giornata':'')+'</span></div><div class="match-up">'+side(next.homeId,hr)+'<div class="mid"><span class="vs">VS</span></div>'+side(next.awayId,ar)+'</div><div class="hero-foot"><span class="hero-when">'+(wl?'<b>'+wl+'</b>':'')+'<span>'+esc(fmtDate(next.date,next.time)||"Data da definire")+' · '+(next.homeId===my?'in casa':'in trasferta')+'</span></span><button class="btn flood sm" type="button" data-edit="'+next.id+'">Inserisci risultato</button></div></div><div class="bbody">'+inner(vsCard(next))+'</div></section>';
+    h+='<section class="block span2"><div class="night hero"><div class="hero-top"><span class="eyebrow">Prossima partita</span><span class="hero-where">'+(next.round?next.round+'ª giornata':'')+'</span></div><div class="match-up">'+side(next.homeId,hr)+'<div class="mid"><span class="vs">VS</span></div>'+side(next.awayId,ar)+'</div><div class="hero-foot"><span class="hero-when">'+(wl?'<b>'+wl+'</b>':'')+'<span>'+esc(fmtDate(next.date,next.time)||"Data da definire")+' · '+(next.homeId===my?'in casa':'in trasferta')+'</span></span></div></div><div class="bbody">'+inner(vsCard(next))+'</div></section>';
   }
   var b2='';
   if (last){
@@ -1124,7 +1150,7 @@ function openMatchView(id){
       h+='<div class="mv-cols"><ul>'+side(m.homeId)+'</ul><ul class="r">'+side(m.awayId)+'</ul></div>';
     }
   }
-  h+='<button class="btn'+(pl?'':' primary')+'" type="button" data-edit="'+m.id+'">'+(pl?'Modifica partita':'Inserisci risultato')+'</button>';
+  h+='<button class="linkbtn mv-edit" type="button" data-edit="'+m.id+'">'+(pl?'Modifica':'Inserisci risultato')+'</button>';
   $("dlgBody").innerHTML=h;
   showDlg();
 }
@@ -1132,7 +1158,7 @@ function openMatchView(id){
 /* ---------- partite ---------- */
 function vPartite(){
   var my=me();
-  var h=header("Partite",1,'<button class="btn primary" type="button" data-new="1">'+icon("plus")+'Partita</button>');
+  var h=header("Partite",1);
   h+='<div class="seg" role="group" aria-label="Vista partite"><button type="button" data-pv="mine" aria-pressed="'+(partView==="mine")+'">'+esc(tname(my))+'</button><button type="button" data-pv="round" aria-pressed="'+(partView==="round")+'">Per giornata</button></div>';
   if(!S.matches.length) return h+'<div class="empty"><span class="muted">Nessuna partita ancora. Incolla risultati o calendario in Gestione, oppure aggiungi una partita.</span><button class="btn" type="button" data-go="import">'+icon("paste")+'Incolla i dati</button></div>';
   if (partView==="round"){
@@ -1251,13 +1277,13 @@ function vMarcatori(){
 /* ---------- squadre ---------- */
 function vRosa(){
   var tid=curRosaTeam(), my=me(), st=playerStats(), row=tableRow(tid);
-  var h=header("Squadre",1,'<button class="btn primary" type="button" data-player="new">'+icon("plus")+'Giocatore</button>');
+  var h=header("Squadre",1);
   h+='<div class="crest-strip" role="group" aria-label="Scegli la squadra">'+S.teams.slice().sort(function(a,b){ return (a.id===my?-1:b.id===my?1:0) || a.name.localeCompare(b.name); }).map(function(t){ return '<button type="button" class="cpick" data-rteam="'+t.id+'" aria-pressed="'+(t.id===tid)+'" aria-label="'+esc(t.name)+'">'+crest(t.id,48,t.id===tid?'lit':'')+'<span>'+esc(shortName(t.id))+'</span></button>'; }).join("")+'</div>';
   var list=S.players.filter(function(p){return pTeam(p)===tid;});
   var gol=list.reduce(function(s,p){return s+st[p.id].gol;},0);
   h+='<section class="night'+((tid===my&&G===MYG)?' hero':'')+' pitch team-hero"><div class="row" style="gap:16px">'+crest(tid,72,(tid===my&&G===MYG)?'lit':'')+'<div class="col grow"><span class="eyebrow" style="color:var(--on-night-muted)">'+((tid===my&&G===MYG)?'La tua squadra':esc(S.settings.girone))+'</span><h1 style="font-size:clamp(26px,6vw,36px)">'+esc(tname(tid))+'</h1></div></div><div class="stats"><div class="stat"><b>'+(row&&row.g?row.pos+'°':'–')+'</b><span>Posizione</span></div><div class="stat"><b>'+(row?row.pts:'–')+'</b><span>Punti</span></div><div class="stat"><b>'+(row?row.v+'-'+row.n+'-'+row.p:'–')+'</b><span>V-N-P</span></div><div class="stat"><b>'+(row?row.gf+':'+row.gs:'–')+'</b><span>Gol</span></div></div></section>';
   h+=teamCards(tid);
-  if(!list.length) return h+'<div class="empty"><span class="muted">Nessun giocatore per questa squadra.</span><button class="btn primary" type="button" data-player="new">'+icon("plus")+'Aggiungi un giocatore</button></div>';
+  if(!list.length) return h+'<div class="empty"><span class="muted">Nessun giocatore per questa squadra.</span></div>';
   var groups=[["Portiere","Portieri"],["Difensore","Difensori"],["Centrocampista","Centrocampisti"],["Attaccante","Attaccanti"],["","Altri"]];
   groups.forEach(function(g){
     var ps=list.filter(function(p){ return g[0] ? p.role===g[0] : ["Portiere","Difensore","Centrocampista","Attaccante"].indexOf(p.role)<0; }).sort(function(a,b){ return st[b.id].pres-st[a.id].pres || st[b.id].gol-st[a.id].gol || a.name.localeCompare(b.name); });
@@ -1285,15 +1311,21 @@ function teamCards(tid){
 }
 
 /* ---------- gestione ---------- */
+function gDet(k,title,sub){ return '<details class="gdet" data-gk="'+k+'"'+(GOPEN[k]?' open':'')+'><summary><span><b>'+title+'</b><span class="meta">'+sub+'</span></span>'+icon("right")+'</summary><div class="gdet-body">'; }
+var GOPEN={};
 function vGestione(){
-  var h=header("Gestione",S.settings.season);
-  h+='<section class="card" id="import"><h2>Incolla risultati e classifica</h2><p class="small muted" style="margin:0">Apri il comunicato del giovedì della Delegazione di Milano oppure la pagina del girone su Tuttocampo, seleziona tutto (Ctrl+A), copia e incolla qui sotto. Vengono presi solo i dati del tuo girone.</p>'+(S.settings.tcLink?'<a class="btn" href="'+esc(S.settings.tcLink)+'" target="_blank" rel="noopener">Apri la pagina su Tuttocampo</a>':'')+'<label class="f">Testo copiato<textarea id="pasteBox" placeholder="Incolla qui il testo della pagina"></textarea></label><div class="grid2"><label class="f">Cosa contiene<select id="pasteMode"><option value="auto">Riconosci da solo</option><option value="res">Risultati o calendario</option><option value="tab">Classifica</option></select></label><label class="f">Giornata, se non indicata<input id="pasteRound" type="number" min="1" max="40" inputmode="numeric" placeholder="Es. 10"></label></div><button class="btn dark" type="button" data-act="parse">Analizza il testo</button><div id="preview"></div></section>';
-  h+='<section class="card"><div class="card-head"><h2>Squadre e stemmi</h2><span class="meta num">'+S.teams.length+'</span></div><p class="small muted" style="margin:0">Ogni squadra ha due colori e un disegno di maglia, usati per la maglietta nelle rose (e per lo stemma, se manca quello vero). Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id); return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '+esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '+esc(t.name)+'" data-kpat="'+t.id+'">'+PATS.map(function(p){return '<option value="'+p[0]+'"'+(p[0]===k.pat?' selected':'')+'>'+p[1]+'</option>';}).join("")+'</select><label class="btn sm" for="logo_'+t.id+'">Carica logo</label><input class="sr" id="logo_'+t.id+'" type="file" accept="image/*" data-logo="'+t.id+'">'+(LOGOS[t.id]?'<button class="btn sm" type="button" data-unlogo="'+t.id+'">Togli logo</button>':'')+'<button class="btn sm danger" type="button" aria-label="Elimina '+esc(t.name)+'" data-delteam="'+t.id+'"'+(t.id===me()?' disabled':'')+'>'+icon("x")+'</button></div></div>'; }).join("")+'</div><form class="row" id="addTeamForm"><input id="newTeam" aria-label="Nuova squadra" placeholder="Nome nuova squadra"><button class="btn" type="submit">'+icon("plus")+'Aggiungi</button></form><div id="delTeamConfirm"></div></section>';
-  h+='<section class="card"><h2>Squadra e girone</h2><div class="grid2"><label class="f">La tua squadra<select id="setMy">'+S.teams.slice().sort(byName).map(function(t){return '<option value="'+t.id+'"'+(t.id===me()?' selected':'')+'>'+esc(t.name)+'</option>';}).join("")+'</select></label><label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label></div><label class="f">Campionato e girone<input id="setGirone" value="'+esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'+esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></section>';
-  h+='<section class="card"><h2>Copia di sicurezza</h2><p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'+((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')+'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></section>';
-  h+='<section class="card"><h2>La tua squadra</h2><div class="row" style="gap:12px">'+crest(me(),44)+'<div class="col grow" style="gap:2px"><b>'+esc(tname(me()))+'</b><span class="meta">Home, calendario, obiettivo e colori seguono questa squadra</span></div><button class="btn sm" type="button" data-act="pickTeam">Cambia</button></div></section>';
-  var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div><span class="tiny muted">Automatico segue le impostazioni dell’iPhone. La scelta vale solo su questo dispositivo.</span></section>';
-  h+=syncChip()+'<span class="tiny muted">Versione app '+APP_VERSION+'</span>';
+  var h=header("Gestione",S.settings.season), my=me();
+  h+='<section class="card"><button type="button" class="gme" data-act="follow">'+crest(my,44)+'<span class="col grow" style="gap:2px"><b>'+esc(tname(my))+'</b><span class="meta">'+(FOL.length>1?'Segui '+FOL.length+' squadre':'La tua squadra')+'</span></span><span class="gme-go">Cambia</span></button></section>';
+  var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div></section>';
+  var up=S.updatedAt?new Date(S.updatedAt).toLocaleDateString("it-IT",{day:"numeric",month:"long"}):"";
+  h+='<section class="card"><div class="row between" style="gap:12px"><div class="col" style="gap:2px"><b>Dati</b><span class="meta">'+(up?'Aggiornati il '+up:'Non ancora aggiornati')+' · '+esc(girLabel(G))+'</span></div>'+(mode==="local"?'<button class="btn sm" type="button" data-act="refresh">Controlla</button>':'')+'</div><span class="tiny muted">Li aggiorna Claude quando gli scrivi “aggiorna tutto”: l’app li scarica da sola.</span></section>';
+  h+='<span class="eyebrow muted gadv">Avanzate · '+esc(girLabel(G))+'</span><section class="card flush gdets">';
+  h+=gDet("add","Inserisci a mano","Una partita o un giocatore")+'<div class="row" style="flex-wrap:wrap"><button class="btn" type="button" data-new="1">'+icon("plus")+'Partita</button><button class="btn" type="button" data-player="new">'+icon("plus")+'Giocatore</button></div></div></details>';
+  h+=gDet("import","Incolla risultati e classifica","Dal comunicato o da Tuttocampo")+'<p class="small muted" style="margin:0">Apri il comunicato del giovedì della Delegazione di Milano oppure la pagina del girone su Tuttocampo, seleziona tutto (Ctrl+A), copia e incolla qui sotto. Vengono presi solo i dati del tuo girone.</p>'+(S.settings.tcLink?'<a class="btn" href="'+esc(S.settings.tcLink)+'" target="_blank" rel="noopener">Apri la pagina su Tuttocampo</a>':'')+'<label class="f">Testo copiato<textarea id="pasteBox" placeholder="Incolla qui il testo della pagina"></textarea></label><div class="grid2"><label class="f">Cosa contiene<select id="pasteMode"><option value="auto">Riconosci da solo</option><option value="res">Risultati o calendario</option><option value="tab">Classifica</option></select></label><label class="f">Giornata, se non indicata<input id="pasteRound" type="number" min="1" max="40" inputmode="numeric" placeholder="Es. 10"></label></div><button class="btn dark" type="button" data-act="parse">Analizza il testo</button><div id="preview"></div></div></details>';
+  h+=gDet("teams","Squadre, colori e stemmi","Nomi, maglie e loghi")+'<p class="small muted" style="margin:0">Ogni squadra ha due colori e un disegno di maglia, usati per la maglietta nelle rose (e per lo stemma, se manca quello vero). Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id); return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '+esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '+esc(t.name)+'" data-kpat="'+t.id+'">'+PATS.map(function(p){return '<option value="'+p[0]+'"'+(p[0]===k.pat?' selected':'')+'>'+p[1]+'</option>';}).join("")+'</select><label class="btn sm" for="logo_'+t.id+'">Carica logo</label><input class="sr" id="logo_'+t.id+'" type="file" accept="image/*" data-logo="'+t.id+'">'+(LOGOS[t.id]?'<button class="btn sm" type="button" data-unlogo="'+t.id+'">Togli logo</button>':'')+'<button class="btn sm danger" type="button" aria-label="Elimina '+esc(t.name)+'" data-delteam="'+t.id+'"'+(t.id===me()?' disabled':'')+'>'+icon("x")+'</button></div></div>'; }).join("")+'</div><form class="row" id="addTeamForm"><input id="newTeam" aria-label="Nuova squadra" placeholder="Nome nuova squadra"><button class="btn" type="submit">'+icon("plus")+'Aggiungi</button></form><div id="delTeamConfirm"></div></div></details>';
+  h+=gDet("set","Impostazioni del girone","Stagione, nome e link")+'<label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label><label class="f">Campionato e girone<input id="setGirone" value="'+esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'+esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></div></details>';
+  h+=gDet("backup","Copia di sicurezza","Scarica o ripristina i dati")+'<p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'+((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')+'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></div></details>';
+  h+='</section><span class="tiny muted" style="text-align:center">Versione app '+APP_VERSION+'</span>';
   return h;
 }
 
@@ -1582,11 +1614,12 @@ document.addEventListener("click", function(e){
   var ds=b.dataset;
   if(ds.tab){ var nt=ds.tab; if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
   if(ds.gir){ var ng=ds.gir; closeDlg(); switchGirone(ng,function(){ smooth(function(){ if(tab==="home"&&ng!==MYG) tab="classifica"; render(); window.scrollTo(0,0); }); }); return; }
+  if(ds.unfol){ var uf=ds.unfol; FOL=FOL.filter(function(x){return x!==uf;}); saveFol(); if(uf===MYT&&FOL.length){ var nf=FOL[0]; closeDlg(); setMyTeam(nf); switchGirone(IDX[nf].g,function(){ tab="home"; partView="mine"; render(); }); return; } openFollow(); return; }
   if(ds.pcat){ openTeamPicker.cat=ds.pcat; openTeamPicker.g=GIRONI.filter(function(g){return g.cat===ds.pcat;})[0].id; drawPicker(); return; }
   if(ds.pg){ openTeamPicker.g=ds.pg; drawPicker(); return; }
   if(ds.ics){ addToCalendar(ds.ics); return; }
   if(ds.themeset){ try { localStorage.setItem("baggese-theme",ds.themeset); } catch(e){} var tv=ds.themeset; smooth(function(){ applyTheme(tv); render(); }); return; }
-  if(ds.go){ tab="gestione"; render(); var target=$(ds.go==="teams"?"newTeam":"pasteBox"); if(target){ target.scrollIntoView({block:"center"}); target.focus(); } return; }
+  if(ds.go){ GOPEN[ds.go==="teams"?"teams":"import"]=true; tab="gestione"; render(); var target=$(ds.go==="teams"?"newTeam":"pasteBox"); if(target){ target.scrollIntoView({block:"center"}); target.focus(); } return; }
   if(ds.filter){ filterMine=ds.filter==="mine"; render(); return; }
   if(ds.src){ tableSrc=ds.src; render(); return; }
   if(ds.myteam){ var nt3=ds.myteam, g3=IDX[nt3]?IDX[nt3].g:G; closeDlg(); setMyTeam(nt3); switchGirone(g3,function(){ smooth(function(){ tab="home"; partView="mine"; render(); window.scrollTo(0,0); }); }); toast("Ora segui "+tname(nt3)); return; }
@@ -1618,7 +1651,9 @@ document.addEventListener("click", function(e){
     case "close": closeDlg(); break;
     case "clsFilter": openClsFilter(); break;
     case "goalEdit": openGoal(); break;
-    case "pickTeam": openTeamPicker(false); break;
+    case "pickTeam": if(FOL.length>1) openFollow(); else openTeamPicker(false); break;
+    case "follow": openFollow(); break;
+    case "addFollow": openTeamPicker(false); break;
     case "pickGirone": openGironi(); break;
     case "clsApply": var ff=+$("fFrom").value, ft=+$("fTo").value; if(ff>ft){ var tmp=ff; ff=ft; ft=tmp; } clsF={from:ff,to:ft,side:openClsFilter.side||"all"}; closeDlg(); render(); break;
     case "clsReset": clsF={from:0,to:0,side:"all"}; closeDlg(); render(); break;
@@ -1638,11 +1673,12 @@ document.addEventListener("click", function(e){
       parsed=parsePaste(txt,$("pasteMode").value,$("pasteRound").value?+$("pasteRound").value:null); drawPreview(); break;
     case "applyPaste": applyPaste(); break;
     case "saveSettings":
-      S.settings.myTeamId=$("setMy").value||S.settings.myTeamId; S.settings.season=$("setSeason").value.trim()||S.settings.season;
+      S.settings.season=$("setSeason").value.trim()||S.settings.season;
       S.settings.girone=$("setGirone").value.trim()||S.settings.girone;
       var lk=$("setLink").value.trim(); S.settings.tcLink=/^https:\/\//i.test(lk)?lk:"";
       save(); toast("Impostazioni salvate"); break;
     case "reseed": loadSeed(true); break;
+    case "refresh": checkNewer(true); break;
     case "backup":
       if(!downloads){ try{ var bl=new Blob([JSON.stringify(S,null,1)],{type:"application/json"}), a=document.createElement("a"); a.href=URL.createObjectURL(bl); a.download="data.json"; document.body.appendChild(a); a.click(); a.remove(); toast("Copia scaricata come data.json"); }catch(e){ toast("Download non riuscito"); } return; }
       downloads.save({filename:"baggese-"+S.settings.season.replace(/\W+/g,"-")+".json", data:JSON.stringify(S,null,2)}).then(function(){toast("Copia scaricata");}).catch(function(err){ if(!err||err.code!=="declined") toast("Download non riuscito"); });
@@ -1653,6 +1689,7 @@ document.addEventListener("click", function(e){
     case "cancelRestore": restorePending=null; $("restoreConfirm").innerHTML=""; break;
   }
 });
+document.addEventListener("toggle", function(e){ var d=e.target; if(d.classList&&d.classList.contains("gdet")) GOPEN[d.dataset.gk]=d.open; }, true);
 document.addEventListener("input", function(e){ if(e.target.id==="tpSearch"){ openTeamPicker.q=e.target.value; drawPicker(); } });
 document.addEventListener("change", function(e){
   var t=e.target;
@@ -1698,6 +1735,8 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
 })();
 
 render(); boot();
+/* app salvata sul telefono: si apre subito anche senza rete */
+if("serviceWorker" in navigator && !window.claude && (location.protocol==="https:"||location.hostname==="localhost")){ window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); }); }
 if(typeof module!=="undefined") module.exports.parse=parsePaste, module.exports.S=function(){return S;}, module.exports.apply=function(p){parsed=p;applyPaste();};
 })();
 </script>
