@@ -738,7 +738,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-13.6";
+var APP_VERSION = "2026-11-13.7";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1320,6 +1320,7 @@ function render(){
   if(typeof segInd==="function"){ segInd(document); tabInd(); }
   var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips");
   if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2;
+  if($("rcVp")) setTimeout(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } },120);
 }
 
 /* ---------- home ---------- */
@@ -1754,11 +1755,18 @@ function rcChips(r){ if(r==null) r=selRound; var strip=$("roundChips"); if(!stri
   if(on){ var left=on.offsetLeft-strip.clientWidth/2+on.clientWidth/2; try { strip.scrollTo({left:left,behavior:"smooth"}); } catch(e){ strip.scrollLeft=left; } } }
 function rcSwapTo(r){ var vp=$("rcVp"); if(!vp) return; selRound=r; vp.querySelectorAll(".rc-side").forEach(function(e){ e.remove(); });
   var cur=$("roundCard"); var tmp=document.createElement("div"); tmp.innerHTML=roundCardHtml(r,true); vp.replaceChild(tmp.firstChild,cur); rcChips(); }
+/* a fine scorrimento la scheda accanto DIVENTA quella attuale (stessi elementi, stessi stemmi già disegnati):
+   niente ricostruzione, quindi i loghi non lampeggiano */
+function rcPromote(dir,r){ var vp=$("rcVp"); if(!vp) return; var wr=vp.querySelector(dir>0?".rc-n":".rc-p"), oc=$("roundCard");
+  if(!wr||!wr.firstElementChild||!oc){ rcSwapTo(r); return; }
+  var sec=wr.firstElementChild; selRound=r; sec.id="roundCard"; sec.removeAttribute("aria-hidden"); sec.style.transition="none"; sec.style.transform="none";
+  vp.replaceChild(sec,oc); wr.remove(); vp.querySelectorAll(".rc-side").forEach(function(e){ e.remove(); }); rcChips();
+  setTimeout(function(){ if(!RC.busy) { rcSides(); rcSet(0,0); } },60); }
 function rcGo(dir,ms){
   var rs=rounds(), i=rs.indexOf(selRound)+dir; if(RC.busy) return; if(i<0||i>=rs.length){ rcSet(0,420); return; }
   RC.busy=true; rcSides(); var W=rcW(); ms=ms||520;
   requestAnimationFrame(function(){ rcSet(-dir*W,ms); haptic(); rcChips(rs[i]);
-    setTimeout(function(){ rcSwapTo(rs[i]); var c=$("roundCard"); if(c){ c.style.transition="none"; c.style.transform="none"; } RC.busy=false; },ms+20); });
+    setTimeout(function(){ rcPromote(dir,rs[i]); RC.busy=false; },ms+20); });
 }
 function rcJump(r){ if(r===selRound) return; var rs=rounds(), d=rs.indexOf(r)-rs.indexOf(selRound); if(Math.abs(d)===1){ rcGo(d); return; }
   var vp=$("rcVp"); if(!vp){ selRound=r; render(); return; } var c=$("roundCard"); c.style.transition="opacity .2s ease"; c.style.opacity="0";
