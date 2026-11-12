@@ -9,3 +9,9 @@ Come si fa
 2. Costruzione: python3 strumento_build_seconda.py seconda-lombardia.txt crea seconda-<lettera>.json (codici SA…SZ, squadre sa_…sz_) e gironi.json per la costante GIRONI dell'app.
 3. Stemmi: workflow GitHub temporaneo (vedi commit 1dad7bf) con gli id Tuttocampo delle squadre.
 4. App: aggiungere i gironi a GIRONI in index.html e i codici in aggiorna_dati.py.
+
+Aggiornamenti leggeri (dopo ogni giornata)
+- strumento_leggi_giornata.js: per un girone legge solo la giornata giocata, le partite con gol, la giornata dopo (orari) e la classifica, una pagina alla volta e salvando ogni pagina (si riprende se si ferma). Circa 10 pagine a girone invece di un centinaio.
+- Le rose (presenze, gol, cartellini dei giocatori) solo una volta al mese.
+- aggiorna_dati.py confronta la classifica calcolata dai risultati con quella di Tuttocampo e lo scrive nel resoconto; l'app mostra "Uguale alla classifica di Tuttocampo" oppure un avviso con le differenze.
+- Gironi nuovi: uno per sera, con strumento_leggi_seconda.js (ora salva ogni pagina letta).

@@ -236,6 +236,24 @@ def main():
         d["imported"] = {"at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "round": cr,
                          "source": f"Tuttocampo, dopo la {cr}ª giornata", "rows": rows}
         report.append(f"Classifica aggiornata dopo la {cr}ª giornata ({len(rows)} squadre)")
+        # Controllo: la classifica calcolata dai risultati deve coincidere con quella di Tuttocampo
+        calc = {t["id"]: {"pts": 0, "g": 0, "gf": 0, "gs": 0} for t in d["teams"]}
+        for m in d["matches"]:
+            if m.get("hg") in ("", None) or m.get("ag") in ("", None) or m["round"] > cr:
+                continue
+            hg, ag = int(m["hg"]), int(m["ag"])
+            for tid, f, s_ in ((m["homeId"], hg, ag), (m["awayId"], ag, hg)):
+                if tid in calc:
+                    c = calc[tid]; c["g"] += 1; c["gf"] += f; c["gs"] += s_; c["pts"] += 3 if f > s_ else 1 if f == s_ else 0
+        diffs = []
+        for r in rows:
+            c = calc.get(r["teamId"])
+            if c and (c["pts"], c["g"], c["gf"], c["gs"]) != (r["pts"], r["g"], r["gf"], r["gs"]):
+                diffs.append(f"{T[r['teamId']]}: qui {c['pts']} pt {c['g']} partite gol {c['gf']}-{c['gs']}, Tuttocampo {r['pts']} pt {r['g']} partite gol {r['gf']}-{r['gs']}")
+        if diffs:
+            report.append("CONTROLLO: la classifica dai risultati NON coincide con Tuttocampo (penalizzazione, risultato a tavolino o partita mancante?):\n  " + "\n  ".join(diffs))
+        else:
+            report.append("Controllo: classifica dai risultati uguale a quella di Tuttocampo")
 
     if up.get("giocatori"):
         n = 0
