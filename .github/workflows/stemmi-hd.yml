@@ -1,0 +1,44 @@
+name: Stemmi in alta risoluzione
+on:
+  push:
+    paths: ['.github/workflows/stemmi-hd.yml']
+permissions:
+  contents: write
+jobs:
+  stemmi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scarica gli stemmi nella misura piu' grande disponibile
+        run: |
+          pip install pillow >/dev/null
+          python3 - <<'PY'
+          import urllib.request, io
+          from PIL import Image
+          T={"pb_schiaffino": 1163824, "pb_briantea": 1001099, "pb_cassina": 1000652, "pb_cantu": 918791, "pb_zeta": 1238264, "pb_giussano": 1022364, "pb_itala": 23660, "pb_dominante": 62198, "pb_leoteam": 917241, "pb_lomazzo": 1323683, "pb_luisago": 935546, "pb_montesolaro": 71196, "pb_cadorago": 1238092, "pb_lissone": 40240, "pb_triuggese": 675808, "pb_cermenate": 1000659, "pa_ausonia1931": 675726, "pa_buccinasco": 676162, "pa_centroschuster": 59010, "pa_frogmilano": 676023, "pa_garibaldina193": 68339, "pa_iris1914": 61071, "pa_leonexiiisport": 26110, "pa_nevadacalcio": 1057685, "pa_orpas": 1023166, "pa_partizanbonola": 1097228, "pa_polisportivadi": 65244, "pa_propeschierabo": 1000449, "pa_quintoromano": 77214, "pa_sangiulianocvs": 1000367, "pa_settimomilanes": 78762, "pa_villa": 33480, "pg_albuzzano": 934217, "pg_asvarzi": 1163199, "pg_casorateprimo": 59011, "pg_cassolese": 10870, "pg_castelnovetto": 934123, "pg_gropellosangio": 930018, "pg_nizzacalcio": 71241, "pg_oratoriostrade": 1000645, "pg_psabressana191": 917105, "pg_realcertosa": 12390, "pg_realtrezzano": 1079206, "pg_rondine1924": 1097787, "pg_rozzanocalcio": 675366, "pg_valversa": 1166166, "pg_virtusbinasco": 60811, "pg_zibidosangiaco": 60177, "tc_alzaiamilano": 1324029, "tc_cavallinobianc": 1078543, "tc_corvettofc": 1324030, "tc_enotria1908": 16940, "tc_futuracalciope": 1324031, "tc_labomba": 1324032, "tc_liscatecalcio": 1136057, "tc_nuovabolgiano": 1282897, "tc_pioltellese196": 1010805, "tc_polisportivaom": 1079212, "tc_realcrescenzag": 1282119, "tc_unionmulazzano": 1000460, "tc_unionotg": 1324033, "tc_vllaznialelite": 1282899, "tc_yousport": 1178393, "sp_agape": 1238268, "sp_cassinanuova": 675015, "sp_circologiovani": 1282802, "sp_cittadicinisel": 1200100, "sp_cologno": 1057130, "sp_cusunimib": 1079213, "sp_fcatleticobico": 1198939, "sp_jcusano1913": 1020325, "sp_niguardacalcio": 918787, "sp_pero": 1079208, "sp_pioxisperanza": 920929, "sp_pronovate": 933823, "sp_rondinella": 73055, "sp_sangiorgio1980": 917817, "sp_solese": 79929, "sp_vigorfc": 1237935, "t_ardor": 59453, "t_artemide": 1238267, "t_baggese": 1200096, "t_bonola": 1020776, "t_cesano": 1035084, "t_concept": 1282804, "t_corsico": 1239514, "t_novella": 1122245, "t_trezzano": 1079205, "t_seguro": 1071793, "t_vercellese": 933821, "t_triestina": 81725, "t_velasca": 1079210, "t_vige": 1200097, "t_villapizzone": 57826, "t_viscontini": 913836}
+          def get(i):
+              for s in (600, 500, 400, 300, 250, 200):
+                  try:
+                      req=urllib.request.Request("https://b2-content.tuttocampo.it/Teams/%d/%d.png"%(s,i), headers={"User-Agent":"Mozilla/5.0"})
+                      im=Image.open(io.BytesIO(urllib.request.urlopen(req,timeout=30).read())).convert("RGBA")
+                      return s, im
+                  except Exception as e:
+                      pass
+              return None, None
+          for k,i in T.items():
+              s, im = get(i)
+              if im is None: print(k, "NON TROVATO"); continue
+              bb=im.getbbox(); im=im.crop(bb) if bb else im
+              f=min(1.0, 184/max(im.size)); im=im.resize((max(1,round(im.width*f)),max(1,round(im.height*f))),Image.LANCZOS)
+              out=Image.new("RGBA",(192,192),(0,0,0,0)); out.paste(im,((192-im.width)//2,(192-im.height)//2),im)
+              q=out.quantize(colors=256, method=Image.FASTOCTREE)
+              q.save(k+".png", optimize=True); print(k, "fonte", s, "px", im.size)
+          PY
+      - name: Salva
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add *_*.png
+          git rm -q .github/workflows/stemmi-hd.yml
+          git commit -m "Stemmi in alta risoluzione"
+          git push
