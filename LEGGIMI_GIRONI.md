@@ -15,3 +15,7 @@ Aggiornamenti leggeri (dopo ogni giornata)
 - Le rose (presenze, gol, cartellini dei giocatori) solo una volta al mese.
 - aggiorna_dati.py confronta la classifica calcolata dai risultati con quella di Tuttocampo e lo scrive nel resoconto; l'app mostra "Uguale alla classifica di Tuttocampo" oppure un avviso con le differenze.
 - Gironi nuovi: uno per sera, con strumento_leggi_seconda.js (ora salva ogni pagina letta).
+
+Pubblicare (dal 12/11/2026)
+- Non caricare su main: carica sul ramo "prova" (git push origin HEAD:prova). Il workflow "Collaudo e pubblicazione" prova l'app con collaudo.js (ogni girone, ogni scheda, iPhone piccolo e grande, chiaro e scuro, computer) e solo se va tutto bene la porta su main, che va online.
+- Stemmi: 192 px, dalla fonte Tuttocampo da 500 px (workflow temporaneo, vedi commit "Stemmi in alta risoluzione").
