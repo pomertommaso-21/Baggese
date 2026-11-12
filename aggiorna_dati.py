@@ -35,7 +35,7 @@ import unicodedata
 
 DATA = "data.json"
 ICS = "baggese.ics"
-GIRONI = {"O": "data.json", "PA": "prima-a.json", "PB": "prima-b.json", "PG": "prima-g.json", "TC": "terza-c.json"}
+GIRONI = {"O": "data.json", "PA": "prima-a.json", "PB": "prima-b.json", "PG": "prima-g.json", "TC": "terza-c.json", "SP": "seconda-p.json"}
 
 
 def norm(s):
@@ -59,7 +59,7 @@ class Book:
     def team(self, name):
         n = norm(name)
         for t in self.teams:
-            if norm(t["name"]) == n or norm(re.sub(r"^(t|pa|pb|pg|tc)_", "", t["id"])) == n:
+            if norm(t["name"]) == n or norm(re.sub(r"^(t|pa|pb|pg|tc|sp)_", "", t["id"])) == n:
                 return t["id"]
         w = set(words(name))
         best, score = None, 0

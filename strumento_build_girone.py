@@ -74,6 +74,7 @@ def scorers(sent):
     out = []
     s = re.sub(r"\s*Da segnalare.*$", "", sent or "")
     for part in re.split(r";\s*(?=per )", s):
+        part = re.sub(r"^([Pp]er (?:(?! in gol ).)+?) autogol di AUTOGOL", r"\1 in gol Autogol", part.strip())
         m = re.match(r"^[Pp]er (.+?) in gol (.*)$", part.strip())
         if not m: continue
         out += parse_list(tid(m.group(1).strip()), m.group(2).replace(" e autogol di AUTOGOL", ", Autogol"))
