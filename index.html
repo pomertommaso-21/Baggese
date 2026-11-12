@@ -710,7 +710,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.25";
+var APP_VERSION = "2026-11-12.26";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -916,13 +916,9 @@ function checkNewer(manual){
       render(); toast("Dati aggiornati");
     } else if (manual) toast("Hai già i dati più recenti");
   }).catch(function(){ if(manual) toast("Non riesco a controllare: sei offline?"); });
-  var p2=fetch(location.pathname+"?t="+Date.now(),{cache:"no-store"}).then(function(r){ return r.ok?r.text():""; }).then(function(t){
-    var m=t.match(/APP_VERSION = "([^"]+)"/); if(!m || m[1]===APP_VERSION) return;
-    var sp=document.getElementById("splash"); if(!sp||sp.classList.contains("out")) return;
-    var k="baggese-reload-"+m[1]; try { if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,"1"); } catch(e){ return; }
-    location.replace(location.pathname+"?v="+encodeURIComponent(m[1]));
-  }).catch(function(){});
-  return Promise.all([p1,p2]);
+  /* versione nuova dell'app: niente ricarica durante l'avvio (faceva "scattare" il logo);
+     il service worker la scarica in silenzio e la usa dalla prossima apertura */
+  return p1;
 }
 document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="visible" && mode==="local") checkNewer(); });
 function loadSeed(manual){
