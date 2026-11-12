@@ -332,6 +332,8 @@ tr[data-z] td:first-child{box-shadow:inset 2px 0 0 var(--zc)}
 .gl:first-child{border-top:0}
 .gl .fx-round{font-size:18px}
 .gl .gmin{font-size:12px;color:var(--muted)}
+#app{overflow-x:clip}
+#roundCard{touch-action:pan-y}
 .cmp-head.big{margin:6px 0 6px}
 .fx-mini{display:grid;grid-template-columns:30px 22px minmax(0,1fr) 40px minmax(0,1fr) 22px 64px;align-items:center;gap:6px;width:100%;padding:9px 0;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;font-size:14px}
 .fx-mini:first-child{border-top:0}.fx-mini b{text-align:center}.fx-mini .meta:last-child{text-align:right;white-space:nowrap}
@@ -726,7 +728,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-13.1";
+var APP_VERSION = "2026-11-13.2";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1211,7 +1213,8 @@ function closeCtx(){ var m=$("ctx"); if(m){ m.classList.remove("on"); setTimeout
   document.addEventListener("touchstart",function(e){ var c=e.target.closest&&e.target.closest("#roundCard"); if(!c){ x0=null; return; } x0=e.touches[0].clientX; y0=e.touches[0].clientY; dx=0; lock=null; c.style.transition="none"; },{passive:true});
   document.addEventListener("touchmove",function(e){ if(x0===null) return; var c=$("roundCard"); if(!c) return; var ddx=e.touches[0].clientX-x0, ddy=e.touches[0].clientY-y0;
     if(lock===null&&(Math.abs(ddx)>8||Math.abs(ddy)>8)) lock=Math.abs(ddx)>Math.abs(ddy)?"x":"y"; if(lock!=="x") return;
-    var rs=rounds(), i=rs.indexOf(selRound); dx=ddx; if((dx>0&&i<=0)||(dx<0&&i>=rs.length-1)) dx=dx/3; c.style.transform="translateX("+dx+"px)"; c.style.opacity=String(1-Math.min(.4,Math.abs(dx)/700)); },{passive:true});
+    if(e.cancelable) e.preventDefault(); /* solo la scheda si muove: la pagina resta ferma */
+    var rs=rounds(), i=rs.indexOf(selRound); dx=ddx; if((dx>0&&i<=0)||(dx<0&&i>=rs.length-1)) dx=dx/3; c.style.transform="translateX("+dx+"px)"; c.style.opacity=String(1-Math.min(.4,Math.abs(dx)/700)); },{passive:false});
   document.addEventListener("touchend",function(){ if(x0===null) return; var c=$("roundCard"); x0=null; if(!c||lock!=="x"){ return; }
     var rs=rounds(), i=rs.indexOf(selRound), dir=dx<-70?1:dx>70?-1:0; if(dir&&(i+dir<0||i+dir>=rs.length)) dir=0;
     c.style.transition="transform .3s cubic-bezier(.32,.72,0,1),opacity .3s"; if(dir){ haptic(); c.style.transform="translateX("+(dir>0?-1:1)*innerWidth*.6+"px)"; c.style.opacity="0"; setTimeout(function(){ stepRound(dir); },160); } else { c.style.transform=""; c.style.opacity=""; } });
