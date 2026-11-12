@@ -332,6 +332,8 @@ tr[data-z] td:first-child{box-shadow:inset 2px 0 0 var(--zc)}
 .gl:first-child{border-top:0}
 .gl .fx-round{font-size:18px}
 .gl .gmin{font-size:12px;color:var(--muted)}
+html,body{overflow-x:hidden;overscroll-behavior-x:none}
+@supports (overflow:clip){html,body{overflow-x:clip}}
 #app{overflow-x:clip}
 #roundCard{touch-action:pan-y}
 .cmp-head.big{margin:6px 0 6px}
@@ -728,7 +730,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-13.2";
+var APP_VERSION = "2026-11-13.3";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
