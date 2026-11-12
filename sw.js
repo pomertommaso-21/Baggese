@@ -4,9 +4,9 @@
    - dati: si mostra subito la copia salvata e intanto si scarica quella nuova
    - stemmi, font, icone: dalla copia salvata
    - richieste con ?t= (controllo aggiornamenti) e ?v= (ricarica dopo un aggiornamento): sempre dalla rete */
-var C = "baggese-v4";
+var C = "baggese-v5";
 var CORE = ["./", "index.html", "data.json", "manifest.webmanifest", "icon.svg", "icon-180.png", "icon-192.png",
-  "Inter-Regular.woff", "Inter-Medium.woff", "Inter-SemiBold.woff", "Inter-Bold.woff", "Inter-ExtraBold.woff", "InterDisplay-Bold.woff", "InterDisplay-ExtraBold.woff"];
+  "Inter-Regular.woff2", "Inter-Medium.woff2", "Inter-SemiBold.woff2", "Inter-Bold.woff2", "Inter-ExtraBold.woff2", "InterDisplay-Bold.woff2", "InterDisplay-ExtraBold.woff2"];
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(C).then(function (c) { return Promise.all(CORE.map(function (u) { return c.add(u).catch(function () {}); })); }).then(function () { return self.skipWaiting(); }));
 });
