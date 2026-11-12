@@ -732,7 +732,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-13.4";
+var APP_VERSION = "2026-11-13.5";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1741,7 +1741,7 @@ function rcSides(){ var vp=$("rcVp"); if(!vp) return; var rs=rounds(), i=rs.inde
     var d=document.createElement("div"); d.className="rc-side rc-"+x[0]; d.setAttribute("data-r",want); d.innerHTML=roundCardHtml(want,false); vp.appendChild(d); }); }
 function rcW(){ var vp=$("rcVp"); return vp?vp.clientWidth:innerWidth; }
 function rcSet(off,ms){ var vp=$("rcVp"); if(!vp) return; var W=rcW(), cur=$("roundCard"), p=vp.querySelector(".rc-p"), n=vp.querySelector(".rc-n");
-  var tr=ms?"transform "+ms+"ms cubic-bezier(.22,.9,.25,1)":"none";
+  var tr=ms?"transform "+ms+"ms cubic-bezier(.25,.85,.3,1)":"none";
   [[cur,0],[p,-W],[n,W]].forEach(function(x){ if(!x[0]) return; x[0].style.transition=tr; x[0].style.transform="translate3d("+(x[1]+off)+"px,0,0)"; }); }
 function rcChips(r){ if(r==null) r=selRound; var strip=$("roundChips"); if(!strip) return; var on=null;
   strip.querySelectorAll(".rchip").forEach(function(b){ var a=+b.getAttribute("data-round")===r; b.setAttribute("aria-pressed",a?"true":"false"); if(a) on=b; });
@@ -1749,14 +1749,14 @@ function rcChips(r){ if(r==null) r=selRound; var strip=$("roundChips"); if(!stri
 function rcSwapTo(r){ var vp=$("rcVp"); if(!vp) return; selRound=r; vp.querySelectorAll(".rc-side").forEach(function(e){ e.remove(); });
   var cur=$("roundCard"); var tmp=document.createElement("div"); tmp.innerHTML=roundCardHtml(r,true); vp.replaceChild(tmp.firstChild,cur); rcChips(); }
 function rcGo(dir,ms){
-  var rs=rounds(), i=rs.indexOf(selRound)+dir; if(RC.busy) return; if(i<0||i>=rs.length){ rcSet(0,320); return; }
-  RC.busy=true; rcSides(); var W=rcW(); ms=ms||380;
+  var rs=rounds(), i=rs.indexOf(selRound)+dir; if(RC.busy) return; if(i<0||i>=rs.length){ rcSet(0,420); return; }
+  RC.busy=true; rcSides(); var W=rcW(); ms=ms||520;
   requestAnimationFrame(function(){ rcSet(-dir*W,ms); haptic(); rcChips(rs[i]);
     setTimeout(function(){ rcSwapTo(rs[i]); var c=$("roundCard"); if(c){ c.style.transition="none"; c.style.transform="none"; } RC.busy=false; },ms+20); });
 }
 function rcJump(r){ if(r===selRound) return; var rs=rounds(), d=rs.indexOf(r)-rs.indexOf(selRound); if(Math.abs(d)===1){ rcGo(d); return; }
-  var vp=$("rcVp"); if(!vp){ selRound=r; render(); return; } var c=$("roundCard"); c.style.transition="opacity .14s ease"; c.style.opacity="0";
-  setTimeout(function(){ rcSwapTo(r); var n=$("roundCard"); n.style.opacity="0"; n.style.transform="translate3d("+(d>0?24:-24)+"px,0,0)"; requestAnimationFrame(function(){ n.style.transition="opacity .22s ease, transform .32s cubic-bezier(.22,.9,.25,1)"; n.style.opacity="1"; n.style.transform="none"; }); },140); }
+  var vp=$("rcVp"); if(!vp){ selRound=r; render(); return; } var c=$("roundCard"); c.style.transition="opacity .2s ease"; c.style.opacity="0";
+  setTimeout(function(){ rcSwapTo(r); var n=$("roundCard"); n.style.opacity="0"; n.style.transform="translate3d("+(d>0?24:-24)+"px,0,0)"; requestAnimationFrame(function(){ n.style.transition="opacity .3s ease, transform .45s cubic-bezier(.25,.85,.3,1)"; n.style.opacity="1"; n.style.transform="none"; }); },200); }
 (function(){ var x0=null,y0=0,dx=0,lock=null,lt=0,lx=0,vel=0;
   document.addEventListener("touchstart",function(e){ var c=e.target.closest&&e.target.closest("#rcVp"); if(!c||RC.busy){ x0=null; return; } x0=lx=e.touches[0].clientX; y0=e.touches[0].clientY; lt=e.timeStamp; dx=0; vel=0; lock=null; },{passive:true});
   document.addEventListener("touchmove",function(e){ if(x0===null) return; var x=e.touches[0].clientX, ddx=x-x0, ddy=e.touches[0].clientY-y0;
@@ -1766,8 +1766,8 @@ function rcJump(r){ if(r===selRound) return; var rs=rounds(), d=rs.indexOf(r)-rs
     var rs=rounds(), i=rs.indexOf(selRound); dx=ddx; if((dx>0&&i<=0)||(dx<0&&i>=rs.length-1)) dx=dx/3; rcSet(dx,0); },{passive:false});
   document.addEventListener("touchend",function(){ if(x0===null) return; x0=null; if(lock!=="x") return; var W=rcW();
     var dir=(dx<-W*.22||vel<-.35)?1:(dx>W*.22||vel>.35)?-1:0; var rs=rounds(), i=rs.indexOf(selRound); if(dir&&(i+dir<0||i+dir>=rs.length)) dir=0;
-    if(!dir){ rcSet(0,320); return; }
-    var left=W-Math.abs(dx), sp=Math.max(.9,Math.abs(vel)), ms=Math.round(Math.max(200,Math.min(380,left/sp)));
+    if(!dir){ rcSet(0,420); return; }
+    var left=W-Math.abs(dx), sp=Math.max(.9,Math.abs(vel)), ms=Math.round(Math.max(380,Math.min(560,left/sp*1.6)));
     rcGo(dir,ms); });
 })();
 
