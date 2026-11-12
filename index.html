@@ -711,7 +711,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.27";
+var APP_VERSION = "2026-11-12.28";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -892,7 +892,7 @@ function switchGirone(g,cb){
   if(mode==="db"){ subscribeDoc(cb); return; }
   var raw=null; try { raw=localStorage.getItem(lsKey()); } catch(e){}
   if(raw){ try { S=normalize(JSON.parse(raw)); ensureMyTeam(); loadLocalLogos(); if(cb) cb(); else render(); checkNewer(); return; } catch(e){} }
-  fetch(gFile()+"?t="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+  fetch(gFile()+"?r=1",{cache:"no-cache"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
     if(G!==g) return;
     S=normalize(d); ensureMyTeam(); loadLocalLogos();
     try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
@@ -910,7 +910,7 @@ function fallbackLocal(){
 function stamp(x){ var t=Date.parse(x||""); return isNaN(t)?0:t; }
 function checkNewer(manual){
   if (window.claude){ if(manual){ render(); toast("Dati aggiornati"); } return Promise.resolve(); }
-  var g0=G, p1=fetch(gFile()+"?t="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+  var g0=G, p1=fetch(gFile()+"?r=1",{cache:"no-cache"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
     if (G===g0 && S.teams.length && d && Array.isArray(d.teams) && stamp(d.updatedAt) > stamp(S.updatedAt)){
       S=normalize(d); ensureMyTeam();
       try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
@@ -923,7 +923,7 @@ function checkNewer(manual){
 }
 document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="visible" && mode==="local") checkNewer(); });
 function loadSeed(manual){
-  fetch(gFile(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+  fetch(gFile()+"?r=1",{cache:"no-cache"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
     S=normalize(d); ensureMyTeam(); loadLocalLogos();
     try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
     render(); if(manual) toast("Dati ricaricati da data.json");

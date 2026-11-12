@@ -3,7 +3,9 @@
      e se arriva mentre c'e' ancora la schermata d'avvio l'app la usa subito
    - dati: si mostra subito la copia salvata e intanto si scarica quella nuova
    - stemmi, font, icone: dalla copia salvata
-   - richieste con ?t= (controllo aggiornamenti) e ?v= (ricarica dopo un aggiornamento): sempre dalla rete */
+   - richieste con ?r= (controllo dei dati nuovi): passano dalla rete ma con l'"impronta" del file,
+     quindi se non e' cambiato niente il server risponde "uguale" e non si riscarica nulla
+   - richieste con ?t= e ?v=: sempre dalla rete */
 var C = "baggese-v5";
 var CORE = ["./", "index.html", "data.json", "manifest.webmanifest", "icon.svg", "icon-180.png", "icon-192.png",
   "Inter-Regular.woff2", "Inter-Medium.woff2", "Inter-SemiBold.woff2", "Inter-Bold.woff2", "Inter-ExtraBold.woff2", "InterDisplay-Bold.woff2", "InterDisplay-ExtraBold.woff2"];
@@ -16,7 +18,7 @@ self.addEventListener("activate", function (e) {
 self.addEventListener("fetch", function (e) {
   var r = e.request, u = new URL(r.url);
   if (r.method !== "GET" || u.origin !== location.origin) return;
-  if (u.searchParams.has("t") || u.searchParams.has("v") || /\.ics$/.test(u.pathname)) return; // sempre dalla rete
+  if (u.searchParams.has("t") || u.searchParams.has("v") || u.searchParams.has("r") || /\.ics$/.test(u.pathname)) return; // dalla rete
   var fresh = /\.(json|html)$/.test(u.pathname) || r.mode === "navigate" || u.pathname.endsWith("/");
   var key = r.mode === "navigate" ? new Request(u.origin + u.pathname) : r;
   e.respondWith(caches.open(C).then(function (c) {
