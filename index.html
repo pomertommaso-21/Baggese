@@ -332,6 +332,12 @@ tr[data-z] td:first-child{box-shadow:inset 2px 0 0 var(--zc)}
 .gl:first-child{border-top:0}
 .gl .fx-round{font-size:18px}
 .gl .gmin{font-size:12px;color:var(--muted)}
+.segfloat{position:fixed;left:0;right:0;top:var(--tbh,50px);z-index:5;padding:8px 16px 10px;background:var(--bg);border-bottom:1px solid var(--line);transform:translateY(calc(-100% - var(--tbh,50px)));opacity:0;visibility:hidden;transition:transform .32s cubic-bezier(.22,.9,.25,1),opacity .2s ease,visibility 0s .32s}
+body.segup .segfloat{transform:none;opacity:1;visibility:visible;transition:transform .32s cubic-bezier(.22,.9,.25,1),opacity .2s ease,visibility 0s}
+body.segup .topbar{border-bottom-color:transparent}
+.segfloat .seg{margin:0}
+@media (min-width:960px){.segfloat{left:232px}}
+
 html,body{overflow-x:hidden;overscroll-behavior-x:none}
 @supports (overflow:clip){html,body{overflow-x:clip}}
 #app{overflow-x:clip}
@@ -713,7 +719,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 <nav class="tabs" aria-label="Sezioni"><div class="brand" id="brand"></div><div class="in" id="tabs"></div></nav>
 <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
 <div class="sbar" aria-hidden="true"></div>
-<div class="topbar" id="topbar" aria-hidden="true"></div>
+<div class="topbar" id="topbar" aria-hidden="true"></div><div class="segfloat" id="segfloat"></div>
 <div class="ptr" id="ptr" aria-hidden="true"><span class="spin"></span></div>
 <div class="toast" id="toast" hidden></div>
 
@@ -732,7 +738,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-13.5";
+var APP_VERSION = "2026-11-13.6";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1309,7 +1315,7 @@ function render(){
   var v={home:vHome,partite:vPartite,classifica:vClassifica,rosa:vRosa,gestione:vGestione}[tab];
   $("app").innerHTML='<div class="view">'+v()+'</div>';
   var tt={home:[me(),tname(me())],partite:[null,"Partite"],classifica:[null,"Classifica"],rosa:[curRosaTeam(),tname(curRosaTeam())],gestione:[null,"Gestione"]}[tab];
-  $("topbar").innerHTML=(tt[0]?crest(tt[0],26):'')+'<span class="ellipsis">'+esc(tt[1])+'</span>';
+  $("topbar").innerHTML=(tt[0]?crest(tt[0],26):'')+'<span class="ellipsis">'+esc(tt[1])+'</span>'; document.body.classList.remove("segup");
   var cc=document.querySelector('#clsChips .rchip[aria-pressed="true"]'), cs=$("clsChips"); if(cc&&cs) cs.scrollLeft=cc.offsetLeft-cs.clientWidth/2+cc.clientWidth/2;
   if(typeof segInd==="function"){ segInd(document); tabInd(); }
   var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips");
@@ -2074,8 +2080,17 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
   window.addEventListener("touchmove",function(e){ if(py===null) return; pdy=e.touches[0].clientY-py; if(pdy<=0||(window.scrollY||0)>0){ ptr.style.transform=""; ptr.classList.remove("show","ready"); return; } var d=Math.min(pdy*0.5,70); ptr.classList.add("show"); ptr.style.transform="translate(-50%,"+(d-50)+"px) rotate("+(d*5)+"deg)"; ptr.classList.toggle("ready",pdy>110); },{passive:true});
   window.addEventListener("touchend",function(){ if(py===null) return; py=null; if(pdy>110 && !busy){ busy=true; haptic(); ptr.classList.add("spinning"); ptr.style.transform="translate(-50%,20px)"; var t0=Date.now(); Promise.resolve(checkNewer(true)).then(function(){ setTimeout(done,Math.max(0,700-(Date.now()-t0))); }); } else done(); function done(){ busy=false; ptr.classList.remove("show","ready","spinning"); ptr.style.transform=""; } });
   var ticking=false;
-  function onScroll(){ if(ticking) return; ticking=true; requestAnimationFrame(function(){ document.body.classList.toggle("scrolled", (window.scrollY||0)>70); ticking=false; }); }
+  var lastY=0, acc=0;
+  function onScroll(){ if(ticking) return; ticking=true; requestAnimationFrame(function(){ var y=window.scrollY||0; document.body.classList.toggle("scrolled", y>70);
+    /* in Partite, risalendo compare da sopra la scelta squadra / per giornata */
+    var dy=y-lastY; lastY=y; acc=(acc>0)===(dy>0)?acc+dy:dy; var sf=$("segfloat"), seg=tab==="partite"?document.querySelector('#app .seg[aria-label="Vista partite"]'):null;
+    if(sf){ var hide=true; if(seg){ var tb=$("topbar"), lim=(tb?tb.offsetHeight:50); var gone=seg.getBoundingClientRect().bottom<lim;
+        if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"'); } hide=false; }
+        else if(gone && acc<=6 && document.body.classList.contains("segup")) hide=false; }
+      document.body.classList.toggle("segup",!hide); }
+    ticking=false; }); }
   window.addEventListener("scroll",onScroll,{passive:true});
+  var setTbh=function(){ var tb=$("topbar"); if(tb) document.documentElement.style.setProperty("--tbh",tb.offsetHeight+"px"); }; setTbh(); window.addEventListener("resize",setTbh); setTimeout(setTbh,1500);
   document.addEventListener("pointermove",chartMove); document.addEventListener("pointerdown",chartMove);
 })();
 
