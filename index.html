@@ -332,6 +332,21 @@ tr[data-z] td:first-child{box-shadow:inset 2px 0 0 var(--zc)}
 .gl:first-child{border-top:0}
 .gl .fx-round{font-size:18px}
 .gl .gmin{font-size:12px;color:var(--muted)}
+.cmp-head.big{margin:6px 0 6px}
+.fx-mini{display:grid;grid-template-columns:30px 22px minmax(0,1fr) 40px minmax(0,1fr) 22px 64px;align-items:center;gap:6px;width:100%;padding:9px 0;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;font-size:14px}
+.fx-mini:first-child{border-top:0}.fx-mini b{text-align:center}.fx-mini .meta:last-child{text-align:right;white-space:nowrap}
+#ctx{position:fixed;inset:0;z-index:900;pointer-events:none}
+#ctx.on{pointer-events:auto}
+.ctx-bg{position:absolute;inset:0;background:rgba(0,0,0,.18);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;transition:opacity .2s}
+#ctx.on .ctx-bg{opacity:1}
+.ctx-row{position:absolute;background:var(--surface);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.18);transform:scale(1);transition:transform .25s cubic-bezier(.32,.72,0,1);overflow:hidden}
+#ctx.on .ctx-row{transform:scale(1.03)}
+.ctx-menu{position:absolute;width:250px;background:var(--surface);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.22);overflow:hidden;transform-origin:top left;transform:scale(.85);opacity:0;transition:transform .25s cubic-bezier(.32,.72,0,1),opacity .2s}
+#ctx.on .ctx-menu{transform:none;opacity:1}
+.ctx-menu button{display:flex;align-items:center;justify-content:space-between;width:100%;padding:13px 16px;border:0;border-top:1px solid var(--line);background:none;color:var(--fg);font:inherit;font-size:16px;text-align:left}
+.ctx-menu button:first-child{border-top:0}.ctx-menu svg{width:18px;height:18px;color:var(--muted)}
+
+
 .vok{display:flex;align-items:center;gap:6px;color:var(--z-promo,#1e9e5a);font-weight:600}.vok svg{width:14px;height:14px}
 .vdiff svg{width:20px;height:20px;flex:none;color:#d98a00;margin-top:2px}
 .bk-code{width:100%;box-sizing:border-box;font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);resize:none;word-break:break-all}
@@ -711,7 +726,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION = "2026-11-12.28";
+var APP_VERSION = "2026-11-13.1";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1153,6 +1168,54 @@ function vsCard(next){
   return h;
 }
 
+
+/* ---------- 3. confronta due squadre ---------- */
+var CMPA=null;
+function cmpRows(A,B){
+  var ra=tableRow(A), rb=tableRow(B), hs=hsplit(), ha=hs[A]||{}, hb=hs[B]||{};
+  var pts=function(id,where){ var p=0; S.matches.forEach(function(m){ if(!played(m)) return; if(where==="c"&&m.homeId===id) p+= +m.hg>+m.ag?3:+m.hg===+m.ag?1:0; if(where==="t"&&m.awayId===id) p+= +m.ag>+m.hg?3:+m.hg===+m.ag?1:0; }); return p; };
+  var row=function(k,l,r,better){ var lc='',rc=''; if(better&&l!=null&&r!=null&&+l!==+r){ var lw=better==="high"?+l>+r:+l<+r; if(lw) rc=' lo'; else lc=' lo'; } return '<span class="l v num'+lc+'">'+(l==null?'–':l)+'</span><span class="k">'+k+'</span><span class="r v num'+rc+'">'+(r==null?'–':r)+'</span>'; };
+  var g=function(r,k){ return r&&r.g?r[k]:null; };
+  return '<div class="cmp">'+row('Posizione',ra&&ra.g?ra.pos+'°':null,rb&&rb.g?rb.pos+'°':null)+row('Punti',g(ra,'pts'),g(rb,'pts'),'high')+row('Vittorie',g(ra,'v'),g(rb,'v'),'high')+row('Pareggi',g(ra,'n'),g(rb,'n'))+row('Sconfitte',g(ra,'p'),g(rb,'p'),'low')+row('Gol fatti',g(ra,'gf'),g(rb,'gf'),'high')+row('Gol subiti',g(ra,'gs'),g(rb,'gs'),'low')+row('Punti in casa',pts(A,"c"),pts(B,"c"),'high')+row('Punti fuori',pts(A,"t"),pts(B,"t"),'high')+
+    '<span class="l">'+fdots(A)+'</span><span class="k">Forma</span><span class="r">'+fdots(B)+'</span></div>';
+}
+function openCompare(A,B){
+  var ms=S.matches.filter(function(m){ return involves(m,A)&&involves(m,B); }).sort(sortMatches);
+  var h='<div class="row between"><h2>Confronto</h2><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div>';
+  h+='<div class="mv-head"><div class="side">'+crest(A,56)+'<strong>'+esc(tname(A))+'</strong></div><div class="mid"><span class="vs">VS</span></div><div class="side">'+crest(B,56)+'<strong>'+esc(tname(B))+'</strong></div></div>';
+  h+=cmpRows(A,B);
+  h+='<h3 class="eyebrow muted" style="margin:18px 0 6px">Scontri in campionato</h3><div class="list">'+ms.map(function(m){ return '<button type="button" class="fx-mini" data-view="'+m.id+'"><span class="meta">'+m.round+'ª</span>'+crest(m.homeId,22)+'<span class="ellipsis">'+esc(tname(m.homeId))+'</span><b class="num">'+(played(m)?esc(m.hg)+'–'+esc(m.ag):'–')+'</b><span class="ellipsis" style="text-align:right">'+esc(tname(m.awayId))+'</span>'+crest(m.awayId,22)+'<span class="meta">'+(played(m)?'':esc(fmtDate(m.date).split(" ").slice(0,3).join(" ")))+'</span></button>'; }).join("")+'</div>';
+  $("dlgBody").innerHTML=h; showDlg();
+}
+function openComparePick(A){
+  CMPA=A;
+  var h='<div class="row between"><h2>Confronta '+esc(tname(A))+' con…</h2><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div><div class="tpick">'+S.teams.filter(function(t){return t.id!==A;}).sort(function(a,b){ return tname(a.id).localeCompare(tname(b.id),"it"); }).map(function(t){ return '<div class="tp-w"><button type="button" class="tp" data-cmpb="'+t.id+'">'+crest(t.id,48)+'<span>'+esc(tname(t.id))+'</span></button></div>'; }).join("")+'</div>';
+  $("dlgBody").innerHTML=h; showDlg();
+}
+function ctxMenu(row){
+  closeCtx(); var id=row.getAttribute("data-tid"); if(!id) return; haptic();
+  var r=row.getBoundingClientRect(), fav=isFav(id);
+  var m=document.createElement("div"); m.id="ctx"; m.innerHTML='<div class="ctx-bg" data-ctxclose="1"></div><div class="ctx-row" style="top:'+r.top+'px;left:'+r.left+'px;width:'+r.width+'px">'+row.innerHTML+'</div><div class="ctx-menu" style="top:'+Math.min(r.bottom+8,innerHeight-190)+'px;left:'+Math.max(12,r.left+12)+'px">'+
+    '<button type="button" data-ctx="open" data-id="'+id+'"><span>Apri '+esc(tname(id))+'</span>'+icon("team")+'</button><button type="button" data-ctx="fav" data-id="'+id+'"><span>'+(fav?'Non seguire più':'Segui')+'</span>'+icon("star")+'</button><button type="button" data-ctx="cmp" data-id="'+id+'"><span>Confronta con…</span>'+icon("swap")+'</button></div>';
+  document.body.appendChild(m); requestAnimationFrame(function(){ m.classList.add("on"); });
+}
+function closeCtx(){ var m=$("ctx"); if(m){ m.classList.remove("on"); setTimeout(function(){ m.remove(); },180); } }
+(function(){ var t=null, sx=0, sy=0;
+  document.addEventListener("touchstart",function(e){ var row=e.target.closest&&e.target.closest(".crow[data-tid]"); if(!row) return; sx=e.touches[0].clientX; sy=e.touches[0].clientY; clearTimeout(t); t=setTimeout(function(){ t="fired"; ctxMenu(row); },480); },{passive:true});
+  document.addEventListener("touchmove",function(e){ if(t&&t!=="fired"&&(Math.abs(e.touches[0].clientX-sx)>8||Math.abs(e.touches[0].clientY-sy)>8)){ clearTimeout(t); t=null; } },{passive:true});
+  document.addEventListener("touchend",function(e){ if(t==="fired"){ e.preventDefault(); } else clearTimeout(t); t=null; },{passive:false});
+  document.addEventListener("contextmenu",function(e){ var row=e.target.closest&&e.target.closest(".crow[data-tid]"); if(row){ e.preventDefault(); ctxMenu(row); } });
+})();
+/* ---------- 2. scorrere tra le giornate col dito ---------- */
+(function(){ var x0=null,y0=0,dx=0,lock=null;
+  document.addEventListener("touchstart",function(e){ var c=e.target.closest&&e.target.closest("#roundCard"); if(!c){ x0=null; return; } x0=e.touches[0].clientX; y0=e.touches[0].clientY; dx=0; lock=null; c.style.transition="none"; },{passive:true});
+  document.addEventListener("touchmove",function(e){ if(x0===null) return; var c=$("roundCard"); if(!c) return; var ddx=e.touches[0].clientX-x0, ddy=e.touches[0].clientY-y0;
+    if(lock===null&&(Math.abs(ddx)>8||Math.abs(ddy)>8)) lock=Math.abs(ddx)>Math.abs(ddy)?"x":"y"; if(lock!=="x") return;
+    var rs=rounds(), i=rs.indexOf(selRound); dx=ddx; if((dx>0&&i<=0)||(dx<0&&i>=rs.length-1)) dx=dx/3; c.style.transform="translateX("+dx+"px)"; c.style.opacity=String(1-Math.min(.4,Math.abs(dx)/700)); },{passive:true});
+  document.addEventListener("touchend",function(){ if(x0===null) return; var c=$("roundCard"); x0=null; if(!c||lock!=="x"){ return; }
+    var rs=rounds(), i=rs.indexOf(selRound), dir=dx<-70?1:dx>70?-1:0; if(dir&&(i+dir<0||i+dir>=rs.length)) dir=0;
+    c.style.transition="transform .3s cubic-bezier(.32,.72,0,1),opacity .3s"; if(dir){ haptic(); c.style.transform="translateX("+(dir>0?-1:1)*innerWidth*.6+"px)"; c.style.opacity="0"; setTimeout(function(){ stepRound(dir); },160); } else { c.style.transform=""; c.style.opacity=""; } });
+})();
 /* ---------- player stats ---------- */
 function playerStats(){
   var st={}, cut=(S.tcRound!=null?+S.tcRound:((S.imported&&S.imported.round)||0));
@@ -1471,7 +1534,7 @@ function compactTable(tb,forms){
   var my=me();
   return '<section class="card flush only-narrow"><div class="ct-head"><span>#</span><span style="text-align:left">Squadra</span><span>G</span><span>GF</span><span>GS</span><span>DR</span><span>Pt</span></div><div class="list">'+tb.rows.map(function(r){
     var dr=(+r.gf||0)-(+r.gs||0), f=forms[r.id]||[];
-    return '<div class="crow'+(r.id===my?' me':'')+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,26)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span><span class="c">'+r.g+'</span><span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span><span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span><span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
+    return '<div class="crow'+(r.id===my?' me':'')+'" data-tid="'+r.id+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,26)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span><span class="c">'+r.g+'</span><span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span><span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span><span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
   }).join("")+'</div></section>';
 }
 function hsplit(){ var o={}; S.matches.forEach(function(m){ if(!played(m)) return; var hg=+m.hg, ag=+m.ag; [[m.homeId,"c",hg,ag],[m.awayId,"t",ag,hg]].forEach(function(x){ var r=o[x[0]]=o[x[0]]||{cgf:0,cgs:0,tgf:0,tgs:0}; r[x[1]+"gf"]+=x[2]; r[x[1]+"gs"]+=x[3]; }); }); return o; }
@@ -1861,6 +1924,10 @@ document.addEventListener("click", function(e){
   if(ds.exp){ var cr=b.closest(".crow"); if(cr){ var o=cr.classList.toggle("open"); b.setAttribute("aria-expanded",String(o)); } return; }
   if(ds.team){ var tt2=ds.team; closeDlg(); smooth(function(){ rosaTeam=tt2; tab="rosa"; render(); window.scrollTo(0,0); }); return; }
   if(ds.rstep){ stepRound(+ds.rstep); return; }
+  if(ds.ctxclose){ closeCtx(); return; }
+  if(ds.ctx){ var cid=ds.id; closeCtx(); if(ds.ctx==="open") { var ob=document.createElement("button"); ob.setAttribute("data-openteam",cid); document.body.appendChild(ob); ob.click(); ob.remove(); } else if(ds.ctx==="fav") toggleFav(cid); else if(ds.ctx==="cmp") openComparePick(cid); return; }
+  if(ds.cmpb){ openCompare(CMPA,ds.cmpb); return; }
+
   if(ds.pedit){ openPlayer(ds.pedit); return; }
   if(ds.pv){ var pv=ds.pv; if(pv==="mine") calJump=true; smooth(function(){ partView=pv; render(); }); return; }
   if(ds.round){ selRound=+ds.round; render(); return; }
@@ -1960,7 +2027,7 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
   d.addEventListener("touchend",function(){ if(sy===null) return; var was=d.classList.contains("drag"); d.classList.remove("drag"); sy=null; if(!was) return;
     if(dy>110 || (vel>.5 && dy>24)){ haptic(); closeDlg(); } else { d.classList.add("snap"); d.style.transform=""; d.style.removeProperty("--bd"); } });
   var app=$("app"), tx=null, ty=null;
-  app.addEventListener("touchstart",function(e){ tx=null; if(tab!=="partite"||partView!=="round"||(e.target.closest&&e.target.closest("#roundChips,.pchart"))) return; tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
+  app.addEventListener("touchstart",function(e){ tx=null; if(tab!=="partite"||partView!=="round"||(e.target.closest&&e.target.closest("#roundChips,.pchart,#roundCard"))) return; tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
   app.addEventListener("touchend",function(e){ if(tx===null) return; var t=e.changedTouches[0], dx=t.clientX-tx, dyy=t.clientY-ty; tx=null; if(Math.abs(dx)>60 && Math.abs(dx)>1.6*Math.abs(dyy)) stepRound(dx<0?1:-1); },{passive:true});
   var lastW=window.innerWidth; window.addEventListener("resize",function(){ clearTimeout(window._rz); window._rz=setTimeout(function(){ if(Math.abs(window.innerWidth-lastW)>60){ lastW=window.innerWidth; render(); } },200); });
   var py=null, pdy=0, ptr=$("ptr"), busy=false;
