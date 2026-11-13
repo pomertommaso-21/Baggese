@@ -56,14 +56,17 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 
 .card.fold,.fold{gap:0}
 .fold-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;background:none;border:0;padding:0;margin:0;color:inherit;font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.fold-ic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--brand) 13%,transparent);color:var(--brand)}
-.fold-ic svg.i{width:21px;height:21px}
+.card.fold{padding:12px 14px 12px 12px}
+.card.fold.open{padding-bottom:16px}
+.card.fold+.card.fold{margin-top:-6px}
+.fold-ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--brand) 13%,transparent);color:var(--brand)}
+.fold-ic svg.i{width:19px;height:19px}
 .fold-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
-.fold-tx b{font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.01em}
-.fold-sub{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fold-tx b{font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:-.01em}
+.fold-sub{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fold-cr{display:inline-flex;vertical-align:middle;margin-left:8px}.fold-cr .crest{margin-left:-4px;box-shadow:0 0 0 1.5px var(--surface)}.fold-cr .crest:first-child{margin-left:0}
-.fold-chev{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);color:var(--muted);transition:transform .38s cubic-bezier(.3,.9,.3,1),background .2s}
-.fold-chev svg.i{width:18px;height:18px}
+.fold-chev{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);color:var(--muted);transition:transform .38s cubic-bezier(.3,.9,.3,1),background .2s}
+.fold-chev svg.i{width:17px;height:17px}
 .fold.open .fold-chev{transform:rotate(180deg)}
 .fold-head:active .fold-chev{background:var(--line)}
 .fold-body{height:0;overflow:hidden}
@@ -788,7 +791,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.11";
+var APP_VERSION="2026-11-13.12";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1290,7 +1293,7 @@ var IC={
  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
  plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="M6 6l12 12M18 6 6 18"/>',
  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.6 2.6-1.4 4.2H9.8L8.4 10.1z"/>',
- left:'<path d="M15 5l-7 7 7 7"/>', swap:'<path d="M7 4v13M3.5 13.5L7 17l3.5-3.5M17 20V7M13.5 10.5L17 7l3.5 3.5"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', chev:'<path d="M7 10l5 5 5-5"/>', clock:'<circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2"/>', updn:'<path d="M12 4.5l4 5H8z" stroke-linejoin="round"/><path d="M12 19.5l-4-5h8z" stroke-linejoin="round"/>', star:'<path d="M12 3.8l2.5 5.1 5.6.8-4.05 3.95.96 5.6L12 16.6l-5 2.65.96-5.6L3.9 9.7l5.6-.8z" stroke-linejoin="round"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>', flash:'<path d="M13.5 3 5.5 13.5h6L10.5 21l8-10.5h-6z" stroke-linejoin="round"/>', trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5v1.2A3.3 3.3 0 0 0 8.3 10.5M16 6h3v1.2a3.3 3.3 0 0 1-3.3 3.3M12 13v4M8.5 20h7M10 17h4"/>', share:'<path d="M12 3.5v11M8 7.5l4-4 4 4"/><path d="M7 11H5.5v9h13v-9H17"/>',
+ left:'<path d="M15 5l-7 7 7 7"/>', swap:'<path d="M7 4v13M3.5 13.5L7 17l3.5-3.5M17 20V7M13.5 10.5L17 7l3.5 3.5"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', chev:'<path d="M7 10l5 5 5-5"/>', clock:'<circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2"/>', updn:'<path d="M12 4.5l4 5H8z" stroke-linejoin="round"/><path d="M12 19.5l-4-5h8z" stroke-linejoin="round"/>', star:'<path d="M12 3.8l2.5 5.1 5.6.8-4.05 3.95.96 5.6L12 16.6l-5 2.65.96-5.6L3.9 9.7l5.6-.8z" stroke-linejoin="round"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>', chart:'<path d="M3.5 19.5h17"/><path d="M5 15.5l4.5-5 3.5 3 6-7"/><path d="M15.5 6.5H19V10"/>', flash:'<path d="M13.5 3 5.5 13.5h6L10.5 21l8-10.5h-6z" stroke-linejoin="round"/>', trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5v1.2A3.3 3.3 0 0 0 8.3 10.5M16 6h3v1.2a3.3 3.3 0 0 1-3.3 3.3M12 13v4M8.5 20h7M10 17h4"/>', share:'<path d="M12 3.5v11M8 7.5l4-4 4 4"/><path d="M7 11H5.5v9h13v-9H17"/>',
  alert:'<path d="M12 3.5 2.5 20h19z"/><path d="M12 10v4.5M12 17.5v.01"/>',
  paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6"/>'
 };
@@ -1739,8 +1742,9 @@ function vClassifica(){
   if(cf.active) h+='<span class="tiny muted">Classifica calcolata solo sulle partite dalla '+cf.from+'ª alla '+cf.to+'ª giornata, '+SIDE_LAB[cf.side]+'. Niente zone e frecce, perché non è la classifica ufficiale.</span>';
   else h+=zLegend();
   if(chk && chk.state==="ok") h+='<span class="tiny vok">'+icon("check")+'Uguale alla classifica di Tuttocampo dopo la '+chk.round+'ª giornata</span>';
-  h+='<section class="card"><div class="card-head"><h2>Andamento</h2><div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div></div>'+(chartMode==="pts"?ptsChart(my):posChart(my))+'</section>';
   if(!cf.active){ h+=restCalendar(); h+=seasonRecords(); }
+  var tr=tableRow(my), pp=prevPos(my), asub=tr?esc(tname(my))+' '+tr.pos+'°'+(pp!=null&&pp!==tr.pos?(pp>tr.pos?', sale di '+(pp-tr.pos):', scende di '+(tr.pos-pp)):pp!=null?', stabile':''):'Posizione giornata per giornata';
+  h+=foldCard("and","chart","Andamento",asub,'<div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div>'+(chartMode==="pts"?ptsChart(my):posChart(my)));
   return h;
 }
 var progView="round", progRound=null;
