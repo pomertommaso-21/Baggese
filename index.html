@@ -107,6 +107,28 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 @media (prefers-reduced-motion:reduce){.fold-in,.fold-chev{transition:none}}
 
 .cls-main{display:contents}
+.stk-list{display:flex;flex-direction:column}
+.stk-list[hidden]{display:none}
+.stk-list.stk-in .stk{animation:gbIn .3s cubic-bezier(.25,.9,.3,1) both}
+.stk-list.stk-in .stk:nth-child(2){animation-delay:.03s}.stk-list.stk-in .stk:nth-child(3){animation-delay:.06s}.stk-list.stk-in .stk:nth-child(4){animation-delay:.09s}
+.stk-seg button{min-height:26px;padding:0 10px;font-size:12px}
+.stk-n{font-size:11px;font-weight:700;opacity:.55;margin-left:2px}
+.stk-none{margin:4px 0;font-size:13px;color:var(--muted)}
+.stk{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:center;gap:8px;padding:6px 0}
+.stk+.stk{border-top:1px solid var(--line)}
+.stk-good{--stk:var(--win-ink)}.stk-bad{--stk:var(--loss-ink)}
+.stk>b{font-family:var(--display);font-size:16px;font-weight:800;letter-spacing:-.02em;color:var(--stk);text-align:center}
+.stk-t{display:flex;align-items:baseline;gap:6px;min-width:0;line-height:1.25;white-space:nowrap;overflow:hidden}
+.stk-l{font-size:13px;font-weight:600;flex:none}
+.stk-c{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;min-width:0}
+.stk-dots{display:flex;align-items:center;gap:3px}
+.stk-dots i{width:6px;height:6px;border-radius:50%;flex:none}
+.stk-dots .d-V{background:var(--win-ink)}.stk-dots .d-N{background:var(--muted);opacity:.5}.stk-dots .d-P{background:var(--loss-ink)}
+.stk-more{font-size:10px;font-weight:700;color:var(--muted);margin-right:2px}
+.stk-line{margin:10px 0 0;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted)}
+.stk-line>span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.stk-line i{width:6px;height:6px;border-radius:50%;background:var(--stk)}
+.stk-line b{color:var(--stk);font-weight:800}
 .vns .ct-head,.vns .crow-main{grid-template-columns:25px minmax(0,1fr) 16px 16px 16px 21px 21px 28px}
 .cls-main .crow{background:var(--surface);position:relative}
 .srt-scope{font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
@@ -852,7 +874,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.24";
+var APP_VERSION="2026-11-13.25";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1262,8 +1284,54 @@ function goalMap(tid){
   }).join('');
   return '<section class="card wide"><div class="card-head"><h2>Gol per giornata</h2></div>'+html+'</section>';
 }
+/* serie in corso: le serie aperte della squadra, ognuna con le partite che la compongono */
+function teamStreaks(tid){
+  var all=S.matches.filter(function(m){ return played(m)&&involves(m,tid); }).sort(sortMatches).map(function(m){ var h=m.homeId===tid, f=+(h?m.hg:m.ag), a=+(h?m.ag:m.hg); return {h:h, f:f, a:a, r:f>a?"V":f<a?"P":"N"}; });
+  if(all.length<3) return [];
+  var run=function(list,test){ var n=0; for(var i=list.length-1;i>=0;i--){ if(test(list[i])) n++; else break; } return n; };
+  var W=function(g){return g.f>g.a;}, NL=function(g){return g.f>=g.a;}, L=function(g){return g.f<g.a;}, NW=function(g){return g.f<=g.a;}, SC=function(g){return g.f>0;}, NS=function(g){return g.f===0;}, CS=function(g){return g.a===0;};
+  var out=[], add=function(list,n,title,sub,ctx,tone,w){ out.push({n:n,title:title,sub:sub,ctx:ctx,tone:tone,w:w,games:list.slice(-n)}); };
+  var w=run(all,W), u=run(all,NL), l=run(all,L), nw=run(all,NW), sc=run(all,SC), ns=run(all,NS), cs=run(all,CS), unb=u===all.length;
+  if(unb) add(all,u,'Imbattuta','da inizio campionato','','good',3);
+  if(w>=2) add(all,w,'Vittorie di fila','','','good',3); else if(u>=3&&!unb) add(all,u,'Senza sconfitte','partite di fila','','good',2);
+  if(l>=2) add(all,l,'Sconfitte di fila','','','bad',3); else if(nw>=3) add(all,nw,'Senza vittorie','partite di fila','','bad',2);
+  if(sc===all.length&&sc>=4) add(all,sc,'Sempre in gol','da inizio campionato','','good',2); else if(sc>=4) add(all,sc,'In gol','partite di fila','','good',1);
+  if(ns>=2) add(all,ns,'Senza segnare','partite di fila','','bad',2);
+  if(cs>=2) add(all,cs,'Porta inviolata','partite di fila','','good',2);
+  [["In casa",all.filter(function(g){return g.h;})],["In trasferta",all.filter(function(g){return !g.h;})]].forEach(function(x){ var lab=x[0], li=x[1]; if(li.length<3) return;
+    var hw=run(li,W), hu=run(li,NL), hl=run(li,L), hnw=run(li,NW), hsc=run(li,SC);
+    /* niente serie di casa/trasferta che dicono già quello che dice la serie generale */
+    if(l>=2&&hl>=1) hl=0; if(w>=2&&hw<li.length) hw=0; if(nw>=3||l>=2) hnw=0; if(unb) hu=0; if(sc===all.length) hsc=0;
+    if(hw&&hw===li.length) add(li,hw,'Sempre vittoriosa',hw+' su '+hw,lab,'good',2.5);
+    else if(hu&&hu===li.length) add(li,hu,'Mai sconfitta','da inizio campionato',lab,'good',2);
+    else if(hw>=2) add(li,hw,'Vittorie di fila','',lab,'good',1.5);
+    else if(hl>=2) add(li,hl,'Sconfitte di fila','',lab,'bad',1.5);
+    else if(hnw>=3) add(li,hnw,'Senza vittorie','partite di fila',lab,'bad',1.5);
+    if(hsc&&hsc===li.length&&hsc>=3) add(li,hsc,'Sempre in gol','da inizio campionato',lab,'good',1); });
+  out.sort(function(a,b){ return b.n*b.w-a.n*a.w; });
+  return out;
+}
+function stkDots(x){ var g=x.games, more=g.length>9?g.length-8:0, shown=more?g.slice(-8):g; return '<span class="stk-dots" aria-hidden="true">'+(more?'<span class="stk-more">+'+more+'</span>':'')+shown.map(function(q){ return '<i class="d-'+q.r+'"></i>'; }).join("")+'</span>'; }
+function stkLabel(x){ return (x.title+(x.sub==="da inizio campionato"?' da inizio campionato':x.sub==="partite di fila"?' di fila':x.sub?' ('+x.sub+')':'')).replace("di fila di fila","di fila"); }
+var stkTone="good";
+function streakCard(tid){
+  var all=teamStreaks(tid); if(!all.length) return '';
+  var good=all.filter(function(x){return x.tone==="good";}).slice(0,4), bad=all.filter(function(x){return x.tone==="bad";}).slice(0,4);
+  var tone=stkTone==="bad"&&bad.length?"bad":good.length?"good":"bad";
+  var row=function(x){
+    var sub=[x.ctx?x.ctx.toLowerCase():"", /^(Sempre|Mai)/.test(x.title)&&x.sub==="da inizio campionato"?"":x.sub==="partite di fila"?"di fila":x.sub].filter(Boolean).join(" · ");
+    return '<div class="stk stk-'+x.tone+'"><b class="num">'+x.n+'</b><span class="stk-t"><span class="stk-l">'+esc(x.title)+'</span>'+(sub?'<span class="stk-c">'+esc(sub)+'</span>':'')+'</span>'+stkDots(x)+'</div>'; };
+  var list=function(k,a){ return '<div class="stk-list" data-stklist="'+k+'"'+(tone===k?'':' hidden')+'>'+(a.length?a.map(row).join(""):'<p class="stk-none">'+(k==="good"?'Nessuna serie positiva in corso.':'Nessuna serie negativa in corso.')+'</p>')+'</div>'; };
+  return '<section class="card stk-card"><div class="card-head"><h2>Serie in corso</h2><div class="seg sm stk-seg" role="group" aria-label="Serie"><button type="button" data-stk="good" aria-pressed="'+(tone==="good")+'">Positive'+(good.length?' <span class="stk-n">'+good.length+'</span>':'')+'</button><button type="button" data-stk="bad" aria-pressed="'+(tone==="bad")+'">Negative'+(bad.length?' <span class="stk-n">'+bad.length+'</span>':'')+'</button></div></div>'+list("good",good)+list("bad",bad)+'</section>';
+}
+/* Home: una riga sola con le due serie più forti */
+function streakLine(tid){
+  var sk=teamStreaks(tid).slice(0,2); if(!sk.length) return '';
+  return '<p class="stk-line">'+sk.map(function(x){ return '<span class="stk-'+x.tone+'"><i></i><b class="num">'+x.n+'</b> '+esc(stkLabel(x).toLowerCase())+(x.ctx?' '+esc(x.ctx.toLowerCase()):'')+'</span>'; }).join("")+'</p>';
+}
 function formCard(tid,title){
   var fm=formOf(tid,5); if(!fm.length) return '';
+
   return '<section class="card"><div class="card-head"><h2>'+esc(title||'Forma')+'</h2><span class="meta">ultime '+fm.length+' partite</span></div><div class="form-row">'+fm.map(function(m){ var rr=resultFor(m,tid), opp=m.homeId===tid?m.awayId:m.homeId; return '<button type="button" class="form-item" data-view="'+m.id+'" aria-label="'+esc(resLabel(rr)+' contro '+tname(opp)+' '+m.hg+' a '+m.ag)+'">'+crest(opp,34)+'<span class="res-dot r-'+rr+'">'+rr+'</span><span class="meta num" style="font-weight:700">'+esc(m.hg)+'–'+esc(m.ag)+'</span></button>'; }).join("")+'</div></section>';
 }
 function topScorers(tid,n){ var st=playerStats(); return S.players.filter(function(p){return pTeam(p)===tid && st[p.id].gol>0;}).sort(function(a,b){return st[b.id].gol-st[a.id].gol || a.name.localeCompare(b.name);}).slice(0,n||4).map(function(p){ return {p:p,g:st[p.id].gol}; }); }
@@ -1459,7 +1527,7 @@ function vHome(){
     var r=resultFor(last,my);
     b2+='<div class="card-head"><h2>Ultimo risultato</h2><span class="res-pill r-'+r+'">'+resLabel(r)+'</span></div><button type="button" class="scoreline" data-view="'+last.id+'"><span class="t">'+crest(last.homeId,48)+esc(tname(last.homeId))+tsc(last,last.homeId)+'</span><span class="big-score">'+esc(last.hg)+'<i>–</i>'+esc(last.ag)+'</span><span class="t">'+crest(last.awayId,48)+esc(tname(last.awayId))+tsc(last,last.awayId)+'</span></button><span class="meta" style="text-align:center">'+(last.round?last.round+'ª giornata · ':'')+esc(fmtDate(last.date))+'</span>';
   }
-  var fc=inner(formCard(my)); if(fc) b2+=(b2?'<hr class="sep">':'')+fc;
+  var fc=inner(formCard(my)); if(fc) b2+=(b2?'<hr class="sep">':'')+fc+streakLine(my);
   if(b2) h+='<section class="card">'+b2+'</section>';
   var b3='', tb=currentTable();
   if (tb.rows.length>1){
@@ -1973,6 +2041,7 @@ function vRosa(){
 function teamCards(tid){
   var my=me(), out='';
   out+=formCard(tid);
+  out+=streakCard(tid);
   if(tid!==my){
     var ms=S.matches.filter(function(m){return involves(m,my)&&involves(m,tid);}).sort(sortMatches);
     if(ms.length) out+='<section class="card flush"><div class="card-head" style="padding:10px 6px 4px"><h2>Contro '+esc(tname(my))+'</h2><span class="meta">andata e ritorno</span></div><div class="list">'+ms.map(boardRow).join("")+'</div></section>';
@@ -2372,7 +2441,7 @@ function applyPaste(){
 document.addEventListener("click", function(e){
   var b=e.target.closest("button,[data-tab],[data-go],[data-view]"); if(!b||b===document.documentElement||b===document.body) return;
   var ds=b.dataset;
-  if((ds.tab&&ds.tab!==tab) || (b.matches("[data-cls],[data-srt],[data-scope],[data-pv],[data-cmode],[data-pv2],[data-pr],[data-fside],[data-filter],[data-themeset]") && b.getAttribute("aria-pressed")!=="true")) haptic();
+  if((ds.tab&&ds.tab!==tab) || (b.matches("[data-cls],[data-srt],[data-scope],[data-stk],[data-pv],[data-cmode],[data-pv2],[data-pr],[data-fside],[data-filter],[data-themeset]") && b.getAttribute("aria-pressed")!=="true")) haptic();
   if(ds.tab){ var nt=ds.tab, ti=function(k){ for(var q=0;q<TABS.length;q++) if(TABS[q][0]===k) return q; return 0; }; if(nt!==tab){ document.documentElement.dataset.vt=ti(nt)>ti(tab)?"fwd":"back"; clearTimeout(smooth.vt); smooth.vt=setTimeout(function(){ delete document.documentElement.dataset.vt; },800); } if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
   if(ds.gir){ var ng=ds.gir; closeDlg(); switchGirone(ng,function(){ smooth(function(){ if(tab==="home"&&ng!==MYG) tab="classifica"; render(); window.scrollTo(0,0); }); }); return; }
   if(ds.unfol){ var uf=ds.unfol; FOL=FOL.filter(function(x){return x!==uf;}); saveFol(); if(uf===MYT&&FOL.length){ var nf=FOL[0]; closeDlg(); setMyTeam(nf); switchGirone(IDX[nf].g,function(){ tab="home"; partView="mine"; render(); }); return; } openFollow(); return; }
@@ -2416,6 +2485,7 @@ document.addEventListener("click", function(e){
   if(ds.shr){ openShare(ds.shr==="t"?"table":"match",ds.shr.slice(2)); return; }
   if(ds.shrgo){ shareGo(); return; }
   if(ds.fold){ toggleFold(b); return; }
+  if(ds.stk){ stkTone=ds.stk; var cd=b.closest(".stk-card"); if(cd){ cd.querySelectorAll("[data-stk]").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); cd.querySelectorAll("[data-stklist]").forEach(function(l){ var on=l.getAttribute("data-stklist")===stkTone; l.hidden=!on; if(on){ l.classList.remove("stk-in"); void l.offsetWidth; l.classList.add("stk-in"); } }); segInd(cd); } return; }
   if(ds.rx){ toggleRx(b); return; }
   if(ds.shrsave){ shareSave(); return; }
   if(ds.view){ openMatchView(ds.view); return; }
