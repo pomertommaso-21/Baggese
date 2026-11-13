@@ -396,7 +396,8 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}
 #app{overflow-x:clip}
 .rc-vp{position:relative;overflow-x:clip;margin:0 -16px;padding:0 16px;touch-action:pan-y}
 .rc-side{position:absolute;top:0;left:16px;right:16px;pointer-events:none}
-.rc-vp.rc-moving .rc-card,.rc-vp.rc-moving .rc-side{will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.rc-card,.rc-side{will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.rc-vp.rc-flat #roundCard{will-change:auto;-webkit-backface-visibility:visible;backface-visibility:visible;transform:none!important}
 .rc-card{contain:layout style}
 .cmp-head.big{margin:6px 0 6px}
 .fx-mini{display:grid;grid-template-columns:30px 22px minmax(0,1fr) 40px minmax(0,1fr) 22px 64px;align-items:center;gap:6px;width:100%;padding:9px 0;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;font-size:14px}
@@ -792,7 +793,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.15";
+var APP_VERSION="2026-11-13.16";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1516,6 +1517,7 @@ function foldAnim(f,op){ var b=f.querySelector(".fold-body"); if(!b) return; var
   b.style.transition="height .34s cubic-bezier(.3,.9,.3,1)"; b.style.height=h1+"px";
   clearTimeout(b._t); b._t=setTimeout(function(){ b.style.transition=""; b.style.height=""; },360); }
 function toggleFold(btn){ var k=btn.getAttribute("data-fold"), f=btn.closest(".fold"), op=!f.classList.contains("open");
+  var vp=k==="gb"&&$("rcVp"); if(vp){ vp.classList.add("rc-flat"); clearTimeout(vp._f); vp._f=setTimeout(function(){ vp.classList.remove("rc-flat"); },450); }
   var all=k==="gb"?document.querySelectorAll(".gb.fold"):[f];
   Array.prototype.forEach.call(all,function(x){ if(x===f) foldAnim(x,op); else x.classList.toggle("open",op); var h=x.querySelector(".fold-head"); if(h) h.setAttribute("aria-expanded",String(op)); });
   try { localStorage.setItem("baggese-fold-"+k,op?"1":"0"); } catch(e){}
@@ -1973,7 +1975,9 @@ function stepRound(dir){ if($("rcVp")){ rcGo(dir); return; } var rs=rounds(), i=
 /* ---------- giornate a scorrimento: solo la scheda si muove, la pagina non si ridisegna ---------- */
 function roundCardHtml(r,cur){
   var my=me(), rs=rounds(), ri=rs.indexOf(r);
-  var ms=S.matches.filter(function(m){return +m.round===r;}).sort(function(a,b){ return (involves(b,my)?1:0)-(involves(a,my)?1:0) || tname(a.homeId).localeCompare(tname(b.homeId)); });
+  /* in ordine di orario: prima la data, poi l'ora (senza orario in fondo); a parità prima la propria squadra */
+  var tk=function(m){ var t=String(m.time||"").match(/^(\d{1,2})[:.](\d{2})/); return (m.date||"9999-99-99")+" "+(t?("0"+t[1]).slice(-2)+":"+t[2]:"99:99"); };
+  var ms=S.matches.filter(function(m){return +m.round===r;}).sort(function(a,b){ var ka=tk(a), kb=tk(b); return ka<kb?-1:ka>kb?1:((involves(b,my)?1:0)-(involves(a,my)?1:0) || tname(a.homeId).localeCompare(tname(b.homeId))); });
   var dt=ms[0]&&ms[0].date;
   return '<section class="card flush rc-card"'+(cur?' id="roundCard"':' aria-hidden="true"')+' data-r="'+r+'"><div class="card-head" style="padding:10px 6px 4px"><div class="col"><h2>'+r+'ª giornata</h2><span class="meta">'+(r>15?'Ritorno':'Andata')+(dt?' · '+esc(fmtDate(dt)):'')+'</span></div><div class="rnav"><button class="btn sm" type="button" data-rstep="-1" aria-label="Giornata precedente"'+(ri<=0?' disabled':'')+'>'+icon("left")+'</button><button class="btn sm" type="button" data-rstep="1" aria-label="Giornata successiva"'+(ri>=rs.length-1?' disabled':'')+'>'+icon("right")+'</button></div></div><div class="list">'+ms.map(boardRow).join("")+'</div>'+roundBrief(r)+'</section>';
 }
@@ -1987,8 +1991,7 @@ function rcW(){ var vp=$("rcVp"); return vp?vp.clientWidth:innerWidth; }
 function rcSet(off,ms,ease){ var vp=$("rcVp"); if(!vp) return; var W=rcW(), cur=$("roundCard"), p=vp.querySelector(".rc-p"), n=vp.querySelector(".rc-n");
   var tr=ms?"transform "+ms+"ms "+(ease||"cubic-bezier(.25,.85,.3,1)"):"none", tk=++RC.tok, idle=(off===0&&!ms);
   /* da ferme le schede non sono "livelli" separati: così su iPhone aprire una tendina non fa tremare la scheda */
-  vp.classList.toggle("rc-moving",!idle);
-  [[cur,0],[p,-W],[n,W]].forEach(function(x){ if(!x[0]) return; x[0].style.transition=tr; x[0].style.transform=(idle&&!x[1])?"none":"translate3d("+(x[1]+off)+"px,0,0)"; });
+  [[cur,0],[p,-W],[n,W]].forEach(function(x){ if(!x[0]) return; x[0].style.transition=tr; x[0].style.transform="translate3d("+(x[1]+off)+"px,0,0)"; });
   if(off===0&&ms) setTimeout(function(){ if(RC.tok===tk) rcSet(0,0); },ms+40); }
 function rcChips(r,noScroll){ if(r==null) r=selRound; var strip=$("roundChips"); if(!strip) return; var on=null;
   strip.querySelectorAll(".rchip").forEach(function(b){ var a=+b.getAttribute("data-round")===r; if(b.getAttribute("aria-pressed")!==String(a)) b.setAttribute("aria-pressed",a?"true":"false"); if(a) on=b; });
@@ -2000,7 +2003,7 @@ function rcSwapTo(r){ var vp=$("rcVp"); if(!vp) return; selRound=r; vp.querySele
    niente ricostruzione, quindi i loghi non lampeggiano */
 function rcPromote(dir,r){ var vp=$("rcVp"); if(!vp) return; var wr=vp.querySelector(dir>0?".rc-n":".rc-p"), oc=$("roundCard");
   if(!wr||!wr.firstElementChild||!oc){ rcSwapTo(r); return; }
-  var sec=wr.firstElementChild; selRound=r; sec.id="roundCard"; sec.removeAttribute("aria-hidden"); sec.style.transition="none"; sec.style.transform="none";
+  var sec=wr.firstElementChild; selRound=r; sec.id="roundCard"; sec.removeAttribute("aria-hidden"); sec.style.transition="none"; sec.style.transform="translate3d(0,0,0)";
   vp.replaceChild(sec,oc); wr.remove(); vp.querySelectorAll(".rc-side").forEach(function(e){ e.remove(); }); rcChips(r,true); rcSet(0,0);
   /* le schede accanto si preparano dopo, una per volta, quando il telefono è libero */
   rcLater(function(){ if(!RC.busy) rcSides(); }); }
@@ -2010,7 +2013,8 @@ function rcGo(dir,ms,ease){
   var rs=rounds(), i=rs.indexOf(selRound)+dir; if(RC.busy) return; if(i<0||i>=rs.length){ rcSet(0,460); return; }
   RC.busy=true; rcChips(rs[i]); rcSides(); var W=rcW(); ms=ms||520;
   requestAnimationFrame(function(){ rcSet(-dir*W,ms,ease); haptic();
-    setTimeout(function(){ rcPromote(dir,rs[i]); RC.busy=false; },ms+20); });
+    var done=false, wr=$("rcVp").querySelector(dir>0?".rc-n":".rc-p"), fin=function(e){ if(done||(e&&e.target!==wr)) return; done=true; if(wr) wr.removeEventListener("transitionend",fin); rcPromote(dir,rs[i]); RC.busy=false; };
+    if(wr) wr.addEventListener("transitionend",fin); setTimeout(fin,ms+120); });
 }
 function rcJump(r){ if(r===selRound) return; var rs=rounds(), d=rs.indexOf(r)-rs.indexOf(selRound); if(Math.abs(d)===1){ rcGo(d); return; }
   var vp=$("rcVp"); if(!vp){ selRound=r; render(); return; } var c=$("roundCard"); c.style.transition="opacity .2s ease"; c.style.opacity="0";
