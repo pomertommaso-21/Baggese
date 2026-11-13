@@ -15,7 +15,7 @@ const BASE = process.env.BASE || 'http://localhost:8765/';
     p.on('pageerror', e => { if (!/view transition/i.test(e.message)) problemi.push(`${tag}: errore JavaScript: ${e.message}`); });
     await p.goto(BASE + '?t=' + Date.now()); await p.waitForTimeout(3000);
     await p.evaluate(() => { const d = document.getElementById('dlg'); if (d && d.open) d.close(); }); await p.waitForTimeout(300);
-    await p.click('nav.tabs [data-tab="partite"]'); await p.waitForTimeout(900);
+    await p.evaluate(() => document.body.classList.remove('navhide')); await p.click('nav.tabs [data-tab="partite"]'); await p.waitForTimeout(900);
     await p.click('[data-pv="round"]'); await p.waitForTimeout(1500);
     await p.evaluate(() => { const a = [...document.querySelectorAll('.rchip:not(.future)')]; (a[a.length - 1] || document.querySelector('.rchip')).click(); }); await p.waitForTimeout(1500);
     await p.evaluate(() => { const ch = document.querySelector('#app > *'); if (ch) ch.__mk = 1; });

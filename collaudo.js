@@ -40,7 +40,7 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
         return [...new Set(out)].slice(0, 5); });
       r.forEach(x => problemi.push(`${tag} · ${name}: ${x}`));
     }
-    async function tap(sel) { const l = p.locator(sel).first(); if (!(await l.count())) return false; try { await l.scrollIntoViewIfNeeded({ timeout: 2000 }); await l.click({ timeout: 3000 }); return true; } catch (e) { problemi.push(`${tag}: non riesco a toccare ${sel}`); return false; } }
+    async function tap(sel) { if (sel.includes('nav.tabs')) await p.evaluate(() => document.body.classList.remove('navhide')); const l = p.locator(sel).first(); if (!(await l.count())) return false; try { await l.scrollIntoViewIfNeeded({ timeout: 2000 }); await l.click({ timeout: 3000 }); return true; } catch (e) { problemi.push(`${tag}: non riesco a toccare ${sel}`); return false; } }
     async function closeDlg() { await p.evaluate(() => { const d = document.getElementById('dlg'); if (d && d.open) d.close(); }); await p.waitForTimeout(150); }
     await check('Home');
     if (await tap('[data-view]')) { await p.waitForTimeout(400); await closeDlg(); }
@@ -77,6 +77,34 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
     if (await tap('#app [data-player]:visible')) { await p.waitForTimeout(400); await closeDlg(); }
     await c.close();
   }
+  /* Barra in basso: scorrendo giù si nasconde, risalendo torna. "Indietro": dalla Classifica a una squadra e ritorno allo stesso punto */
+  {
+    const g0 = GIRONI[0];
+    const c = await b.newContext({ viewport: { width: 393, height: 852 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+    await c.addInitScript(([t, g]) => { try { localStorage.setItem('baggese-myteam', t); localStorage.setItem('baggese-mygirone', g); } catch (e) {} }, [g0.teams[0][0], g0.id]);
+    const p = await c.newPage(); p.on('pageerror', e => problemi.push(`Navigazione: errore JavaScript: ${e.message}`));
+    await p.goto(BASE + '?collaudo=' + Date.now()); await p.waitForTimeout(2600);
+    await p.evaluate(() => { const d = document.getElementById('dlg'); if (d && d.open) d.close(); });
+    try {
+      await p.click('nav.tabs [data-tab="rosa"]'); await p.waitForTimeout(600); await p.click('[data-rtab="ros"]'); await p.waitForTimeout(300);
+      for (let i = 0; i < 15; i++) { await p.evaluate(() => window.scrollBy(0, 40)); await p.waitForTimeout(40); }
+      await p.waitForTimeout(300);
+      const tall = await p.evaluate(() => document.documentElement.scrollHeight - innerHeight > 700);
+      if (tall && !(await p.evaluate(() => document.body.classList.contains('navhide')))) problemi.push('Navigazione: scorrendo giù la barra in basso non si nasconde');
+      for (let i = 0; i < 4; i++) { await p.evaluate(() => window.scrollBy(0, -12)); await p.waitForTimeout(40); }
+      await p.waitForTimeout(300);
+      if (await p.evaluate(() => document.body.classList.contains('navhide'))) problemi.push('Navigazione: risalendo la barra in basso non torna');
+      await p.evaluate(() => { document.body.classList.remove('navhide'); window.scrollTo(0, 0); }); await p.click('nav.tabs [data-tab="classifica"]'); await p.waitForTimeout(700);
+      await p.evaluate(() => window.scrollTo(0, 300)); await p.waitForTimeout(300); const y0 = await p.evaluate(() => Math.round(scrollY));
+      await p.evaluate(() => { const r = [...document.querySelectorAll('.crow .crow-main')].find(x => { const q = x.getBoundingClientRect(); return q.top > 120 && q.bottom < 700; }); if (r) r.click(); }); await p.waitForTimeout(300);
+      await p.evaluate(() => { const l = document.querySelector('.crow.open [data-team]'); if (l) l.click(); }); await p.waitForTimeout(900);
+      if (!(await p.locator('[data-navback]').count())) problemi.push('Navigazione: aprendo una squadra dalla Classifica manca "‹ Classifica"');
+      else { await p.click('[data-navback]'); await p.waitForTimeout(900);
+        const back = await p.evaluate(() => [document.documentElement.getAttribute('data-curtab'), Math.round(scrollY)]);
+        if (back[0] !== 'classifica' || Math.abs(back[1] - y0) > 4) problemi.push(`Navigazione: "indietro" non riporta al punto di prima (${back[0]}, ${back[1]} invece di ${y0})`); }
+    } catch (e) { problemi.push(`Navigazione: prova non riuscita (${e.message.split('\n')[0]})`); }
+    await c.close();
+  }
   /* Proiezione: cambiando girone deve mostrare le squadre del girone nuovo, non quelle del precedente */
   if (GIRONI.length > 1) {
     const g0 = GIRONI[0], g1 = GIRONI.find(g => g.id !== g0.id && !/Terza/.test(g.cat)) || GIRONI[1];
@@ -86,12 +114,12 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
     await p.goto(BASE + '?collaudo=' + Date.now()); await p.waitForTimeout(2600);
     await p.evaluate(() => { const d = document.getElementById('dlg'); if (d && d.open) d.close(); });
     try {
-      await p.click('nav.tabs [data-tab="classifica"]'); await p.waitForTimeout(600);
+      await p.evaluate(() => document.body.classList.remove('navhide')); await p.click('nav.tabs [data-tab="classifica"]'); await p.waitForTimeout(600);
       if (await p.locator('[data-srt="prj"]').count()) {
         await p.click('[data-srt="prj"]'); await p.waitForSelector('.prjt .crow[data-tid]', { timeout: 10000 });
         const ids0 = new Set(g0.teams.map(t => t[0]));
         await p.click('[data-act="pickGirone"]'); await p.waitForTimeout(500); await p.click(`[data-gir="${g1.id}"]`); await p.waitForTimeout(1500);
-        if (!(await p.locator('[data-srt="prj"][aria-pressed="true"]').count())) { await p.click('nav.tabs [data-tab="classifica"]').catch(() => {}); await p.waitForTimeout(500); if (await p.locator('[data-srt="prj"]').count()) await p.click('[data-srt="prj"]'); }
+        if (!(await p.locator('[data-srt="prj"][aria-pressed="true"]').count())) { await p.evaluate(() => document.body.classList.remove('navhide')); await p.click('nav.tabs [data-tab="classifica"]').catch(() => {}); await p.waitForTimeout(500); if (await p.locator('[data-srt="prj"]').count()) await p.click('[data-srt="prj"]'); }
         await p.waitForSelector('.prjt .crow[data-tid]', { timeout: 10000 });
         const shown = await p.$$eval('.prjt .crow[data-tid]', rs => rs.map(r => r.getAttribute('data-tid')));
         const wrong = shown.filter(id => ids0.has(id) || !g1.teams.some(t => t[0] === id));

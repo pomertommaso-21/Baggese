@@ -398,6 +398,22 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 .pd-go{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;padding:10px 2px 8px;background:none;border:0;border-top:1px solid var(--line);font:inherit;font-size:13px;font-weight:650;color:var(--fg);text-align:left;cursor:pointer}
 .pd-go span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pd-go svg.i{width:15px;height:15px;color:var(--muted)}
+
+/* indietro */
+.navback{align-self:flex-start;display:inline-flex;align-items:center;gap:2px;margin:-6px 0 -10px -6px;padding:5px 10px 5px 4px;border:0;border-radius:999px;background:transparent;color:var(--brand);font:inherit;font-size:14px;font-weight:650;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.navback svg.i{width:18px;height:18px}
+.navback:active{background:color-mix(in srgb,var(--brand) 10%,transparent)}
+/* sezioni della squadra fisse in alto */
+.rt-stick{position:sticky;top:var(--tbh,50px);z-index:4;margin:-4px -16px 0;padding:6px 16px 8px;background:var(--bg);transition:box-shadow .2s ease}
+.rt-stick .rt-seg{margin-top:0}
+.rt-anchor{height:0;margin-bottom:-16px}
+.rt-stick.stuck{box-shadow:0 1px 0 var(--line)}
+body.scrolled .topbar{border-bottom-color:transparent}
+@media (min-width:960px){.rt-stick{margin:-4px 0 0;padding:6px 0 8px}}
+/* barra delle schede che si fa da parte */
+nav.tabs{transition:transform .32s cubic-bezier(.3,.9,.3,1),opacity .2s ease}
+@media (max-width:959px){body.navhide nav.tabs{transform:translateY(calc(100% + 30px));opacity:0;pointer-events:none}}
+@media (prefers-reduced-motion:reduce){nav.tabs{transition:none}}
 </style>
 <div id="splash"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="174 174 676 726"><defs><radialGradient id="sp_bg" cx="50%" cy="25%" r="85%"><stop offset="0" stop-color="#DE2E38"/><stop offset="1" stop-color="#8A121B"/></radialGradient><radialGradient id="sp_ball" cx="40%" cy="34%" r="72%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F6F6F8"/><stop offset="1" stop-color="#DCDCE2"/></radialGradient><radialGradient id="sp_sh" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><clipPath id="sp_c"><circle cx="512" cy="512" r="318"/></clipPath></defs><ellipse cx="512" cy="852" rx="254" ry="40" fill="url(#sp_sh)"/><circle cx="512" cy="512" r="318" fill="url(#sp_ball)"/><g clip-path="url(#sp_c)"><polygon points="512.0,400.0 618.5,477.4 577.8,602.6 446.2,602.6 405.5,477.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><polygon points="512.0,304.0 413.1,232.1 450.9,115.9 573.1,115.9 610.9,232.1" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="512.0" y1="400.0" x2="512.0" y2="304.0" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="709.8,447.7 747.6,331.4 869.9,331.4 907.6,447.7 808.7,519.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="618.5" y1="477.4" x2="709.8" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="634.3,680.3 756.5,680.3 794.3,796.6 695.4,868.4 596.5,796.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="577.8" y1="602.6" x2="634.3" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="389.7,680.3 427.5,796.6 328.6,868.4 229.7,796.6 267.5,680.3" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="446.2" y1="602.6" x2="389.7" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="314.2,447.7 215.3,519.6 116.4,447.7 154.1,331.4 276.4,331.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="405.5" y1="477.4" x2="314.2" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="413.1" y1="232.1" x2="808.7" y2="519.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="747.6" y1="331.4" x2="596.5" y2="796.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="756.5" y1="680.3" x2="267.5" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="427.5" y1="796.6" x2="276.4" y2="331.4" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="215.3" y1="519.6" x2="610.9" y2="232.1" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/></g><circle cx="512" cy="512" r="318" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="4"/></svg></div>
 <script>(function(){ var sp=document.getElementById("splash"); if(sp) requestAnimationFrame(function(){ setTimeout(function(){ sp.classList.add("in"); },90); }); var d=document.documentElement; d.classList.add("boot"); try { var t=localStorage.getItem("baggese-theme"); if(t==="light"||t==="dark") d.setAttribute("data-theme",t); } catch(e){} })();</script>
@@ -1122,7 +1138,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.31";
+var APP_VERSION="2026-11-13.32";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1734,6 +1750,13 @@ function syncChip(){ if(!S.updatedAt) return ""; var d=new Date(S.updatedAt); re
 function girSel(){ return '<span class="gline"><button type="button" class="gsel" data-act="pickGirone" aria-label="Cambia girone">'+esc(girLabel(G))+icon("chev")+'</button>'+(G!==MYG?'<button type="button" class="linkbtn gback" data-gir="'+MYG+'">Il tuo girone</button>':'')+'</span>'; }
 function header(title,sub,right){ if(sub===1) return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:4px">'+girSel()+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:6px">'+(sub?'<span class="eyebrow muted">'+esc(sub)+'</span>':'')+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; }
 
+/* "Indietro": quando si apre una squadra (o la proiezione) da un'altra pagina, si ricorda da dove si veniva */
+var NAVBACK=null, TABLAB={home:"Home",partite:"Partite",classifica:"Classifica",rosa:"Squadre",gestione:"Gestione"};
+function navPush(to){ NAVBACK={to:to,tab:tab,y:window.scrollY||0,clsView:clsView,clsSort:clsSort,clsScope:clsScope,partView:partView,selRound:selRound,rosaTeam:rosaTeam,rosaTab:rosaTab}; }
+function navLabel(){ if(!NAVBACK) return ''; return NAVBACK.tab==="rosa"?tname(NAVBACK.rosaTeam||curRosaTeam()):TABLAB[NAVBACK.tab]; }
+function navBack(){ var nb=NAVBACK; if(!nb) return; NAVBACK=null; haptic();
+  document.documentElement.dataset.vt="back"; clearTimeout(smooth.vt); smooth.vt=setTimeout(function(){ delete document.documentElement.dataset.vt; },700);
+  smooth(function(){ tab=nb.tab; clsView=nb.clsView; clsSort=nb.clsSort; clsScope=nb.clsScope; partView=nb.partView; selRound=nb.selRound; rosaTeam=nb.rosaTeam; rosaTab=nb.rosaTab; render(); window.scrollTo(0,nb.y); }); }
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
   crestN=0; shirtN=0; HIST=null; setAccent();
@@ -1744,7 +1767,9 @@ function render(){
   $("tabs").innerHTML=TABS.map(function(t){ return '<button type="button" data-tab="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'><span>'+icon(t[2])+'</span>'+t[1]+'</button>'; }).join("");
   $("brand").innerHTML=crest(me(),36)+'<b class="ellipsis" style="min-width:0">'+esc(tname(me()))+'<br><span class="tiny muted" style="font-family:var(--body);font-weight:600;text-transform:none">'+esc(S.settings.season)+'</span></b>';
   var v={home:vHome,partite:vPartite,classifica:vClassifica,rosa:vRosa,gestione:vGestione}[tab];
-  $("app").innerHTML='<div class="view">'+v()+'</div>';
+  if(NAVBACK&&NAVBACK.to!==tab) NAVBACK=null;
+  $("app").innerHTML='<div class="view">'+(NAVBACK?'<button type="button" class="navback" data-navback="1">'+icon("left")+'<span>'+esc(navLabel())+'</span></button>':'')+v()+'</div>';
+  document.body.classList.remove("navhide");
   var tt={home:[me(),tname(me())],partite:[null,"Partite"],classifica:[null,"Classifica"],rosa:[curRosaTeam(),tname(curRosaTeam())],gestione:[null,"Gestione"]}[tab];
   $("topbar").innerHTML=(tt[0]?crest(tt[0],26):'')+'<span class="ellipsis">'+esc(tt[1])+'</span>'; document.body.classList.remove("segup");
   var cc=document.querySelector('#clsChips .rchip[aria-pressed="true"]'), cs=$("clsChips"); if(cc&&cs) cs.scrollLeft=cc.offsetLeft-cs.clientWidth/2+cc.clientWidth/2;
@@ -2469,7 +2494,7 @@ function vRosa(){
   var gol=list.reduce(function(s,p){return s+st[p.id].gol;},0);
   h+='<section class="night'+((tid===my&&G===MYG)?' hero':'')+' pitch team-hero"><div class="row" style="gap:16px">'+crest(tid,72,(tid===my&&G===MYG)?'lit':'')+'<div class="col grow"><span class="eyebrow" style="color:var(--on-night-muted)">'+((tid===my&&G===MYG)?'La tua squadra':esc(S.settings.girone))+'</span><h1 style="font-size:clamp(26px,6vw,36px)">'+esc(tname(tid))+'</h1></div>'+(IDX[tid]?starBtn(tid,"hero-star"):'')+'</div><div class="stats"><div class="stat"><b>'+(row&&row.g?row.pos+'°':'–')+'</b><span>Posizione</span></div><div class="stat"><b>'+(row?row.pts:'–')+'</b><span>Punti</span></div><div class="stat"><b>'+(row?row.v+'-'+row.n+'-'+row.p:'–')+'</b><span>V-N-P</span></div><div class="stat"><b>'+(row?row.gf+':'+row.gs:'–')+'</b><span>Gol</span></div></div></section>';
   var RT=[["pan","Panoramica"],["par","Partite"],["ros","Rosa"],["num","Statistiche"]];
-  h+='<div class="seg sm rt-seg" role="group" aria-label="Sezioni della squadra">'+RT.map(function(x){ return '<button type="button" data-rtab="'+x[0]+'" aria-pressed="'+(rosaTab===x[0])+'">'+x[1]+'</button>'; }).join("")+'</div>';
+  h+='<div class="rt-anchor"></div><div class="rt-stick"><div class="seg sm rt-seg" role="group" aria-label="Sezioni della squadra">'+RT.map(function(x){ return '<button type="button" data-rtab="'+x[0]+'" aria-pressed="'+(rosaTab===x[0])+'">'+x[1]+'</button>'; }).join("")+'</div></div>';
   var panel=function(k,html){ return '<div class="rt-panel" data-rpanel="'+k+'"'+(rosaTab===k?'':' hidden')+'>'+html+'</div>'; };
   h+=panel("pan",teamCards(tid));
   h+=panel("par",teamMatches(tid));
@@ -2921,11 +2946,13 @@ document.addEventListener("click", function(e){
   var b=e.target.closest("button,[data-tab],[data-go],[data-view]"); if(!b||b===document.documentElement||b===document.body) return;
   var ds=b.dataset;
   if((ds.tab&&ds.tab!==tab) || (b.matches("[data-cls],[data-srt],[data-scope],[data-stk],[data-rtab],[data-pv],[data-cmode],[data-pv2],[data-pr],[data-fside],[data-filter],[data-themeset]") && b.getAttribute("aria-pressed")!=="true")) haptic();
+  if(ds.navback){ navBack(); return; }
+  if(ds.tab&&b.closest("nav.tabs")) NAVBACK=null;
   if(ds.tab){ var nt=ds.tab, ti=function(k){ for(var q=0;q<TABS.length;q++) if(TABS[q][0]===k) return q; return 0; }; if(nt!==tab){ document.documentElement.dataset.vt=ti(nt)>ti(tab)?"fwd":"back"; clearTimeout(smooth.vt); smooth.vt=setTimeout(function(){ delete document.documentElement.dataset.vt; },800); } if(nt==="partite") calJump=true; var go=function(){ smooth(function(){ tab=nt; render(); window.scrollTo(0,0); document.body.classList.remove("scrolled"); }); }; if(nt==="home"&&G!==MYG) switchGirone(MYG,go); else go(); return; }
   if(ds.gir){ var ng=ds.gir; closeDlg(); switchGirone(ng,function(){ smooth(function(){ if(tab==="home"&&ng!==MYG) tab="classifica"; render(); window.scrollTo(0,0); }); }); return; }
   if(ds.unfol){ var uf=ds.unfol; FOL=FOL.filter(function(x){return x!==uf;}); saveFol(); if(uf===MYT&&FOL.length){ var nf=FOL[0]; closeDlg(); setMyTeam(nf); switchGirone(IDX[nf].g,function(){ tab="home"; partView="mine"; render(); }); return; } openFollow(); return; }
   if(ds.star){ toggleFav(ds.star); return; }
-  if(ds.openteam){ var ot=ds.openteam; closeDlg(); switchGirone(IDX[ot]?IDX[ot].g:G,function(){ smooth(function(){ rosaTeam=ot; tab="rosa"; render(); window.scrollTo(0,0); }); }); return; }
+  if(ds.openteam){ var ot=ds.openteam; if(tab!=="rosa") navPush("rosa"); closeDlg(); switchGirone(IDX[ot]?IDX[ot].g:G,function(){ smooth(function(){ rosaTeam=ot; tab="rosa"; render(); window.scrollTo(0,0); }); }); return; }
   if(ds.pcat){ openTeamPicker.cat=ds.pcat; openTeamPicker.g=GIRONI.filter(function(g){return g.cat===ds.pcat;})[0].id; drawPicker(); return; }
   if(ds.pg){ openTeamPicker.g=ds.pg; drawPicker(); return; }
   if(ds.ics){ addToCalendar(ds.ics); return; }
@@ -2951,7 +2978,7 @@ document.addEventListener("click", function(e){
   if(ds.fpre){ var lpp=lastPlayedRound(); if(ds.fpre==="and"){ $("fFrom").value=1; $("fTo").value=Math.min(15,lpp); } else { $("fFrom").value=Math.max(1,lpp-(+ds.fpre)+1); $("fTo").value=lpp; } return; }
   if(ds.rteam){ var rt=ds.rteam; smooth(function(){ rosaTeam=rt; render(); }); return; }
   if(ds.exp){ var cr=b.closest(".crow"); if(cr){ var o=cr.classList.toggle("open"); b.setAttribute("aria-expanded",String(o)); } return; }
-  if(ds.team){ var tt2=ds.team; closeDlg(); smooth(function(){ rosaTeam=tt2; tab="rosa"; render(); window.scrollTo(0,0); }); return; }
+  if(ds.team){ var tt2=ds.team; if(tab!=="rosa") navPush("rosa"); closeDlg(); smooth(function(){ rosaTeam=tt2; tab="rosa"; render(); window.scrollTo(0,0); }); return; }
   if(ds.rstep){ stepRound(+ds.rstep); return; }
   if(ds.ctxclose){ closeCtx(); return; }
   if(ds.ctx){ var cid=ds.id; closeCtx(); if(ds.ctx==="open") { var ob=document.createElement("button"); ob.setAttribute("data-openteam",cid); document.body.appendChild(ob); ob.click(); ob.remove(); } else if(ds.ctx==="fav") toggleFav(cid); else if(ds.ctx==="cmp") openComparePick(cid); return; }
@@ -2965,12 +2992,15 @@ document.addEventListener("click", function(e){
   if(ds.shrgo){ shareGo(); return; }
   if(ds.fold){ toggleFold(b); return; }
   if(ds.top11){ haptic(); openTop11(ds.top11); return; }
-  if(ds.prjgo){ haptic(); clsSort="prj"; clsScope="all"; clsView="squadre"; var tb0=document.querySelector('nav.tabs [data-tab="classifica"]'); if(tb0){ tb0.click(); setTimeout(function(){ window.scrollTo(0,0); },60); } return; }
+  if(ds.prjgo){ haptic(); navPush("classifica"); clsSort="prj"; clsScope="all"; clsView="squadre"; var tb0=document.querySelector('nav.tabs [data-tab="classifica"]'), keep=NAVBACK; if(tb0){ tb0.click(); NAVBACK=keep; if(tab==="classifica") render(); setTimeout(function(){ window.scrollTo(0,0); },60); } return; }
   if(ds.t11fd){ var fi=b.closest(".t11-fd"), fo=!fi.classList.contains("open"); hAnim(fi,fi.querySelector(".t11-fd-b"),fo); b.setAttribute("aria-expanded",String(fo));
     if(fo) setTimeout(function(){ var dl=$("dlg"), r=fi.getBoundingClientRect(); if(!dl.open||!dl.contains(fi)){ var vh=innerHeight-96; if(r.bottom>vh) window.scrollBy({top:Math.min(r.bottom-vh,r.top-80),behavior:"smooth"}); return; } var dr=dl.getBoundingClientRect(); if(r.bottom>dr.bottom-8) dl.scrollBy({top:r.bottom-dr.bottom+16,behavior:"smooth"}); },340); return; }
   if(ds.t11why){ var wi=b.closest(".rx"), wo=!wi.classList.contains("open"); hAnim(wi,wi.querySelector(".rx-body"),wo); b.setAttribute("aria-expanded",String(wo));
     if(wo) setTimeout(function(){ var dl=$("dlg"), r=wi.getBoundingClientRect(), dr=dl.getBoundingClientRect(); if(r.bottom>dr.bottom-8) dl.scrollBy({top:Math.min(r.bottom-dr.bottom+16,r.top-dr.top-12),behavior:"smooth"}); },340); return; }
-  if(ds.rtab){ rosaTab=ds.rtab; var sg2=b.closest(".seg"); if(sg2) sg2.querySelectorAll("[data-rtab]").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); document.querySelectorAll("[data-rpanel]").forEach(function(pn){ var on=pn.getAttribute("data-rpanel")===rosaTab; pn.hidden=!on; if(on){ pn.classList.remove("rt-in"); void pn.offsetWidth; pn.classList.add("rt-in"); } }); if(sg2) segInd(sg2.parentNode); return; }
+  if(ds.rtab){ rosaTab=ds.rtab; var stk=document.querySelector(".rt-stick"), wasStuck=stk&&stk.classList.contains("stuck"); var sg2=b.closest(".seg"); if(sg2) sg2.querySelectorAll("[data-rtab]").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); document.querySelectorAll("[data-rpanel]").forEach(function(pn){ var on=pn.getAttribute("data-rpanel")===rosaTab; pn.hidden=!on; if(on){ pn.classList.remove("rt-in"); void pn.offsetWidth; pn.classList.add("rt-in"); } }); if(sg2) segInd(sg2.parentNode);
+    /* se la barra è fissa in alto, la sezione nuova parte da subito sotto */
+    if(wasStuck){ var tbh=$("topbar")?$("topbar").offsetHeight:50, an=document.querySelector(".rt-anchor"); if(an) window.scrollTo(0,Math.max(0,an.getBoundingClientRect().top+(window.scrollY||0)-tbh+4)); }
+    return; }
   if(ds.stk){ stkTone=ds.stk; var cd=b.closest(".stk-card"); if(cd){ cd.querySelectorAll("[data-stk]").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); cd.querySelectorAll("[data-stklist]").forEach(function(l){ var on=l.getAttribute("data-stklist")===stkTone; l.hidden=!on; if(on){ l.classList.remove("stk-in"); void l.offsetWidth; l.classList.add("stk-in"); } }); segInd(cd); } return; }
   if(ds.rx){ toggleRx(b); return; }
   if(ds.shrsave){ shareSave(); return; }
@@ -3076,6 +3106,10 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
   window.addEventListener("touchstart",function(e){ py=null; var tg=e.target; if(busy||$("dlg").open||(window.scrollY||0)>0||(tg&&tg.closest&&tg.closest(".chips,.pchart,#roundCard"))) return; py=e.touches[0].clientY; pdy=0; },{passive:true});
   window.addEventListener("touchmove",function(e){ if(py===null) return; pdy=e.touches[0].clientY-py; if(pdy<=0||(window.scrollY||0)>0){ ptr.style.transform=""; ptr.classList.remove("show","ready"); return; } var d=Math.min(pdy*0.5,70); ptr.classList.add("show"); ptr.style.transform="translate(-50%,"+(d-50)+"px) rotate("+(d*5)+"deg)"; ptr.classList.toggle("ready",pdy>110); },{passive:true});
   window.addEventListener("touchend",function(){ if(py===null) return; py=null; if(pdy>110 && !busy){ busy=true; haptic(); ptr.classList.add("spinning"); ptr.style.transform="translate(-50%,20px)"; var t0=Date.now(); Promise.resolve(checkNewer(true)).then(function(){ setTimeout(done,Math.max(0,700-(Date.now()-t0))); }); } else done(); function done(){ busy=false; ptr.classList.remove("show","ready","spinning"); ptr.style.transform=""; } });
+  var ex=null, ey=0, edx=0;
+  window.addEventListener("touchstart",function(e){ ex=null; if(!NAVBACK||$("dlg").open) return; var t=e.touches[0]; if(t.clientX>22) return; ex=t.clientX; ey=t.clientY; edx=0; },{passive:true});
+  window.addEventListener("touchmove",function(e){ if(ex===null) return; var t=e.touches[0]; edx=t.clientX-ex; if(Math.abs(t.clientY-ey)>50&&edx<40){ ex=null; $("app").style.transform=""; return; } if(edx>0){ $("app").style.transition="none"; $("app").style.transform="translateX("+Math.min(edx*.5,90)+"px)"; $("app").style.opacity=String(1-Math.min(edx/600,.3)); } },{passive:true});
+  window.addEventListener("touchend",function(){ if(ex===null) return; var go=edx>80; ex=null; var a=$("app"); a.style.transition="transform .25s ease, opacity .25s ease"; a.style.transform=""; a.style.opacity=""; setTimeout(function(){ a.style.transition=""; },260); if(go) navBack(); },{passive:true});
   var ticking=false;
   var lastY=0, acc=0;
   function onScroll(){ if(ticking) return; ticking=true; requestAnimationFrame(function(){ var y=window.scrollY||0; var sc=y>70;
@@ -3086,6 +3120,10 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
         else if(gone && acc<=6 && document.body.classList.contains("segup")) hide=false; }
       if(document.body.classList.contains("segup")===hide) document.body.classList.toggle("segup",!hide); }
     if(document.body.classList.contains("scrolled")!==sc) document.body.classList.toggle("scrolled",sc);
+    /* la barra delle schede scende scorrendo in giù e torna appena si risale (o in fondo alla pagina) */
+    var atEnd=y+innerHeight>=document.documentElement.scrollHeight-4, nh=document.body.classList.contains("navhide");
+    if(!nh&&acc>14&&y>120&&!atEnd&&innerWidth<960) document.body.classList.add("navhide"); else if(nh&&(acc<-8||y<60||atEnd)) document.body.classList.remove("navhide");
+    var stk=document.querySelector(".rt-stick"); if(stk){ var tbh=$("topbar")?$("topbar").offsetHeight:50, st=sc&&stk.getBoundingClientRect().top<=tbh+1; if(stk.classList.contains("stuck")!==st) stk.classList.toggle("stuck",st); }
     ticking=false; }); }
   window.addEventListener("scroll",onScroll,{passive:true});
   var setTbh=function(){ var tb=$("topbar"); if(tb) document.documentElement.style.setProperty("--tbh",tb.offsetHeight+"px"); }; setTbh(); window.addEventListener("resize",setTbh); setTimeout(setTbh,1500);
