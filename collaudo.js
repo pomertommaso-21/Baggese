@@ -47,6 +47,15 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
     for (const t of ['partite', 'classifica', 'rosa', 'gestione']) { await tap(`nav.tabs [data-tab="${t}"]`); await check(t); }
     await tap('nav.tabs [data-tab="classifica"]'); await p.waitForTimeout(400);
     if (await tap('[data-act="prog"]')) { await p.waitForTimeout(400); await closeDlg(); }
+    /* Partite per giornata: dopo il cambio giornata le schede accanto devono restare fuori dallo schermo */
+    await tap('nav.tabs [data-tab="partite"]'); await p.waitForTimeout(400);
+    if (await tap('#app [data-pv="round"]')) { await p.waitForTimeout(700);
+      for (const st of ['1', '-1']) { if (!(await tap(`#roundCard [data-rstep="${st}"]:not([disabled])`))) continue; await p.waitForTimeout(1400);
+        const bad = await p.evaluate(() => { const W = innerWidth, c = document.getElementById('roundCard'); if (!c) return 'scheda della giornata sparita';
+          const vp = document.getElementById('rcVp').getBoundingClientRect(), cl = c.getBoundingClientRect().left - vp.left; if (cl < 0 || cl > 40) return 'scheda della giornata fuori posto';
+          const s = [...document.querySelectorAll('.rc-side')].find(x => { const q = x.getBoundingClientRect(); return q.left < vp.right - 1 && q.right > vp.left + 1; });
+          return s ? 'una giornata accanto è sopra quella attuale' : ''; });
+        if (bad) problemi.push(`${tag}: Per giornata: ${bad}`); } }
     await tap('nav.tabs [data-tab="rosa"]'); await p.waitForTimeout(400);
     if (await tap('#app [data-player]')) { await p.waitForTimeout(400); await closeDlg(); }
     await c.close();
