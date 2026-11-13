@@ -66,16 +66,15 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 .fold-chev svg.i{width:18px;height:18px}
 .fold.open .fold-chev{transform:rotate(180deg)}
 .fold-head:active .fold-chev{background:var(--line)}
-.fold-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.3,.9,.3,1)}
-.fold.open .fold-body{grid-template-rows:1fr}
-.fold-in{overflow:hidden;min-height:0;display:flex;flex-direction:column;gap:12px;opacity:0;transform:translateY(-4px);transition:opacity .25s ease,transform .38s cubic-bezier(.3,.9,.3,1)}
-.fold.open .fold-in{opacity:1;transform:none;transition-delay:.06s}
-.fold.open .fold-in>:first-child{margin-top:14px}
+.fold-body{height:0;overflow:hidden}
+.fold.open .fold-body{height:auto}
+.fold-in{display:flex;flex-direction:column;gap:12px;padding-top:14px;opacity:0;transition:opacity .22s ease}
+.fold.open .fold-in{opacity:1;transition-delay:.05s}
 .gb.fold{padding:12px 10px 12px}
 .gb .fold-ic{width:34px;height:34px}.gb .fold-ic svg.i{width:18px;height:18px}
 .gb .fold-tx b{font-size:15px}
 .gb .fold-in{gap:0}
-@media (prefers-reduced-motion:reduce){.fold-body,.fold-in,.fold-chev{transition:none}}
+@media (prefers-reduced-motion:reduce){.fold-in,.fold-chev{transition:none}}
 </style>
 <div id="splash"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="174 174 676 726"><defs><radialGradient id="sp_bg" cx="50%" cy="25%" r="85%"><stop offset="0" stop-color="#DE2E38"/><stop offset="1" stop-color="#8A121B"/></radialGradient><radialGradient id="sp_ball" cx="40%" cy="34%" r="72%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F6F6F8"/><stop offset="1" stop-color="#DCDCE2"/></radialGradient><radialGradient id="sp_sh" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><clipPath id="sp_c"><circle cx="512" cy="512" r="318"/></clipPath></defs><ellipse cx="512" cy="852" rx="254" ry="40" fill="url(#sp_sh)"/><circle cx="512" cy="512" r="318" fill="url(#sp_ball)"/><g clip-path="url(#sp_c)"><polygon points="512.0,400.0 618.5,477.4 577.8,602.6 446.2,602.6 405.5,477.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><polygon points="512.0,304.0 413.1,232.1 450.9,115.9 573.1,115.9 610.9,232.1" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="512.0" y1="400.0" x2="512.0" y2="304.0" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="709.8,447.7 747.6,331.4 869.9,331.4 907.6,447.7 808.7,519.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="618.5" y1="477.4" x2="709.8" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="634.3,680.3 756.5,680.3 794.3,796.6 695.4,868.4 596.5,796.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="577.8" y1="602.6" x2="634.3" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="389.7,680.3 427.5,796.6 328.6,868.4 229.7,796.6 267.5,680.3" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="446.2" y1="602.6" x2="389.7" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="314.2,447.7 215.3,519.6 116.4,447.7 154.1,331.4 276.4,331.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="405.5" y1="477.4" x2="314.2" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="413.1" y1="232.1" x2="808.7" y2="519.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="747.6" y1="331.4" x2="596.5" y2="796.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="756.5" y1="680.3" x2="267.5" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="427.5" y1="796.6" x2="276.4" y2="331.4" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="215.3" y1="519.6" x2="610.9" y2="232.1" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/></g><circle cx="512" cy="512" r="318" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="4"/></svg></div>
 <script>(function(){ var sp=document.getElementById("splash"); if(sp) requestAnimationFrame(function(){ setTimeout(function(){ sp.classList.add("in"); },90); }); var d=document.documentElement; d.classList.add("boot"); try { var t=localStorage.getItem("baggese-theme"); if(t==="light"||t==="dark") d.setAttribute("data-theme",t); } catch(e){} })();</script>
@@ -789,7 +788,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.9";
+var APP_VERSION="2026-11-13.10";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1506,9 +1505,14 @@ function seasonRecords(){
 }
 function foldOpen(k){ try { return localStorage.getItem("baggese-fold-"+k)==="1"; } catch(e){ return false; } }
 function foldCard(k,ic,title,sub,body){ var op=foldOpen(k); return '<section class="card fold'+(op?' open':'')+'"><button type="button" class="fold-head" data-fold="'+k+'" aria-expanded="'+op+'"><span class="fold-ic">'+icon(ic)+'</span><span class="fold-tx"><b>'+title+'</b><span class="fold-sub">'+sub+'</span></span><span class="fold-chev">'+icon("chev")+'</span></button><div class="fold-body"><div class="fold-in">'+body+'</div></div></section>'; }
-function toggleFold(btn){ var k=btn.getAttribute("data-fold"), f=btn.closest(".fold"), op=!f.classList.contains("open"); haptic();
+function foldAnim(f,op){ var b=f.querySelector(".fold-body"); if(!b) return; var h0=b.getBoundingClientRect().height; f.classList.toggle("open",op);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){ return; }
+  var h1=op?b.firstElementChild.scrollHeight:0; b.style.transition="none"; b.style.height=h0+"px"; void b.offsetHeight;
+  b.style.transition="height .34s cubic-bezier(.3,.9,.3,1)"; b.style.height=h1+"px";
+  clearTimeout(b._t); b._t=setTimeout(function(){ b.style.transition=""; b.style.height=""; },360); }
+function toggleFold(btn){ var k=btn.getAttribute("data-fold"), f=btn.closest(".fold"), op=!f.classList.contains("open");
   var all=k==="gb"?document.querySelectorAll(".gb.fold"):[f];
-  Array.prototype.forEach.call(all,function(x){ x.classList.toggle("open",op); var h=x.querySelector(".fold-head"); if(h) h.setAttribute("aria-expanded",String(op)); });
+  Array.prototype.forEach.call(all,function(x){ if(x===f) foldAnim(x,op); else x.classList.toggle("open",op); var h=x.querySelector(".fold-head"); if(h) h.setAttribute("aria-expanded",String(op)); });
   try { localStorage.setItem("baggese-fold-"+k,op?"1":"0"); } catch(e){}
   if(op&&k!=="gb") setTimeout(function(){ var r=f.getBoundingClientRect(), vh=innerHeight-90; if(r.bottom>vh) window.scrollBy({top:Math.min(r.bottom-vh,r.top-80),behavior:"smooth"}); },320);
 }
