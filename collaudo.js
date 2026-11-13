@@ -55,7 +55,16 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
           const vp = document.getElementById('rcVp').getBoundingClientRect(), cl = c.getBoundingClientRect().left - vp.left; if (cl < 0 || cl > 40) return 'scheda della giornata fuori posto';
           const s = [...document.querySelectorAll('.rc-side')].find(x => { const q = x.getBoundingClientRect(); return q.left < vp.right - 1 && q.right > vp.left + 1; });
           return s ? 'una giornata accanto è sopra quella attuale' : ''; });
-        if (bad) problemi.push(`${tag}: Per giornata: ${bad}`); } }
+        if (bad) problemi.push(`${tag}: Per giornata: ${bad}`); }
+      /* La giornata in breve: la scheda che scorre non deve animare la sua altezza (su iPhone la farebbe tremare) */
+      const last = p.locator('#roundChips .rchip:not(.future)').last();
+      if (await last.count()) { await last.click(); await p.waitForTimeout(1400);
+        const gb = p.locator('#roundCard [data-fold="gb"]');
+        if (await gb.count()) { await gb.scrollIntoViewIfNeeded(); await gb.click(); await p.waitForTimeout(60);
+          const h1 = await p.evaluate(() => document.getElementById('roundCard').getBoundingClientRect().height); await p.waitForTimeout(600);
+          const h2 = await p.evaluate(() => document.getElementById('roundCard').getBoundingClientRect().height);
+          if (Math.abs(h1 - h2) > 1) problemi.push(`${tag}: La giornata in breve: la scheda cambia altezza a poco a poco (su iPhone trema)`);
+          await gb.click(); await p.waitForTimeout(200); } } }
     await tap('nav.tabs [data-tab="rosa"]'); await p.waitForTimeout(400);
     if (await tap('#app [data-player]')) { await p.waitForTimeout(400); await closeDlg(); }
     await c.close();

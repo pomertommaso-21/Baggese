@@ -98,7 +98,10 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 .gb.fold{padding:12px 10px 12px}
 .gb .fold-ic{width:34px;height:34px}.gb .fold-ic svg.i{width:18px;height:18px}
 .gb .fold-tx b{font-size:15px}
-.gb .fold-in{gap:0}
+.gb .fold-in{gap:0;transition:none}
+.gb.gb-in .gb-row{animation:gbIn .36s cubic-bezier(.25,.9,.3,1) both;animation-delay:calc(var(--i,0)*40ms)}
+@keyframes gbIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.gb.gb-in .gb-row{animation:none}}
 @media (prefers-reduced-motion:reduce){.fold-in,.fold-chev{transition:none}}
 </style>
 <div id="splash"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="174 174 676 726"><defs><radialGradient id="sp_bg" cx="50%" cy="25%" r="85%"><stop offset="0" stop-color="#DE2E38"/><stop offset="1" stop-color="#8A121B"/></radialGradient><radialGradient id="sp_ball" cx="40%" cy="34%" r="72%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F6F6F8"/><stop offset="1" stop-color="#DCDCE2"/></radialGradient><radialGradient id="sp_sh" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><clipPath id="sp_c"><circle cx="512" cy="512" r="318"/></clipPath></defs><ellipse cx="512" cy="852" rx="254" ry="40" fill="url(#sp_sh)"/><circle cx="512" cy="512" r="318" fill="url(#sp_ball)"/><g clip-path="url(#sp_c)"><polygon points="512.0,400.0 618.5,477.4 577.8,602.6 446.2,602.6 405.5,477.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><polygon points="512.0,304.0 413.1,232.1 450.9,115.9 573.1,115.9 610.9,232.1" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="512.0" y1="400.0" x2="512.0" y2="304.0" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="709.8,447.7 747.6,331.4 869.9,331.4 907.6,447.7 808.7,519.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="618.5" y1="477.4" x2="709.8" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="634.3,680.3 756.5,680.3 794.3,796.6 695.4,868.4 596.5,796.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="577.8" y1="602.6" x2="634.3" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="389.7,680.3 427.5,796.6 328.6,868.4 229.7,796.6 267.5,680.3" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="446.2" y1="602.6" x2="389.7" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="314.2,447.7 215.3,519.6 116.4,447.7 154.1,331.4 276.4,331.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="405.5" y1="477.4" x2="314.2" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="413.1" y1="232.1" x2="808.7" y2="519.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="747.6" y1="331.4" x2="596.5" y2="796.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="756.5" y1="680.3" x2="267.5" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="427.5" y1="796.6" x2="276.4" y2="331.4" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="215.3" y1="519.6" x2="610.9" y2="232.1" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/></g><circle cx="512" cy="512" r="318" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="4"/></svg></div>
@@ -418,7 +421,7 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}
 .rc-vp{position:relative;overflow-x:clip;margin:0 -16px;padding:0 16px;touch-action:pan-y}
 .rc-slot{will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .rc-slot.rc-side{position:absolute;top:0;left:16px;right:16px;pointer-events:none}
-.rc-vp.rc-flat .rc-slot.cur{will-change:auto;-webkit-backface-visibility:visible;backface-visibility:visible;transform:none!important}
+
 .rc-card{contain:layout style}
 .cmp-head.big{margin:6px 0 6px}
 .fx-mini{display:grid;grid-template-columns:30px 22px minmax(0,1fr) 40px minmax(0,1fr) 22px 64px;align-items:center;gap:6px;width:100%;padding:9px 0;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;font-size:14px}
@@ -814,7 +817,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.17";
+var APP_VERSION="2026-11-13.18";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1499,7 +1502,7 @@ function roundBrief(r){
     out.push([tops.length>1?'Più gol':'Più gol', tops.map(function(x){ return '<b>'+esc(sName(x.s,true))+'</b> '+(x.n===2?'doppietta':x.n===3?'tripletta':x.n+' gol')+' <span class="muted">('+esc(tname(sTeam(x.s)))+')</span>'; }).join(', ')]); }
   tz.unshift(goals+' gol');
   var op=foldOpen("gb");
-  return '<div class="gb fold'+(op?' open':'')+'"><button type="button" class="fold-head" data-fold="gb" aria-expanded="'+op+'"><span class="fold-ic">'+icon("flash")+'</span><span class="fold-tx"><b>La giornata in breve</b><span class="fold-sub">'+tz.join(' · ')+'</span></span><span class="fold-chev">'+icon("chev")+'</span></button><div class="fold-body"><div class="fold-in">'+out.map(function(o){ return '<div class="gb-row"><span class="gb-lab">'+o[0]+'</span><span class="gb-txt">'+o[1]+'</span></div>'; }).join('')+'</div></div></div>';
+  return '<div class="gb fold'+(op?' open':'')+'"><button type="button" class="fold-head" data-fold="gb" aria-expanded="'+op+'"><span class="fold-ic">'+icon("flash")+'</span><span class="fold-tx"><b>La giornata in breve</b><span class="fold-sub">'+tz.join(' · ')+'</span></span><span class="fold-chev">'+icon("chev")+'</span></button><div class="fold-body"><div class="fold-in">'+out.map(function(o,i){ return '<div class="gb-row" style="--i:'+i+'"><span class="gb-lab">'+o[0]+'</span><span class="gb-txt">'+o[1]+'</span></div>'; }).join('')+'</div></div></div>';
 }
 
 /* ---------- record e curiosità ---------- */
@@ -1547,11 +1550,13 @@ function foldAnim(f,op){ var b=f.querySelector(".fold-body"); if(!b) return; var
   b.style.transition="height .34s cubic-bezier(.3,.9,.3,1)"; b.style.height=h1+"px";
   clearTimeout(b._t); b._t=setTimeout(function(){ b.style.transition=""; b.style.height=""; },360); }
 function toggleFold(btn){ var k=btn.getAttribute("data-fold"), f=btn.closest(".fold"), op=!f.classList.contains("open");
-  var vp=k==="gb"&&$("rcVp"); if(vp){ vp.classList.add("rc-flat"); clearTimeout(vp._f); vp._f=setTimeout(function(){ vp.classList.remove("rc-flat"); },450); }
   var all=k==="gb"?document.querySelectorAll(".gb.fold"):[f];
-  Array.prototype.forEach.call(all,function(x){ if(x===f) foldAnim(x,op); else x.classList.toggle("open",op); var h=x.querySelector(".fold-head"); if(h) h.setAttribute("aria-expanded",String(op)); });
+  /* la giornata in breve sta nella scheda che scorre: lì l'altezza non si anima (su iPhone farebbe tremare la scheda),
+     cambia in un colpo solo e sono le righe a entrare morbide */
+  if(k==="gb"&&op){ f.classList.add("gb-in"); clearTimeout(f._g); f._g=setTimeout(function(){ f.classList.remove("gb-in"); },700); }
+  Array.prototype.forEach.call(all,function(x){ if(x===f&&k!=="gb") foldAnim(x,op); else x.classList.toggle("open",op); var h=x.querySelector(".fold-head"); if(h) h.setAttribute("aria-expanded",String(op)); });
   try { localStorage.setItem("baggese-fold-"+k,op?"1":"0"); } catch(e){}
-  if(op&&k!=="gb") setTimeout(function(){ var r=f.getBoundingClientRect(), vh=innerHeight-90; if(r.bottom>vh) window.scrollBy({top:Math.min(r.bottom-vh,r.top-80),behavior:"smooth"}); },320);
+  if(op) setTimeout(function(){ var r=f.getBoundingClientRect(), vh=innerHeight-90; if(r.bottom>vh) window.scrollBy({top:Math.min(r.bottom-vh,r.top-80),behavior:"smooth"}); },k==="gb"?90:320);
 }
 function crestPair(m,sz){ return '<span class="cpair">'+crest(m.homeId,sz||24)+crest(m.awayId,sz||24)+'</span>'; }
 function recRow(cr,lab,main,sub,val,unit,mine,rk){
