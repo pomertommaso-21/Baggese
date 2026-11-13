@@ -792,7 +792,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.13";
+var APP_VERSION="2026-11-13.14";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1981,19 +1981,21 @@ var RC={busy:false,tok:0};
 function rcSides(){ var vp=$("rcVp"); if(!vp) return; var rs=rounds(), i=rs.indexOf(selRound);
   [["p",i-1],["n",i+1]].forEach(function(x){ var el=vp.querySelector(".rc-"+x[0]); var want=(x[1]>=0&&x[1]<rs.length)?rs[x[1]]:null;
     if(el && +el.getAttribute("data-r")===want) return; if(el) el.remove(); if(want===null) return;
-    var d=document.createElement("div"); d.className="rc-side rc-"+x[0]; d.setAttribute("data-r",want); d.innerHTML=roundCardHtml(want,false); vp.appendChild(d); }); }
+    /* la scheda accanto nasce già fuori dallo schermo: mai sopra a quella attuale */
+    var d=document.createElement("div"); d.className="rc-side rc-"+x[0]; d.setAttribute("data-r",want); var W=rcW(); d.style.transform="translate3d("+(x[0]==="p"?-W:W)+"px,0,0)"; d.innerHTML=roundCardHtml(want,false); vp.appendChild(d); }); }
 function rcW(){ var vp=$("rcVp"); return vp?vp.clientWidth:innerWidth; }
 function rcSet(off,ms,ease){ var vp=$("rcVp"); if(!vp) return; var W=rcW(), cur=$("roundCard"), p=vp.querySelector(".rc-p"), n=vp.querySelector(".rc-n");
   var tr=ms?"transform "+ms+"ms "+(ease||"cubic-bezier(.25,.85,.3,1)"):"none", tk=++RC.tok, idle=(off===0&&!ms);
   /* da ferme le schede non sono "livelli" separati: così su iPhone aprire una tendina non fa tremare la scheda */
   vp.classList.toggle("mv",!idle);
-  [[cur,0],[p,-W],[n,W]].forEach(function(x){ if(!x[0]) return; x[0].style.transition=tr; x[0].style.transform=idle?(x[1]?"translateX("+x[1]+"px)":"none"):"translate3d("+(x[1]+off)+"px,0,0)"; });
+  [[cur,0],[p,-W],[n,W]].forEach(function(x){ if(!x[0]) return; x[0].style.transition=tr; x[0].style.transform=(idle&&!x[1])?"none":"translate3d("+(x[1]+off)+"px,0,0)"; });
   if(off===0&&ms) setTimeout(function(){ if(RC.tok===tk) rcSet(0,0); },ms+40); }
 function rcChips(r,noScroll){ if(r==null) r=selRound; var strip=$("roundChips"); if(!strip) return; var on=null;
   strip.querySelectorAll(".rchip").forEach(function(b){ var a=+b.getAttribute("data-round")===r; if(b.getAttribute("aria-pressed")!==String(a)) b.setAttribute("aria-pressed",a?"true":"false"); if(a) on=b; });
   if(on&&!noScroll){ var left=on.offsetLeft-strip.clientWidth/2+on.clientWidth/2; try { strip.scrollTo({left:left,behavior:"smooth"}); } catch(e){ strip.scrollLeft=left; } } }
 function rcSwapTo(r){ var vp=$("rcVp"); if(!vp) return; selRound=r; vp.querySelectorAll(".rc-side").forEach(function(e){ e.remove(); });
-  var cur=$("roundCard"); var tmp=document.createElement("div"); tmp.innerHTML=roundCardHtml(r,true); vp.replaceChild(tmp.firstChild,cur); rcChips(); }
+  var cur=$("roundCard"); var tmp=document.createElement("div"); tmp.innerHTML=roundCardHtml(r,true); vp.replaceChild(tmp.firstChild,cur); rcChips();
+  setTimeout(function(){ rcLater(function(){ if(!RC.busy&&selRound===r) rcSides(); }); },500); }
 /* a fine scorrimento la scheda accanto DIVENTA quella attuale (stessi elementi, stessi stemmi già disegnati):
    niente ricostruzione, quindi i loghi non lampeggiano */
 function rcPromote(dir,r){ var vp=$("rcVp"); if(!vp) return; var wr=vp.querySelector(dir>0?".rc-n":".rc-p"), oc=$("roundCard");
@@ -2024,7 +2026,7 @@ function rcJump(r){ if(r===selRound) return; var rs=rounds(), d=rs.indexOf(r)-rs
     smp.push({x:x,t:e.timeStamp}); if(smp.length>12) smp.shift();
     var rs=rounds(), i=rs.indexOf(selRound), W=rcW(); dx=((ddx>0&&i<=0)||(ddx<0&&i>=rs.length-1))?rubber(ddx,W):ddx;
     if(!raf) raf=requestAnimationFrame(apply); },{passive:false});
-  var end=function(){ if(x0===null) return; x0=null; if(raf){ cancelAnimationFrame(raf); raf=0; rcSet(dx,0); } if(lock!=="x") return; var W=rcW(), v=velocity();
+  var end=function(){ if(x0===null) return; x0=null; if(raf){ cancelAnimationFrame(raf); raf=0; rcSet(dx,0); } if(lock!=="x"){ if(!RC.busy) rcSet(0,0); return; } var W=rcW(), v=velocity();
     var dir=(dx<-W*.2||v<-.3)?1:(dx>W*.2||v>.3)?-1:0; if(dir===1&&v>.2) dir=0; if(dir===-1&&v<-.2) dir=0;
     var rs=rounds(), i=rs.indexOf(selRound); if(dir&&(i+dir<0||i+dir>=rs.length)) dir=0;
     if(!dir){ var back=Math.abs(dx), msb=Math.round(Math.max(320,Math.min(480,back*1.4))); rcSet(0,msb,rcEase(v,back,msb)); return; }
