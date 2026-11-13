@@ -23,3 +23,8 @@ jobs:
           cd rotta && python3 -m http.server 8766 >/dev/null 2>&1 &
           sleep 1
           BASE=http://localhost:8766/ node collaudo_safari.js || true
+      - name: Versione rotta (schede sovrapposte)
+        run: |
+          cd rotta2 && python3 -m http.server 8767 >/dev/null 2>&1 &
+          sleep 1
+          BASE=http://localhost:8767/ node collaudo_safari.js || true
