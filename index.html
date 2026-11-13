@@ -276,6 +276,24 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 .t11-fd.open .t11-fd-in{opacity:1}
 .t11-fd .t11-leg{border-top:0;padding:0}
 .t11-fd .t11-calc{border-top:0;padding:0}
+
+
+.ps-t11{display:flex;flex-direction:column;gap:10px;border-radius:14px;padding:12px 14px;background:color-mix(in srgb,#1f7a45 11%,var(--surface))}
+.ps-t11-top{display:flex;align-items:center;gap:12px}
+.ps-t11-top>b{font-family:var(--display);letter-spacing:-.02em;font-size:26px;font-weight:800;line-height:1;color:#1b6e3e;min-width:22px;text-align:center}
+.ps-t11-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ps-t11-tx strong{font-size:14px;font-weight:650}
+.ps-t11-tx span{font-size:12px;color:var(--muted)}
+.ps-t11-rs{display:flex;flex-wrap:wrap;gap:6px}
+.ps-t11-r{position:relative;min-width:40px;height:30px;padding:0 9px;border-radius:9px;border:1px solid color-mix(in srgb,#1f7a45 22%,transparent);background:var(--surface);color:var(--fg);font:inherit;font-family:var(--display);font-weight:800;font-size:13.5px;letter-spacing:-.01em;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ps-t11-r:active{transform:scale(.96)}
+.ps-t11-r i{position:absolute;top:-6px;right:-5px;width:16px;height:16px;border-radius:50%;background:#F5B700;display:grid;place-items:center;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.ps-t11-r i svg.i{width:10px;height:10px;fill:#3a2a00;color:#3a2a00}
+.rx-s.rx-wrap{white-space:normal;overflow:visible}
+.rx-star{display:inline-grid;place-items:center;vertical-align:-1px}
+.rx-star svg.i{width:11px;height:11px;fill:#E0A800;color:#E0A800}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ps-t11-top>b{color:#57c98a}}
+[data-theme="dark"] .ps-t11-top>b{color:#57c98a}
 </style>
 <div id="splash"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="174 174 676 726"><defs><radialGradient id="sp_bg" cx="50%" cy="25%" r="85%"><stop offset="0" stop-color="#DE2E38"/><stop offset="1" stop-color="#8A121B"/></radialGradient><radialGradient id="sp_ball" cx="40%" cy="34%" r="72%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F6F6F8"/><stop offset="1" stop-color="#DCDCE2"/></radialGradient><radialGradient id="sp_sh" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><clipPath id="sp_c"><circle cx="512" cy="512" r="318"/></clipPath></defs><ellipse cx="512" cy="852" rx="254" ry="40" fill="url(#sp_sh)"/><circle cx="512" cy="512" r="318" fill="url(#sp_ball)"/><g clip-path="url(#sp_c)"><polygon points="512.0,400.0 618.5,477.4 577.8,602.6 446.2,602.6 405.5,477.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><polygon points="512.0,304.0 413.1,232.1 450.9,115.9 573.1,115.9 610.9,232.1" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="512.0" y1="400.0" x2="512.0" y2="304.0" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="709.8,447.7 747.6,331.4 869.9,331.4 907.6,447.7 808.7,519.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="618.5" y1="477.4" x2="709.8" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="634.3,680.3 756.5,680.3 794.3,796.6 695.4,868.4 596.5,796.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="577.8" y1="602.6" x2="634.3" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="389.7,680.3 427.5,796.6 328.6,868.4 229.7,796.6 267.5,680.3" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="446.2" y1="602.6" x2="389.7" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="314.2,447.7 215.3,519.6 116.4,447.7 154.1,331.4 276.4,331.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="405.5" y1="477.4" x2="314.2" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="413.1" y1="232.1" x2="808.7" y2="519.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="747.6" y1="331.4" x2="596.5" y2="796.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="756.5" y1="680.3" x2="267.5" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="427.5" y1="796.6" x2="276.4" y2="331.4" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="215.3" y1="519.6" x2="610.9" y2="232.1" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/></g><circle cx="512" cy="512" r="318" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="4"/></svg></div>
 <script>(function(){ var sp=document.getElementById("splash"); if(sp) requestAnimationFrame(function(){ setTimeout(function(){ sp.classList.add("in"); },90); }); var d=document.documentElement; d.classList.add("boot"); try { var t=localStorage.getItem("baggese-theme"); if(t==="light"||t==="dark") d.setAttribute("data-theme",t); } catch(e){} })();</script>
@@ -1000,7 +1018,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.28";
+var APP_VERSION="2026-11-13.29";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1771,6 +1789,10 @@ function seasonRecords(){
   if(cs&&cs.n>=3){ var ct=sTeam(cs.s), tg=(per[ct]||[]).length;
     var prk=rank(pl,function(x){return x.n;},function(x,pos,v){ var t=sTeam(x.s); return '<div class="rx-r'+(t===my?' me':'')+'"><span class="rx-p'+(pos===1?' first':'')+'">'+pos+'</span>'+crest(t,24)+'<span class="rx-n"><span class="ellipsis">'+esc(sName(x.s,true))+'</span><span class="rx-s">'+x.g+' gol</span></span><b class="num">'+v+'</b></div>'; });
     h+=recRow(crest(ct,30),'Marcatore più costante',esc(sName(cs.s))+' <span class="muted">· '+esc(tname(ct))+'</span>','in gol in '+cs.n+' partite su '+tg+', '+cs.g+' gol in tutto',cs.n,'partite',ct===my,prk); }
+  var t11s=top11Season(), tl=Object.keys(t11s).map(function(k){return t11s[k];}).sort(function(a,b){ return b.n-a.n || b.mvp-a.mvp || (b.tid===my?1:0)-(a.tid===my?1:0); }), tw=tl[0];
+  if(tw&&tw.n>=2){ var ttie=tl.filter(function(x){return x.n===tw.n;}).length-1;
+    var trk=rank(tl,function(x){return x.n;},function(x,pos,v){ return '<button type="button" data-player="'+x.p.id+'" class="rx-r'+(x.tid===my?' me':'')+'"><span class="rx-p'+(pos===1?' first':'')+'">'+pos+'</span>'+crest(x.tid,24)+'<span class="rx-n"><span class="ellipsis">'+esc(x.p.name)+'</span><span class="rx-s rx-wrap">'+esc(tname(x.tid))+(x.mvp?' · <span class="rx-star">'+icon("star")+'</span> '+(x.mvp===1?'1&nbsp;volta':x.mvp+'&nbsp;volte')+' migliore in&nbsp;campo':'')+'</span></span><b class="num">'+v+'</b></button>'; });
+    h+=recRow(crest(tw.tid,30),'Più volte in Top 11',esc(tw.p.name)+' <span class="muted">· '+esc(tname(tw.tid))+'</span>',(tw.rs.length<=6?'giornate '+t11List(tw.rs):'in '+tw.n+' giornate su '+lastPlayedRound())+(ttie?' · a pari con '+(ttie===1?'un altro':'altri '+ttie):''),tw.n,'volte',tw.tid===my,trk); }
   return foldCard("rec","trophy","Record e curiosità",tz[0],'<div class="list rec">'+h+'</div><span class="tiny muted">Fino alla '+lastPlayedRound()+'ª giornata. Tocca un record per vedere la classifica.</span>');
 }
 function foldOpen(k){ try { return localStorage.getItem("baggese-fold-"+k)==="1"; } catch(e){ return false; } }
@@ -1976,6 +1998,14 @@ function top11(r){
 }
 function t11Tag(c){ return c.g?(c.g===1?'1 gol':c.g===2?'doppietta':c.g===3?'tripletta':c.g+' gol')+(c.pen&&c.g===c.pen?' (rig.)':''):c.cs?(c.ga?(c.ga===1?'1 gol subito':c.ga+' gol subiti'):'porta inviolata'):c.fill?(c.res==="V"?'vittoria':'pareggio'):''; }
 function t11Why(c,t){ var w=t11Tag(c); return w.charAt(0).toUpperCase()+w.slice(1)+' contro '+esc(tname(c.opp))+' <span class="t11-r-pos">'+t.pos[c.opp]+'ª</span>'; }
+/* quante volte ogni giocatore è entrato nella Top 11 (e in quali giornate) */
+var T11S={k:null,v:null};
+function top11Season(){ var L=lastPlayedRound(), k=(G&&G.id)+'|'+L+'|'+S.matches.filter(played).length+'|'+S.players.length; if(T11S.k===k) return T11S.v;
+  var by={}; for(var r=1;r<=L;r++){ var t=top11(r); if(!t) continue; t.all.forEach(function(c){ var x=by[c.p.id]=by[c.p.id]||{p:c.p,tid:c.tid,n:0,rs:[],mvp:0}; x.n++; x.rs.push(r); if(c===t.mvp) x.mvp++; }); }
+  T11S={k:k,v:by}; return by; }
+/* posizione di un giocatore per presenze in Top 11 (a pari presenze stessa posizione) */
+function t11Rank(id){ var by=top11Season(), me1=by[id]; if(!me1) return null; var better=0, same=0; Object.keys(by).forEach(function(k){ if(by[k].n>me1.n) better++; else if(by[k].n===me1.n&&k!==id) same++; }); return {pos:better+1,same:same}; }
+function t11List(rs){ rs=rs.map(function(r){return r+'ª';}); return rs.length<2?rs.join(''):rs.slice(0,-1).join(', ')+' e '+rs[rs.length-1]; }
 function t11Fd(title,body){ return '<div class="t11-fd"><button type="button" class="t11-fd-h" data-t11fd="1" aria-expanded="false"><span>'+title+'</span><span class="t11-fd-ch">'+icon("chev")+'</span></button><div class="t11-fd-b"><div class="t11-fd-in">'+body+'</div></div></div>'; }
 function t11Surname(n){ var w=String(n).split(" "); if(w.length>2&&/^(de|di|da|del|della|dello|dal|dalla|lo|la|li|le|van|von|d')$/i.test(w[0])) return w[0]+" "+w[1]; return w[0]; }
 function openTop11(r){
@@ -2405,6 +2435,10 @@ function openPlayerView(id){
     var tb=S.players.filter(function(q){return pTeam(q)===tid && st[q.id].gol>s.gol;}).length;
     h+='<div class="rank-line"><b>'+(better+1)+'°</b><span>nella classifica marcatori del girone'+(same?' (a pari merito con '+same+(same===1?' altro':' altri')+')':'')+(tb===0?'. Miglior marcatore della squadra.':', '+(tb+1)+'° in squadra.')+'</span></div>';
   }
+  var ts=top11Season()[id];
+  if(ts){ var tr=t11Rank(id), L=lastPlayedRound(), mv={}; (function(){ for(var r=1;r<=L;r++){ var t=top11(r); if(t&&t.mvp.p.id===id) mv[r]=1; } })();
+    h+='<div class="ps-t11"><div class="ps-t11-top"><b>'+ts.n+'</b><span class="ps-t11-tx"><strong>'+(ts.n===1?'volta':'volte')+' nella Top 11 della giornata</strong><span>'+tr.pos+'° nel girone'+(tr.same?' a pari merito':'')+' · su '+L+' giornate'+(ts.mvp?' · '+(ts.mvp===1?'1&nbsp;volta':ts.mvp+'&nbsp;volte')+' migliore in&nbsp;campo':'')+'</span></span></div>'
+      +'<div class="ps-t11-rs">'+ts.rs.map(function(r){ return '<button type="button" class="ps-t11-r'+(mv[r]?' mvp':'')+'" data-top11="'+r+'" aria-label="Apri la Top 11 della '+r+'ª giornata">'+r+'ª'+(mv[r]?'<i>'+icon("star")+'</i>':'')+'</button>'; }).join('')+'</div></div>'; }
   var gm=S.matches.filter(function(m){ return (m.scorers||[]).some(function(x){return x.playerId===id;}); }).sort(sortMatches);
   var att=0;
   if(gm.length){
