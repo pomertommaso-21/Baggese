@@ -77,6 +77,29 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
     if (await tap('#app [data-player]:visible')) { await p.waitForTimeout(400); await closeDlg(); }
     await c.close();
   }
+  /* Proiezione: cambiando girone deve mostrare le squadre del girone nuovo, non quelle del precedente */
+  if (GIRONI.length > 1) {
+    const g0 = GIRONI[0], g1 = GIRONI.find(g => g.id !== g0.id && !/Terza/.test(g.cat)) || GIRONI[1];
+    const c = await b.newContext({ viewport: { width: 393, height: 852 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+    await c.addInitScript(([t, g]) => { try { localStorage.setItem('baggese-myteam', t); localStorage.setItem('baggese-follow', JSON.stringify([t])); localStorage.setItem('baggese-mygirone', g); } catch (e) {} }, [g0.teams[0][0], g0.id]);
+    const p = await c.newPage(); p.on('pageerror', e => problemi.push(`Proiezione: errore JavaScript: ${e.message}`));
+    await p.goto(BASE + '?collaudo=' + Date.now()); await p.waitForTimeout(2600);
+    await p.evaluate(() => { const d = document.getElementById('dlg'); if (d && d.open) d.close(); });
+    try {
+      await p.click('nav.tabs [data-tab="classifica"]'); await p.waitForTimeout(600);
+      if (await p.locator('[data-srt="prj"]').count()) {
+        await p.click('[data-srt="prj"]'); await p.waitForSelector('.prjt .crow[data-tid]', { timeout: 10000 });
+        const ids0 = new Set(g0.teams.map(t => t[0]));
+        await p.click('[data-act="pickGirone"]'); await p.waitForTimeout(500); await p.click(`[data-gir="${g1.id}"]`); await p.waitForTimeout(1500);
+        if (!(await p.locator('[data-srt="prj"][aria-pressed="true"]').count())) { await p.click('nav.tabs [data-tab="classifica"]').catch(() => {}); await p.waitForTimeout(500); if (await p.locator('[data-srt="prj"]').count()) await p.click('[data-srt="prj"]'); }
+        await p.waitForSelector('.prjt .crow[data-tid]', { timeout: 10000 });
+        const shown = await p.$$eval('.prjt .crow[data-tid]', rs => rs.map(r => r.getAttribute('data-tid')));
+        const wrong = shown.filter(id => ids0.has(id) || !g1.teams.some(t => t[0] === id));
+        if (wrong.length) problemi.push(`Proiezione: dopo il passaggio da ${g0.id} a ${g1.id} mostra squadre dell'altro girone (${wrong.slice(0, 3).join(', ')})`);
+      }
+    } catch (e) { problemi.push(`Proiezione: prova del cambio girone non riuscita (${e.message.split('\n')[0]})`); }
+    await c.close();
+  }
   await b.close();
   const uniq = [...new Set(problemi)];
   if (uniq.length) { console.log('COLLAUDO NON SUPERATO (' + uniq.length + ' problemi):\n- ' + uniq.join('\n- ')); process.exit(1); }

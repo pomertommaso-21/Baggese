@@ -1122,7 +1122,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.30";
+var APP_VERSION="2026-11-13.31";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1853,7 +1853,7 @@ function prMatch(m,mod){ mod=mod||prModel(); if(!mod) return null; var L=prLam(m
   var t=p1+pX+p2; return {p1:p1/t,pX:pX/t,p2:p2/t,best:best,lh:L[0],la:L[1],pick:p1>=pX&&p1>=p2?"1":p2>=pX?"2":"X"}; }
 /* quanti pronostici ha azzeccato l'app: ogni partita è prevista solo con le giornate giocate prima */
 var PRA={k:null,v:null};
-function prKey(){ return (G&&G.id)+'|'+S.matches.filter(played).length+'|'+S.matches.length; }
+function prKey(){ return String(G)+'|'+S.matches.filter(played).length+'|'+S.matches.length; }
 function prAccuracy(){ var k=prKey(); if(PRA.k===k) return PRA.v; var by={}, ok=0, tot=0, mods={};
   S.matches.filter(function(m){ return played(m)&&+m.round>=4; }).forEach(function(m){ var r=+m.round, mod=mods[r]!==undefined?mods[r]:(mods[r]=prModel(r)); if(!mod) return; var p=prMatch(m,mod); if(!p) return;
     var res=+m.hg>+m.ag?"1":+m.hg<+m.ag?"2":"X", hit=p.pick===res; by[m.id]={p:p,hit:hit}; tot++; if(hit) ok++; });
@@ -2197,7 +2197,7 @@ function t11Tag(c){ return c.g?(c.g===1?'1 gol':c.g===2?'doppietta':c.g===3?'tri
 function t11Why(c,t){ var w=t11Tag(c); return w.charAt(0).toUpperCase()+w.slice(1)+' contro '+esc(tname(c.opp))+' <span class="t11-r-pos">'+t.pos[c.opp]+'ª</span>'; }
 /* quante volte ogni giocatore è entrato nella Top 11 (e in quali giornate) */
 var T11S={k:null,v:null};
-function top11Season(){ var L=lastPlayedRound(), k=(G&&G.id)+'|'+L+'|'+S.matches.filter(played).length+'|'+S.players.length; if(T11S.k===k) return T11S.v;
+function top11Season(){ var L=lastPlayedRound(), k=String(G)+'|'+L+'|'+S.matches.filter(played).length+'|'+S.players.length; if(T11S.k===k) return T11S.v;
   var by={}; for(var r=1;r<=L;r++){ var t=top11(r); if(!t) continue; t.all.forEach(function(c){ var x=by[c.p.id]=by[c.p.id]||{p:c.p,tid:c.tid,n:0,rs:[],mvp:0}; x.n++; x.rs.push(r); if(c===t.mvp) x.mvp++; }); }
   T11S={k:k,v:by}; return by; }
 /* posizione di un giocatore per presenze in Top 11 (a pari presenze stessa posizione) */
