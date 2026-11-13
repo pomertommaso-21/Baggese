@@ -33,6 +33,7 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
       await p.waitForTimeout(500);
       const r = await p.evaluate(() => { const W = innerWidth, out = []; if (document.documentElement.scrollWidth > W + 1) out.push('la pagina scorre di lato');
         if (!document.querySelector('#app h1')) out.push('manca il titolo');
+        document.querySelectorAll('#app .crest').forEach(e => { if (e.getClientRects().length && e.getBoundingClientRect().width < 10) out.push('stemmi minuscoli'); });
         document.querySelectorAll('#app img').forEach(e => { if (e.complete && e.naturalWidth === 0 && getComputedStyle(e).display !== 'none') out.push('immagine rotta ' + e.getAttribute('src')); });
         document.querySelectorAll('#app *').forEach(e => { const s = getComputedStyle(e); if (s.display === 'none' || !e.getClientRects().length) return; const r = e.getBoundingClientRect(); if (!r.width) return;
           for (let a = e.parentElement; a; a = a.parentElement) { const o = getComputedStyle(a).overflowX; if (o !== 'visible') return; }
@@ -73,7 +74,7 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
       if (!(await p.evaluate(() => { const ch = document.querySelector('#app > *'); return !!(ch && ch.__mk); }))) problemi.push(`${tag}: ${t}: un tocco fuori dai pulsanti ridisegna tutta la pagina`); }
     await tap('nav.tabs [data-tab="rosa"]'); await p.waitForTimeout(400);
     /* la pagina squadra è divisa in sezioni: i giocatori stanno in "Rosa"; si provano tutte le sezioni */
-    for (const rt of ['par', 'num', 'pan', 'ros']) { if (await p.locator(`#app [data-rtab="${rt}"]`).count()) { await tap(`#app [data-rtab="${rt}"]`); await p.waitForTimeout(350); } }
+    for (const rt of ['par', 'num', 'pan', 'ros']) { if (await p.locator(`#app [data-rtab="${rt}"]`).count()) { await tap(`#app [data-rtab="${rt}"]`); await p.waitForTimeout(350); if (rt === 'par') await check('Squadre › Partite'); } }
     if (await tap('#app [data-player]:visible')) { await p.waitForTimeout(400); await closeDlg(); }
     await c.close();
   }

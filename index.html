@@ -552,7 +552,7 @@ button.mini-row{background:none;border:0;width:100%;color:inherit;text-align:lef
 .rchip[aria-pressed="true"]{background:var(--brand);color:var(--on-brand);border-color:transparent}
 .board{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;width:100%;padding:12px 6px;background:none;border:0;border-top:1px solid var(--line);color:inherit;text-align:left}
 .list>.board:first-child,.list>.fx:first-child,.list>.pl:first-child{border-top:0}
-.board.is-me .nm{color:var(--brand);font-weight:700}
+.board .b-team.me .nm{color:var(--brand);font-weight:700}
 
 .b-team{display:flex;align-items:center;gap:10px;justify-content:flex-end;min-width:0;font-weight:600;font-size:14px}
 .b-team.away{justify-content:flex-start}
@@ -1138,7 +1138,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.32";
+var APP_VERSION="2026-11-13.33";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -2324,8 +2324,10 @@ function fixtureRow(m){
   var my=me(), r=resultFor(m,my), home=m.homeId===my, opp=home?m.awayId:m.homeId;
   return '<button type="button" class="fx" data-view="'+m.id+'"><span class="fx-round num">'+esc(m.round||"–")+'</span><span class="fx-main">'+crest(opp,36)+'<span class="col"><b class="ellipsis">'+esc(tname(opp))+'</b><span class="meta">'+(home?'Casa':'Trasferta')+' · '+esc(fmtDate(m.date,m.time)||"data da definire")+'</span>'+'</span></span>'+(played(m)?'<span class="fx-score"><span class="num">'+esc(m.hg)+'–'+esc(m.ag)+'</span><span class="res-dot r-'+r+'">'+r+'</span></span>':'<span class="meta" style="font-weight:600">'+esc(whenLabel(m.date))+'</span>')+'</button>';
 }
-function boardRow(m,sz){ sz=sz||30;
-  return '<button type="button" class="board'+(involves(m,me())?' is-me':'')+'" data-view="'+m.id+'"><span class="b-team"><span class="nm">'+esc(tname(m.homeId))+'</span>'+crest(m.homeId,sz)+'</span><span class="b-score">'+(played(m)?esc(m.hg)+'<i>–</i>'+esc(m.ag):'<small>'+esc(boardWhen(m))+'</small>')+'</span><span class="b-team away">'+crest(m.awayId,sz)+'<span class="nm">'+esc(tname(m.awayId))+'</span></span></button>';
+/* NB: boardRow si usa anche come ms.map(boardRow), che passa l'indice come secondo argomento: la misura dello stemma va in una funzione a parte */
+function boardRow(m){ return boardRowSz(m,30); }
+function boardRowSz(m,sz){ var my=me();
+  return '<button type="button" class="board'+(involves(m,my)?' is-me':'')+'" data-view="'+m.id+'"><span class="b-team'+(m.homeId===my?' me':'')+'"><span class="nm">'+esc(tname(m.homeId))+'</span>'+crest(m.homeId,sz)+'</span><span class="b-score">'+(played(m)?esc(m.hg)+'<i>–</i>'+esc(m.ag):'<small>'+esc(boardWhen(m))+'</small>')+'</span><span class="b-team away'+(m.awayId===my?' me':'')+'">'+crest(m.awayId,sz)+'<span class="nm">'+esc(tname(m.awayId))+'</span></span></button>';
 }
 
 /* ---------- classifica ---------- */
@@ -2706,7 +2708,7 @@ function roundCardHtml(r,cur){
   var tk=function(m){ var t=String(m.time||"").match(/^(\d{1,2})[:.](\d{2})/); return (m.date||"9999-99-99")+" "+(t?("0"+t[1]).slice(-2)+":"+t[2]:"99:99"); };
   var ms=S.matches.filter(function(m){return +m.round===r;}).sort(function(a,b){ var ka=tk(a), kb=tk(b); return ka<kb?-1:ka>kb?1:((involves(b,my)?1:0)-(involves(a,my)?1:0) || tname(a.homeId).localeCompare(tname(b.homeId))); });
   var dt=ms[0]&&ms[0].date;
-  return '<section class="card flush rc-card"'+(cur?' id="roundCard"':' aria-hidden="true"')+' data-r="'+r+'"><div class="card-head rc-head"><h2>'+r+'ª giornata<span class="meta">'+(r>15?'Ritorno':'Andata')+(dt?' · '+esc(fmtDate(dt)):'')+'</span></h2><div class="rnav"><button class="btn sm" type="button" data-rstep="-1" aria-label="Giornata precedente"'+(ri<=0?' disabled':'')+'>'+icon("left")+'</button><button class="btn sm" type="button" data-rstep="1" aria-label="Giornata successiva"'+(ri>=rs.length-1?' disabled':'')+'>'+icon("right")+'</button></div></div><div class="list">'+ms.map(function(m){ return boardRow(m,28); }).join("")+'</div>'+roundBrief(r)+'</section>';
+  return '<section class="card flush rc-card"'+(cur?' id="roundCard"':' aria-hidden="true"')+' data-r="'+r+'"><div class="card-head rc-head"><h2>'+r+'ª giornata<span class="meta">'+(r>15?'Ritorno':'Andata')+(dt?' · '+esc(fmtDate(dt)):'')+'</span></h2><div class="rnav"><button class="btn sm" type="button" data-rstep="-1" aria-label="Giornata precedente"'+(ri<=0?' disabled':'')+'>'+icon("left")+'</button><button class="btn sm" type="button" data-rstep="1" aria-label="Giornata successiva"'+(ri>=rs.length-1?' disabled':'')+'>'+icon("right")+'</button></div></div><div class="list">'+ms.map(function(m){ return boardRowSz(m,28); }).join("")+'</div>'+roundBrief(r)+'</section>';
 }
 var RC={busy:false,tok:0,anim:null};
 /* tre "posti" fissi (giornata prima, attuale, dopo): a fine scorrimento cambiano solo i ruoli,
