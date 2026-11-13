@@ -891,7 +891,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.26";
+var APP_VERSION="2026-11-13.27";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -2068,7 +2068,7 @@ function teamMatches(tid){
   var ms=S.matches.filter(function(m){ return involves(m,tid); }).sort(sortMatches);
   var pl=ms.filter(played), fu=ms.filter(function(m){ return !played(m); });
   var sec=function(t,a,meta){ return a.length?'<section class="card flush"><div class="card-head" style="padding:10px 6px 4px"><h2>'+t+'</h2><span class="meta">'+meta+'</span></div><div class="list">'+a.map(boardRow).join("")+'</div></section>':''; };
-  return sec('Da giocare',fu,fu.length+' partite')+sec('Giocate',pl.slice().reverse(),'dalla più recente');
+  return sec('Giocate',pl,pl.length+(pl.length===1?' partita':' partite'))+sec('Da giocare',fu,fu.length+(fu.length===1?' partita':' partite'));
 }
 /* Numeri: casa e trasferta, marcatori, record della squadra */
 function teamNumbers(tid){
