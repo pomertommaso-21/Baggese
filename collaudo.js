@@ -65,6 +65,12 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
           const h2 = await p.evaluate(() => document.getElementById('roundCard').getBoundingClientRect().height);
           if (Math.abs(h1 - h2) > 1) problemi.push(`${tag}: La giornata in breve: la scheda cambia altezza a poco a poco (su iPhone trema)`);
           await gb.click(); await p.waitForTimeout(200); } } }
+    /* toccare un punto qualsiasi (non un pulsante) non deve ridisegnare la pagina */
+    for (const t of ['classifica', 'partite']) { await tap(`nav.tabs [data-tab="${t}"]`); await p.waitForTimeout(500);
+      await p.evaluate(() => { const ch = document.querySelector('#app > *'); if (ch) ch.__mk = 1; });
+      const tx = p.locator('#app h1, #app .eyebrow, #app h2').first(); if (await tx.count()) { try { await tx.click({ timeout: 2000 }); } catch (e) {} }
+      await p.waitForTimeout(500);
+      if (!(await p.evaluate(() => { const ch = document.querySelector('#app > *'); return !!(ch && ch.__mk); }))) problemi.push(`${tag}: ${t}: un tocco fuori dai pulsanti ridisegna tutta la pagina`); }
     await tap('nav.tabs [data-tab="rosa"]'); await p.waitForTimeout(400);
     if (await tap('#app [data-player]')) { await p.waitForTimeout(400); await closeDlg(); }
     await c.close();
