@@ -70,6 +70,7 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 .fold.open .fold-chev{transform:rotate(180deg)}
 .fold-head:active .fold-chev{background:var(--line)}
 .fold-body{height:0;overflow:hidden}
+.fold:not(.open):not(.closing) .fold-in{display:none}
 .fold.open .fold-body{height:auto}
 .fold-in{display:flex;flex-direction:column;gap:12px;padding-top:14px;opacity:0;transition:opacity .22s ease}
 .fold.open .fold-in{opacity:1;transition-delay:.05s}
@@ -791,7 +792,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.12";
+var APP_VERSION="2026-11-13.13";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1373,7 +1374,7 @@ function render(){
   if(typeof segInd==="function"){ segInd(document); tabInd(); }
   var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips");
   if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2;
-  if($("rcVp")) setTimeout(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } },120);
+  if($("rcVp")) rcLater(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } });
 }
 
 /* ---------- home ---------- */
@@ -1509,6 +1510,7 @@ function seasonRecords(){
 function foldOpen(k){ try { return localStorage.getItem("baggese-fold-"+k)==="1"; } catch(e){ return false; } }
 function foldCard(k,ic,title,sub,body){ var op=foldOpen(k); return '<section class="card fold'+(op?' open':'')+'"><button type="button" class="fold-head" data-fold="'+k+'" aria-expanded="'+op+'"><span class="fold-ic">'+icon(ic)+'</span><span class="fold-tx"><b>'+title+'</b><span class="fold-sub">'+sub+'</span></span><span class="fold-chev">'+icon("chev")+'</span></button><div class="fold-body"><div class="fold-in">'+body+'</div></div></section>'; }
 function foldAnim(f,op){ var b=f.querySelector(".fold-body"); if(!b) return; var h0=b.getBoundingClientRect().height; f.classList.toggle("open",op);
+  if(!op){ f.classList.add("closing"); clearTimeout(f._c); f._c=setTimeout(function(){ f.classList.remove("closing"); },380); }
   if(matchMedia("(prefers-reduced-motion: reduce)").matches){ return; }
   var h1=op?b.firstElementChild.scrollHeight:0; b.style.transition="none"; b.style.height=h0+"px"; void b.offsetHeight;
   b.style.transition="height .34s cubic-bezier(.3,.9,.3,1)"; b.style.height=h1+"px";
@@ -1617,7 +1619,8 @@ function openShare(kind,id){
   $("dlgBody").innerHTML='<div class="row between"><span class="eyebrow muted">Condividi come immagine</span><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div><div class="shr-prev" id="shrPrev"><span class="muted small">Preparo l’immagine…</span></div><div class="row" style="gap:8px"><button class="btn primary grow" type="button" data-shrgo="1" disabled>'+icon("share")+'Condividi</button><button class="btn" type="button" data-shrsave="1" disabled>Salva</button></div>';
   showDlg();
   var m=kind==="match"?S.matches.filter(function(z){return z.id===id;})[0]:null;
-  (m?matchImage(m):tableImage()).then(function(c){
+  /* l'immagine si disegna dopo che il foglio è salito: così l'animazione non scatta */
+  new Promise(function(r){ setTimeout(r,480); }).then(function(){ return m?matchImage(m):tableImage(); }).then(function(c){
     c.toBlob(function(b){ if(!b){ toast("Non riesco a creare l’immagine"); return; }
       if(SHR.url) URL.revokeObjectURL(SHR.url); SHR.url=URL.createObjectURL(b);
       var nm=(m?('baggese-'+tname(m.homeId)+'-'+tname(m.awayId)):('classifica-'+G)).toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.png';
@@ -1737,14 +1740,14 @@ function vClassifica(){
   }
   var forms={}; if(tb.src==="calc") calc.forEach(function(r){ forms[r.id]=(r.form||[]).slice(-5); });
   h+=compactTable(tb,forms);
-  h+='<section class="card flush only-wide"><div class="tbl"><table><thead><tr><th>#</th><th class="name">Squadra</th><th>Pt</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th><th>DR</th>'+(tb.src==="calc"?'<th>Forma</th>':'')+'</tr></thead><tbody>'+tb.rows.map(function(r){ var dr=(+r.gf||0)-(+r.gs||0); return '<tr'+(r.id===my?' class="me"':'')+zAttr(r.pos)+'><td><span class="pcell"><span class="posn">'+r.pos+'</span></span></td><td class="name"><button type="button" class="tbtn" data-team="'+r.id+'">'+crest(r.id,30)+'<span>'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</button></td><td class="pts">'+r.pts+'</td><td>'+r.g+'</td><td>'+r.v+'</td><td>'+r.n+'</td><td>'+r.p+'</td><td>'+r.gf+':'+r.gs+'</td><td>'+(dr>0?"+":dr<0?"−":"")+Math.abs(dr)+'</td>'+(tb.src==="calc"?'<td><span class="fdots">'+(forms[r.id]||[]).map(function(f){return '<span class="r-'+f+'">'+f+'</span>';}).join("")+'</span></td>':'')+'</tr>'; }).join("")+'</tbody></table></div></section>';
+  if(innerWidth>=720) h+='<section class="card flush only-wide"><div class="tbl"><table><thead><tr><th>#</th><th class="name">Squadra</th><th>Pt</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th><th>DR</th>'+(tb.src==="calc"?'<th>Forma</th>':'')+'</tr></thead><tbody>'+tb.rows.map(function(r){ var dr=(+r.gf||0)-(+r.gs||0); return '<tr'+(r.id===my?' class="me"':'')+zAttr(r.pos)+'><td><span class="pcell"><span class="posn">'+r.pos+'</span></span></td><td class="name"><button type="button" class="tbtn" data-team="'+r.id+'">'+crest(r.id,30)+'<span>'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</button></td><td class="pts">'+r.pts+'</td><td>'+r.g+'</td><td>'+r.v+'</td><td>'+r.n+'</td><td>'+r.p+'</td><td>'+r.gf+':'+r.gs+'</td><td>'+(dr>0?"+":dr<0?"−":"")+Math.abs(dr)+'</td>'+(tb.src==="calc"?'<td><span class="fdots">'+(forms[r.id]||[]).map(function(f){return '<span class="r-'+f+'">'+f+'</span>';}).join("")+'</span></td>':'')+'</tr>'; }).join("")+'</tbody></table></div></section>';
   ZOFF=false; MVR=null;
   if(cf.active) h+='<span class="tiny muted">Classifica calcolata solo sulle partite dalla '+cf.from+'ª alla '+cf.to+'ª giornata, '+SIDE_LAB[cf.side]+'. Niente zone e frecce, perché non è la classifica ufficiale.</span>';
   else h+=zLegend();
   if(chk && chk.state==="ok") h+='<span class="tiny vok">'+icon("check")+'Uguale alla classifica di Tuttocampo dopo la '+chk.round+'ª giornata</span>';
   if(!cf.active){ h+=restCalendar(); h+=seasonRecords(); }
   var tr=tableRow(my), pp=prevPos(my), asub=tr?esc(tname(my))+' '+tr.pos+'°'+(pp!=null&&pp!==tr.pos?(pp>tr.pos?', sale di '+(pp-tr.pos):', scende di '+(tr.pos-pp)):pp!=null?', stabile':''):'Posizione giornata per giornata';
-  h+=foldCard("and","chart","Andamento",asub,'<div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div>'+(chartMode==="pts"?ptsChart(my):posChart(my)));
+  h+=foldCard("and","chart","Andamento",asub,'<div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div><div class="chart-wrap">'+(chartMode==="pts"?ptsChart(my):posChart(my))+'</div>');
   return h;
 }
 var progView="round", progRound=null;
@@ -1986,9 +1989,9 @@ function rcSet(off,ms,ease){ var vp=$("rcVp"); if(!vp) return; var W=rcW(), cur=
   vp.classList.toggle("mv",!idle);
   [[cur,0],[p,-W],[n,W]].forEach(function(x){ if(!x[0]) return; x[0].style.transition=tr; x[0].style.transform=idle?(x[1]?"translateX("+x[1]+"px)":"none"):"translate3d("+(x[1]+off)+"px,0,0)"; });
   if(off===0&&ms) setTimeout(function(){ if(RC.tok===tk) rcSet(0,0); },ms+40); }
-function rcChips(r){ if(r==null) r=selRound; var strip=$("roundChips"); if(!strip) return; var on=null;
-  strip.querySelectorAll(".rchip").forEach(function(b){ var a=+b.getAttribute("data-round")===r; b.setAttribute("aria-pressed",a?"true":"false"); if(a) on=b; });
-  if(on){ var left=on.offsetLeft-strip.clientWidth/2+on.clientWidth/2; try { strip.scrollTo({left:left,behavior:"smooth"}); } catch(e){ strip.scrollLeft=left; } } }
+function rcChips(r,noScroll){ if(r==null) r=selRound; var strip=$("roundChips"); if(!strip) return; var on=null;
+  strip.querySelectorAll(".rchip").forEach(function(b){ var a=+b.getAttribute("data-round")===r; if(b.getAttribute("aria-pressed")!==String(a)) b.setAttribute("aria-pressed",a?"true":"false"); if(a) on=b; });
+  if(on&&!noScroll){ var left=on.offsetLeft-strip.clientWidth/2+on.clientWidth/2; try { strip.scrollTo({left:left,behavior:"smooth"}); } catch(e){ strip.scrollLeft=left; } } }
 function rcSwapTo(r){ var vp=$("rcVp"); if(!vp) return; selRound=r; vp.querySelectorAll(".rc-side").forEach(function(e){ e.remove(); });
   var cur=$("roundCard"); var tmp=document.createElement("div"); tmp.innerHTML=roundCardHtml(r,true); vp.replaceChild(tmp.firstChild,cur); rcChips(); }
 /* a fine scorrimento la scheda accanto DIVENTA quella attuale (stessi elementi, stessi stemmi già disegnati):
@@ -1996,13 +1999,15 @@ function rcSwapTo(r){ var vp=$("rcVp"); if(!vp) return; selRound=r; vp.querySele
 function rcPromote(dir,r){ var vp=$("rcVp"); if(!vp) return; var wr=vp.querySelector(dir>0?".rc-n":".rc-p"), oc=$("roundCard");
   if(!wr||!wr.firstElementChild||!oc){ rcSwapTo(r); return; }
   var sec=wr.firstElementChild; selRound=r; sec.id="roundCard"; sec.removeAttribute("aria-hidden"); sec.style.transition="none"; sec.style.transform="none";
-  vp.replaceChild(sec,oc); wr.remove(); vp.querySelectorAll(".rc-side").forEach(function(e){ e.remove(); }); rcChips();
-  setTimeout(function(){ if(!RC.busy) { rcSides(); rcSet(0,0); } },60); }
+  vp.replaceChild(sec,oc); wr.remove(); vp.querySelectorAll(".rc-side").forEach(function(e){ e.remove(); }); rcChips(r,true); rcSet(0,0);
+  /* le schede accanto si preparano dopo, una per volta, quando il telefono è libero */
+  rcLater(function(){ if(!RC.busy) rcSides(); }); }
+function rcLater(fn){ if(window.requestIdleCallback) requestIdleCallback(fn,{timeout:400}); else setTimeout(fn,120); }
 function rcEase(v,dist,ms){ var x1=.28, s=dist>1?Math.abs(v)*ms/dist:0, y1=Math.max(x1*1.15,Math.min(1,x1*s)); return "cubic-bezier("+x1+","+y1.toFixed(3)+",.22,1)"; }
 function rcGo(dir,ms,ease){
   var rs=rounds(), i=rs.indexOf(selRound)+dir; if(RC.busy) return; if(i<0||i>=rs.length){ rcSet(0,460); return; }
-  RC.busy=true; rcSides(); var W=rcW(); ms=ms||520;
-  requestAnimationFrame(function(){ rcSet(-dir*W,ms,ease); haptic(); rcChips(rs[i]);
+  RC.busy=true; rcChips(rs[i]); rcSides(); var W=rcW(); ms=ms||520;
+  requestAnimationFrame(function(){ rcSet(-dir*W,ms,ease); haptic();
     setTimeout(function(){ rcPromote(dir,rs[i]); RC.busy=false; },ms+20); });
 }
 function rcJump(r){ if(r===selRound) return; var rs=rounds(), d=rs.indexOf(r)-rs.indexOf(selRound); if(Math.abs(d)===1){ rcGo(d); return; }
@@ -2209,7 +2214,8 @@ document.addEventListener("click", function(e){
   if(ds.src){ tableSrc=ds.src; render(); return; }
   if(ds.myteam){ var nt3=ds.myteam, g3=IDX[nt3]?IDX[nt3].g:G; closeDlg(); setMyTeam(nt3); switchGirone(g3,function(){ smooth(function(){ tab="home"; partView="mine"; render(); window.scrollTo(0,0); }); }); toast("Ora segui "+tname(nt3)); return; }
   if(ds.goal){ try { localStorage.setItem("baggese-goal",ds.goal); } catch(e){} closeDlg(); render(); return; }
-  if(ds.cmode){ chartMode=ds.cmode; render(); return; }
+  if(ds.cmode){ chartMode=ds.cmode; var fi=b.closest(".fold-in"), ch=fi&&fi.querySelector(".chart-wrap");
+    if(ch){ fi.querySelectorAll("[data-cmode]").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.cmode===chartMode)); }); ch.innerHTML=chartMode==="pts"?ptsChart(me()):posChart(me()); segInd(fi); } else render(); return; }
   if(ds.pr){ progRound=+ds.pr; openProg(true); return; }
   if(ds.pv2){ progView=ds.pv2; openProg(true); return; }
   if(ds.srt){ var sv=ds.srt; smooth(function(){ clsSort=sv; render(); }); return; }
@@ -2336,13 +2342,14 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
   window.addEventListener("touchend",function(){ if(py===null) return; py=null; if(pdy>110 && !busy){ busy=true; haptic(); ptr.classList.add("spinning"); ptr.style.transform="translate(-50%,20px)"; var t0=Date.now(); Promise.resolve(checkNewer(true)).then(function(){ setTimeout(done,Math.max(0,700-(Date.now()-t0))); }); } else done(); function done(){ busy=false; ptr.classList.remove("show","ready","spinning"); ptr.style.transform=""; } });
   var ticking=false;
   var lastY=0, acc=0;
-  function onScroll(){ if(ticking) return; ticking=true; requestAnimationFrame(function(){ var y=window.scrollY||0; document.body.classList.toggle("scrolled", y>70);
+  function onScroll(){ if(ticking) return; ticking=true; requestAnimationFrame(function(){ var y=window.scrollY||0; var sc=y>70;
     /* in Partite, risalendo compare da sopra la scelta squadra / per giornata */
     var dy=y-lastY; lastY=y; acc=(acc>0)===(dy>0)?acc+dy:dy; var sf=$("segfloat"), seg=tab==="partite"?document.querySelector('#app .seg[aria-label="Vista partite"]'):null;
     if(sf){ var hide=true; if(seg){ var tb=$("topbar"), lim=(tb?tb.offsetHeight:50); var gone=seg.getBoundingClientRect().bottom<lim;
         if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"'); } hide=false; }
         else if(gone && acc<=6 && document.body.classList.contains("segup")) hide=false; }
-      document.body.classList.toggle("segup",!hide); }
+      if(document.body.classList.contains("segup")===hide) document.body.classList.toggle("segup",!hide); }
+    if(document.body.classList.contains("scrolled")!==sc) document.body.classList.toggle("scrolled",sc);
     ticking=false; }); }
   window.addEventListener("scroll",onScroll,{passive:true});
   var setTbh=function(){ var tb=$("topbar"); if(tb) document.documentElement.style.setProperty("--tbh",tb.offsetHeight+"px"); }; setTbh(); window.addEventListener("resize",setTbh); setTimeout(setTbh,1500);
