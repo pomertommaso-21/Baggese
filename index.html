@@ -99,11 +99,15 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 .gb .fold-ic{width:34px;height:34px}.gb .fold-ic svg.i{width:18px;height:18px}
 .gb .fold-tx b{font-size:15px}
 .gb .fold-in{gap:0;transition:none}
+.gb.gb-out .gb-row{opacity:0;transform:translateY(-4px);transition:opacity .2s ease,transform .3s cubic-bezier(.3,.9,.3,1)}
+.gb.gb-out .fold-chev{transform:none}
 .gb.gb-in .gb-row{animation:gbIn .36s cubic-bezier(.25,.9,.3,1) both;animation-delay:calc(var(--i,0)*40ms)}
 @keyframes gbIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.gb.gb-in .gb-row{animation:none}}
 @media (prefers-reduced-motion:reduce){.fold-in,.fold-chev{transition:none}}
 
+.cls-main{display:contents}
+.cls-main .crow{background:var(--surface);position:relative}
 .srt-scope{font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .srt-row .srt{flex:none}.srt-row .srt button{white-space:nowrap}
 .srt-car{display:inline-grid;place-items:center;margin-left:3px;vertical-align:-2px;opacity:.55}.srt-car svg.i{width:12px;height:12px}
@@ -844,7 +848,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.21";
+var APP_VERSION="2026-11-13.22";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1577,8 +1581,15 @@ function foldAnim(f,op){ var b=f.querySelector(".fold-body"); if(!b) return; var
   var h1=op?b.firstElementChild.scrollHeight:0; b.style.transition="none"; b.style.height=h0+"px"; void b.offsetHeight;
   b.style.transition="height .34s cubic-bezier(.3,.9,.3,1)"; b.style.height=h1+"px";
   clearTimeout(b._t); b._t=setTimeout(function(){ b.style.transition=""; b.style.height=""; },360); }
-function toggleFold(btn){ var k=btn.getAttribute("data-fold"), f=btn.closest(".fold"), op=!f.classList.contains("open");
+function toggleFold(btn,now){ var k=btn.getAttribute("data-fold"), f=btn.closest(".fold"), op=!f.classList.contains("open");
   var all=k==="gb"?document.querySelectorAll(".gb.fold"):[f];
+  if(k==="gb"&&!op&&!now){ if(f.classList.contains("gb-out")) return;
+    var body=f.querySelector(".fold-body"), bh=body?body.getBoundingClientRect().height:0, y=window.scrollY||0,
+        maxAfter=document.documentElement.scrollHeight-bh-innerHeight, target=Math.max(0,Math.min(y,maxAfter));
+    f.classList.add("gb-out");
+    var fin=function(){ f.classList.remove("gb-out"); toggleFold(btn,true); };
+    if(y-target>4){ window.scrollTo({top:target,behavior:"smooth"}); setTimeout(fin,Math.round(Math.min(560,260+(y-target)*.7))); } else setTimeout(fin,150);
+    return; }
   /* la giornata in breve sta nella scheda che scorre: lì l'altezza non si anima (su iPhone farebbe tremare la scheda),
      cambia in un colpo solo e sono le righe a entrare morbide */
   if(k==="gb"&&op){ f.classList.add("gb-in"); clearTimeout(f._g); f._g=setTimeout(function(){ f.classList.remove("gb-in"); },700); }
@@ -1792,13 +1803,34 @@ function tcCheck(calc,imp){
 function sameTables(a,b){ if(a.length!==b.length) return false; for(var i=0;i<a.length;i++){ if(a[i].id!==b[i].id||+a[i].pts!==+b[i].pts||+a[i].g!==+b[i].g) return false; } return true; }
 /* ---------- classifica: casa / trasferta / ultime 5 ---------- */
 var clsScope="all";
-var SCOPE_MENU={all:"Totale",home:"Casa",away:"Trasferta",last5:"Forma · ultime 5"};
+var SCOPE_MENU={all:"Totale",home:"Casa",away:"Trasferta",last5:"Forma"};
 /* tocco su Punti / Attacco / Difesa: si apre sotto un piccolo menu per scegliere la divisione */
+function clsUpdate(fn){
+  var app=$("app"), main=app.querySelector(".cls-main"), sr=app.querySelector(".srt-row");
+  if(tab!=="classifica"||!main||!sr){ smooth(function(){ fn(); render(); }); return; }
+  var old={}, crests={};
+  main.querySelectorAll(".crow[data-tid]").forEach(function(r){ var t=r.getAttribute("data-tid"); old[t]=r.getBoundingClientRect().top; var c=r.querySelector(".crest"); if(c) crests[t]=c; });
+  fn();
+  var tmp=document.createElement("div"); tmp.innerHTML=vClassifica();
+  var nm=tmp.querySelector(".cls-main"), ns=tmp.querySelector(".srt-row");
+  if(!nm||!ns){ render(); return; }
+  /* gli stemmi già caricati si spostano nelle righe nuove: niente immagini che si ricaricano */
+  nm.querySelectorAll(".crow[data-tid]").forEach(function(r){ var t=r.getAttribute("data-tid"), oc=crests[t], nc=r.querySelector(".crest"); if(oc&&nc){ nc.replaceWith(oc); delete crests[t]; } });
+  /* la riga Punti / Attacco / Difesa resta la stessa: cambiano solo il pulsante acceso e la scritta a destra (così la pastiglia scivola) */
+  var os=sr.querySelector(".seg"), nsg=ns.querySelector(".seg");
+  if(os&&nsg){ nsg.querySelectorAll("[data-srt]").forEach(function(nb){ var ob=os.querySelector('[data-srt="'+nb.getAttribute("data-srt")+'"]'); if(ob){ ob.setAttribute("aria-pressed",nb.getAttribute("aria-pressed")); if(ob.innerHTML!==nb.innerHTML) ob.innerHTML=nb.innerHTML; } });
+    while(os.nextSibling) os.nextSibling.remove(); while(nsg.nextSibling) sr.appendChild(nsg.nextSibling); segInd(sr); }
+  else sr.replaceWith(ns);
+  main.replaceWith(nm);
+  var moved=[];
+  nm.querySelectorAll(".crow[data-tid]").forEach(function(r){ var t=r.getAttribute("data-tid"); if(old[t]==null) return; var d=old[t]-r.getBoundingClientRect().top; if(Math.abs(d)>1){ r.style.transition="none"; r.style.transform="translateY("+d+"px)"; moved.push(r); } });
+  if(moved.length){ void nm.offsetHeight; requestAnimationFrame(function(){ moved.forEach(function(r){ r.style.transition="transform .42s cubic-bezier(.25,.9,.3,1)"; r.style.transform=""; }); setTimeout(function(){ moved.forEach(function(r){ r.style.transition=""; }); },460); }); }
+}
 function closeScopeMenu(){ var m=document.querySelector(".scope-menu"), bg=document.querySelector(".scope-bg"); if(bg) bg.remove(); if(m){ m.classList.remove("in"); setTimeout(function(){ m.remove(); },180); } window.removeEventListener("scroll",closeScopeMenu); }
 function openScopeMenu(btn,k){ closeScopeMenu();
   var r=btn.getBoundingClientRect(), W=196, left=Math.max(12,Math.min(innerWidth-W-12,r.left+r.width/2-W/2));
   var bg=document.createElement("div"); bg.className="scope-bg";
-  bg.addEventListener("click",function(){ closeScopeMenu(); if(k!==clsSort) smooth(function(){ clsSort=k; render(); }); });
+  bg.addEventListener("click",function(){ closeScopeMenu(); if(k!==clsSort) clsUpdate(function(){ clsSort=k; }); });
   var m=document.createElement("div"); m.className="scope-menu"; m.setAttribute("role","menu"); m.style.left=left+"px"; m.style.top=(r.bottom+8)+"px"; m.style.width=W+"px";
   m.style.transformOrigin=(r.left+r.width/2-left)+"px 0";
   m.innerHTML=["all","home","away","last5"].map(function(q){ var on=clsScope===q; return '<button type="button" role="menuitemradio" aria-checked="'+on+'" data-scopepick="'+q+'" data-srtv="'+k+'"><span>'+SCOPE_MENU[q]+'</span>'+(on?icon("check"):'')+'</button>'; }).join("");
@@ -1850,7 +1882,7 @@ function vClassifica(){
   var forms={}; if(tb.src==="calc") calc.forEach(function(r){ forms[r.id]=(r.form||[]).slice(-5); });
   var sorted=clsSort!=="pts";
   if (sorted){ var k=clsSort; ZOFF=true; tb={src:tb.src, rows:tb.rows.map(function(r){ var o={}; for(var q in r) o[q]=r[q]; return o; }).sort(function(a,b){ return k==="gf"? (b.gf-a.gf||a.gs-b.gs) : (a.gs-b.gs||b.gf-a.gf); })}; tb.rows.forEach(function(r,i){ r.pos=i+1; }); }
-  h+=compactTable(tb,forms,true);
+  h+='<div class="cls-main">'+compactTable(tb,forms,true);
   if(innerWidth>=720) h+='<section class="card flush only-wide"><div class="tbl"><table><thead><tr><th>#</th><th class="name">Squadra</th><th>Pt</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th><th>DR</th>'+(tb.src==="calc"?'<th>Forma</th>':'')+'</tr></thead><tbody>'+tb.rows.map(function(r){ var dr=(+r.gf||0)-(+r.gs||0); return '<tr'+(r.id===my?' class="me"':'')+zAttr(r.pos)+'><td><span class="pcell"><span class="posn">'+r.pos+'</span></span></td><td class="name"><button type="button" class="tbtn" data-team="'+r.id+'">'+crest(r.id,30)+'<span>'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</button></td><td class="pts">'+r.pts+'</td><td>'+r.g+'</td><td>'+r.v+'</td><td>'+r.n+'</td><td>'+r.p+'</td><td>'+r.gf+':'+r.gs+'</td><td>'+(dr>0?"+":dr<0?"−":"")+Math.abs(dr)+'</td>'+(tb.src==="calc"?'<td><span class="fdots">'+(forms[r.id]||[]).map(function(f){return '<span class="r-'+f+'">'+f+'</span>';}).join("")+'</span></td>':'')+'</tr>'; }).join("")+'</tbody></table></div></section>';
   ZOFF=false; MVR=null;
   if(cf.active) h+='<span class="tiny muted">Classifica calcolata solo sulle partite dalla '+cf.from+'ª alla '+cf.to+'ª giornata, '+SIDE_LAB[cf.side]+'. Niente zone e frecce, perché non è la classifica ufficiale.</span>';
@@ -1858,6 +1890,7 @@ function vClassifica(){
   else if(scoped){ var mr=tb.rows.filter(function(r){return r.id===my;})[0], gr=gen.rows.filter(function(r){return r.id===my;})[0];
     h+='<span class="tiny muted">'+(clsScope==="last5"?'Forma: solo le ultime 5 partite di ogni squadra':clsScope==="home"?'Solo le partite giocate in casa':'Solo le partite giocate in trasferta')+(mr&&gr?': '+esc(tname(my))+' <b>'+mr.pos+'ª</b> (nella classifica vera '+gr.pos+'ª)':'')+'. Niente zone e frecce, non è la classifica ufficiale.</span>'; }
   else h+=zLegend();
+  h+='</div>';
   if(!cf.active){ h+=restCalendar(); h+=seasonRecords(); }
   var tr=tableRow(my), pp=prevPos(my), asub=tr?esc(tname(my))+' '+tr.pos+'°'+(pp!=null&&pp!==tr.pos?(pp>tr.pos?', sale di '+(pp-tr.pos):', scende di '+(tr.pos-pp)):pp!=null?', stabile':''):'Posizione giornata per giornata';
   h+=foldCard("and","chart","Andamento",asub,'<div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div><div class="chart-wrap">'+(chartMode==="pts"?ptsChart(my):posChart(my))+'</div>');
@@ -2348,11 +2381,11 @@ document.addEventListener("click", function(e){
     if(ch){ fi.querySelectorAll("[data-cmode]").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.cmode===chartMode)); }); ch.innerHTML=chartMode==="pts"?ptsChart(me()):posChart(me()); segInd(fi); } else render(); return; }
   if(ds.pr){ progRound=+ds.pr; openProg(true); return; }
   if(ds.pv2){ progView=ds.pv2; openProg(true); return; }
-  if(ds.srt){ if(clsRange().active||ds.srt!=="pts"){ var sv0=ds.srt; smooth(function(){ clsSort=sv0; if(sv0!=="pts") clsScope="all"; render(); }); return; }
+  if(ds.srt){ if(clsRange().active||ds.srt!=="pts"){ var sv0=ds.srt; clsUpdate(function(){ clsSort=sv0; if(sv0!=="pts") clsScope="all"; }); return; }
     var sg=b.closest(".seg"); if(sg&&b.getAttribute("aria-pressed")!=="true"){ sg.querySelectorAll("[data-srt]").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); var car=sg.querySelector(".srt-car"); if(car) b.appendChild(car); segInd(sg); }
     openScopeMenu(b,ds.srt); return; }
-  if(ds.srth){ var sv=ds.srth; smooth(function(){ clsSort=sv; render(); }); return; }
-  if(ds.scopepick){ var sp=ds.scopepick, st=ds.srtv; closeScopeMenu(); smooth(function(){ clsSort=st; clsScope=sp; render(); }); return; }
+  if(ds.srth){ var sv=ds.srth; clsUpdate(function(){ clsSort=sv; if(sv!=="pts") clsScope="all"; }); return; }
+  if(ds.scopepick){ var sp=ds.scopepick, st=ds.srtv; closeScopeMenu(); clsUpdate(function(){ clsSort=st; clsScope=sp; }); return; }
   if(ds.scope){ var scv=ds.scope; smooth(function(){ clsScope=scv; render(); }); return; }
   if(ds.cls){ var cv=ds.cls; smooth(function(){ clsView=cv; render(); }); return; }
   if(ds.fside){ openClsFilter.side=ds.fside; document.querySelectorAll("[data-fside]").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.fside===ds.fside)); }); return; }
