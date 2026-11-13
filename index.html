@@ -396,7 +396,7 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}
 #app{overflow-x:clip}
 .rc-vp{position:relative;overflow-x:clip;margin:0 -16px;padding:0 16px;touch-action:pan-y}
 .rc-side{position:absolute;top:0;left:16px;right:16px;pointer-events:none}
-.rc-vp.mv .rc-card,.rc-vp.mv .rc-side{will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.rc-vp.rc-moving .rc-card,.rc-vp.rc-moving .rc-side{will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .rc-card{contain:layout style}
 .cmp-head.big{margin:6px 0 6px}
 .fx-mini{display:grid;grid-template-columns:30px 22px minmax(0,1fr) 40px minmax(0,1fr) 22px 64px;align-items:center;gap:6px;width:100%;padding:9px 0;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;font-size:14px}
@@ -792,7 +792,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.14";
+var APP_VERSION="2026-11-13.15";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1987,7 +1987,7 @@ function rcW(){ var vp=$("rcVp"); return vp?vp.clientWidth:innerWidth; }
 function rcSet(off,ms,ease){ var vp=$("rcVp"); if(!vp) return; var W=rcW(), cur=$("roundCard"), p=vp.querySelector(".rc-p"), n=vp.querySelector(".rc-n");
   var tr=ms?"transform "+ms+"ms "+(ease||"cubic-bezier(.25,.85,.3,1)"):"none", tk=++RC.tok, idle=(off===0&&!ms);
   /* da ferme le schede non sono "livelli" separati: così su iPhone aprire una tendina non fa tremare la scheda */
-  vp.classList.toggle("mv",!idle);
+  vp.classList.toggle("rc-moving",!idle);
   [[cur,0],[p,-W],[n,W]].forEach(function(x){ if(!x[0]) return; x[0].style.transition=tr; x[0].style.transform=(idle&&!x[1])?"none":"translate3d("+(x[1]+off)+"px,0,0)"; });
   if(off===0&&ms) setTimeout(function(){ if(RC.tok===tk) rcSet(0,0); },ms+40); }
 function rcChips(r,noScroll){ if(r==null) r=selRound; var strip=$("roundChips"); if(!strip) return; var on=null;
