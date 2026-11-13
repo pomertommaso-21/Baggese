@@ -99,8 +99,8 @@ html.boot[data-theme="dark"],html[data-theme="dark"] #splash{background:#0B0B0D}
 .gb .fold-ic{width:34px;height:34px}.gb .fold-ic svg.i{width:18px;height:18px}
 .gb .fold-tx b{font-size:15px}
 .gb .fold-in{gap:0;transition:none}
-.gb.gb-out .gb-row{opacity:0;transform:translateY(-4px);transition:opacity .2s ease,transform .3s cubic-bezier(.3,.9,.3,1)}
 .gb.gb-out .fold-chev{transform:none}
+.gb.gb-fade .gb-row{opacity:0;transition:opacity .14s ease}
 .gb.gb-in .gb-row{animation:gbIn .36s cubic-bezier(.25,.9,.3,1) both;animation-delay:calc(var(--i,0)*40ms)}
 @keyframes gbIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.gb.gb-in .gb-row{animation:none}}
@@ -720,6 +720,9 @@ img{-webkit-user-drag:none}
 .seg button{position:relative;z-index:1}
 .seg-ind{position:absolute;left:0;top:0;z-index:0;border-radius:10px;background:var(--active);pointer-events:none;transition:transform .42s cubic-bezier(.3,.8,.3,1),width .42s cubic-bezier(.3,.8,.3,1)}
 .seg.has-ind button[aria-pressed="true"],html.segjs .seg button[aria-pressed="true"]{background:transparent;box-shadow:none}
+.seg[aria-label="Vista partite"]{padding:3px;border-radius:12px;gap:3px}
+.seg[aria-label="Vista partite"] button{min-height:30px;font-size:13px;border-radius:9px}
+.seg[aria-label="Vista partite"] .seg-ind{border-radius:9px}
 .seg.sm .seg-ind{border-radius:8px;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.14)}
 @media (prefers-reduced-motion:reduce){.seg-ind{transition:none}}
 .tp small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:2px}
@@ -848,7 +851,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.22";
+var APP_VERSION="2026-11-13.23";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1583,12 +1586,17 @@ function foldAnim(f,op){ var b=f.querySelector(".fold-body"); if(!b) return; var
   clearTimeout(b._t); b._t=setTimeout(function(){ b.style.transition=""; b.style.height=""; },360); }
 function toggleFold(btn,now){ var k=btn.getAttribute("data-fold"), f=btn.closest(".fold"), op=!f.classList.contains("open");
   var all=k==="gb"?document.querySelectorAll(".gb.fold"):[f];
+  /* chiudendo: la pagina risale dolcemente fino in cima con il riepilogo ancora visibile;
+     si chiude solo quando è uscito dallo schermo (o si è arrivati in cima), così non si vede mai uno spazio vuoto */
   if(k==="gb"&&!op&&!now){ if(f.classList.contains("gb-out")) return;
-    var body=f.querySelector(".fold-body"), bh=body?body.getBoundingClientRect().height:0, y=window.scrollY||0,
-        maxAfter=document.documentElement.scrollHeight-bh-innerHeight, target=Math.max(0,Math.min(y,maxAfter));
-    f.classList.add("gb-out");
-    var fin=function(){ f.classList.remove("gb-out"); toggleFold(btn,true); };
-    if(y-target>4){ window.scrollTo({top:target,behavior:"smooth"}); setTimeout(fin,Math.round(Math.min(560,260+(y-target)*.7))); } else setTimeout(fin,150);
+    var body=f.querySelector(".fold-body"), bh=body?body.getBoundingClientRect().height:0;
+    if((window.scrollY||0)<2){ toggleFold(btn,true); return; }
+    f.classList.add("gb-out"); window.scrollTo({top:0,behavior:"smooth"});
+    var t0=Date.now(), done=false, fin=function(){ if(done) return; done=true; var r=f.getBoundingClientRect(), vis=r.top<innerHeight&&r.bottom>0;
+      var close=function(){ f.classList.remove("gb-out","gb-fade"); toggleFold(btn,true); };
+      if(vis){ f.classList.add("gb-fade"); setTimeout(close,150); } else close(); };
+    (function watch(){ if(done) return; var y=window.scrollY||0, maxAfter=document.documentElement.scrollHeight-bh-innerHeight, top=f.getBoundingClientRect().top;
+      if((top>innerHeight&&y<=maxAfter)||y<1||Date.now()-t0>1200) fin(); else requestAnimationFrame(watch); })();
     return; }
   /* la giornata in breve sta nella scheda che scorre: lì l'altezza non si anima (su iPhone farebbe tremare la scheda),
      cambia in un colpo solo e sono le righe a entrare morbide */
