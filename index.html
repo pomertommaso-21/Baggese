@@ -414,6 +414,73 @@ body.scrolled .topbar{border-bottom-color:transparent}
 nav.tabs{transition:transform .32s cubic-bezier(.3,.9,.3,1),opacity .2s ease}
 @media (max-width:959px){body.navhide nav.tabs{transform:translateY(calc(100% + 30px));opacity:0;pointer-events:none}}
 @media (prefers-reduced-motion:reduce){nav.tabs{transition:none}}
+
+/* tocco lungo: anteprima nel menu */
+[data-view],[data-team],.crow{-webkit-touch-callout:none}
+.ctx-row.ctx-el{overflow:hidden}
+.ctx-row.ctx-el>*{margin:0!important;width:100%;height:100%;pointer-events:none}
+#ctx .ctx-menu{width:min(320px,calc(100vw - 28px))}
+.ctx-peek{display:flex;flex-direction:column;gap:9px;padding:13px 14px 12px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+#ctx .ctx-menu button{font-size:15.5px;padding:12px 16px}
+.pp{display:inline-grid;place-items:center;min-width:24px;height:18px;padding:0 5px;margin-right:6px;border-radius:6px;font-size:10.5px;font-weight:800;font-variant-numeric:tabular-nums;background:color-mix(in srgb,var(--fg) 9%,transparent);color:var(--fg);vertical-align:1px}
+.pp.z-promo{background:color-mix(in srgb,var(--z-promo) 16%,transparent);color:var(--z-promo)}
+.pp.z-po{background:color-mix(in srgb,var(--z-po) 16%,transparent);color:var(--z-po)}
+.pp.z-pl{background:color-mix(in srgb,var(--z-pl) 18%,transparent);color:var(--z-pl)}
+.pp.z-rel{background:color-mix(in srgb,var(--z-rel) 16%,transparent);color:var(--z-rel)}
+.pv-head{display:flex;align-items:center;gap:11px}
+.pv-tt{display:flex;flex-direction:column;gap:3px;min-width:0}.pv-tt b{font-family:var(--display);font-size:16px;font-weight:800;letter-spacing:-.01em}.pv-tt>span{font-size:12px;color:var(--muted)}
+.pv-row{display:grid;grid-template-columns:66px minmax(0,1fr);align-items:center;gap:8px;font-size:13px}
+.pv-l{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pv-v{display:flex;align-items:center;gap:6px;min-width:0;white-space:nowrap;overflow:hidden}.pv-v b{font-weight:650;overflow:hidden;text-overflow:ellipsis;min-width:0}.pv-v em{font-style:normal;color:var(--muted);flex:none}.pv-v .crest{flex:none}
+.pv-form{display:flex;gap:3px}.pv-form i{font-style:normal;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-size:10.5px;font-weight:800}
+.pv-form i.r-V{background:var(--win-bg);color:var(--win-ink)}.pv-form i.r-N{background:var(--draw-bg);color:var(--draw-ink)}.pv-form i.r-P{background:var(--loss-bg);color:var(--loss-ink)}
+.pv-m{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:start;gap:6px}
+.pv-mt{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;min-width:0}.pv-mt b{font-size:13px;line-height:1.2}.pv-mt>span{font-size:11px;color:var(--muted)}.pv-mt .pp{margin-right:4px}
+.pv-ms{display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:6px}.pv-ms b{font-family:var(--display);font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1}.pv-ms b.vs{font-size:18px;color:var(--muted)}
+.pv-ms em{font-style:normal;font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.pv-sc{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:9px;border-top:1px solid var(--line);font-size:12.5px}
+.pv-sc>div{display:flex;flex-direction:column;gap:5px;min-width:0}.pv-sc .h{align-items:flex-end;text-align:right}
+.pv-sc span{display:flex;flex-direction:column;line-height:1.2;max-width:100%}.pv-sc b{font-weight:650}.pv-sc em{font-style:normal;font-size:11px;color:var(--muted)}
+.pv-none{font-size:12.5px;color:var(--muted);text-align:center;padding-top:8px;border-top:1px solid var(--line)}
+.pv-vs .pv-form{gap:2px}.pv-vs .pv-form i{width:18px;height:18px;font-size:10px;border-radius:5px}
+.pv-vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding-top:9px;border-top:1px solid var(--line)}.pv-vs .pv-form:first-child{justify-content:flex-end}
+.pv-foot{font-size:11px;color:var(--muted);text-align:center}
+/* scelta della squadra */
+.tsel{display:inline-flex;align-items:center;gap:8px;max-width:100%;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;letter-spacing:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.tsel>span:first-child{min-width:0}
+.tsel-ch{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.16);flex:none;transition:background .2s}
+.tsel:active .tsel-ch{background:rgba(255,255,255,.3)}
+.tsel-ch svg.i{width:15px;height:15px}
+.tg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.tg{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 2px 9px;border:0;border-radius:16px;background:none;font:inherit;color:var(--fg);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s,background .2s}
+.tg:active{transform:scale(.95);background:var(--surface-2)}
+.tg.on{background:var(--surface-2);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--brand) 55%,transparent)}
+.tg-c{position:relative;line-height:0}
+.tg-f{position:absolute;right:-4px;top:-3px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:#F5B700;box-shadow:0 0 0 2px var(--surface)}
+.tg-f svg.i{width:10px;height:10px;fill:#3a2a00;color:#3a2a00}
+.tg-n{font-size:11.5px;font-weight:650;line-height:1.2;text-align:center;max-width:100%;min-height:2.4em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tg.my .tg-n{color:var(--brand)}
+.tg-m{display:flex;align-items:center;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}.tg-m .pp{margin-right:4px}
+.tg-legend{color:var(--brand)}
+
+
+/* campo di casa */
+.card.fld{gap:10px}
+.fld-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center}
+.fld-ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--brand) 13%,transparent);color:var(--brand);align-self:start;margin-top:1px}
+.fld-ic svg.i{width:18px;height:18px}
+.fld-tx{display:flex;flex-direction:column;gap:1px;min-width:0;line-height:1.3}
+.fld-tx b{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.fld-tx>span{font-size:12.5px;color:var(--muted)}
+.fld-tx .fld-sh{font-size:12px;margin-top:2px}
+.fld-ad{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;max-width:100%;background:none;border:0;padding:0;font:inherit;font-size:12.5px;color:var(--muted);text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fld-ad svg.i{width:12px;height:12px;flex:none;opacity:.7}
+.fld-ad:active{color:var(--fg)}
+.fld-go{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;flex:none;border-radius:999px;background:var(--brand);color:var(--on-brand);font-weight:700;font-size:13.5px;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.fld-go svg.i{width:13px;height:13px}
+.fld-go span{font-size:12.5px}
+.fld-ad span{min-width:0}
+.fld-go:active{transform:scale(.96)}
 </style>
 <div id="splash"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="174 174 676 726"><defs><radialGradient id="sp_bg" cx="50%" cy="25%" r="85%"><stop offset="0" stop-color="#DE2E38"/><stop offset="1" stop-color="#8A121B"/></radialGradient><radialGradient id="sp_ball" cx="40%" cy="34%" r="72%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F6F6F8"/><stop offset="1" stop-color="#DCDCE2"/></radialGradient><radialGradient id="sp_sh" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><clipPath id="sp_c"><circle cx="512" cy="512" r="318"/></clipPath></defs><ellipse cx="512" cy="852" rx="254" ry="40" fill="url(#sp_sh)"/><circle cx="512" cy="512" r="318" fill="url(#sp_ball)"/><g clip-path="url(#sp_c)"><polygon points="512.0,400.0 618.5,477.4 577.8,602.6 446.2,602.6 405.5,477.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><polygon points="512.0,304.0 413.1,232.1 450.9,115.9 573.1,115.9 610.9,232.1" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="512.0" y1="400.0" x2="512.0" y2="304.0" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="709.8,447.7 747.6,331.4 869.9,331.4 907.6,447.7 808.7,519.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="618.5" y1="477.4" x2="709.8" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="634.3,680.3 756.5,680.3 794.3,796.6 695.4,868.4 596.5,796.6" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="577.8" y1="602.6" x2="634.3" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="389.7,680.3 427.5,796.6 328.6,868.4 229.7,796.6 267.5,680.3" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="446.2" y1="602.6" x2="389.7" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><polygon points="314.2,447.7 215.3,519.6 116.4,447.7 154.1,331.4 276.4,331.4" fill="#C8202A" stroke="#C8202A" stroke-width="10" stroke-linejoin="round"/><line x1="405.5" y1="477.4" x2="314.2" y2="447.7" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="413.1" y1="232.1" x2="808.7" y2="519.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="747.6" y1="331.4" x2="596.5" y2="796.6" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="756.5" y1="680.3" x2="267.5" y2="680.3" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="427.5" y1="796.6" x2="276.4" y2="331.4" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/><line x1="215.3" y1="519.6" x2="610.9" y2="232.1" stroke="#C8202A" stroke-width="12" stroke-linecap="round"/></g><circle cx="512" cy="512" r="318" fill="none" stroke="#000" stroke-opacity=".08" stroke-width="4"/></svg></div>
 <script>(function(){ var sp=document.getElementById("splash"); if(sp) requestAnimationFrame(function(){ setTimeout(function(){ sp.classList.add("in"); },90); }); var d=document.documentElement; d.classList.add("boot"); try { var t=localStorage.getItem("baggese-theme"); if(t==="light"||t==="dark") d.setAttribute("data-theme",t); } catch(e){} })();</script>
@@ -1138,7 +1205,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-13.33";
+var APP_VERSION="2026-11-14.1";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1650,19 +1717,51 @@ function openComparePick(A){
   var h='<div class="row between"><h2>Confronta '+esc(tname(A))+' con…</h2><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div><div class="tpick">'+S.teams.filter(function(t){return t.id!==A;}).sort(function(a,b){ return tname(a.id).localeCompare(tname(b.id),"it"); }).map(function(t){ return '<div class="tp-w"><button type="button" class="tp" data-cmpb="'+t.id+'">'+crest(t.id,48)+'<span>'+esc(tname(t.id))+'</span></button></div>'; }).join("")+'</div>';
   $("dlgBody").innerHTML=h; showDlg();
 }
-function ctxMenu(row){
-  closeCtx(); var id=row.getAttribute("data-tid"); if(!id) return; haptic();
-  var r=row.getBoundingClientRect(), fav=isFav(id);
-  var m=document.createElement("div"); m.id="ctx"; m.innerHTML='<div class="ctx-bg" data-ctxclose="1"></div><div class="ctx-row" style="top:'+r.top+'px;left:'+r.left+'px;width:'+r.width+'px">'+row.innerHTML+'</div><div class="ctx-menu" style="top:'+Math.min(r.bottom+8,innerHeight-190)+'px;left:'+Math.max(12,r.left+12)+'px">'+
-    '<button type="button" data-ctx="open" data-id="'+id+'"><span>Apri '+esc(tname(id))+'</span>'+icon("team")+'</button><button type="button" data-ctx="fav" data-id="'+id+'"><span>'+(fav?'Non seguire più':'Segui')+'</span>'+icon("star")+'</button><button type="button" data-ctx="cmp" data-id="'+id+'"><span>Confronta con…</span>'+icon("swap")+'</button></div>';
-  document.body.appendChild(m); requestAnimationFrame(function(){ m.classList.add("on"); });
+/* ---------- tocco lungo: anteprima + azioni, su squadre e partite (come il menu della classifica) ---------- */
+function posPill(id){ var r=tableRow(id); if(!r||!r.g) return ''; var z=zoneOf(r.pos); return '<span class="pp'+(z?' z-'+z:'')+'">'+r.pos+'°</span>'; }
+function formDots(id){ return S.matches.filter(function(m){ return played(m)&&involves(m,id); }).sort(sortMatches).slice(-5).map(function(m){ var x=resultFor(m,id); return '<i class="r-'+x+'">'+x+'</i>'; }).join(''); }
+function peekTeam(id,withHead){ var r=tableRow(id), fm=formDots(id), nx=S.matches.filter(function(m){ return !played(m)&&involves(m,id); }).sort(sortMatches)[0], top=topScorers(id,1)[0], h='';
+  if(withHead) h+='<div class="pv-head">'+crest(id,40)+'<div class="pv-tt"><b>'+esc(tname(id))+'</b><span>'+posPill(id)+(r&&r.g?r.pts+' punti · '+r.v+'V '+r.n+'N '+r.p+'P':'')+'</span></div></div>';
+  if(fm) h+='<div class="pv-row"><span class="pv-l">Forma</span><span class="pv-form">'+fm+'</span></div>';
+  if(nx){ var o=nx.homeId===id?nx.awayId:nx.homeId; h+='<div class="pv-row"><span class="pv-l">Prossima</span><span class="pv-v">'+crest(o,20)+'<b>'+esc(tname(o))+'</b><em>'+(nx.homeId===id?'casa':'fuori')+(nx.date?' · '+esc(fmtDate(nx.date)):'')+'</em></span></div>'; }
+  if(top&&top.g) h+='<div class="pv-row"><span class="pv-l">Bomber</span><span class="pv-v"><b>'+esc(sName({playerId:top.p.id},true))+'</b><em>'+top.g+' gol</em></span></div>';
+  return h; }
+function peekMatch(m){ var pl=played(m), sc=(m.scorers||[]).slice().sort(function(a,b){ return minKey(a)-minKey(b); });
+  var key=function(x){ return x.og?"og":(x.playerId||x.name); };
+  var side=function(t){ var mine=sc.filter(function(x){ return sTeam(x)===t; }); return groupScorers(mine).map(function(g){ var mins=mine.filter(function(x){ return key(x)===key(g.s); }).map(function(x){ return minLabel(x)+(x.pen?' rig.':''); }).filter(function(v){ return v.trim(); }).join(', ');
+      if(!mins&&g.pen) mins=g.pen>1?g.pen+' rig.':'rig.';
+      return '<span><b>'+esc(sName(g.s,true))+(g.n>1?' ×'+g.n:'')+'</b>'+(mins?'<em>'+mins+'</em>':'')+'</span>'; }).join(''); };
+  var tm=function(id){ var r=tableRow(id); return '<span class="pv-mt">'+crest(id,40)+'<b>'+esc(tname(id))+'</b><span>'+posPill(id)+(r&&r.g?r.pts+' pt':'')+'</span></span>'; };
+  var h='<div class="pv-m">'+tm(m.homeId)+'<span class="pv-ms">'+(pl?'<b>'+esc(m.hg)+'–'+esc(m.ag)+'</b><em>Finale</em>':'<b class="vs">VS</b><em>'+esc(whenLabel(m.date)||'Da giocare')+'</em>')+'</span>'+tm(m.awayId)+'</div>';
+  if(pl&&sc.length) h+='<div class="pv-sc"><div class="h">'+side(m.homeId)+'</div><div class="a">'+side(m.awayId)+'</div></div>';
+  if(pl&&!sc.length) h+='<div class="pv-none">'+(+m.hg+ +m.ag===0?'Nessun gol':'Marcatori non disponibili')+'</div>';
+  if(!pl) h+='<div class="pv-vs"><span class="pv-form">'+formDots(m.homeId)+'</span><span class="pv-l">Forma</span><span class="pv-form">'+formDots(m.awayId)+'</span></div>';
+  h+='<div class="pv-foot">'+(m.round?m.round+'ª giornata':'')+(m.date?' · '+esc(fmtDate(m.date,m.time)):'')+'</div>';
+  return h; }
+function ctxMenu(el){
+  closeCtx(); var crow=el.classList.contains("crow"), mid=el.getAttribute("data-view"), id=crow?el.getAttribute("data-tid"):el.getAttribute("data-team"), m=null;
+  if(mid){ m=S.matches.filter(function(x){return x.id===mid;})[0]; if(!m) return; } else if(!id) return;
+  haptic(); var src=crow?el:(el.closest(".cal-row")||el), r=src.getBoundingClientRect();
+  var act=function(a,lab,ic,extra){ return '<button type="button" data-ctx="'+a+'" data-id="'+(m?m.id:id)+'"'+(extra||'')+'><span>'+lab+'</span>'+icon(ic)+'</button>'; };
+  var body=m?'<div class="ctx-peek">'+peekMatch(m)+'</div>'+act("mopen","Apri la partita","right")+(!played(m)&&m.date?act("mics","Aggiungi al calendario","calplus"):'')+act("mshr","Condividi come immagine","share")
+    :'<div class="ctx-peek">'+peekTeam(id,!crow)+'</div>'+act("open","Apri "+esc(tname(id)),"team")+act("fav",isFav(id)?'Non seguire più':'Segui',"star")+act("cmp","Confronta con…","swap");
+  var mm=document.createElement("div"); mm.id="ctx";
+  mm.innerHTML='<div class="ctx-bg" data-ctxclose="1"></div><div class="ctx-row'+(crow?'':' ctx-el')+'" style="top:'+r.top+'px;left:'+r.left+'px;width:'+r.width+'px;height:'+r.height+'px">'+(crow?src.innerHTML:src.outerHTML)+'</div><div class="ctx-menu">'+body+'</div>';
+  document.body.appendChild(mm);
+  /* il menu va sotto la riga se ci sta, altrimenti sopra; se non ci sta né sopra né sotto, la riga sale */
+  var mn=mm.querySelector(".ctx-menu"), mh=mn.offsetHeight, W=mn.offsetWidth, left=Math.max(14,Math.min(innerWidth-W-14,r.left+12)), top;
+  if(r.bottom+10+mh<=innerHeight-14) top=r.bottom+10; else if(r.top-10-mh>=14){ top=r.top-10-mh; mn.style.transformOrigin="bottom left"; }
+  else { var lift=Math.max(0,r.bottom+10+mh-(innerHeight-14)), nt=Math.max(14,r.top-lift); mm.querySelector(".ctx-row").style.top=nt+"px"; top=Math.min(nt+r.height+10,innerHeight-14-mh); }
+  mn.style.left=left+"px"; mn.style.top=top+"px";
+  requestAnimationFrame(function(){ mm.classList.add("on"); });
 }
-function closeCtx(){ var m=$("ctx"); if(m){ m.classList.remove("on"); setTimeout(function(){ m.remove(); },180); } }
-(function(){ var t=null, sx=0, sy=0;
-  document.addEventListener("touchstart",function(e){ var row=e.target.closest&&e.target.closest(".crow[data-tid]"); if(!row) return; sx=e.touches[0].clientX; sy=e.touches[0].clientY; clearTimeout(t); t=setTimeout(function(){ t="fired"; ctxMenu(row); },480); },{passive:true});
+function closeCtx(){ var m=$("ctx"); if(m){ m.removeAttribute("id"); m.classList.remove("on"); setTimeout(function(){ m.remove(); },200); } }
+(function(){ var t=null, sx=0, sy=0, SEL=".crow[data-tid],[data-view],[data-team]";
+  var pick=function(e){ var el=e.target.closest&&e.target.closest(SEL); if(!el||el.closest("nav.tabs,dialog,#ctx,.chips,.seg")) return null; return el; };
+  document.addEventListener("touchstart",function(e){ var el=pick(e); clearTimeout(t); t=null; if(!el||$("dlg").open) return; sx=e.touches[0].clientX; sy=e.touches[0].clientY; t=setTimeout(function(){ t="fired"; ctxMenu(el); },450); },{passive:true});
   document.addEventListener("touchmove",function(e){ if(t&&t!=="fired"&&(Math.abs(e.touches[0].clientX-sx)>8||Math.abs(e.touches[0].clientY-sy)>8)){ clearTimeout(t); t=null; } },{passive:true});
   document.addEventListener("touchend",function(e){ if(t==="fired"){ e.preventDefault(); } else clearTimeout(t); t=null; },{passive:false});
-  document.addEventListener("contextmenu",function(e){ var row=e.target.closest&&e.target.closest(".crow[data-tid]"); if(row){ e.preventDefault(); ctxMenu(row); } });
+  document.addEventListener("contextmenu",function(e){ var el=pick(e); if(el&&!$("dlg").open){ e.preventDefault(); ctxMenu(el); } });
 })();
 
 /* ---------- player stats ---------- */
@@ -2257,6 +2356,86 @@ function t11Teaser(r){
   return '<button type="button" class="t11-tz" data-top11="'+r+'" aria-label="Apri la Top 11 della giornata"><span class="t11-tz-tx"><span class="t11-tz-ey">Top 11</span><b>'+t.f.join("-")+'</b><span class="t11-tz-mvp">'+icon("star")+'<span>'+esc(t11Surname(t.mvp.p.name))+'</span></span></span><span class="t11-mini">'+cols.map(function(l){ return '<span class="t11-mc">'+l.map(function(c){ return '<span class="t11-md'+(c===t.mvp?' mvp':'')+'">'+crest(c.tid,cs)+'</span>'; }).join("")+'</span>'; }).join("")+'</span></button>';
 }
 
+/* ---------- scelta della squadra: griglia con tutti gli stemmi del girone ---------- */
+function openTeamGrid(){ var cur=curRosaTeam(), my=me(), tb=currentTable(), pos={}, pts={}; tb.rows.forEach(function(r){ pos[r.id]=r.pos; pts[r.id]=r.pts; });
+  var list=S.teams.slice().sort(function(a,b){ return (pos[a.id]||99)-(pos[b.id]||99) || tname(a.id).localeCompare(tname(b.id),"it"); });
+  $("dlgBody").innerHTML='<div class="row between"><div class="col" style="gap:2px"><span class="eyebrow muted">'+esc(girLabel(G))+'</span><h2 style="margin:0">Scegli la squadra</h2></div><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div>'
+    +'<div class="tg-grid">'+list.map(function(t){ var z=zoneOf(pos[t.id]); return '<button type="button" class="tg'+(t.id===cur?' on':'')+(t.id===my?' my':'')+'" data-rteam="'+t.id+'" aria-pressed="'+(t.id===cur)+'" aria-label="'+esc(tname(t.id))+(pos[t.id]?', '+pos[t.id]+'°':'')+'">'
+      +'<span class="tg-c">'+crest(t.id,48)+(isFav(t.id)&&t.id!==my?'<span class="tg-f">'+icon("star")+'</span>':'')+'</span>'
+      +'<span class="tg-n">'+esc(tname(t.id))+'</span><span class="tg-m">'+(pos[t.id]?'<span class="pp'+(z?' z-'+z:'')+'">'+pos[t.id]+'°</span>'+pts[t.id]+' pt':'')+'</span></button>'; }).join('')+'</div>'
+    +'<span class="tiny muted" style="text-align:center">In ordine di classifica · <span class="tg-legend">la tua squadra in rosso</span></span>';
+  showDlg(); }
+
+/* ---------- campo di casa di ogni squadra (dai programmi gare del Comitato Regionale Lombardo, stagione 2026/27) ---------- */
+var CAMPI={
+ /* Seconda Categoria Milano · Girone O */
+ t_baggese:["C.S. Quinto Romano, campo 1","Via Vittorio De Sica 14","Milano",1], t_ardor:["C.S. Oratoriale Mons. G. Sala","Via Repubblica 6","Bollate"],
+ t_artemide:["C.S. Calvairate","Via Vismara 3","Milano",1], t_bonola:["C.S. San Romano, campo 1","Via Armando Picchi 1","Milano",1],
+ t_cesano:["Comunale, campo 1","Via IV Novembre 9","Cusago"], t_concept:["C.S. Comunale La Spezia","Via Famagosta 79","Milano",1],
+ t_corsico:["Comunale n. 1","Via Roma angolo Via Verdi","Assago",1], t_novella:["C.S. S. Pertini, campo 2","Via dello Sport 70","Cornaredo"],
+ t_trezzano:["Comunale L. Fabbri, campo 1","Viale Europa","Trezzano sul Naviglio"], t_seguro:["C.S. Comunale","Via Sandro Pertini 13","Settimo Milanese (Seguro)",1],
+ t_triestina:["Campo U.S. Triestina 1946, n. 1","Via Fleming 13","Milano",1], t_velasca:["Campo U.S. Triestina 1946, n. 1","Via Fleming 13","Milano",1],
+ t_vercellese:["C.S. Vercellese, campo 1","Via Caldera 85","Milano"], t_vige:["C.S. Carassai, campo 2","Via Sant'Abbondio 4","Milano"],
+ t_villapizzone:["C.S. Villapizzone","Via Perin del Vaga 11","Milano",1], t_viscontini:["C.S. P. e L. Pernigotti","Via F. Giorgi 10","Milano",1],
+ /* Seconda Categoria Milano · Girone P */
+ sp_agape:["C.S. San Romano, campo 1","Via Armando Picchi 1","Milano",1], sp_cassinanuova:["C.S. Comunale","Via Oglio 1/3","Bollate (Cassina Nuova)"],
+ sp_circologiovani:["C.S. Comunale G","Via G. Deledda","Bresso",1], sp_cittadicinisel:["Comunale D. Crippa, campo 1","Via dei Lavoratori 27","Cinisello Balsamo"],
+ sp_cologno:["Comunale Vittorio Brusa, campo 2","Via Perego 25","Cologno Monzese"], sp_cusunimib:["C.S. Bicocca Stadium","Viale Sarca 205","Milano"],
+ sp_fcatleticobico:["C.S. Comunale G. Mauro","Via Ussi 18","Milano",1], sp_jcusano1913:["C.S. Comunale Seveso","Via Caveto 24","Cusano Milanino",1],
+ sp_niguardacalcio:["C.S. Comunale Enrico Cucchi","Via Arezzo 13","Milano"], sp_pero:["Comunale G. Brera, campo 1","Via Giovanni XXIII 6","Pero",1],
+ sp_pioxisperanza:["Comunale D. Crippa, campo 1","Via dei Lavoratori 27","Cinisello Balsamo"], sp_pronovate:["C.S. Comunale V. Torriani, campo 2","Via V. Torriani 6","Novate Milanese"],
+ sp_rondinella:["Comunale D. Crippa, campo 1","Via dei Lavoratori 27","Cinisello Balsamo"], sp_sangiorgio1980:["C.S. Comunale Manin, campo A","Via Manin 110","Sesto San Giovanni"],
+ sp_solese:["C.S. Comunale Cascina del Sole","Via Ospitaletto","Bollate (Cascina del Sole)"], sp_vigorfc:["C.S. Comunale Vigorello","Via San Michele del Carso 55","Paderno Dugnano"],
+ /* Prima Categoria Lombardia · Girone A */
+ pa_ausonia1931:["C.S. Ausonia 1931","Via Bonfadini 18 angolo Via Varsavia","Milano",1], pa_buccinasco:["C.S. Gaetano Scirea, campo 1","Via Gramsci","Buccinasco",1],
+ pa_centroschuster:["Centro Schuster, campo A","Via Padre Lodovico Morell 2","Milano"], pa_frogmilano:["C.S. Comunale, campo 1","Via Teresa Noce 5","Milano"],
+ pa_garibaldina193:["Campo G. Massola, n. 1","Via Don Minzoni 4","Milano"], pa_iris1914:["Comunale Franco Bettinelli","Via Faraday 15","Milano"],
+ pa_leonexiiisport:["C.S. Leone XIII, campo 1","Via Rossetti 4","Milano",1], pa_nevadacalcio:["C.S. Gaetano Scirea, campo 1","Via Gramsci","Buccinasco",1],
+ pa_orpas:["C.S. Bovisasca, campo 1","Via Assietta 48","Milano",1], pa_partizanbonola:["C.S. Comunale La Spezia","Via Famagosta 79","Milano",1],
+ pa_polisportivadi:["C.S. Comunale, campo 1","Via Giacomo Brodolini 4","Nova Milanese"], pa_propeschierabo:["Campo Comunale di Linate","Via Pascoli","Peschiera Borromeo (Linate)"],
+ pa_quintoromano:["C.S. Quinto Romano, campo 1","Via Vittorio De Sica 14","Milano",1], pa_sangiulianocvs:["C.S. Comunale n. 1","Via Toscana 1","San Giuliano Milanese (Sesto Ulteriano)"],
+ pa_settimomilanes:["C.S. S. Pertini, campo 1","Via dello Sport 1","Cornaredo"], pa_villa:["C.S. Comunale G. Mauro","Via Ussi 18","Milano",1],
+ /* Prima Categoria Lombardia · Girone B */
+ pb_schiaffino:["Comunale C. Schiaffino","Via Sondrio 36","Paderno Dugnano (Calderara)",1], pb_briantea:["C.S. Comunale Mario Vaghi","Via Po 55","Cesano Maderno (Molinello)"],
+ pb_cassina:["Centro Sportivo Comunale","Via Vittorio Veneto","Cassina Rizzardi"], pb_cantu:["Comunale Totò Caimi","Via San Giuseppe 31","Cantù (Vighizzolo)",1],
+ pb_zeta:["Stadio La Rocca, campo 1","Via Rocca 19","Trezzo sull'Adda"], pb_giussano:["C.S. Stefano Borgonovo, campo 1","Largo Donatori di Sangue 3","Giussano"],
+ pb_itala:["C.S. Comunale, campo 1","Via Leonardo da Vinci 26","Lurate Caccivio"], pb_dominante:["C.S. La Dominante, campo 1","Via Ramazzotti 19","Monza"],
+ pb_leoteam:["Stadio Parco, campo 2","Via Parco 51","Biassono",1], pb_lomazzo:["C.S. Comunale, campo 1","Via del Filagno 2","Lomazzo"],
+ pb_luisago:["C.S. Comunale, campo 1","Via S. Pos 6","Grandate"], pb_montesolaro:["C.S. Parrocchiale","Via delle Muselle 1","Carimate (Montesolaro)",1],
+ pb_cadorago:["C.S. Comunale Elio Zampiero","Via Dante Alighieri","Cadorago",1], pb_lissone:["C.S. Comunale","Via Santa Caterina da Siena 1","Sovico",1],
+ pb_triuggese:["C.S. Comunale","Via Alcide De Gasperi 9","Triuggio",1], pb_cermenate:["C.S. Comunale, campo 1","Via del Filagno 2","Lomazzo"],
+ /* Prima Categoria Lombardia · Girone G */
+ pg_albuzzano:["C.S. Comunale Elios","Via Don C. Prelini 17","Albuzzano"], pg_asvarzi:["Stadio Comunale Carlo Chiappano","Via Oreste Maretti 8","Varzi"],
+ pg_casorateprimo:["Comunale B. Chiodini","Via Magnaghi 40","Casorate Primo"], pg_cassolese:["Campo Sportivo Comunale n. 1","Via Genova","Cassolnovo"],
+ pg_castelnovetto:["C.S. Comunale Asilo Gambarana","Via San Rocco 1","Castelnovetto"], pg_gropellosangio:["Comunale Mascherpa","Via Vittorio Veneto 27","Gropello Cairoli"],
+ pg_nizzacalcio:["C.S. Comunale Corrado Scabini","Via della Stazione 4","Ponte Nizza"], pg_oratoriostrade:["Stadio Comunale Gaetano Scirea","Via I Maggio","Stradella"],
+ pg_psabressana191:["Oratorio S. Alessandro","Via Alessandria","Pavia"], pg_realcertosa:["C.S. Comunale","Via Aldo Moro","Certosa di Pavia"],
+ pg_realtrezzano:["C.S. Real Camp, campo 1","Via Don Casaleggi 4","Trezzano sul Naviglio",1], pg_rondine1924:["Centro Sportivo Comunale","Piazzale Sanguigni","Belgioioso"],
+ pg_rozzanocalcio:["C.S. Comunale Valleambrosia, campo 1","Via Monte Amiata 34","Rozzano"], pg_valversa:["C.S. Comunale A. Rescigno","Via Pianella 18","Santa Maria della Versa"],
+ pg_virtusbinasco:["C.S. Comunale Giampiero Pazzi","Via Filippo Turati","Binasco"], pg_zibidosangiaco:["C.S. Comunale","Via Lenin 3 angolo Via Risorgimento","Zibido San Giacomo",1],
+ /* Terza Categoria Milano · Girone C */
+ tc_alzaiamilano:["C.S. Comunale La Spezia","Via Famagosta 79","Milano",1], tc_cavallinobianc:["C.S. Comunale G.P. Squeri","Via Maritano","San Donato Milanese"],
+ tc_corvettofc:["C.S. Calvairate","Via Vismara 3","Milano",1], tc_enotria1908:["C.S. Enotria B","Via C. Cazzaniga 26","Milano",1],
+ tc_futuracalciope:["Comunale Diego Stefanacci","Via Trieste","Peschiera Borromeo (San Bovio)"], tc_labomba:["C.S. Forza e Coraggio","Via Gallura 8","Milano"],
+ tc_liscatecalcio:["Centro Sportivo Comunale","Via Dante Alighieri","Liscate"], tc_nuovabolgiano:["Comunale A. Fortunato","Via Gramsci","San Donato Milanese"],
+ tc_pioltellese196:["C.S. Comunale Stadio","Via Piemonte 23","Pioltello"], tc_polisportivaom:["C.S. Comunale Mozart","Via Wolfgang A. Mozart 9","Pioltello"],
+ tc_realcrescenzag:["Comunale A.C. Crescenzago","Via Trasimeno 25","Milano",1], tc_unionmulazzano:["Campo Sportivo Comunale","Cassino d'Alberi, SP 158 di Villavesco","Mulazzano"],
+ tc_unionotg:["C.S. Cambini-Fossati","Via Palmanova 47","Milano",1], tc_vllaznialelite:["Piccolo Stadio Scarioni, campo 2","Via Tucidide 10","Milano",1],
+ tc_yousport:["Piccolo Stadio Scarioni, campo 2","Via Tucidide 10","Milano",1]};
+function campoOf(id){ var c=CAMPI[id]; if(!c) return null; var p=c[0].split(", "), sub=p.slice(1).join(", ").replace(/^n\. ?(\d+)$/i,"campo $1"); return {name:c[0],main:p[0],sub:sub,addr:c[1],city:c[2],ea:!!c[3]}; }
+/* Google Maps: con l'app installata si apre lì, altrimenti nel browser; percorso in auto fino al campo */
+function mapsUrl(c){ return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(c.main+', '+c.addr+', '+c.city.replace(/\s*\(.*\)$/,'')+', Italia')+'&travelmode=driving'; }
+var PIN='<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.3"/></svg>';
+var NAVI='<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5 3.8 10.6c-.6.3-.5 1.1.1 1.3l6.6 1.9 1.9 6.6c.2.6 1 .7 1.3.1z" fill="currentColor" stroke="none"/></svg>';
+var COPY='<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></svg>';
+function campoCard(tid){ var c=campoOf(tid); if(!c) return '';
+  var shared=S.teams.filter(function(t){ var o=campoOf(t.id); return t.id!==tid&&o&&o.addr===c.addr&&o.city===c.city; });
+  var info=[c.sub?c.sub.charAt(0).toUpperCase()+c.sub.slice(1):'', c.ea?'erba sintetica':''].filter(Boolean).join(' · ');
+  return '<section class="card fld"><div class="card-head"><h2>Campo di casa</h2><a class="fld-go" href="'+mapsUrl(c)+'" target="_blank" rel="noopener" aria-label="Indicazioni con Google Maps">'+NAVI+'<span>Google Maps</span></a></div>'
+    +'<div class="fld-row"><span class="fld-ic">'+PIN+'</span><div class="fld-tx"><b>'+esc(c.main)+'</b>'+(info?'<span>'+esc(info)+'</span>':'')
+    +'<button type="button" class="fld-ad" data-copyaddr="'+esc(c.name+' · '+c.addr+', '+c.city)+'" aria-label="Copia indirizzo"><span>'+esc(c.addr)+', '+esc(c.city)+'</span>'+COPY+'</button>'
+    +(shared.length?'<span class="fld-sh">Ci gioca anche '+shared.map(function(t){ return esc(tname(t.id)); }).join(', ')+'</span>':'')+'</div></div></section>'; }
+
 /* ---------- partite ---------- */
 function vPartite(){
   var my=me();
@@ -2491,10 +2670,9 @@ function vMarcatori(){
 function vRosa(){
   var tid=curRosaTeam(), my=me(), st=playerStats(), row=tableRow(tid);
   var h=header("Squadre",1);
-  h+='<div class="crest-strip" role="group" aria-label="Scegli la squadra">'+S.teams.slice().sort(function(a,b){ return (a.id===my?-1:b.id===my?1:0) || a.name.localeCompare(b.name); }).map(function(t){ return '<button type="button" class="cpick" data-rteam="'+t.id+'" aria-pressed="'+(t.id===tid)+'" aria-label="'+esc(t.name)+'">'+crest(t.id,48,t.id===tid?'lit':'')+'<span>'+esc(shortName(t.id))+'</span></button>'; }).join("")+'</div>';
   var list=S.players.filter(function(p){return pTeam(p)===tid;});
   var gol=list.reduce(function(s,p){return s+st[p.id].gol;},0);
-  h+='<section class="night'+((tid===my&&G===MYG)?' hero':'')+' pitch team-hero"><div class="row" style="gap:16px">'+crest(tid,72,(tid===my&&G===MYG)?'lit':'')+'<div class="col grow"><span class="eyebrow" style="color:var(--on-night-muted)">'+((tid===my&&G===MYG)?'La tua squadra':esc(S.settings.girone))+'</span><h1 style="font-size:clamp(26px,6vw,36px)">'+esc(tname(tid))+'</h1></div>'+(IDX[tid]?starBtn(tid,"hero-star"):'')+'</div><div class="stats"><div class="stat"><b>'+(row&&row.g?row.pos+'°':'–')+'</b><span>Posizione</span></div><div class="stat"><b>'+(row?row.pts:'–')+'</b><span>Punti</span></div><div class="stat"><b>'+(row?row.v+'-'+row.n+'-'+row.p:'–')+'</b><span>V-N-P</span></div><div class="stat"><b>'+(row?row.gf+':'+row.gs:'–')+'</b><span>Gol</span></div></div></section>';
+  h+='<section class="night'+((tid===my&&G===MYG)?' hero':'')+' pitch team-hero"><div class="row" style="gap:16px">'+crest(tid,72,(tid===my&&G===MYG)?'lit':'')+'<div class="col grow"><span class="eyebrow" style="color:var(--on-night-muted)">'+((tid===my&&G===MYG)?'La tua squadra':esc(S.settings.girone))+'</span><h1 style="font-size:clamp(26px,6vw,36px)"><button type="button" class="tsel" data-teampick="1" aria-label="Cambia squadra: '+esc(tname(tid))+'"><span>'+esc(tname(tid))+'</span><span class="tsel-ch">'+icon("chev")+'</span></button></h1></div>'+(IDX[tid]?starBtn(tid,"hero-star"):'')+'</div><div class="stats"><div class="stat"><b>'+(row&&row.g?row.pos+'°':'–')+'</b><span>Posizione</span></div><div class="stat"><b>'+(row?row.pts:'–')+'</b><span>Punti</span></div><div class="stat"><b>'+(row?row.v+'-'+row.n+'-'+row.p:'–')+'</b><span>V-N-P</span></div><div class="stat"><b>'+(row?row.gf+':'+row.gs:'–')+'</b><span>Gol</span></div></div></section>';
   var RT=[["pan","Panoramica"],["par","Partite"],["ros","Rosa"],["num","Statistiche"]];
   h+='<div class="rt-anchor"></div><div class="rt-stick"><div class="seg sm rt-seg" role="group" aria-label="Sezioni della squadra">'+RT.map(function(x){ return '<button type="button" data-rtab="'+x[0]+'" aria-pressed="'+(rosaTab===x[0])+'">'+x[1]+'</button>'; }).join("")+'</div></div>';
   var panel=function(k,html){ return '<div class="rt-panel" data-rpanel="'+k+'"'+(rosaTab===k?'':' hidden')+'>'+html+'</div>'; };
@@ -2553,6 +2731,7 @@ function teamCards(tid){
     var nx=S.matches.filter(function(m){return involves(m,my)&&!played(m);}).sort(sortMatches)[0];
     if(nx) out+='<section class="card flush"><div class="card-head" style="padding:10px 6px 4px"><h2>Prossima partita</h2><span class="meta">'+nx.round+'ª giornata</span></div><div class="list">'+boardRow(nx)+'</div></section>';
   }
+  out+=campoCard(tid);
   out+='<section class="card"><div class="card-head"><h2>Andamento</h2><span class="meta">posizione dopo ogni giornata</span></div>'+posChart(tid,true)+'</section>';
   return '<div class="two">'+out+'</div>';
 }
@@ -2945,6 +3124,8 @@ function applyPaste(){
 
 /* ---------- events ---------- */
 document.addEventListener("click", function(e){
+  /* menu del tocco lungo: un tocco fuori (o sulla riga sollevata) lo chiude e basta */
+  if(e.target.closest&&e.target.closest("#ctx")&&!e.target.closest(".ctx-menu")){ closeCtx(); return; }
   var b=e.target.closest("button,[data-tab],[data-go],[data-view]"); if(!b||b===document.documentElement||b===document.body) return;
   var ds=b.dataset;
   if((ds.tab&&ds.tab!==tab) || (b.matches("[data-cls],[data-srt],[data-scope],[data-stk],[data-rtab],[data-pv],[data-cmode],[data-pv2],[data-pr],[data-fside],[data-filter],[data-themeset]") && b.getAttribute("aria-pressed")!=="true")) haptic();
@@ -2978,12 +3159,14 @@ document.addEventListener("click", function(e){
   if(ds.cls){ var cv=ds.cls; smooth(function(){ clsView=cv; render(); }); return; }
   if(ds.fside){ openClsFilter.side=ds.fside; document.querySelectorAll("[data-fside]").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.fside===ds.fside)); }); return; }
   if(ds.fpre){ var lpp=lastPlayedRound(); if(ds.fpre==="and"){ $("fFrom").value=1; $("fTo").value=Math.min(15,lpp); } else { $("fFrom").value=Math.max(1,lpp-(+ds.fpre)+1); $("fTo").value=lpp; } return; }
-  if(ds.rteam){ var rt=ds.rteam; smooth(function(){ rosaTeam=rt; render(); }); return; }
+  if(ds.teampick){ haptic(); openTeamGrid(); return; }
+  if(ds.copyaddr){ var tx=ds.copyaddr; haptic(); var ok=function(){ toast("Indirizzo copiato"); }; try { navigator.clipboard.writeText(tx).then(ok,function(){ toast(tx); }); } catch(e){ toast(tx); } return; }
+  if(ds.rteam){ var rt=ds.rteam; if($("dlg").open) closeDlg(); smooth(function(){ rosaTeam=rt; render(); }); return; }
   if(ds.exp){ var cr=b.closest(".crow"); if(cr){ var o=cr.classList.toggle("open"); b.setAttribute("aria-expanded",String(o)); } return; }
   if(ds.team){ var tt2=ds.team; if(tab!=="rosa") navPush("rosa"); closeDlg(); smooth(function(){ rosaTeam=tt2; tab="rosa"; render(); window.scrollTo(0,0); }); return; }
   if(ds.rstep){ stepRound(+ds.rstep); return; }
   if(ds.ctxclose){ closeCtx(); return; }
-  if(ds.ctx){ var cid=ds.id; closeCtx(); if(ds.ctx==="open") { var ob=document.createElement("button"); ob.setAttribute("data-openteam",cid); document.body.appendChild(ob); ob.click(); ob.remove(); } else if(ds.ctx==="fav") toggleFav(cid); else if(ds.ctx==="cmp") openComparePick(cid); return; }
+  if(ds.ctx){ var cid=ds.id; closeCtx(); if(ds.ctx==="open") { var ob=document.createElement("button"); ob.setAttribute("data-openteam",cid); document.body.appendChild(ob); ob.click(); ob.remove(); } else if(ds.ctx==="fav") toggleFav(cid); else if(ds.ctx==="cmp") openComparePick(cid); else if(ds.ctx==="mopen") openMatchView(cid); else if(ds.ctx==="mics") addToCalendar(cid); else if(ds.ctx==="mshr") openShare("match",cid); return; }
   if(ds.cmpb){ openCompare(CMPA,ds.cmpb); return; }
 
   if(ds.pedit){ openPlayer(ds.pedit); return; }
