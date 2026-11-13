@@ -72,7 +72,9 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
       await p.waitForTimeout(500);
       if (!(await p.evaluate(() => { const ch = document.querySelector('#app > *'); return !!(ch && ch.__mk); }))) problemi.push(`${tag}: ${t}: un tocco fuori dai pulsanti ridisegna tutta la pagina`); }
     await tap('nav.tabs [data-tab="rosa"]'); await p.waitForTimeout(400);
-    if (await tap('#app [data-player]')) { await p.waitForTimeout(400); await closeDlg(); }
+    /* la pagina squadra è divisa in sezioni: i giocatori stanno in "Rosa"; si provano tutte le sezioni */
+    for (const rt of ['par', 'num', 'pan', 'ros']) { if (await p.locator(`#app [data-rtab="${rt}"]`).count()) { await tap(`#app [data-rtab="${rt}"]`); await p.waitForTimeout(350); } }
+    if (await tap('#app [data-player]:visible')) { await p.waitForTimeout(400); await closeDlg(); }
     await c.close();
   }
   await b.close();
