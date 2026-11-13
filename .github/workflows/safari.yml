@@ -1,0 +1,25 @@
+name: Prova collaudo Safari (temporanea)
+on:
+  push:
+    branches: [prova-safari]
+jobs:
+  safari:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: |
+          npm i --no-save playwright@1.49.1 >/dev/null
+          npx playwright install --with-deps webkit >/dev/null
+      - name: Versione attuale
+        run: |
+          python3 -m http.server 8765 >/dev/null 2>&1 &
+          sleep 1
+          node collaudo_safari.js || true
+      - name: Versione rotta (.19)
+        run: |
+          cd rotta && python3 -m http.server 8766 >/dev/null 2>&1 &
+          sleep 1
+          BASE=http://localhost:8766/ node collaudo_safari.js || true
