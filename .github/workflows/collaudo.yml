@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   collaudo:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,11 +24,12 @@ jobs:
       - name: Prepara il browser di prova
         run: |
           npm i --no-save playwright@1.49.1 >/dev/null
-          npx playwright install --with-deps chromium >/dev/null
+          npx playwright install --with-deps chromium webkit >/dev/null
       - name: Collaudo dell'app
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &
           sleep 1
           node collaudo.js
+          node collaudo_safari.js
       - name: Pubblica (solo se il collaudo è superato)
         run: git push origin HEAD:main
