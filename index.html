@@ -1714,6 +1714,26 @@ function scorersCard(tid,title){
   return '<section class="card"><div class="card-head"><h2>'+esc(title||'Marcatori')+'</h2></div>'+top.map(function(o){ return '<div class="scorer"><button type="button" class="plink ellipsis" data-player="'+o.p.id+'" style="font-weight:600">'+esc(o.p.name)+'</button><b class="num">'+o.g+'</b><div class="bar"><i style="width:'+Math.round(o.g/mx*100)+'%"></i></div></div>'; }).join("")+'</section>';
 }
 function fdots(tid){ return '<span class="fdots">'+formOf(tid,5).map(function(m){ var f=resultFor(m,tid); return '<span class="r-'+f+'">'+f+'</span>'; }).join("")+'</span>'; }
+function vsCard(next){
+  var my=me(), H=next.homeId, A=next.awayId, opp=H===my?A:H, rh=tableRow(H), ra=tableRow(A);
+  function row(k,lv,rv,better){
+    var lc='',rc='';
+    if(better && lv!=null && rv!=null && +lv!==+rv){ var lw = better==="high" ? +lv>+rv : +lv<+rv; if(lw) rc=' lo'; else lc=' lo'; }
+    return '<span class="l v num'+lc+'">'+(lv==null?'–':lv)+'</span><span class="k">'+k+'</span><span class="r v num'+rc+'">'+(rv==null?'–':rv)+'</span>';
+  }
+  function who(t){ var top=topScorers(t,2); return top.length? top.map(function(o){ return '<span><button type="button" class="plink" data-player="'+o.p.id+'">'+esc(sName({playerId:o.p.id},true))+'</button> <span class="muted">'+o.g+'</span></span>'; }).join("") : '<span class="muted">–</span>'; }
+  var and=null;
+  if(+next.round>15) and=S.matches.filter(function(m){ return +m.round===+next.round-15 && involves(m,my) && involves(m,opp) && played(m); })[0];
+  var andHtml = and ? '<button type="button" class="and-chip" data-view="'+and.id+'"><span class="meta">Andata</span>'+crest(and.homeId,22)+'<span class="num">'+esc(and.hg)+'–'+esc(and.ag)+'</span>'+crest(and.awayId,22)+'</button>'
+    : (+next.round<=15 ? '<span class="meta">Primo confronto · il ritorno alla '+(+next.round+15)+'ª giornata</span>' : '');
+  var g=function(r,k){ return r&&r.g?r[k]:null; };
+  var h='<section class="card"><div class="card-head" style="flex-wrap:wrap"><h2>Verso la partita</h2>'+andHtml+'</div>';
+  h+='<div class="cmp-head">'+crest(H,40,H===my?'lit':'')+'<span class="eyebrow muted">'+esc(shortName(H))+' – '+esc(shortName(A))+'</span>'+crest(A,40,A===my?'lit':'')+'</div>';
+  h+='<div class="cmp">'+row('Posizione',rh&&rh.g?rh.pos+'°':null,ra&&ra.g?ra.pos+'°':null,null)+row('Punti',g(rh,'pts'),g(ra,'pts'),'high')+row('Gol fatti',g(rh,'gf'),g(ra,'gf'),'high')+row('Gol subiti',g(rh,'gs'),g(ra,'gs'),'low');
+  h+='<span class="l">'+fdots(H)+'</span><span class="k">Forma</span><span class="r">'+fdots(A)+'</span>';
+  h+='<span class="l who">'+who(H)+'</span><span class="k">Bomber</span><span class="r who">'+who(A)+'</span></div></section>';
+  return h;
+}
 
 
 /* ---------- 3. confronta due squadre ---------- */
