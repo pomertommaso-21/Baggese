@@ -18,6 +18,17 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
       g.teams.forEach(t => { if (!fs.existsSync(t[0] + '.png')) problemi.push(`stemma mancante: ${t[0]}.png`); });
     } catch (e) { problemi.push(`${g.file}: non leggibile (${e.message})`); }
   }
+  // nomi usati nel codice ma mai definiti (per esempio una funzione tolta per sbaglio mentre altrove serve ancora):
+  // si controlla tutto il codice, anche le parti che il giro di prova non tocca
+  try { let ts; try { ts = require('typescript'); } catch (e) { ts = require('/opt/npm-tools/node_modules/typescript'); }
+    [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].forEach((mm, i) => { const code = mm[1], name = 'app' + i + '.js';
+      const opts = { allowJs: true, checkJs: true, noEmit: true, target: ts.ScriptTarget.ES2022, lib: ['lib.es2022.d.ts', 'lib.dom.d.ts'], types: [], noImplicitAny: false, strict: false };
+      const host = ts.createCompilerHost(opts), orig = host.getSourceFile.bind(host);
+      host.getSourceFile = (f, l) => f === name ? ts.createSourceFile(f, code, l, true, ts.ScriptKind.JS) : orig(f, l);
+      host.fileExists = f => f === name || ts.sys.fileExists(f); host.readFile = f => f === name ? code : ts.sys.readFile(f);
+      const nomi = new Set(); ts.createProgram([name], opts, host).getSemanticDiagnostics().filter(d => [2304, 2552, 2663].includes(d.code)).forEach(d => { const n = (ts.flattenDiagnosticMessageText(d.messageText, ' ').match(/name '([^']+)'/) || [])[1]; if (n && !/^(module|claude)$/.test(n)) nomi.add(n); });
+      nomi.forEach(n => problemi.push(`codice: si usa "${n}" ma non esiste più`)); });
+  } catch (e) { problemi.push('controllo dei nomi non eseguito: ' + e.message); }
   const b = await chromium.launch();
   for (const C of CONF) {
     const mob = C.vw < 700; const tag = `${C.g} ${C.vw}px ${C.sch}`;

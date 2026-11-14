@@ -24,7 +24,7 @@ jobs:
           node-version: 20
       - name: Prepara il browser di prova
         run: |
-          npm i --no-save playwright@1.49.1 >/dev/null
+          npm i --no-save playwright@1.49.1 typescript@6.0.3 >/dev/null
           npx playwright install --with-deps chromium webkit >/dev/null
       - name: Collaudo dell'app
         run: |
