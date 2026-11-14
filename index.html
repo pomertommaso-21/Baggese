@@ -1101,6 +1101,19 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
   @keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
   @keyframes sheetDown{to{transform:translateY(100%)}}
 }
+
+/* filtro casa / trasferta del calendario */
+.sdf{display:flex;align-items:center;gap:2px;margin:-6px 0 -8px;min-height:30px;font-size:13px}
+.sdf button{all:unset;cursor:pointer;padding:5px 9px;border-radius:8px;font-weight:600;color:var(--muted);white-space:nowrap;-webkit-tap-highlight-color:transparent;transition:color .2s,background-color .2s}
+.sdf button[aria-pressed=true]{color:var(--fg);font-weight:700;background:color-mix(in srgb,var(--fg) 7%,transparent)}
+.sdf button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+.sdf .sd-sum{margin-left:auto;padding-left:6px;display:flex;flex-direction:column;align-items:flex-end;line-height:1.25;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;animation:sdIn .25s ease both}
+.sdf .sd-sum b{color:var(--fg);font-weight:800}.sdf .sd-sum i{font-style:normal;margin:0 4px;opacity:.6}
+.sdf .r-v{color:var(--win-ink)}.sdf .r-p{color:var(--loss-ink)}
+.sdf .sd-left{font-size:11px;font-weight:600;opacity:.85}
+@keyframes sdIn{from{opacity:0;transform:translateX(4px)}to{opacity:1;transform:none}}
+.segfloat .sdf{margin:6px 0 -4px}
+@media (max-width:370px){.sdf button{padding:5px 8px}.sdf .sd-sum{font-size:11.5px}}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1130,7 +1143,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-14.4";
+var APP_VERSION="2026-11-15.1";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1306,7 +1319,7 @@ function subscribeDoc(cb){
 /* cambia il girone che stai guardando */
 function switchGirone(g,cb){
   if(g===G && S.teams.length){ if(cb) cb(); return; }
-  G=g; rosaTeam=null; clsF={from:0,to:0,side:"all"}; selRound=null; partView=(G===MYG?"mine":"round"); tableSrc=null;
+  G=g; rosaTeam=null; clsF={from:0,to:0,side:"all"}; selRound=null; partView=(G===MYG?"mine":"round"); calSide="all"; tableSrc=null;
   if(mode==="db"){ subscribeDoc(cb); return; }
   var raw=null; try { raw=localStorage.getItem(lsKey()); } catch(e){}
   if(raw){ try { S=normalize(JSON.parse(raw)); ensureMyTeam(); loadLocalLogos(); if(cb) cb(); else render(); checkNewer(); return; } catch(e){} }
@@ -1647,7 +1660,7 @@ var IC={
 function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'; }
 
 /* ---------- render ---------- */
-var clsSort = "pts", MVR = null, partView = "mine", selRound = null, slideDir = 0, calJump = false, autoUntil = 0;
+var clsSort = "pts", MVR = null, partView = "mine", calSide = "all", selRound = null, slideDir = 0, calJump = false, autoUntil = 0;
 
 /* stemmi: stessa cornice tonda per tutti; logo caricato o scudetto generato con i colori sociali */
 var KITS={t_baggese:["#C8202A","#FFFFFF","stripes"],t_ardor:["#1A1A1A","#F08A24","sleeves"],t_artemide:["#F2D21B","#111111","sleeves"],t_bonola:["#178F4A","#F2D43A","sleeves"],t_cesano:["#2A1FA8","#F2E21B","sleeves"],t_concept:["#4B5563","#FFFFFF","sleeves"],t_corsico:["#5A1430","#FFFFFF","sleeves"],t_novella:["#C81E2B","#1A1A1A","sleeves"],t_trezzano:["#A77BC0","#FFFFFF","sleeves"],t_seguro:["#5AA9D6","#FFFFFF","sleeves"],t_triestina:["#D52B32","#FFFFFF","sleeves"],t_velasca:["#D9161B","#FFFFFF","sleeves"],t_vercellese:["#D9262B","#23439A","halves"],t_vige:["#1F2A5C","#D62B35","sleeves"],t_villapizzone:["#F7D90A","#5E1C78","sleeves"],t_viscontini:["#0E4A78","#F2D43A","sleeves"],"pb_schiaffino":["#E02020","#FFFFFF","sleeves"],"pb_briantea":["#111111","#C8A26A","sleeves"],"pb_cassina":["#1F2366","#F2D21B","sleeves"],"pb_cantu":["#F5DC0A","#0B3D63","sleeves"],"pb_zeta":["#111111","#D9201E","sleeves"],"pb_giussano":["#FFFFFF","#E01E1E","halves"],"pb_itala":["#FFFFFF","#111111","sleeves"],"pb_dominante":["#111111","#2E7DC0","stripes"],"pb_leoteam":["#FFFFFF","#E01E1E","sleeves"],"pb_lomazzo":["#FFFFFF","#2060C0","sleeves"],"pb_luisago":["#F5D90A","#111111","sleeves"],"pb_montesolaro":["#9CC3EF","#1F5F9F","sleeves"],"pb_cadorago":["#1C1F45","#F5D90A","sleeves"],"pb_lissone":["#0B2463","#FFFFFF","sleeves"],"pb_triuggese":["#E01E1E","#FFFFFF","sleeves"],"pb_cermenate":["#FFFFFF","#111111","sleeves"],"pa_ausonia1931":["#111111", "#1E7A3E", "stripes"],"pa_buccinasco":["#D2232A", "#1F3F8F", "sleeves"],"pa_centroschuster":["#1E8F4E", "#111111", "quarters"],"pa_frogmilano":["#F2D21B", "#1E7A3E", "sleeves"],"pa_garibaldina193":["#D2232A", "#1E8F4E", "halves"],"pa_iris1914":["#FFFFFF", "#111111", "halves"],"pa_leonexiiisport":["#FFFFFF", "#C8A23C", "sleeves"],"pa_nevadacalcio":["#FFFFFF", "#111111", "sleeves"],"pa_orpas":["#2E9E3E", "#F2D21B", "sleeves"],"pa_partizanbonola":["#111111", "#FFFFFF", "sleeves"],"pa_polisportivadi":["#F26A1B", "#FFFFFF", "sleeves"],"pa_propeschierabo":["#7A1F2B", "#3A8FD0", "sleeves"],"pa_quintoromano":["#1E8F4E", "#FFFFFF", "sleeves"],"pa_sangiulianocvs":["#1F3F8F", "#D2232A", "sleeves"],"pa_settimomilanes":["#D2232A", "#FFFFFF", "stripes"],"pa_villa":["#FFFFFF", "#111111", "sleeves"],"pg_albuzzano":["#7A1F2B", "#FFFFFF", "sleeves"],"pg_asvarzi":["#FFFFFF", "#7A1F2B", "stripes"],"pg_casorateprimo":["#2A6FD0", "#F2D21B", "sleeves"],"pg_cassolese":["#5AA9D6", "#FFFFFF", "stripes"],"pg_castelnovetto":["#7EC8E3", "#0F1E3D", "sleeves"],"pg_gropellosangio":["#FFFFFF", "#6A3FA0", "halves"],"pg_nizzacalcio":["#E01E1E", "#F2D21B", "sleeves"],"pg_oratoriostrade":["#F2D21B", "#111111", "stripes"],"pg_psabressana191":["#1E8F4E", "#FFFFFF", "stripes"],"pg_realcertosa":["#7A1F2B", "#FFFFFF", "sleeves"],"pg_realtrezzano":["#111111", "#F2D21B", "sleeves"],"pg_rondine1924":["#D2232A", "#FFFFFF", "sleeves"],"pg_rozzanocalcio":["#2E9E3E", "#F2D21B", "sleeves"],"pg_valversa":["#1E7A3E", "#FFFFFF", "sleeves"],"pg_virtusbinasco":["#1F3F8F", "#D2232A", "halves"],"pg_zibidosangiaco":["#D2232A", "#F2D21B", "stripes"],"tc_alzaiamilano":["#6A3FA0", "#FFFFFF", "sleeves"],"tc_cavallinobianc":["#FFFFFF", "#C8202A", "sleeves"],"tc_corvettofc":["#7A1F2B", "#111111", "sleeves"],"tc_enotria1908":["#C8202A", "#1F3F8F", "stripes"],"tc_futuracalciope":["#1F3F8F", "#D2232A", "stripes"],"tc_labomba":["#E8308A", "#FFFFFF", "sleeves"],"tc_liscatecalcio":["#D2232A", "#FFFFFF", "sleeves"],"tc_nuovabolgiano":["#FFFFFF", "#2A4FB0", "sleeves"],"tc_pioltellese196":["#1F3F8F", "#F2D21B", "stripes"],"tc_polisportivaom":["#1A2F6B", "#FFFFFF", "sleeves"],"tc_realcrescenzag":["#FFFFFF", "#C8202A", "sleeves"],"tc_unionmulazzano":["#F2D21B", "#D2232A", "sleeves"],"tc_unionotg":["#1A2F6B", "#E0B020", "sleeves"],"tc_vllaznialelite":["#C8202A", "#1F3F8F", "stripes"],"tc_yousport":["#E8492A", "#1F4E5A", "sleeves"],"sp_agape":["#8A6AA8", "#111111", "sleeves"],"sp_cassinanuova":["#8E1F2E", "#FFFFFF", "sleeves"],"sp_circologiovani":["#FFFFFF", "#1E9A4A", "sleeves"],"sp_cittadicinisel":["#7FB8E6", "#FFFFFF", "stripes"],"sp_cologno":["#1E6B3A", "#F2C21B", "sleeves"],"sp_cusunimib":["#111111", "#FFFFFF", "sleeves"],"sp_fcatleticobico":["#D2232A", "#111111", "stripes"],"sp_jcusano1913":["#FFFFFF", "#111111", "sleeves"],"sp_niguardacalcio":["#D2232A", "#1F3F8F", "stripes"],"sp_pero":["#FFFFFF", "#1F5F8F", "halves"],"sp_pioxisperanza":["#2E9A3A", "#F2D21B", "sleeves"],"sp_pronovate":["#FFFFFF", "#D2232A", "sleeves"],"sp_rondinella":["#1F4FA0", "#F2A01B", "sleeves"],"sp_sangiorgio1980":["#FFFFFF", "#C8202A", "sleeves"],"sp_solese":["#F2D21B", "#1E7A3A", "stripes"],"sp_vigorfc":["#1F4FA0", "#FFFFFF", "sleeves"]};
@@ -2301,6 +2314,14 @@ function vPartite(){
     return h;
   }
   var list=S.matches.filter(function(m){return involves(m,my);}).sort(sortMatches);
+  /* filtro casa / trasferta: tre parole; il riassunto compare solo quando se ne sceglie una */
+  if(list.length){
+    var sd=calSide, sum="";
+    if(sd!=="all"){ var o={v:0,n:0,p:0,left:0}; list.forEach(function(m){ if((m.homeId===my)!==(sd==="home")) return; if(!played(m)){ o.left++; return; } var r=resultFor(m,my); if(r==="V") o.v++; else if(r==="P") o.p++; else o.n++; });
+      sum='<span class="sd-sum"><span class="sd-rec"><b>'+(o.v*3+o.n)+' pt</b><i>·</i><span class="r-v">'+o.v+'V</span> <span class="r-n">'+o.n+'N</span> <span class="r-p">'+o.p+'P</span></span>'+(o.left?'<span class="sd-left">'+o.left+' da giocare</span>':'')+'</span>'; }
+    h+='<div class="sdf" role="group" aria-label="Casa o trasferta">'+[["all","Tutte"],["home","Casa"],["away","Trasferta"]].map(function(x){ return '<button type="button" data-side="'+x[0]+'" aria-pressed="'+(sd===x[0])+'">'+x[1]+'</button>'; }).join("")+sum+'</div>';
+    if(sd!=="all") list=list.filter(function(m){ return (m.homeId===my)===(sd==="home"); });
+  }
   var fut=list.filter(function(m){return !played(m);}), past=list.filter(played), nx=fut[0];
   function byMonth(arr){ var g=[], cur=null; arr.forEach(function(m){ var k=(m.date||"").slice(0,7)||"x"; if(!cur||cur.k!==k){ cur={k:k,ms:[]}; g.push(cur); } cur.ms.push(m); }); return g; }
   function monLabel(k){ if(k==="x") return "Data da fissare"; var p=k.split("-"); return ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"][+p[1]-1]+" "+p[0]; }
@@ -2997,6 +3018,7 @@ document.addEventListener("click", function(e){
   if(ds.rstep){ stepRound(+ds.rstep); return; }
 
   if(ds.pedit){ openPlayer(ds.pedit); return; }
+  if(ds.side){ var sv=ds.side; if(sv===calSide) return; calJump=true; smooth(function(){ calSide=sv; render(); }); return; }
   if(ds.pv){ var pv=ds.pv; if(pv==="mine") calJump=true; smooth(function(){ partView=pv; render(); }); return; }
   if(ds.round){ rcJump(+ds.round); return; }
   if(ds.unlogo){ setLogo(ds.unlogo,null); return; }
@@ -3128,7 +3150,7 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
     /* in Partite, risalendo compare da sopra la scelta squadra / per giornata */
     var dy=y-lastY; lastY=y; acc=(acc>0)===(dy>0)?acc+dy:dy; if(Date.now()<autoUntil){ acc=0; } /* salto automatico alla prossima partita: non è uno scorrimento dell'utente, la barra resta */ var sf=$("segfloat"), seg=tab==="partite"?document.querySelector('#app .seg[aria-label="Vista partite"]'):null;
     if(sf){ var hide=true; if(seg){ var tb=$("topbar"), lim=(tb?tb.offsetHeight:50); var gone=seg.getBoundingClientRect().bottom<lim;
-        if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"'); } hide=false; }
+        if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ var sdf=seg.nextElementSibling; sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"')+(sdf&&sdf.classList.contains("sdf")?sdf.outerHTML.replace(/ aria-label="Casa o trasferta"/,' aria-label="Casa o trasferta (in alto)"'):""); } hide=false; }
         else if(gone && acc<=6 && document.body.classList.contains("segup")) hide=false; }
       if(document.body.classList.contains("segup")===hide) document.body.classList.toggle("segup",!hide); }
     if(document.body.classList.contains("scrolled")!==sc) document.body.classList.toggle("scrolled",sc);
