@@ -3310,6 +3310,14 @@
    "ag": 2,
    "scorers": [
     {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_9"
+    },
+    {
+     "teamId": "t_vercellese",
+     "playerId": "p_ver_28"
+    },
+    {
      "teamId": "t_cesano",
      "playerId": "p_ces_27"
     },
@@ -10858,6 +10866,6 @@
    }
   ]
  },
- "updatedAt": "2026-11-15T20:45:14+00:00",
+ "updatedAt": "2026-11-15T22:36:06+00:00",
  "tcRound": 9
 }
