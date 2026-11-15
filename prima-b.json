@@ -2232,9 +2232,30 @@
    "time": "20:30",
    "homeId": "pb_zeta",
    "awayId": "pb_cermenate",
-   "hg": 0,
-   "ag": 2,
-   "scorers": [],
+   "hg": 1,
+   "ag": 3,
+   "scorers": [
+    {
+     "teamId": "pb_zeta",
+     "playerId": "pb_zeta_19",
+     "min": "35' 2T"
+    },
+    {
+     "teamId": "pb_cermenate",
+     "playerId": "pb_cermenate_23",
+     "min": "10' 1T"
+    },
+    {
+     "teamId": "pb_cermenate",
+     "playerId": "pb_cermenate_25",
+     "min": "44' 1T"
+    },
+    {
+     "teamId": "pb_cermenate",
+     "playerId": "pb_cermenate_12",
+     "min": "40' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -9750,7 +9771,7 @@
   }
  ],
  "imported": {
-  "at": "2026-11-15T20:36:49+00:00",
+  "at": "2026-11-15T22:00:08+00:00",
   "round": 10,
   "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
@@ -9795,8 +9816,8 @@
     "v": 6,
     "n": 1,
     "p": 3,
-    "gf": 14,
-    "gs": 10
+    "gf": 15,
+    "gs": 11
    },
    {
     "teamId": "pb_itala",
@@ -9839,8 +9860,8 @@
     "v": 4,
     "n": 3,
     "p": 3,
-    "gf": 20,
-    "gs": 17
+    "gf": 21,
+    "gs": 18
    },
    {
     "teamId": "pb_montesolaro",
@@ -9933,5 +9954,5 @@
   ]
  },
  "tcRound": 9,
- "updatedAt": "2026-11-15T20:36:49+00:00"
+ "updatedAt": "2026-11-15T22:00:08+00:00"
 }
