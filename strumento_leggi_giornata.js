@@ -5,7 +5,8 @@
    Una pagina alla volta con pausa; ogni pagina letta resta in localStorage ("lg_<girone>_<giornata>"),
    quindi se si ferma basta rilanciare: riparte da dove era. Risultato: window.__lg.out (righe di testo)
    Righe: M|giornata|data|ora|casa gol|gol ospite|chiave   S|chiave|frase marcatori   C|pos|squadra|celle della classifica */
-window.LEGGI = async function(gp, N, PAUSA){
+window.LEGGI = async function(gp, N, PAUSA, OPZ){
+  OPZ = OPZ || {};
   PAUSA = PAUSA || 3000;
   const KEY = 'lg_'+gp+'_'+N, B = 'https://www.tuttocampo.it/Lombardia/'+gp+'/';
   const st = JSON.parse(localStorage.getItem(KEY) || '{}'); const save = () => localStorage.setItem(KEY, JSON.stringify(st));
@@ -32,9 +33,10 @@ window.LEGGI = async function(gp, N, PAUSA){
   __lg.step = 'partite'; const S = [];
   for (const l of M) { const c = l.split('|'); const hg = (c[4].match(/(\d+)$/)||[])[1], ag = (c[5].match(/^(\d+)/)||[])[1];
     if (hg === undefined || ag === undefined || +hg + +ag === 0) continue;
+    if (OPZ.solo && OPZ.solo.indexOf(c[6]) < 0) continue;   /* ricontrollo: solo le partite che hanno ancora qualcosa da sistemare */
     const s = await page(B+'Partita/'+c[6]+'/x', d => /Per [^\n]*? in gol/.test(d.body ? d.body.innerText : ''), d => { const m = d.body.innerText.match(/(?:^|\n)\s*(Per [^\n]*? in gol[^\n]*)/); return m ? m[1].trim() : ''; }, 20000);
     S.push('S|'+c[6]+'|'+(s||'')); }
-  __lg.step = 'giornata dopo'; const M2 = await page(B+'Giornata'+(N+1), hasRows, d => rowsOf(d, N+1)) || [];
+  __lg.step = 'giornata dopo'; const M2 = OPZ.dopo === false ? [] : (await page(B+'Giornata'+(N+1), hasRows, d => rowsOf(d, N+1)) || []);
   __lg.step = 'classifica'; const C = await page(B+'Classifica', d => d.querySelectorAll('table tr a[href*="/Squadra/"]').length, d => {
     const t = [...d.querySelectorAll('table')].find(t => t.querySelector('a[href*="/Squadra/"]')); if (!t) return [];
     return [...t.querySelectorAll('tr')].filter(r => r.querySelector('a[href*="/Squadra/"]')).map(r => 'C|'+[...r.cells].map(c => c.innerText.replace(/\s+/g,' ').trim()).join('|')); }) || [];
@@ -42,3 +44,27 @@ window.LEGGI = async function(gp, N, PAUSA){
   return __lg.out.length + ' righe lette' + (__lg.err.length ? ', avvisi: ' + __lg.err.join('; ') : '');
 };
 'pronto: LEGGI("SecondaCategoria/GironeOMilano", N)'
+
+
+/* RIGHE: legge solo la pagina della giornata N (risultati di tutte le partite, con la chiave di ogni partita).
+   Serve al ricontrollo: si confrontano i risultati con quelli già salvati (strumento_da_ricontrollare.py)
+   e poi si leggono con LEGGI(gp, N, 3000, {solo: [...], dopo: false}) solo le partite che hanno ancora qualcosa da sistemare.
+   La pagina letta resta in localStorage con la stessa chiave di LEGGI, così LEGGI non la rilegge. */
+window.RIGHE = async function(gp, N){
+  const KEY = 'lg_'+gp+'_'+N, B = 'https://www.tuttocampo.it/Lombardia/'+gp+'/', u = B+'Giornata'+N;
+  const st = JSON.parse(localStorage.getItem(KEY) || '{}');
+  if (!st[u]) {
+    const f = document.createElement('iframe'); f.style.cssText='position:fixed;left:0;top:0;width:1200px;height:900px;opacity:.01;pointer-events:none;z-index:-1;border:0'; document.body.appendChild(f);
+    const sleep = ms => new Promise(r => setTimeout(r, ms)); f.src = u; const t = Date.now(); let last = -1; await sleep(500);
+    while (Date.now()-t < 25000) { let v = 0; try { const d = f.contentDocument; if (d && d.location.href.indexOf('/Giornata'+N) >= 0) v = [...d.querySelectorAll('tr')].filter(t => /Partita\/\d/.test(t.innerHTML)).length; } catch(e){}
+      if (v > 0 && v === last) break; last = v; await sleep(350); }
+    let date = ''; const out = [];
+    [...f.contentDocument.querySelectorAll('tr')].forEach(t => { const tx = t.innerText.replace(/\s+/g,' ').trim();
+      const dm = tx.match(/^(LUN|MAR|MER|GIO|VEN|SAB|DOM)[A-Z]*\.?\s+(\d+\s+[A-Z]+)/i); if (dm && !/Partita/.test(t.innerHTML)) { date = dm[2].toUpperCase(); return; }
+      const a = [...t.querySelectorAll('a')].map(a => a.getAttribute('href')).find(h => /\/Partita\/\d+\.\d+/.test(h||''));
+      if (a) { const c = [...t.cells].map(c => c.innerText.replace(/\s+/g,' ').trim()); out.push('M|'+N+'|'+date+'|'+c[0]+'|'+c[1]+'|'+c[2]+'|'+a.match(/Partita\/(\d+\.\d+)/)[1]); } });
+    f.remove(); if (out.length) { st[u] = out; localStorage.setItem(KEY, JSON.stringify(st)); }
+    await sleep(3000);
+  }
+  return st[u] || [];
+};
