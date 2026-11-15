@@ -2368,9 +2368,31 @@
    "time": "17:00",
    "homeId": "sp_agape",
    "awayId": "sp_pero",
-   "hg": 3,
+   "hg": 4,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "sp_agape",
+     "playerId": "sp_agape_18",
+     "min": "2' 1T"
+    },
+    {
+     "teamId": "sp_agape",
+     "playerId": "sp_agape_20"
+    },
+    {
+     "teamId": "sp_agape",
+     "playerId": "sp_agape_20"
+    },
+    {
+     "teamId": "sp_agape",
+     "playerId": "sp_agape_28"
+    },
+    {
+     "teamId": "sp_pero",
+     "playerId": "sp_pero_14"
+    }
+   ],
    "cards": []
   },
   {
@@ -2380,9 +2402,30 @@
    "time": "17:30",
    "homeId": "sp_circologiovani",
    "awayId": "sp_rondinella",
-   "hg": 0,
-   "ag": 0,
-   "scorers": [],
+   "hg": 2,
+   "ag": 2,
+   "scorers": [
+    {
+     "teamId": "sp_circologiovani",
+     "playerId": "sp_circologiovani_7",
+     "min": "28' 2T"
+    },
+    {
+     "teamId": "sp_circologiovani",
+     "playerId": "sp_circologiovani_7",
+     "min": "37' 2T"
+    },
+    {
+     "teamId": "sp_rondinella",
+     "playerId": "sp_rondinella_8",
+     "min": "25' 2T"
+    },
+    {
+     "teamId": "sp_rondinella",
+     "playerId": "sp_rondinella_8",
+     "min": "51' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -2392,9 +2435,34 @@
    "time": "18:30",
    "homeId": "sp_cusunimib",
    "awayId": "sp_vigorfc",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 2,
+   "ag": 4,
+   "scorers": [
+    {
+     "teamId": "sp_cusunimib",
+     "playerId": "sp_cusunimib_22"
+    },
+    {
+     "teamId": "sp_cusunimib",
+     "playerId": "sp_cusunimib_4"
+    },
+    {
+     "teamId": "sp_vigorfc",
+     "playerId": "sp_vigorfc_4"
+    },
+    {
+     "teamId": "sp_vigorfc",
+     "playerId": "sp_vigorfc_22"
+    },
+    {
+     "teamId": "sp_vigorfc",
+     "playerId": "sp_vigorfc_22"
+    },
+    {
+     "teamId": "sp_vigorfc",
+     "playerId": "sp_vigorfc_6"
+    }
+   ],
    "cards": []
   },
   {
@@ -10301,7 +10369,7 @@
   }
  ],
  "imported": {
-  "at": "2026-11-15T17:36:38+00:00",
+  "at": "2026-11-15T20:36:49+00:00",
   "round": 10,
   "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
@@ -10324,12 +10392,23 @@
     "v": 6,
     "n": 2,
     "p": 2,
-    "gf": 29,
+    "gf": 30,
     "gs": 10
    },
    {
-    "teamId": "sp_cologno",
+    "teamId": "sp_vigorfc",
     "pos": 3,
+    "pts": 19,
+    "g": 10,
+    "v": 6,
+    "n": 1,
+    "p": 3,
+    "gf": 27,
+    "gs": 22
+   },
+   {
+    "teamId": "sp_cologno",
+    "pos": 4,
     "pts": 19,
     "g": 10,
     "v": 6,
@@ -10340,7 +10419,7 @@
    },
    {
     "teamId": "sp_pioxisperanza",
-    "pos": 4,
+    "pos": 5,
     "pts": 18,
     "g": 10,
     "v": 6,
@@ -10351,7 +10430,7 @@
    },
    {
     "teamId": "sp_cassinanuova",
-    "pos": 5,
+    "pos": 6,
     "pts": 18,
     "g": 10,
     "v": 4,
@@ -10362,7 +10441,7 @@
    },
    {
     "teamId": "sp_cittadicinisel",
-    "pos": 6,
+    "pos": 7,
     "pts": 17,
     "g": 10,
     "v": 5,
@@ -10373,25 +10452,14 @@
    },
    {
     "teamId": "sp_pero",
-    "pos": 7,
+    "pos": 8,
     "pts": 17,
     "g": 10,
     "v": 4,
     "n": 5,
     "p": 1,
     "gf": 21,
-    "gs": 18
-   },
-   {
-    "teamId": "sp_vigorfc",
-    "pos": 8,
-    "pts": 16,
-    "g": 9,
-    "v": 5,
-    "n": 1,
-    "p": 3,
-    "gf": 23,
-    "gs": 20
+    "gs": 19
    },
    {
     "teamId": "sp_solese",
@@ -10434,8 +10502,8 @@
     "v": 3,
     "n": 1,
     "p": 6,
-    "gf": 12,
-    "gs": 16
+    "gf": 14,
+    "gs": 18
    },
    {
     "teamId": "sp_sangiorgio1980",
@@ -10452,12 +10520,12 @@
     "teamId": "sp_cusunimib",
     "pos": 14,
     "pts": 5,
-    "g": 9,
+    "g": 10,
     "v": 1,
     "n": 2,
-    "p": 6,
-    "gf": 13,
-    "gs": 25
+    "p": 7,
+    "gf": 15,
+    "gs": 29
    },
    {
     "teamId": "sp_jcusano1913",
@@ -10478,11 +10546,11 @@
     "v": 0,
     "n": 4,
     "p": 6,
-    "gf": 10,
-    "gs": 24
+    "gf": 12,
+    "gs": 26
    }
   ]
  },
  "tcRound": 9,
- "updatedAt": "2026-11-15T17:36:38+00:00"
+ "updatedAt": "2026-11-15T20:36:49+00:00"
 }

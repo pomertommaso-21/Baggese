@@ -3456,9 +3456,26 @@
    "time": "18:30",
    "homeId": "t_velasca",
    "awayId": "t_bonola",
-   "hg": "",
-   "ag": "",
-   "scorers": [],
+   "hg": 2,
+   "ag": 3,
+   "scorers": [
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_17",
+     "min": "4' 1T"
+    },
+    {
+     "teamId": "t_bonola",
+     "playerId": "p_bon_21",
+     "min": "41' 1T"
+    },
+    {
+     "teamId": "t_bonola",
+     "og": true,
+     "name": "Autogol",
+     "min": "1' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -10651,7 +10668,7 @@
   }
  ],
  "imported": {
-  "at": "2026-11-15T17:36:38+00:00",
+  "at": "2026-11-15T20:36:49+00:00",
   "round": 10,
   "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
@@ -10667,8 +10684,19 @@
     "gs": 7
    },
    {
-    "teamId": "t_corsico",
+    "teamId": "t_bonola",
     "pos": 2,
+    "pts": 21,
+    "g": 10,
+    "v": 6,
+    "n": 3,
+    "p": 1,
+    "gf": 28,
+    "gs": 10
+   },
+   {
+    "teamId": "t_corsico",
+    "pos": 3,
     "pts": 21,
     "g": 10,
     "v": 7,
@@ -10679,7 +10707,7 @@
    },
    {
     "teamId": "t_ardor",
-    "pos": 3,
+    "pos": 4,
     "pts": 20,
     "g": 10,
     "v": 6,
@@ -10690,7 +10718,7 @@
    },
    {
     "teamId": "t_vige",
-    "pos": 4,
+    "pos": 5,
     "pts": 19,
     "g": 10,
     "v": 5,
@@ -10698,17 +10726,6 @@
     "p": 1,
     "gf": 28,
     "gs": 15
-   },
-   {
-    "teamId": "t_bonola",
-    "pos": 5,
-    "pts": 18,
-    "g": 9,
-    "v": 5,
-    "n": 3,
-    "p": 1,
-    "gf": 25,
-    "gs": 8
    },
    {
     "teamId": "t_artemide",
@@ -10725,12 +10742,12 @@
     "teamId": "t_velasca",
     "pos": 7,
     "pts": 17,
-    "g": 9,
+    "g": 10,
     "v": 5,
     "n": 2,
-    "p": 2,
-    "gf": 14,
-    "gs": 11
+    "p": 3,
+    "gf": 16,
+    "gs": 14
    },
    {
     "teamId": "t_baggese",
@@ -10833,6 +10850,6 @@
    }
   ]
  },
- "updatedAt": "2026-11-15T17:36:38+00:00",
+ "updatedAt": "2026-11-15T20:36:49+00:00",
  "tcRound": 9
 }

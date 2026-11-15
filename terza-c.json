@@ -2502,8 +2502,28 @@
    "homeId": "tc_labomba",
    "awayId": "tc_cavallinobianc",
    "hg": 2,
-   "ag": 0,
-   "scorers": [],
+   "ag": 2,
+   "scorers": [
+    {
+     "teamId": "tc_labomba",
+     "playerId": "tc_labomba_13",
+     "min": "39' 1T"
+    },
+    {
+     "teamId": "tc_labomba",
+     "playerId": "tc_labomba_19"
+    },
+    {
+     "teamId": "tc_cavallinobianc",
+     "playerId": "tc_cavallinobianc_32",
+     "min": "2' 2T"
+    },
+    {
+     "teamId": "tc_cavallinobianc",
+     "playerId": "tc_cavallinobianc_3",
+     "min": "18' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -2513,9 +2533,25 @@
    "time": "17:30",
    "homeId": "tc_yousport",
    "awayId": "tc_unionmulazzano",
-   "hg": 0,
-   "ag": 0,
-   "scorers": [],
+   "hg": 2,
+   "ag": 3,
+   "scorers": [
+    {
+     "teamId": "tc_unionmulazzano",
+     "playerId": "tc_unionmulazzano_12",
+     "min": "45' 2T",
+     "pen": true
+    },
+    {
+     "teamId": "tc_unionmulazzano",
+     "playerId": "tc_unionmulazzano_2",
+     "min": "49' 2T"
+    },
+    {
+     "teamId": "tc_unionmulazzano",
+     "playerId": "tc_unionmulazzano_9"
+    }
+   ],
    "cards": []
   },
   {
@@ -2525,9 +2561,38 @@
    "time": "18:30",
    "homeId": "tc_unionotg",
    "awayId": "tc_realcrescenzag",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 3,
+   "ag": 5,
+   "scorers": [
+    {
+     "teamId": "tc_unionotg",
+     "playerId": "tc_unionotg_16"
+    },
+    {
+     "teamId": "tc_unionotg",
+     "playerId": "tc_unionotg_16"
+    },
+    {
+     "teamId": "tc_unionotg",
+     "playerId": "tc_unionotg_7"
+    },
+    {
+     "teamId": "tc_realcrescenzag",
+     "playerId": "tc_realcrescenzag_10"
+    },
+    {
+     "teamId": "tc_realcrescenzag",
+     "playerId": "tc_realcrescenzag_23"
+    },
+    {
+     "teamId": "tc_realcrescenzag",
+     "playerId": "tc_realcrescenzag_17"
+    },
+    {
+     "teamId": "tc_realcrescenzag",
+     "playerId": "tc_realcrescenzag_26"
+    }
+   ],
    "cards": []
   },
   {
@@ -9414,7 +9479,7 @@
   }
  ],
  "imported": {
-  "at": "2026-11-15T17:36:38+00:00",
+  "at": "2026-11-15T20:36:49+00:00",
   "round": 10,
   "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
@@ -9454,12 +9519,12 @@
    {
     "teamId": "tc_cavallinobianc",
     "pos": 4,
-    "pts": 19,
+    "pts": 20,
     "g": 10,
     "v": 5,
-    "n": 4,
-    "p": 1,
-    "gf": 28,
+    "n": 5,
+    "p": 0,
+    "gf": 30,
     "gs": 17
    },
    {
@@ -9474,30 +9539,41 @@
     "gs": 14
    },
    {
-    "teamId": "tc_labomba",
+    "teamId": "tc_unionmulazzano",
     "pos": 6,
     "pts": 16,
     "g": 9,
     "v": 5,
     "n": 1,
     "p": 3,
-    "gf": 25,
-    "gs": 16
+    "gf": 27,
+    "gs": 22
    },
    {
-    "teamId": "tc_unionmulazzano",
+    "teamId": "tc_realcrescenzag",
     "pos": 7,
+    "pts": 15,
+    "g": 9,
+    "v": 5,
+    "n": 0,
+    "p": 4,
+    "gf": 31,
+    "gs": 13
+   },
+   {
+    "teamId": "tc_labomba",
+    "pos": 8,
     "pts": 14,
     "g": 9,
     "v": 4,
     "n": 2,
     "p": 3,
-    "gf": 24,
-    "gs": 20
+    "gf": 25,
+    "gs": 18
    },
    {
     "teamId": "tc_nuovabolgiano",
-    "pos": 8,
+    "pos": 9,
     "pts": 13,
     "g": 10,
     "v": 4,
@@ -9507,37 +9583,26 @@
     "gs": 25
    },
    {
-    "teamId": "tc_realcrescenzag",
-    "pos": 9,
-    "pts": 12,
-    "g": 8,
-    "v": 4,
-    "n": 0,
-    "p": 4,
-    "gf": 26,
-    "gs": 10
-   },
-   {
     "teamId": "tc_yousport",
     "pos": 10,
-    "pts": 10,
+    "pts": 9,
     "g": 9,
     "v": 2,
-    "n": 4,
-    "p": 3,
-    "gf": 20,
-    "gs": 15
+    "n": 3,
+    "p": 4,
+    "gf": 22,
+    "gs": 18
    },
    {
     "teamId": "tc_unionotg",
     "pos": 11,
     "pts": 9,
-    "g": 9,
+    "g": 10,
     "v": 3,
     "n": 0,
-    "p": 6,
-    "gf": 19,
-    "gs": 23
+    "p": 7,
+    "gf": 22,
+    "gs": 28
    },
    {
     "teamId": "tc_enotria1908",
@@ -9586,5 +9651,5 @@
   ]
  },
  "tcRound": 9,
- "updatedAt": "2026-11-15T17:36:38+00:00"
+ "updatedAt": "2026-11-15T20:36:49+00:00"
 }

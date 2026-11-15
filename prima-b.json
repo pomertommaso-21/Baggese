@@ -2232,8 +2232,8 @@
    "time": "20:30",
    "homeId": "pb_zeta",
    "awayId": "pb_cermenate",
-   "hg": null,
-   "ag": null,
+   "hg": 0,
+   "ag": 2,
    "scorers": [],
    "cards": []
   },
@@ -9750,7 +9750,7 @@
   }
  ],
  "imported": {
-  "at": "2026-11-15T17:36:38+00:00",
+  "at": "2026-11-15T20:36:49+00:00",
   "round": 10,
   "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
@@ -9788,8 +9788,19 @@
     "gs": 16
    },
    {
-    "teamId": "pb_itala",
+    "teamId": "pb_cermenate",
     "pos": 4,
+    "pts": 19,
+    "g": 10,
+    "v": 6,
+    "n": 1,
+    "p": 3,
+    "gf": 14,
+    "gs": 10
+   },
+   {
+    "teamId": "pb_itala",
+    "pos": 5,
     "pts": 17,
     "g": 10,
     "v": 5,
@@ -9800,7 +9811,7 @@
    },
    {
     "teamId": "pb_triuggese",
-    "pos": 5,
+    "pos": 6,
     "pts": 16,
     "g": 10,
     "v": 4,
@@ -9808,17 +9819,6 @@
     "p": 2,
     "gf": 19,
     "gs": 15
-   },
-   {
-    "teamId": "pb_cermenate",
-    "pos": 6,
-    "pts": 16,
-    "g": 9,
-    "v": 5,
-    "n": 1,
-    "p": 3,
-    "gf": 12,
-    "gs": 10
    },
    {
     "teamId": "pb_leoteam",
@@ -9835,12 +9835,12 @@
     "teamId": "pb_zeta",
     "pos": 8,
     "pts": 15,
-    "g": 9,
+    "g": 10,
     "v": 4,
     "n": 3,
-    "p": 2,
+    "p": 3,
     "gf": 20,
-    "gs": 15
+    "gs": 17
    },
    {
     "teamId": "pb_montesolaro",
@@ -9933,5 +9933,5 @@
   ]
  },
  "tcRound": 9,
- "updatedAt": "2026-11-15T17:36:38+00:00"
+ "updatedAt": "2026-11-15T20:36:49+00:00"
 }

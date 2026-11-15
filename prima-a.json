@@ -2406,6 +2406,10 @@
      "teamId": "pa_sangiulianocvs",
      "playerId": "pa_sangiulianocvs_9",
      "pen": true
+    },
+    {
+     "teamId": "pa_garibaldina193",
+     "playerId": "pa_garibaldina193_1"
     }
    ],
    "cards": []
@@ -2476,7 +2480,25 @@
    "awayId": "pa_iris1914",
    "hg": 3,
    "ag": 1,
-   "scorers": [],
+   "scorers": [
+    {
+     "teamId": "pa_partizanbonola",
+     "playerId": "pa_partizanbonola_9"
+    },
+    {
+     "teamId": "pa_partizanbonola",
+     "playerId": "pa_partizanbonola_10"
+    },
+    {
+     "teamId": "pa_partizanbonola",
+     "playerId": "pa_partizanbonola_11"
+    },
+    {
+     "teamId": "pa_iris1914",
+     "playerId": "pa_iris1914_1",
+     "min": "39' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -10461,7 +10483,7 @@
   }
  ],
  "imported": {
-  "at": "2026-11-15T17:36:38+00:00",
+  "at": "2026-11-15T20:36:49+00:00",
   "round": 10,
   "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
@@ -10644,5 +10666,5 @@
   ]
  },
  "tcRound": 9,
- "updatedAt": "2026-11-15T17:36:38+00:00"
+ "updatedAt": "2026-11-15T20:36:49+00:00"
 }
