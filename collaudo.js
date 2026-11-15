@@ -78,6 +78,18 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
           const h2 = await p.evaluate(() => document.getElementById('roundCard').getBoundingClientRect().height);
           if (Math.abs(h1 - h2) > 1) problemi.push(`${tag}: La giornata in breve: la scheda cambia altezza a poco a poco (su iPhone trema)`);
           await gb.click(); await p.waitForTimeout(200); } } }
+    /* Calendario della squadra, filtro Tutte / Casa / Trasferta: la scelta nasconde le righe sul posto, senza ridisegnare né spostare la pagina */
+    if (await tap('#app [data-pv="mine"]')) { await p.waitForTimeout(1200);
+      if (await p.locator('#app .sdf [data-side="away"]').count()) {
+        await p.evaluate(() => { scrollTo(0, 0); const ch = document.querySelector('#app > *'); if (ch) ch.__mk = 1; }); await p.waitForTimeout(300);
+        await p.locator('#app .sdf [data-side="away"]').click(); await p.waitForTimeout(500);
+        const r = await p.evaluate(() => { const ch = document.querySelector('#app > *'); const vis = [...document.querySelectorAll('#app .cal-row')].filter(x => x.offsetParent !== null);
+          return { mk: !!(ch && ch.__mk), y: scrollY, casa: vis.filter(x => / in casa/.test(x.textContent)).length, vis: vis.length, sum: !!document.querySelector('#app .sdf .sd-sum:not([hidden])') }; });
+        if (!r.mk) problemi.push(`${tag}: Calendario: scegliendo Trasferta la pagina si ridisegna`);
+        if (r.y > 2) problemi.push(`${tag}: Calendario: scegliendo Trasferta la pagina si sposta`);
+        if (r.casa || !r.vis) problemi.push(`${tag}: Calendario: il filtro Trasferta non mostra le partite giuste`);
+        if (!r.sum) problemi.push(`${tag}: Calendario: manca il riassunto di Trasferta`);
+        await p.locator('#app .sdf [data-side="all"]').click(); await p.waitForTimeout(300); } }
     /* toccare un punto qualsiasi (non un pulsante) non deve ridisegnare la pagina */
     for (const t of ['classifica', 'partite']) { await tap(`nav.tabs [data-tab="${t}"]`); await p.waitForTimeout(500);
       await p.evaluate(() => { const ch = document.querySelector('#app > *'); if (ch) ch.__mk = 1; });

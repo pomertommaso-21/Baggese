@@ -1112,7 +1112,8 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 .sdf .r-v{color:var(--win-ink)}.sdf .r-p{color:var(--loss-ink)}
 .sdf .sd-left{font-size:11px;font-weight:600;opacity:.85}
 @keyframes sdIn{from{opacity:0;transform:translateX(4px)}to{opacity:1;transform:none}}
-.segfloat .sdf{margin:6px 0 -4px}
+.cal-part,.cal-mon{display:contents}.cal-part[hidden],.cal-mon[hidden],.cal-row[hidden],.sdf .sd-sum[hidden]{display:none}
+.list>.cal-row.fv{border-top:0}
 @media (max-width:370px){.sdf button{padding:5px 8px}.sdf .sd-sum{font-size:11.5px}}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
@@ -1143,7 +1144,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-15.1";
+var APP_VERSION="2026-11-15.2";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1736,6 +1737,7 @@ function render(){
   var v={home:vHome,partite:vPartite,classifica:vClassifica,rosa:vRosa,gestione:vGestione}[tab];
   if(NAVBACK&&NAVBACK.to!==tab) NAVBACK=null;
   $("app").innerHTML='<div class="view">'+(NAVBACK?'<button type="button" class="navback" data-navback="1">'+icon("left")+'<span>'+esc(navLabel())+'</span></button>':'')+v()+'</div>';
+  if(tab==="partite" && partView==="mine") sideApply();
   document.body.classList.remove("navhide");
   var tt={home:[me(),tname(me())],partite:[null,"Partite"],classifica:[null,"Classifica"],rosa:[curRosaTeam(),tname(curRosaTeam())],gestione:[null,"Gestione"]}[tab];
   $("topbar").innerHTML=(tt[0]?crest(tt[0],26):'')+'<span class="ellipsis">'+esc(tt[1])+'</span>'; document.body.classList.remove("segup");
@@ -2314,33 +2316,43 @@ function vPartite(){
     return h;
   }
   var list=S.matches.filter(function(m){return involves(m,my);}).sort(sortMatches);
-  /* filtro casa / trasferta: tre parole; il riassunto compare solo quando se ne sceglie una */
+  /* filtro casa / trasferta: tre parole; il riassunto compare solo quando se ne sceglie una.
+     Le righe ci sono tutte: la scelta le nasconde sul posto (sideApply), senza ridisegnare la pagina né spostarla */
   if(list.length){
-    var sd=calSide, sum="";
-    if(sd!=="all"){ var o={v:0,n:0,p:0,left:0}; list.forEach(function(m){ if((m.homeId===my)!==(sd==="home")) return; if(!played(m)){ o.left++; return; } var r=resultFor(m,my); if(r==="V") o.v++; else if(r==="P") o.p++; else o.n++; });
-      sum='<span class="sd-sum"><span class="sd-rec"><b>'+(o.v*3+o.n)+' pt</b><i>·</i><span class="r-v">'+o.v+'V</span> <span class="r-n">'+o.n+'N</span> <span class="r-p">'+o.p+'P</span></span>'+(o.left?'<span class="sd-left">'+o.left+' da giocare</span>':'')+'</span>'; }
-    h+='<div class="sdf" role="group" aria-label="Casa o trasferta">'+[["all","Tutte"],["home","Casa"],["away","Trasferta"]].map(function(x){ return '<button type="button" data-side="'+x[0]+'" aria-pressed="'+(sd===x[0])+'">'+x[1]+'</button>'; }).join("")+sum+'</div>';
-    if(sd!=="all") list=list.filter(function(m){ return (m.homeId===my)===(sd==="home"); });
+    var sums=["home","away"].map(function(sd){ var o={v:0,n:0,p:0,left:0}; list.forEach(function(m){ if((m.homeId===my)!==(sd==="home")) return; if(!played(m)){ o.left++; return; } var r=resultFor(m,my); if(r==="V") o.v++; else if(r==="P") o.p++; else o.n++; });
+      return '<span class="sd-sum" data-s="'+sd+'" hidden><span class="sd-rec"><b>'+(o.v*3+o.n)+' pt</b><i>·</i><span class="r-v">'+o.v+'V</span> <span class="r-n">'+o.n+'N</span> <span class="r-p">'+o.p+'P</span></span>'+(o.left?'<span class="sd-left">'+o.left+' da giocare</span>':'')+'</span>'; }).join("");
+    h+='<div class="sdf" role="group" aria-label="Casa o trasferta">'+[["all","Tutte"],["home","Casa"],["away","Trasferta"]].map(function(x){ return '<button type="button" data-side="'+x[0]+'" aria-pressed="false">'+x[1]+'</button>'; }).join("")+sums+'</div>';
   }
   var fut=list.filter(function(m){return !played(m);}), past=list.filter(played), nx=fut[0];
   function byMonth(arr){ var g=[], cur=null; arr.forEach(function(m){ var k=(m.date||"").slice(0,7)||"x"; if(!cur||cur.k!==k){ cur={k:k,ms:[]}; g.push(cur); } cur.ms.push(m); }); return g; }
   function monLabel(k){ if(k==="x") return "Data da fissare"; var p=k.split("-"); return ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"][+p[1]-1]+" "+p[0]; }
   if(past.length){
-    h+='<h2 style="margin-bottom:-4px">Già giocate</h2>';
-    byMonth(past).forEach(function(g){ h+='<div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,false); }).join("")+'</div></section>'; });
+    h+='<div class="cal-part"><h2 style="margin-bottom:-4px">Già giocate</h2>';
+    byMonth(past).forEach(function(g){ h+='<div class="cal-mon"><div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,false); }).join("")+'</div></section></div>'; });
+    h+='</div>';
   }
   if(fut.length){
     var dated=fut.filter(function(m){return m.date;}).length;
-    h+='<div class="row between" id="calNext" style="margin-bottom:-4px'+(past.length?';margin-top:10px':'')+'"><h2>Prossime partite</h2>'+(dated?'<button class="linkbtn" type="button" data-ics="all">'+icon("calplus")+'Aggiungi tutte al calendario</button>':'')+'</div>';
-    byMonth(fut).forEach(function(g){ h+='<div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,m===nx); }).join("")+'</div></section>'; });
+    h+='<div class="cal-part"><div class="row between" id="calNext" style="margin-bottom:-4px'+(past.length?';margin-top:10px':'')+'"><h2>Prossime partite</h2>'+(dated?'<button class="linkbtn" type="button" data-ics="all">'+icon("calplus")+'Aggiungi tutte al calendario</button>':'')+'</div>';
+    byMonth(fut).forEach(function(g){ h+='<div class="cal-mon"><div class="mon">'+monLabel(g.k)+'</div><section class="card flush"><div class="list">'+g.ms.map(function(m){ return calRow(m,m===nx); }).join("")+'</div></section></div>'; });
+    h+='</div>';
   }
   return h;
+}
+function sideApply(){
+  var app=$("app"), sv=calSide, q=function(sel){ return Array.prototype.slice.call(app.querySelectorAll(sel)); };
+  if(!app.querySelector(".sdf")) return;
+  q(".sdf [data-side]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-side")===sv)); });
+  q(".sdf .sd-sum").forEach(function(x){ x.hidden = x.getAttribute("data-s")!==sv; });
+  q(".cal-row[data-h]").forEach(function(r){ r.hidden = sv!=="all" && (r.getAttribute("data-h")==="1")!==(sv==="home"); });
+  q(".cal-mon,.cal-part").forEach(function(g){ g.hidden = !g.querySelector(".cal-row[data-h]:not([hidden])"); });
+  q(".list").forEach(function(l){ var first=true; Array.prototype.forEach.call(l.children,function(r){ if(!r.classList.contains("cal-row")) return; r.classList.toggle("fv", first && !r.hidden); if(!r.hidden) first=false; }); });
 }
 function calRow(m,isNext){
   var my=me(), home=m.homeId===my, opp=home?m.awayId:m.homeId, r=resultFor(m,my), dt=null;
   if(m.date){ var p=m.date.split("-"); dt=new Date(+p[0],+p[1]-1,+p[2]); }
   var wl=whenLabel(m.date), meta=[(m.round?m.round+'ª giornata':''),(home?'in casa':'in trasferta'),(m.time?esc(m.time):''),(isNext&&wl?wl.toLowerCase():'')].filter(Boolean).join(' · ');
-  return '<div class="cal-row'+(isNext?' next':'')+'"><button type="button" class="cal-main" data-view="'+m.id+'"><span class="dtile">'+(dt?'<b>'+dt.getDate()+'</b><span>'+["dom","lun","mar","mer","gio","ven","sab"][dt.getDay()]+'</span>':'<b>–</b>')+'</span><span class="col" style="min-width:0;gap:2px"><span class="t">'+crest(opp,28)+'<b class="ellipsis">'+esc(tname(opp))+'</b></span><span class="meta">'+meta+'</span></span>'+(played(m)?'<span class="fx-score"><span class="num">'+esc(m.hg)+'–'+esc(m.ag)+'</span><span class="res-dot r-'+r+'">'+r+'</span></span>':'')+'</button>'+(!played(m)&&m.date?'<button type="button" class="ical" data-ics="'+m.id+'" aria-label="Aggiungi al calendario">'+icon("calplus")+'</button>':'')+'</div>';
+  return '<div class="cal-row'+(isNext?' next':'')+'" data-h="'+(home?1:0)+'"><button type="button" class="cal-main" data-view="'+m.id+'"><span class="dtile">'+(dt?'<b>'+dt.getDate()+'</b><span>'+["dom","lun","mar","mer","gio","ven","sab"][dt.getDay()]+'</span>':'<b>–</b>')+'</span><span class="col" style="min-width:0;gap:2px"><span class="t">'+crest(opp,28)+'<b class="ellipsis">'+esc(tname(opp))+'</b></span><span class="meta">'+meta+'</span></span>'+(played(m)?'<span class="fx-score"><span class="num">'+esc(m.hg)+'–'+esc(m.ag)+'</span><span class="res-dot r-'+r+'">'+r+'</span></span>':'')+'</button>'+(!played(m)&&m.date?'<button type="button" class="ical" data-ics="'+m.id+'" aria-label="Aggiungi al calendario">'+icon("calplus")+'</button>':'')+'</div>';
 }
 function icsEsc(t){ return String(t).replace(/\\/g,"\\\\").replace(/;/g,"\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"); }
 function pad2(n){ return (n<10?"0":"")+n; }
@@ -3018,7 +3030,7 @@ document.addEventListener("click", function(e){
   if(ds.rstep){ stepRound(+ds.rstep); return; }
 
   if(ds.pedit){ openPlayer(ds.pedit); return; }
-  if(ds.side){ var sv=ds.side; if(sv===calSide) return; calJump=true; smooth(function(){ calSide=sv; render(); }); return; }
+  if(ds.side){ if(ds.side!==calSide){ calSide=ds.side; sideApply(); } return; }
   if(ds.pv){ var pv=ds.pv; if(pv==="mine") calJump=true; smooth(function(){ partView=pv; render(); }); return; }
   if(ds.round){ rcJump(+ds.round); return; }
   if(ds.unlogo){ setLogo(ds.unlogo,null); return; }
@@ -3150,7 +3162,7 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
     /* in Partite, risalendo compare da sopra la scelta squadra / per giornata */
     var dy=y-lastY; lastY=y; acc=(acc>0)===(dy>0)?acc+dy:dy; if(Date.now()<autoUntil){ acc=0; } /* salto automatico alla prossima partita: non è uno scorrimento dell'utente, la barra resta */ var sf=$("segfloat"), seg=tab==="partite"?document.querySelector('#app .seg[aria-label="Vista partite"]'):null;
     if(sf){ var hide=true; if(seg){ var tb=$("topbar"), lim=(tb?tb.offsetHeight:50); var gone=seg.getBoundingClientRect().bottom<lim;
-        if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ var sdf=seg.nextElementSibling; sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"')+(sdf&&sdf.classList.contains("sdf")?sdf.outerHTML.replace(/ aria-label="Casa o trasferta"/,' aria-label="Casa o trasferta (in alto)"'):""); } hide=false; }
+        if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"'); } hide=false; }
         else if(gone && acc<=6 && document.body.classList.contains("segup")) hide=false; }
       if(document.body.classList.contains("segup")===hide) document.body.classList.toggle("segup",!hide); }
     if(document.body.classList.contains("scrolled")!==sc) document.body.classList.toggle("scrolled",sc);
