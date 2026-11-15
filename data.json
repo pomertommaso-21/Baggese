@@ -3154,9 +3154,30 @@
    "time": "14:30",
    "homeId": "t_vige",
    "awayId": "t_seguro",
-   "hg": "",
-   "ag": "",
-   "scorers": [],
+   "hg": 2,
+   "ag": 2,
+   "scorers": [
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_12",
+     "min": "42' 1T"
+    },
+    {
+     "teamId": "t_vige",
+     "playerId": "p_vig_24",
+     "min": "15' 2T"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_18",
+     "min": "8' 2T"
+    },
+    {
+     "teamId": "t_seguro",
+     "playerId": "p_seg_4",
+     "min": "33' 2T"
+    }
+   ],
    "cards": []
   },
   {
@@ -3178,9 +3199,31 @@
    "time": "14:30",
    "homeId": "t_corsico",
    "awayId": "t_baggese",
-   "hg": "",
-   "ag": "",
-   "scorers": [],
+   "hg": 2,
+   "ag": 3,
+   "scorers": [
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_4"
+    },
+    {
+     "teamId": "t_corsico",
+     "playerId": "p_cor_4"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_1"
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16",
+     "pen": true
+    },
+    {
+     "teamId": "t_baggese",
+     "playerId": "p_bag_16"
+    }
+   ],
    "cards": []
   },
   {
@@ -3202,9 +3245,46 @@
    "time": "14:30",
    "homeId": "t_viscontini",
    "awayId": "t_villapizzone",
-   "hg": "",
-   "ag": "",
-   "scorers": [],
+   "hg": 2,
+   "ag": 7,
+   "scorers": [
+    {
+     "teamId": "t_viscontini",
+     "playerId": "p_vis_19"
+    },
+    {
+     "teamId": "t_viscontini",
+     "playerId": "p_vis_18"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_11"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_25"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_25"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_25"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_13"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_13"
+    },
+    {
+     "teamId": "t_villapizzone",
+     "playerId": "p_vil_5"
+    }
+   ],
    "cards": []
   },
   {
@@ -3226,9 +3306,18 @@
    "time": "14:30",
    "homeId": "t_vercellese",
    "awayId": "t_cesano",
-   "hg": "",
-   "ag": "",
-   "scorers": [],
+   "hg": 2,
+   "ag": 2,
+   "scorers": [
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_27"
+    },
+    {
+     "teamId": "t_cesano",
+     "playerId": "p_ces_9"
+    }
+   ],
    "cards": []
   },
   {
@@ -3250,9 +3339,34 @@
    "time": "15:00",
    "homeId": "t_trezzano",
    "awayId": "t_novella",
-   "hg": "",
-   "ag": "",
-   "scorers": [],
+   "hg": 5,
+   "ag": 1,
+   "scorers": [
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_15"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_16"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_10"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_20"
+    },
+    {
+     "teamId": "t_trezzano",
+     "playerId": "p_tre_20"
+    },
+    {
+     "teamId": "t_novella",
+     "playerId": "p_nov_23"
+    }
+   ],
    "cards": []
   },
   {
@@ -3274,9 +3388,19 @@
    "time": "16:00",
    "homeId": "t_ardor",
    "awayId": "t_triestina",
-   "hg": "",
-   "ag": "",
-   "scorers": [],
+   "hg": 1,
+   "ag": 1,
+   "scorers": [
+    {
+     "teamId": "t_ardor",
+     "playerId": "p_ard_26",
+     "pen": true
+    },
+    {
+     "teamId": "t_triestina",
+     "playerId": "p_tri_30"
+    }
+   ],
    "cards": []
   },
   {
@@ -3298,9 +3422,19 @@
    "time": "16:00",
    "homeId": "t_artemide",
    "awayId": "t_concept",
-   "hg": "",
-   "ag": "",
-   "scorers": [],
+   "hg": 2,
+   "ag": 0,
+   "scorers": [
+    {
+     "teamId": "t_artemide",
+     "playerId": "p_art_10"
+    },
+    {
+     "teamId": "t_artemide",
+     "og": true,
+     "name": "Autogol"
+    }
+   ],
    "cards": []
   },
   {
@@ -3343,7 +3477,7 @@
    "id": "m11_1",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:00",
    "homeId": "t_cesano",
    "awayId": "t_concept",
    "hg": "",
@@ -3367,7 +3501,7 @@
    "id": "m11_2",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "t_villapizzone",
    "awayId": "t_vercellese",
    "hg": "",
@@ -3391,7 +3525,7 @@
    "id": "m11_3",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "t_novella",
    "awayId": "t_viscontini",
    "hg": "",
@@ -3415,7 +3549,7 @@
    "id": "m11_4",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "t_triestina",
    "awayId": "t_trezzano",
    "hg": "",
@@ -3439,7 +3573,7 @@
    "id": "m11_5",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "t_bonola",
    "awayId": "t_corsico",
    "hg": "",
@@ -3463,7 +3597,7 @@
    "id": "m11_6",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "t_vige",
    "awayId": "t_artemide",
    "hg": "",
@@ -3487,7 +3621,7 @@
    "id": "m11_7",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "16:30",
    "homeId": "t_seguro",
    "awayId": "t_velasca",
    "hg": "",
@@ -3511,7 +3645,7 @@
    "id": "m11_8",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "17:30",
    "homeId": "t_baggese",
    "awayId": "t_ardor",
    "hg": "",
@@ -10517,46 +10651,57 @@
   }
  ],
  "imported": {
-  "at": "2026-11-09T14:50:00+01:00",
-  "round": 9,
-  "source": "Tuttocampo, dopo la 9ª giornata",
+  "at": "2026-11-15T17:36:38+00:00",
+  "round": 10,
+  "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
    {
     "teamId": "t_triestina",
     "pos": 1,
-    "pts": 21,
-    "g": 9,
+    "pts": 22,
+    "g": 10,
     "v": 6,
-    "n": 3,
+    "n": 4,
     "p": 0,
-    "gf": 23,
-    "gs": 6
+    "gf": 24,
+    "gs": 7
    },
    {
     "teamId": "t_corsico",
     "pos": 2,
     "pts": 21,
-    "g": 9,
+    "g": 10,
     "v": 7,
     "n": 0,
-    "p": 2,
-    "gf": 25,
-    "gs": 12
+    "p": 3,
+    "gf": 27,
+    "gs": 15
    },
    {
     "teamId": "t_ardor",
     "pos": 3,
-    "pts": 19,
-    "g": 9,
+    "pts": 20,
+    "g": 10,
     "v": 6,
-    "n": 1,
+    "n": 2,
     "p": 2,
-    "gf": 27,
-    "gs": 11
+    "gf": 28,
+    "gs": 12
+   },
+   {
+    "teamId": "t_vige",
+    "pos": 4,
+    "pts": 19,
+    "g": 10,
+    "v": 5,
+    "n": 4,
+    "p": 1,
+    "gf": 28,
+    "gs": 15
    },
    {
     "teamId": "t_bonola",
-    "pos": 4,
+    "pos": 5,
     "pts": 18,
     "g": 9,
     "v": 5,
@@ -10566,19 +10711,19 @@
     "gs": 8
    },
    {
-    "teamId": "t_vige",
-    "pos": 5,
+    "teamId": "t_artemide",
+    "pos": 6,
     "pts": 18,
-    "g": 9,
+    "g": 10,
     "v": 5,
     "n": 3,
-    "p": 1,
-    "gf": 26,
+    "p": 2,
+    "gf": 19,
     "gs": 13
    },
    {
     "teamId": "t_velasca",
-    "pos": 6,
+    "pos": 7,
     "pts": 17,
     "g": 9,
     "v": 5,
@@ -10588,117 +10733,106 @@
     "gs": 11
    },
    {
-    "teamId": "t_artemide",
-    "pos": 7,
-    "pts": 15,
-    "g": 9,
-    "v": 4,
-    "n": 3,
-    "p": 2,
-    "gf": 17,
-    "gs": 13
-   },
-   {
     "teamId": "t_baggese",
     "pos": 8,
-    "pts": 13,
-    "g": 9,
-    "v": 3,
+    "pts": 16,
+    "g": 10,
+    "v": 4,
     "n": 4,
     "p": 2,
-    "gf": 20,
-    "gs": 18
+    "gf": 23,
+    "gs": 20
    },
    {
     "teamId": "t_seguro",
     "pos": 9,
-    "pts": 12,
-    "g": 9,
+    "pts": 13,
+    "g": 10,
     "v": 4,
-    "n": 0,
+    "n": 1,
     "p": 5,
-    "gf": 15,
-    "gs": 25
+    "gf": 17,
+    "gs": 27
    },
    {
     "teamId": "t_vercellese",
     "pos": 10,
-    "pts": 10,
-    "g": 9,
+    "pts": 11,
+    "g": 10,
     "v": 3,
-    "n": 1,
+    "n": 2,
     "p": 5,
-    "gf": 13,
-    "gs": 14
+    "gf": 15,
+    "gs": 16
    },
    {
     "teamId": "t_cesano",
     "pos": 11,
-    "pts": 10,
-    "g": 9,
+    "pts": 11,
+    "g": 10,
     "v": 3,
-    "n": 1,
+    "n": 2,
     "p": 5,
-    "gf": 19,
-    "gs": 21
-   },
-   {
-    "teamId": "t_novella",
-    "pos": 12,
-    "pts": 9,
-    "g": 9,
-    "v": 3,
-    "n": 0,
-    "p": 6,
-    "gf": 11,
-    "gs": 21
+    "gf": 21,
+    "gs": 23
    },
    {
     "teamId": "t_trezzano",
-    "pos": 13,
-    "pts": 7,
-    "g": 9,
-    "v": 2,
+    "pos": 12,
+    "pts": 10,
+    "g": 10,
+    "v": 3,
     "n": 1,
     "p": 6,
-    "gf": 10,
-    "gs": 21
+    "gf": 15,
+    "gs": 22
    },
    {
     "teamId": "t_villapizzone",
-    "pos": 14,
-    "pts": 6,
-    "g": 9,
-    "v": 1,
+    "pos": 13,
+    "pts": 9,
+    "g": 10,
+    "v": 2,
     "n": 3,
     "p": 5,
+    "gf": 19,
+    "gs": 19
+   },
+   {
+    "teamId": "t_novella",
+    "pos": 14,
+    "pts": 9,
+    "g": 10,
+    "v": 3,
+    "n": 0,
+    "p": 7,
     "gf": 12,
-    "gs": 17
+    "gs": 26
    },
    {
     "teamId": "t_concept",
     "pos": 15,
     "pts": 6,
-    "g": 9,
+    "g": 10,
     "v": 2,
     "n": 0,
-    "p": 7,
+    "p": 8,
     "gf": 17,
-    "gs": 27
+    "gs": 29
    },
    {
     "teamId": "t_viscontini",
     "pos": 16,
     "pts": 1,
-    "g": 9,
+    "g": 10,
     "v": 0,
     "n": 1,
-    "p": 8,
-    "gf": 5,
-    "gs": 41
+    "p": 9,
+    "gf": 7,
+    "gs": 48
    }
   ]
  },
- "updatedAt": "2026-11-11T15:12:35+00:00",
+ "updatedAt": "2026-11-15T17:36:38+00:00",
  "tcRound": 9
 }

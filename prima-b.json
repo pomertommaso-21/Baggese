@@ -2204,16 +2204,32 @@
    "time": "18:00",
    "homeId": "pb_giussano",
    "awayId": "pb_itala",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 0,
+   "ag": 3,
+   "scorers": [
+    {
+     "teamId": "pb_itala",
+     "playerId": "pb_itala_1",
+     "min": "43' 1T",
+     "pen": true
+    },
+    {
+     "teamId": "pb_itala",
+     "playerId": "pb_itala_3",
+     "min": "47' 1T"
+    },
+    {
+     "teamId": "pb_itala",
+     "playerId": "pb_itala_2"
+    }
+   ],
    "cards": []
   },
   {
    "id": "m10_2",
    "round": 10,
    "date": "2026-11-15",
-   "time": "13:00",
+   "time": "20:30",
    "homeId": "pb_zeta",
    "awayId": "pb_cermenate",
    "hg": null,
@@ -2228,9 +2244,14 @@
    "time": "14:30",
    "homeId": "pb_briantea",
    "awayId": "pb_luisago",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 0,
+   "ag": 1,
+   "scorers": [
+    {
+     "teamId": "pb_luisago",
+     "playerId": "pb_luisago_3"
+    }
+   ],
    "cards": []
   },
   {
@@ -2240,9 +2261,35 @@
    "time": "14:30",
    "homeId": "pb_leoteam",
    "awayId": "pb_cantu",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 2,
+   "ag": 4,
+   "scorers": [
+    {
+     "teamId": "pb_leoteam",
+     "playerId": "pb_leoteam_20"
+    },
+    {
+     "teamId": "pb_leoteam",
+     "playerId": "pb_leoteam_7"
+    },
+    {
+     "teamId": "pb_cantu",
+     "playerId": "pb_cantu_19"
+    },
+    {
+     "teamId": "pb_cantu",
+     "playerId": "pb_cantu_19"
+    },
+    {
+     "teamId": "pb_cantu",
+     "playerId": "pb_cantu_19"
+    },
+    {
+     "teamId": "pb_cantu",
+     "playerId": "pb_cantu_1",
+     "pen": true
+    }
+   ],
    "cards": []
   },
   {
@@ -2252,9 +2299,15 @@
    "time": "14:30",
    "homeId": "pb_dominante",
    "awayId": "pb_cadorago",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 0,
+   "ag": 1,
+   "scorers": [
+    {
+     "teamId": "pb_cadorago",
+     "playerId": "pb_cadorago_20",
+     "min": "27' 1T"
+    }
+   ],
    "cards": []
   },
   {
@@ -2264,9 +2317,14 @@
    "time": "14:30",
    "homeId": "pb_lomazzo",
    "awayId": "pb_triuggese",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 0,
+   "ag": 1,
+   "scorers": [
+    {
+     "teamId": "pb_triuggese",
+     "playerId": "pb_triuggese_19"
+    }
+   ],
    "cards": []
   },
   {
@@ -2276,9 +2334,27 @@
    "time": "14:30",
    "homeId": "pb_montesolaro",
    "awayId": "pb_schiaffino",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 1,
+   "ag": 3,
+   "scorers": [
+    {
+     "teamId": "pb_montesolaro",
+     "playerId": "pb_montesolaro_2"
+    },
+    {
+     "teamId": "pb_schiaffino",
+     "playerId": "pb_schiaffino_18"
+    },
+    {
+     "teamId": "pb_schiaffino",
+     "playerId": "pb_schiaffino_18"
+    },
+    {
+     "teamId": "pb_schiaffino",
+     "playerId": "pb_schiaffino_14",
+     "pen": true
+    }
+   ],
    "cards": []
   },
   {
@@ -2288,16 +2364,52 @@
    "time": "14:30",
    "homeId": "pb_lissone",
    "awayId": "pb_cassina",
-   "hg": null,
-   "ag": null,
-   "scorers": [],
+   "hg": 5,
+   "ag": 2,
+   "scorers": [
+    {
+     "teamId": "pb_lissone",
+     "playerId": "pb_lissone_3",
+     "min": "42' 1T"
+    },
+    {
+     "teamId": "pb_lissone",
+     "playerId": "pb_lissone_3",
+     "min": "15' 2T"
+    },
+    {
+     "teamId": "pb_lissone",
+     "playerId": "pb_lissone_21",
+     "min": "44' 1T"
+    },
+    {
+     "teamId": "pb_lissone",
+     "playerId": "pb_lissone_21",
+     "min": "45' 1T"
+    },
+    {
+     "teamId": "pb_lissone",
+     "playerId": "pb_lissone_2",
+     "min": "20' 2T"
+    },
+    {
+     "teamId": "pb_cassina",
+     "playerId": "pb_cassina_22",
+     "min": "1' 2T"
+    },
+    {
+     "teamId": "pb_cassina",
+     "playerId": "pb_cassina_6",
+     "min": "20' 2T"
+    }
+   ],
    "cards": []
   },
   {
    "id": "m11_1",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "pb_cassina",
    "awayId": "pb_montesolaro",
    "hg": null,
@@ -2309,7 +2421,7 @@
    "id": "m11_2",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "pb_itala",
    "awayId": "pb_zeta",
    "hg": null,
@@ -2321,7 +2433,7 @@
    "id": "m11_3",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "pb_dominante",
    "awayId": "pb_briantea",
    "hg": null,
@@ -2333,7 +2445,7 @@
    "id": "m11_4",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "pb_cadorago",
    "awayId": "pb_giussano",
    "hg": null,
@@ -2345,7 +2457,7 @@
    "id": "m11_5",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "pb_triuggese",
    "awayId": "pb_lissone",
    "hg": null,
@@ -2357,7 +2469,7 @@
    "id": "m11_6",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "14:30",
    "homeId": "pb_cermenate",
    "awayId": "pb_leoteam",
    "hg": null,
@@ -2369,7 +2481,7 @@
    "id": "m11_7",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "15:00",
    "homeId": "pb_cantu",
    "awayId": "pb_lomazzo",
    "hg": null,
@@ -2381,7 +2493,7 @@
    "id": "m11_8",
    "round": 11,
    "date": "2026-11-22",
-   "time": "",
+   "time": "15:30",
    "homeId": "pb_schiaffino",
    "awayId": "pb_luisago",
    "hg": null,
@@ -9638,46 +9750,68 @@
   }
  ],
  "imported": {
-  "at": "2026-11-11T14:51:46+01:00",
-  "round": 9,
-  "source": "Tuttocampo, dopo la 9ª giornata",
+  "at": "2026-11-15T17:36:38+00:00",
+  "round": 10,
+  "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
    {
     "teamId": "pb_cantu",
     "pos": 1,
-    "pts": 21,
-    "g": 9,
-    "v": 6,
+    "pts": 24,
+    "g": 10,
+    "v": 7,
     "n": 3,
     "p": 0,
-    "gf": 27,
-    "gs": 9
+    "gf": 31,
+    "gs": 11
    },
    {
     "teamId": "pb_lissone",
     "pos": 2,
-    "pts": 20,
-    "g": 9,
-    "v": 6,
+    "pts": 23,
+    "g": 10,
+    "v": 7,
     "n": 2,
     "p": 1,
-    "gf": 28,
-    "gs": 8
+    "gf": 33,
+    "gs": 10
    },
    {
     "teamId": "pb_luisago",
     "pos": 3,
-    "pts": 18,
-    "g": 9,
-    "v": 6,
+    "pts": 21,
+    "g": 10,
+    "v": 7,
     "n": 0,
     "p": 3,
-    "gf": 25,
+    "gf": 26,
     "gs": 16
    },
    {
-    "teamId": "pb_cermenate",
+    "teamId": "pb_itala",
     "pos": 4,
+    "pts": 17,
+    "g": 10,
+    "v": 5,
+    "n": 2,
+    "p": 3,
+    "gf": 28,
+    "gs": 16
+   },
+   {
+    "teamId": "pb_triuggese",
+    "pos": 5,
+    "pts": 16,
+    "g": 10,
+    "v": 4,
+    "n": 4,
+    "p": 2,
+    "gf": 19,
+    "gs": 15
+   },
+   {
+    "teamId": "pb_cermenate",
+    "pos": 6,
     "pts": 16,
     "g": 9,
     "v": 5,
@@ -9688,18 +9822,18 @@
    },
    {
     "teamId": "pb_leoteam",
-    "pos": 5,
+    "pos": 7,
     "pts": 16,
-    "g": 9,
+    "g": 10,
     "v": 5,
     "n": 1,
-    "p": 3,
-    "gf": 15,
-    "gs": 16
+    "p": 4,
+    "gf": 17,
+    "gs": 20
    },
    {
     "teamId": "pb_zeta",
-    "pos": 6,
+    "pos": 8,
     "pts": 15,
     "g": 9,
     "v": 4,
@@ -9709,117 +9843,95 @@
     "gs": 15
    },
    {
-    "teamId": "pb_itala",
-    "pos": 7,
-    "pts": 14,
-    "g": 9,
-    "v": 4,
-    "n": 2,
-    "p": 3,
-    "gf": 25,
-    "gs": 16
-   },
-   {
     "teamId": "pb_montesolaro",
-    "pos": 8,
-    "pts": 13,
-    "g": 9,
-    "v": 3,
-    "n": 4,
-    "p": 2,
-    "gf": 16,
-    "gs": 11
-   },
-   {
-    "teamId": "pb_triuggese",
     "pos": 9,
     "pts": 13,
-    "g": 9,
+    "g": 10,
     "v": 3,
     "n": 4,
-    "p": 2,
-    "gf": 18,
-    "gs": 15
+    "p": 3,
+    "gf": 17,
+    "gs": 14
    },
    {
     "teamId": "pb_cassina",
     "pos": 10,
     "pts": 13,
-    "g": 9,
+    "g": 10,
     "v": 4,
     "n": 1,
-    "p": 4,
-    "gf": 12,
-    "gs": 18
-   },
-   {
-    "teamId": "pb_giussano",
-    "pos": 11,
-    "pts": 11,
-    "g": 9,
-    "v": 3,
-    "n": 2,
-    "p": 4,
+    "p": 5,
     "gf": 14,
-    "gs": 19
+    "gs": 23
    },
    {
     "teamId": "pb_cadorago",
-    "pos": 12,
-    "pts": 9,
-    "g": 9,
-    "v": 2,
+    "pos": 11,
+    "pts": 12,
+    "g": 10,
+    "v": 3,
     "n": 3,
     "p": 4,
-    "gf": 14,
+    "gf": 15,
     "gs": 24
    },
    {
-    "teamId": "pb_dominante",
-    "pos": 13,
-    "pts": 8,
-    "g": 9,
-    "v": 2,
+    "teamId": "pb_giussano",
+    "pos": 12,
+    "pts": 11,
+    "g": 10,
+    "v": 3,
     "n": 2,
     "p": 5,
-    "gf": 11,
-    "gs": 19
+    "gf": 14,
+    "gs": 22
    },
    {
     "teamId": "pb_schiaffino",
-    "pos": 14,
-    "pts": 7,
-    "g": 9,
-    "v": 2,
+    "pos": 13,
+    "pts": 10,
+    "g": 10,
+    "v": 3,
     "n": 1,
     "p": 6,
+    "gf": 14,
+    "gs": 19
+   },
+   {
+    "teamId": "pb_dominante",
+    "pos": 14,
+    "pts": 8,
+    "g": 10,
+    "v": 2,
+    "n": 2,
+    "p": 6,
     "gf": 11,
-    "gs": 18
+    "gs": 20
    },
    {
     "teamId": "pb_lomazzo",
     "pos": 15,
     "pts": 6,
-    "g": 9,
+    "g": 10,
     "v": 1,
     "n": 3,
-    "p": 5,
+    "p": 6,
     "gf": 9,
-    "gs": 15
+    "gs": 16
    },
    {
     "teamId": "pb_briantea",
     "pos": 16,
     "pts": 0,
-    "g": 9,
+    "g": 10,
     "v": 0,
     "n": 0,
-    "p": 9,
+    "p": 10,
     "gf": 5,
-    "gs": 33
+    "gs": 34
    }
   ]
  },
  "tcRound": 9,
- "updatedAt": "2026-11-11T14:11:40+00:00"
+ "updatedAt": "2026-11-15T17:36:38+00:00"
 }
