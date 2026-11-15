@@ -107,6 +107,33 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
     if (await tap('#app [data-player]:visible')) { await p.waitForTimeout(400); await closeDlg(); }
     await c.close();
   }
+  /* Barra in basso: facendo scorrere il dito da Home a Squadre la pillola segue il dito e al rilascio si apre Squadre (una volta sola) */
+  {
+    const g0 = GIRONI[0];
+    const c = await b.newContext({ viewport: { width: 393, height: 852 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+    await c.addInitScript(([t, g]) => { try { localStorage.setItem('baggese-myteam', t); localStorage.setItem('baggese-mygirone', g); } catch (e) {} }, [g0.teams[0][0], g0.id]);
+    const p = await c.newPage(); p.on('pageerror', e => problemi.push(`Barra in basso: errore JavaScript: ${e.message}`));
+    await p.goto(BASE + '?collaudo=' + Date.now()); await p.waitForTimeout(2600);
+    await p.evaluate(() => { const d = document.getElementById('dlg'); if (d && d.open) d.close(); });
+    try {
+      const cdp = await c.newCDPSession(p);
+      const bx = await p.evaluate(() => [...document.querySelectorAll('nav.tabs button[data-tab]')].map(x => { const r = x.getBoundingClientRect(); return [x.dataset.tab, r.left + r.width / 2, r.top + r.height / 2]; }));
+      const y = bx[0][2], T = (type, x) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y }] });
+      await p.evaluate(() => { window.__nc = 0; document.addEventListener('click', e => { if (e.target.closest('nav.tabs')) window.__nc++; }, true); });
+      await T('touchStart', bx[0][1]); const xs = [];
+      for (let x = bx[0][1]; x <= bx[3][1]; x += 8) { await T('touchMove', x); await p.waitForTimeout(16); xs.push(await p.evaluate(() => document.querySelector('.tab-ind').getBoundingClientRect().left)); }
+      const segue = xs.filter((v, i) => i && v > xs[i - 1] + 0.5).length;
+      await T('touchEnd'); await p.waitForTimeout(900);
+      const r = await p.evaluate(() => { const on = document.querySelector('nav.tabs button[aria-current="page"]'); return { tab: on.dataset.tab, n: window.__nc, d: Math.abs(document.querySelector('.tab-ind').getBoundingClientRect().left - on.getBoundingClientRect().left) }; });
+      if (segue < xs.length * 0.6) problemi.push('Barra in basso: trascinando, la pillola non segue il dito');
+      if (r.tab !== bx[3][0]) problemi.push(`Barra in basso: trascinando fino a Squadre si apre "${r.tab}"`);
+      if (r.n !== 1) problemi.push(`Barra in basso: al rilascio la sezione si apre ${r.n} volte`);
+      if (r.d > 3) problemi.push('Barra in basso: dopo il rilascio la pillola non è sulla sezione aperta');
+      await p.tap('nav.tabs [data-tab="partite"]'); await p.waitForTimeout(800);
+      if (await p.evaluate(() => document.querySelector('nav.tabs button[aria-current="page"]').dataset.tab) !== 'partite') problemi.push('Barra in basso: il semplice tocco non cambia più sezione');
+    } catch (e) { problemi.push('Barra in basso: prova non riuscita: ' + e.message.split('\n')[0]); }
+    await c.close();
+  }
   /* Barra in basso: scorrendo giù si nasconde, risalendo torna. "Indietro": dalla Classifica a una squadra e ritorno allo stesso punto */
   {
     const g0 = GIRONI[0];

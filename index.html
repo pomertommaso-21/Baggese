@@ -1116,6 +1116,14 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 .cal-part,.cal-mon{display:contents}.cal-part[hidden],.cal-mon[hidden],.cal-row[hidden],.sdf .sd-sum[hidden]{display:none}
 .list>.cal-row.fv{border-top:0}
 @media (max-width:370px){.sdf button{padding:5px 8px}.sdf .sd-sum{font-size:11.5px}}
+
+/* trascinamento sulla barra in basso */
+nav.tabs.dragging button[aria-current="page"]:not(.hov){color:var(--muted);font-weight:600}
+nav.tabs.dragging button[aria-current="page"]:not(.hov) svg.i{stroke-width:2}
+nav.tabs.dragging button.hov{color:var(--brand);font-weight:700}
+nav.tabs.dragging button.hov svg.i{stroke-width:2.5}
+nav.tabs.dragging .tab-ind{box-shadow:inset 0 0 0 1px var(--lg-pill-line),inset 0 1px 0 var(--lg-hi),0 6px 18px rgba(0,0,0,.12)}
+nav.tabs button{transition:color .15s ease}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1145,7 +1153,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-15.2";
+var APP_VERSION="2026-11-15.3";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -3161,11 +3169,11 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
   app.addEventListener("touchend",function(e){ if(tx===null) return; var t=e.changedTouches[0], dx=t.clientX-tx, dyy=t.clientY-ty; tx=null; if(Math.abs(dx)>60 && Math.abs(dx)>1.6*Math.abs(dyy)) stepRound(dx<0?1:-1); },{passive:true});
   var lastW=window.innerWidth; window.addEventListener("resize",function(){ clearTimeout(window._rz); window._rz=setTimeout(function(){ if(Math.abs(window.innerWidth-lastW)>60){ lastW=window.innerWidth; render(); } },200); });
   var py=null, pdy=0, ptr=$("ptr"), busy=false;
-  window.addEventListener("touchstart",function(e){ py=null; var tg=e.target; if(busy||$("dlg").open||(window.scrollY||0)>0||(tg&&tg.closest&&tg.closest(".chips,.pchart,#roundCard"))) return; py=e.touches[0].clientY; pdy=0; },{passive:true});
+  window.addEventListener("touchstart",function(e){ py=null; var tg=e.target; if(busy||$("dlg").open||(window.scrollY||0)>0||(tg&&tg.closest&&tg.closest(".chips,.pchart,#roundCard,nav.tabs"))) return; py=e.touches[0].clientY; pdy=0; },{passive:true});
   window.addEventListener("touchmove",function(e){ if(py===null) return; pdy=e.touches[0].clientY-py; if(pdy<=0||(window.scrollY||0)>0){ ptr.style.transform=""; ptr.classList.remove("show","ready"); return; } var d=Math.min(pdy*0.5,70); ptr.classList.add("show"); ptr.style.transform="translate(-50%,"+(d-50)+"px) rotate("+(d*5)+"deg)"; ptr.classList.toggle("ready",pdy>110); },{passive:true});
   window.addEventListener("touchend",function(){ if(py===null) return; py=null; if(pdy>110 && !busy){ busy=true; haptic(); ptr.classList.add("spinning"); ptr.style.transform="translate(-50%,20px)"; var t0=Date.now(); Promise.resolve(checkNewer(true)).then(function(){ setTimeout(done,Math.max(0,700-(Date.now()-t0))); }); } else done(); function done(){ busy=false; ptr.classList.remove("show","ready","spinning"); ptr.style.transform=""; } });
   var ex=null, ey=0, edx=0;
-  window.addEventListener("touchstart",function(e){ ex=null; if(!NAVBACK||$("dlg").open) return; var t=e.touches[0]; if(t.clientX>22) return; ex=t.clientX; ey=t.clientY; edx=0; },{passive:true});
+  window.addEventListener("touchstart",function(e){ ex=null; if(!NAVBACK||$("dlg").open||(e.target.closest&&e.target.closest("nav.tabs"))) return; var t=e.touches[0]; if(t.clientX>22) return; ex=t.clientX; ey=t.clientY; edx=0; },{passive:true});
   window.addEventListener("touchmove",function(e){ if(ex===null) return; var t=e.touches[0]; edx=t.clientX-ex; if(Math.abs(t.clientY-ey)>50&&edx<40){ ex=null; $("app").style.transform=""; return; } if(edx>0){ $("app").style.transition="none"; $("app").style.transform="translateX("+Math.min(edx*.5,90)+"px)"; $("app").style.opacity=String(1-Math.min(edx/600,.3)); } },{passive:true});
   window.addEventListener("touchend",function(){ if(ex===null) return; var go=edx>80; ex=null; var a=$("app"); a.style.transition="transform .25s ease, opacity .25s ease"; a.style.transform=""; a.style.opacity=""; setTimeout(function(){ a.style.transition=""; },260); if(go) navBack(); },{passive:true});
   var ticking=false;
@@ -3227,6 +3235,43 @@ function tabInd(){
   }
   TABPOS=[x,w];
 }
+/* Barra in basso: facendo scorrere il dito, la pillola segue il dito e illumina la sezione sotto;
+   al rilascio si aggancia alla sezione più vicina e la apre. Tutto con transform, un aggiornamento per fotogramma */
+(function(){
+  var host=document.querySelector("nav.tabs"); if(!host) return;
+  var st=null, raf=0;
+  function tabsGeo(){ var nav=host.querySelector(".in"), bs=Array.prototype.slice.call(nav.querySelectorAll("button[data-tab]")); return bs.map(function(b){ return {b:b, x:b.offsetLeft+nav.offsetLeft, w:b.offsetWidth}; }); }
+  function nearest(g,cx){ var k=0, best=1e9; g.forEach(function(t,i){ var d=Math.abs(t.x+t.w/2-cx); if(d<best){ best=d; k=i; } }); return k; }
+  function frame(){ raf=0; if(!st||!st.drag) return;
+    var g=st.g, w=g[0].w, min=g[0].x, max=g[g.length-1].x, x=st.fx-w/2;
+    if(x<min) x=min-Math.min(18,(min-x)*.3); else if(x>max) x=max+Math.min(18,(x-max)*.3);   /* ai bordi fa un po' di resistenza */
+    st.sc+=(1.1-st.sc)*.35; st.x=x;
+    st.ind.style.transform="translateX("+x.toFixed(2)+"px) scale("+st.sc.toFixed(3)+")";
+    var k=nearest(g,x+w/2); if(k!==st.k){ if(st.k>=0) g[st.k].b.classList.remove("hov"); g[k].b.classList.add("hov"); if(st.k>=0) haptic(); st.k=k; }
+    if(Math.abs(st.sc-1.1)>.002) raf=requestAnimationFrame(frame);
+  }
+  host.addEventListener("touchstart",function(e){ st=null; if(window.innerWidth>=960||e.touches.length!==1||document.body.classList.contains("navhide")) return;
+    var ind=host.querySelector(".tab-ind"); if(!ind) return; var t=e.touches[0];
+    st={x0:t.clientX, y0:t.clientY, fx:0, drag:false, ind:ind, k:-1, sc:1, left:host.getBoundingClientRect().left+host.clientLeft};
+  },{passive:true});
+  host.addEventListener("touchmove",function(e){ if(!st) return; var t=e.touches[0], dx=t.clientX-st.x0, dy=t.clientY-st.y0;
+    if(!st.drag){ if(Math.abs(dx)<7 && Math.abs(dy)<7) return; if(Math.abs(dy)>Math.abs(dx)){ st=null; return; }
+      st.drag=true; st.g=tabsGeo(); host.classList.add("dragging"); if(st.ind.getAnimations) st.ind.getAnimations().forEach(function(a){ a.cancel(); });
+      var cur=0; st.g.forEach(function(q,i){ if(q.b.getAttribute("aria-current")==="page") cur=i; }); st.k=-1; st.ind.style.width=st.g[cur].w+"px"; }
+    e.preventDefault(); st.fx=t.clientX-st.left; if(!raf) raf=requestAnimationFrame(frame);
+  },{passive:false});
+  function end(e,cancel){ if(!st) return; var s0=st; st=null; if(raf){ cancelAnimationFrame(raf); raf=0; } if(!s0.drag) return;
+    if(e&&e.cancelable) e.preventDefault();   /* niente tocco "fantasma" sul pulsante sotto il dito */
+    host.classList.remove("dragging"); s0.g.forEach(function(q){ q.b.classList.remove("hov"); });
+    var k=nearest(s0.g,s0.x+s0.g[0].w/2), to=s0.g[k], from=s0.x, sc=s0.sc;
+    s0.ind.style.transform="translateX("+to.x+"px)";
+    if(s0.ind.animate) s0.ind.animate([{transform:"translateX("+from+"px) scale("+sc+")"},{transform:"translateX("+to.x+"px) scale(1)"}],{duration:380,easing:"cubic-bezier(.25,1.25,.4,1)"});
+    TABPOS=[to.x,to.w];   /* la pillola è già in viaggio: il ridisegno della barra non deve farla ripartire da dove era prima */
+    if(!cancel && to.b.getAttribute("aria-current")!=="page") setTimeout(function(){ to.b.click(); },0);
+  }
+  host.addEventListener("touchend",function(e){ end(e,false); },{passive:false});
+  host.addEventListener("touchcancel",function(e){ end(e,true); },{passive:false});
+})();
 (function(){ var pend=false; new MutationObserver(function(){ if(pend) return; pend=true; requestAnimationFrame(function(){ pend=false; segInd(document); tabInd(); fitNames(); }); }).observe(document.body,{childList:true,subtree:true}); window.addEventListener("resize",function(){ SEGPOS={}; TABPOS=null; segInd(document); tabInd(); }); })();
 render(); boot();
 /* app salvata sul telefono: si apre subito anche senza rete */
