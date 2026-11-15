@@ -3460,6 +3460,14 @@
    "ag": 3,
    "scorers": [
     {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_27"
+    },
+    {
+     "teamId": "t_velasca",
+     "playerId": "p_vel_1"
+    },
+    {
      "teamId": "t_bonola",
      "playerId": "p_bon_17",
      "min": "4' 1T"
@@ -10850,6 +10858,6 @@
    }
   ]
  },
- "updatedAt": "2026-11-15T20:36:49+00:00",
+ "updatedAt": "2026-11-15T20:45:14+00:00",
  "tcRound": 9
 }
