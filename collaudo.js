@@ -89,7 +89,12 @@ CONF.push({ g: GIRONI[0].id, team: GIRONI[0].teams[2][0], vw: 1280, vh: 820, sch
         if (r.y > 2) problemi.push(`${tag}: Calendario: scegliendo Trasferta la pagina si sposta`);
         if (r.casa || !r.vis) problemi.push(`${tag}: Calendario: il filtro Trasferta non mostra le partite giuste`);
         if (!r.sum) problemi.push(`${tag}: Calendario: manca il riassunto di Trasferta`);
-        await p.locator('#app .sdf [data-side="all"]').click(); await p.waitForTimeout(300); } }
+        await p.locator('#app .sdf [data-side="all"]').click(); await p.waitForTimeout(300);
+        /* risalendo, la barra con i pulsanti si attacca sotto quella in alto: nessuno spazio in mezzo da cui si veda la pagina */
+        await p.evaluate(() => scrollTo(0, 1200)); await p.waitForTimeout(300); await p.evaluate(() => scrollBy(0, -100)); await p.waitForTimeout(120); await p.evaluate(() => scrollBy(0, -80)); await p.waitForTimeout(700);
+        const g = await p.evaluate(() => document.body.classList.contains('segup') ? document.getElementById('segfloat').getBoundingClientRect().top - document.getElementById('topbar').getBoundingClientRect().bottom : null);
+        if (g !== null && Math.abs(g) > 1) problemi.push(`${tag}: Calendario: risalendo, tra la barra in alto e quella con i pulsanti resta uno spazio di ${Math.round(g)} px`);
+        await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(300); } }
     /* toccare un punto qualsiasi (non un pulsante) non deve ridisegnare la pagina */
     for (const t of ['classifica', 'partite']) { await tap(`nav.tabs [data-tab="${t}"]`); await p.waitForTimeout(500);
       await p.evaluate(() => { const ch = document.querySelector('#app > *'); if (ch) ch.__mk = 1; });

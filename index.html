@@ -1112,6 +1112,7 @@ dialog .dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
 .sdf .r-v{color:var(--win-ink)}.sdf .r-p{color:var(--loss-ink)}
 .sdf .sd-left{font-size:11px;font-weight:600;opacity:.85}
 @keyframes sdIn{from{opacity:0;transform:translateX(4px)}to{opacity:1;transform:none}}
+.segfloat .sdf{margin:6px 0 -4px}
 .cal-part,.cal-mon{display:contents}.cal-part[hidden],.cal-mon[hidden],.cal-row[hidden],.sdf .sd-sum[hidden]{display:none}
 .list>.cal-row.fv{border-top:0}
 @media (max-width:370px){.sdf button{padding:5px 8px}.sdf .sd-sum{font-size:11.5px}}
@@ -1741,6 +1742,8 @@ function render(){
   document.body.classList.remove("navhide");
   var tt={home:[me(),tname(me())],partite:[null,"Partite"],classifica:[null,"Classifica"],rosa:[curRosaTeam(),tname(curRosaTeam())],gestione:[null,"Gestione"]}[tab];
   $("topbar").innerHTML=(tt[0]?crest(tt[0],26):'')+'<span class="ellipsis">'+esc(tt[1])+'</span>'; document.body.classList.remove("segup");
+  /* la barra che compare risalendo si attacca sotto quella in alto: la misura va presa adesso (con o senza stemma l'altezza cambierebbe) */
+  document.documentElement.style.setProperty("--tbh",$("topbar").offsetHeight+"px");
   var cc=document.querySelector('#clsChips .rchip[aria-pressed="true"]'), cs=$("clsChips"); if(cc&&cs) cs.scrollLeft=cc.offsetLeft-cs.clientWidth/2+cc.clientWidth/2;
   if(typeof segInd==="function"){ segInd(document); tabInd(); }
   var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips");
@@ -2340,10 +2343,10 @@ function vPartite(){
   return h;
 }
 function sideApply(){
-  var app=$("app"), sv=calSide, q=function(sel){ return Array.prototype.slice.call(app.querySelectorAll(sel)); };
+  var app=$("app"), sv=calSide, q=function(sel){ return Array.prototype.slice.call(app.querySelectorAll(sel)); }, both=function(sel){ return Array.prototype.slice.call(document.querySelectorAll("#app "+sel+",#segfloat "+sel)); };
   if(!app.querySelector(".sdf")) return;
-  q(".sdf [data-side]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-side")===sv)); });
-  q(".sdf .sd-sum").forEach(function(x){ x.hidden = x.getAttribute("data-s")!==sv; });
+  both(".sdf [data-side]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-side")===sv)); });
+  both(".sdf .sd-sum").forEach(function(x){ x.hidden = x.getAttribute("data-s")!==sv; });
   q(".cal-row[data-h]").forEach(function(r){ r.hidden = sv!=="all" && (r.getAttribute("data-h")==="1")!==(sv==="home"); });
   q(".cal-mon,.cal-part").forEach(function(g){ g.hidden = !g.querySelector(".cal-row[data-h]:not([hidden])"); });
   q(".list").forEach(function(l){ var first=true; Array.prototype.forEach.call(l.children,function(r){ if(!r.classList.contains("cal-row")) return; r.classList.toggle("fv", first && !r.hidden); if(!r.hidden) first=false; }); });
@@ -3030,7 +3033,16 @@ document.addEventListener("click", function(e){
   if(ds.rstep){ stepRound(+ds.rstep); return; }
 
   if(ds.pedit){ openPlayer(ds.pedit); return; }
-  if(ds.side){ if(ds.side!==calSide){ calSide=ds.side; sideApply(); } return; }
+  if(ds.side){ if(ds.side!==calSide){
+      /* la partita che si sta guardando resta ferma sullo schermo: si prende la prima riga visibile sotto la barra
+         e, dopo la scelta, si mette nello stesso punto la prima riga rimasta da lì in avanti (le righe sono in ordine di data) */
+      var sv2=ds.side, sfl=$("segfloat"), lim=(sfl&&document.body.classList.contains("segup"))?sfl.getBoundingClientRect().bottom:0, i0=-1, at=0;
+      var rws=Array.prototype.slice.call(document.querySelectorAll("#app .cal-row[data-h]"));
+      for(var ri=0;ri<rws.length;ri++){ if(rws[ri].hidden) continue; var rr=rws[ri].getBoundingClientRect(); if(rr.bottom>lim){ i0=ri; at=rr.top; break; } }
+      var y0=window.scrollY; autoUntil=Date.now()+700; calSide=sv2; sideApply();
+      if(i0>=0 && y0>0){ var anc=null; for(var rj=i0;rj<rws.length;rj++){ if(!rws[rj].hidden){ anc=rws[rj]; break; } } if(!anc){ for(var rk=i0;rk>=0;rk--){ if(!rws[rk].hidden){ anc=rws[rk]; break; } } }
+        if(anc){ window.scrollTo(0, Math.max(0, y0+(anc.getBoundingClientRect().top+(window.scrollY-y0))-at)); } } }
+    return; }
   if(ds.pv){ var pv=ds.pv; if(pv==="mine") calJump=true; smooth(function(){ partView=pv; render(); }); return; }
   if(ds.round){ rcJump(+ds.round); return; }
   if(ds.unlogo){ setLogo(ds.unlogo,null); return; }
@@ -3162,7 +3174,7 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
     /* in Partite, risalendo compare da sopra la scelta squadra / per giornata */
     var dy=y-lastY; lastY=y; acc=(acc>0)===(dy>0)?acc+dy:dy; if(Date.now()<autoUntil){ acc=0; } /* salto automatico alla prossima partita: non è uno scorrimento dell'utente, la barra resta */ var sf=$("segfloat"), seg=tab==="partite"?document.querySelector('#app .seg[aria-label="Vista partite"]'):null;
     if(sf){ var hide=true; if(seg){ var tb=$("topbar"), lim=(tb?tb.offsetHeight:50); var gone=seg.getBoundingClientRect().bottom<lim;
-        if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"'); } hide=false; }
+        if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ var sdf=seg.nextElementSibling; sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"')+(sdf&&sdf.classList.contains("sdf")?sdf.outerHTML.replace(/ aria-label="Casa o trasferta"/,' aria-label="Casa o trasferta (in alto)"'):""); } hide=false; }
         else if(gone && acc<=6 && document.body.classList.contains("segup")) hide=false; }
       if(document.body.classList.contains("segup")===hide) document.body.classList.toggle("segup",!hide); }
     if(document.body.classList.contains("scrolled")!==sc) document.body.classList.toggle("scrolled",sc);
