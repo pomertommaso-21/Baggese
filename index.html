@@ -1191,7 +1191,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.9";
+var APP_VERSION="2026-11-16.10";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1797,12 +1797,35 @@ function segShow(){ var sf=$("segfloat"), seg=document.querySelector('#app .seg[
   if(seg.getBoundingClientRect().bottom>=lim) return; var sdf=seg.nextElementSibling;
   sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"')+(sdf&&sdf.classList.contains("sdf")?sdf.outerHTML.replace(/ aria-label="Casa o trasferta"/,' aria-label="Casa o trasferta (in alto)"'):"");
   document.body.classList.add("segup"); }
+/* calendario della Baggese: salto alla prossima partita, con la barra Baggese / Per giornata visibile sopra */
+function calJumpNow(){ var el=document.getElementById("calNext"); if(!(el && tab==="partite" && partView==="mine")) return;
+  autoUntil=Date.now()+600; window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-76)); segShow();
+  if(document.body.classList.contains("segup")){ var tb2=$("topbar"), sf2=$("segfloat"); window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-((tb2?tb2.offsetHeight:50)+(sf2?sf2.offsetHeight:0)+10))); } }
+/* Partite: Baggese <-> Per giornata come le altre sezioni: la pagina resta ferma, la pillola scorre, il contenuto nuovo entra
+   scivolando dal lato giusto (niente dissolvenza) */
+function partSwitch(pv,dir,pillDone){
+  var v=document.querySelector("#app .view"), sg=v&&v.querySelector('.seg[aria-label="Vista partite"]'); if(!sg||pv===partView){ return; }
+  var old=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) old.push(c); if(c===sg||c.contains(sg)) seen=true; });
+  partView=pv; var tmp=document.createElement("div"); tmp.innerHTML=vPartite();
+  var nsg=tmp.querySelector('.seg[aria-label="Vista partite"]'), fresh=[], s2=false; if(!nsg){ render(); return; }
+  Array.prototype.slice.call(tmp.children).forEach(function(c){ if(s2) fresh.push(c); if(c===nsg||c.contains(nsg)) s2=true; });
+  var bs=Array.prototype.slice.call(sg.querySelectorAll("button")), on=null; bs.forEach(function(b){ var y=b.getAttribute("data-pv")===pv; b.setAttribute("aria-pressed",String(y)); if(y) on=b; });
+  var ind=sg.querySelector(".seg-ind"), key=(sg.getAttribute("aria-label")||"seg")+"|"+bs.length;
+  if(ind&&on){ var g=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight]; if(!pillDone){ ind.style.transition="transform .32s cubic-bezier(.25,.9,.3,1),width .32s cubic-bezier(.25,.9,.3,1)"; ind.style.transform="translate("+g[0]+"px,"+g[1]+"px)"; ind.style.width=g[2]+"px"; }
+    ind.dataset.p=g.join(","); SEGPOS[key]=g; }
+  document.body.classList.remove("segup");
+  old.forEach(function(n){ n.remove(); }); var frag=document.createDocumentFragment(); fresh.forEach(function(n){ frag.appendChild(n); }); v.insertBefore(frag,sg.nextSibling);
+  if(pv==="mine") sideApply(); else { window.scrollTo(0,0); if($("rcVp")){ rkAuto(); rcLater(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } }); } var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips"); if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2; }
+  fitNames(); segInd(v);
+  if(!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)) fresh.forEach(function(n){ if(n.animate) n.animate([{transform:"translate3d("+(dir>0?34:-34)+"px,0,0)",opacity:0},{transform:"none",opacity:1}],{duration:280,easing:"cubic-bezier(.25,.9,.3,1)"}); });
+  if(pv==="mine") requestAnimationFrame(calJumpNow);
+}
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
   crestN=0; shirtN=0; HIST=null; setAccent();
   var spl=$("splash"); if(spl&&!spl.dataset.going){ spl.dataset.going="1"; var fr=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve(); var wait=Math.max(0,1400-(performance.now?performance.now():0)); Promise.all([Promise.race([fr,new Promise(function(r){ setTimeout(r,1500); })]),new Promise(function(r){ setTimeout(r,wait); })]).then(function(){ requestAnimationFrame(function(){ document.documentElement.classList.remove("boot"); applyTheme(getTheme()); spl.classList.add("out"); setTimeout(function(){ if(spl.parentNode) spl.parentNode.removeChild(spl); },850); }); }); } document.body.classList.toggle("other",G!==MYG);
   if(!askedTeam && S.teams.length>1 && mode!=="loading"){ askedTeam=true; var seen=null; try { seen=localStorage.getItem("baggese-myteam"); } catch(e){ seen="x"; } if(!seen) setTimeout(function(){ openTeamPicker(true); },400); }
-  if(calJump){ calJump=false; requestAnimationFrame(function(){ requestAnimationFrame(function(){ var el=document.getElementById("calNext"); if(el && tab==="partite" && partView==="mine"){ autoUntil=Date.now()+600; window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-76)); segShow(); if(document.body.classList.contains("segup")){ var tb2=$("topbar"), sf2=$("segfloat"); window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-((tb2?tb2.offsetHeight:50)+(sf2?sf2.offsetHeight:0)+10))); } } }); }); }
+  if(calJump){ calJump=false; requestAnimationFrame(function(){ requestAnimationFrame(calJumpNow); }); }
   /* NB: non "data-tab", che è il segnale dei pulsanti delle schede in basso */ document.documentElement.setAttribute("data-curtab",tab);
   $("tabs").innerHTML=TABS.map(function(t){ return '<button type="button" data-tab="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'><span>'+icon(t[2])+'</span>'+t[1]+'</button>'; }).join("");
   $("brand").innerHTML=crest(me(),36)+'<b class="ellipsis" style="min-width:0">'+esc(tname(me()))+'<br><span class="tiny muted" style="font-family:var(--body);font-weight:600;text-transform:none">'+esc(S.settings.season)+'</span></b>';
@@ -3181,7 +3204,7 @@ document.addEventListener("click", function(e){
       if(i0>=0 && y0>0){ var anc=null; for(var rj=i0;rj<rws.length;rj++){ if(!rws[rj].hidden){ anc=rws[rj]; break; } } if(!anc){ for(var rk=i0;rk>=0;rk--){ if(!rws[rk].hidden){ anc=rws[rk]; break; } } }
         if(anc){ window.scrollTo(0, Math.max(0, y0+(anc.getBoundingClientRect().top+(window.scrollY-y0))-at)); } } }
     return; }
-  if(ds.pv){ var pv=ds.pv; if(pv==="mine") calJump=true; smooth(function(){ partView=pv; render(); }); return; }
+  if(ds.pv){ if(ds.pv!==partView&&document.querySelector('#app .seg[aria-label="Vista partite"]')) partSwitch(ds.pv, ds.pv==="round"?1:-1); else if(ds.pv!==partView){ var pv=ds.pv; if(pv==="mine") calJump=true; smooth(function(){ partView=pv; render(); }); } return; }
   if(ds.round){ rcJump(+ds.round); return; }
   if(ds.unlogo){ setLogo(ds.unlogo,null); return; }
   if(ds.shr){ openShare(ds.shr==="t"?"table":"match",ds.shr.slice(2)); return; }
@@ -3488,7 +3511,7 @@ function rkAuto(){ var vp=$("rcVp"); if(!vp) return; var sv=rkSaved(); if(sv){ r
     if(!go){ s.mv.forEach(function(n){ n.style.transition="transform .34s cubic-bezier(.3,1.15,.4,1),opacity .25s ease"; n.style.transform=""; n.style.opacity=""; }); setTimeout(clean,360); return; }
     haptic(); var out=s.dx<0?-36:36;
     s.mv.forEach(function(n){ n.style.transition="transform .15s ease-in,opacity .15s ease-in"; n.style.transform="translate3d("+out+"px,0,0)"; n.style.opacity="0"; });
-    setTimeout(function(){ clean(); var nb=s.bs[s.ni]; if(tab==="classifica"&&nb.getAttribute("data-cls")) clsSwitch(nb.getAttribute("data-cls"),s.dx<0?1:-1,true); else nb.click(); },150);
+    setTimeout(function(){ clean(); var nb=s.bs[s.ni]; if(tab==="classifica"&&nb.getAttribute("data-cls")) clsSwitch(nb.getAttribute("data-cls"),s.dx<0?1:-1,true); else if(tab==="partite"&&nb.getAttribute("data-pv")) partSwitch(nb.getAttribute("data-pv"),s.dx<0?1:-1,true); else nb.click(); },150);
   }
   document.addEventListener("touchend",end,{passive:true}); document.addEventListener("touchcancel",end,{passive:true});
 })();
