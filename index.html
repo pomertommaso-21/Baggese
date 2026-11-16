@@ -1124,6 +1124,7 @@ nav.tabs.dragging button.hov{color:var(--brand);font-weight:700}
 nav.tabs.dragging button.hov svg.i{stroke-width:2.5}
 nav.tabs.dragging .tab-ind{box-shadow:inset 0 0 0 1px var(--lg-pill-line),inset 0 1px 0 var(--lg-hi),0 6px 18px rgba(0,0,0,.12)}
 nav.tabs button{transition:color .15s ease}
+.seg button.swhov{color:var(--fg)}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1153,7 +1154,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-15.3";
+var APP_VERSION="2026-11-16.3";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -3235,6 +3236,42 @@ function tabInd(){
   }
   TABPOS=[x,w];
 }
+/* Sottosezioni: si passa da una all'altra trascinando il dito sul contenuto; la pillola segue il dito */
+(function(){
+  var st=null;
+  function hScroll(el){ for(var n=el;n&&n.id!=="app";n=n.parentElement){ if(n.scrollWidth>n.clientWidth+2){ var ox=getComputedStyle(n).overflowX; if(ox==="auto"||ox==="scroll") return true; } } return false; }
+  function segOf(){ if(tab==="classifica") return document.querySelector('#app .seg[aria-label="Classifica"]'); if(tab==="rosa") return document.querySelector("#app .rt-seg"); return null; }
+  function moving(sg){ if(tab==="rosa"){ var pn=document.querySelector('#app [data-rpanel]:not([hidden])'); if(!pn) return []; pn.classList.remove("rt-in"); /* il pannello non ha una scatola sua (display:contents): si muovono i suoi blocchi */ return Array.prototype.slice.call(pn.children).map(function(n){ n.style.animation="none"; return n; }); }
+    var row=sg.closest(".row")||sg, v=document.querySelector("#app .view"), out=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) out.push(c); if(c===row||c.contains(row)) seen=true; }); return out; }
+  document.addEventListener("touchstart",function(e){ st=null; if(e.touches.length!==1||$("dlg").open) return; var tg=e.target; if(!tg.closest||!tg.closest("#app .view")) return;
+    if(tg.closest(".ghead,.seg,input,select,textarea,.crow.open .crow-det")||hScroll(tg)) return;
+    var sg=segOf(); if(!sg) return; var t=e.touches[0]; if(t.clientX<24) return;
+    var bs=Array.prototype.slice.call(sg.querySelectorAll("button")), cur=-1; bs.forEach(function(b,i){ if(b.getAttribute("aria-pressed")==="true") cur=i; }); if(cur<0) return;
+    st={x:t.clientX,y:t.clientY,on:false,sg:sg,bs:bs,cur:cur,dx:0,lx:t.clientX,lt:performance.now(),v:0}; },{passive:true});
+  document.addEventListener("touchmove",function(e){ if(!st) return; var t=e.touches[0], dx=t.clientX-st.x, dy=t.clientY-st.y;
+    if(!st.on){ if(Math.abs(dx)<10&&Math.abs(dy)<10) return; if(Math.abs(dy)*1.15>Math.abs(dx)){ st=null; return; }
+      st.on=true; st.ind=st.sg.querySelector(".seg-ind"); st.mv=moving(st.sg); st.mv.forEach(function(n){ n.style.transition="none"; }); if(st.ind) st.ind.style.transition="none"; }
+    e.preventDefault(); var now=performance.now(); st.v=(t.clientX-st.lx)/Math.max(1,now-st.lt); st.lx=t.clientX; st.lt=now; st.dx=dx;
+    var dir=dx<0?1:-1, ni=st.cur+dir, has=ni>=0&&ni<st.bs.length, p=has?Math.min(1,Math.abs(dx)/(innerWidth*.55)):0;
+    var a=st.bs[st.cur], b=has?st.bs[ni]:a, x=a.offsetLeft+(b.offsetLeft-a.offsetLeft)*p, w=a.offsetWidth+(b.offsetWidth-a.offsetWidth)*p;
+    if(st.ind){ st.ind.style.transform="translate("+x.toFixed(1)+"px,"+a.offsetTop+"px)"; st.ind.style.width=w.toFixed(1)+"px"; }
+    st.sg.querySelectorAll("button").forEach(function(q,i){ q.classList.toggle("swhov",has&&p>.5?i===ni:i===st.cur); });
+    var cx=has?dx*.35:dx*.12; st.mv.forEach(function(n){ n.style.transform="translateX("+cx.toFixed(1)+"px)"; n.style.opacity=String(1-Math.min(.5,Math.abs(cx)/260)); });
+    st.p=p; st.ni=has?ni:-1;
+  },{passive:false});
+  function end(){ if(!st) return; var s=st; st=null; if(!s.on) return; s.sg.querySelectorAll("button").forEach(function(q){ q.classList.remove("swhov"); });
+    var go=s.ni>=0&&(s.p>.35||(s.p>.08&&Math.abs(s.v)>.4&&(s.v<0)===(s.dx<0)));
+    var back=function(){ s.mv.forEach(function(n){ n.style.transition="transform .34s cubic-bezier(.3,1.15,.4,1),opacity .25s ease"; n.style.transform=""; n.style.opacity=""; });
+      if(s.ind){ var a=s.bs[s.cur]; s.ind.style.transition=""; s.ind.style.transform="translate("+a.offsetLeft+"px,"+a.offsetTop+"px)"; s.ind.style.width=a.offsetWidth+"px"; } };
+    if(!go){ back(); return; }
+    haptic(); var b=s.bs[s.ni];
+    if(s.ind){ s.ind.style.transition=""; s.ind.style.transform="translate("+b.offsetLeft+"px,"+b.offsetTop+"px)"; s.ind.style.width=b.offsetWidth+"px"; }
+    var out=s.dx<0?-40:40; s.mv.forEach(function(n){ n.style.transition="transform .16s ease-in,opacity .16s ease-in"; n.style.transform="translateX("+out+"px)"; n.style.opacity="0"; });
+    setTimeout(function(){ s.mv.forEach(function(n){ n.style.transition=""; n.style.transform=""; n.style.opacity=""; n.style.animation=""; }); if(s.ind){ s.ind.dataset.p=""; } b.click(); },170);
+  }
+  document.addEventListener("touchend",end,{passive:true}); document.addEventListener("touchcancel",end,{passive:true});
+})();
+
 /* Barra in basso: facendo scorrere il dito, la pillola segue il dito e illumina la sezione sotto;
    al rilascio si aggancia alla sezione più vicina e la apre. Tutto con transform, un aggiornamento per fotogramma */
 (function(){
