@@ -4551,7 +4551,7 @@
    "teamId": "t_baggese",
    "name": "Delgado Zevallos Christian Braya",
    "num": "",
-   "role": "Difensore",
+   "role": "Centrocampista",
    "tc": {
     "gol": 0,
     "pres": 7,
@@ -4580,7 +4580,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 1,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -4677,19 +4677,6 @@
    }
   },
   {
-   "id": "p_bag_17",
-   "teamId": "t_baggese",
-   "name": "Orellana Vargas Jenner Andrey",
-   "num": "",
-   "role": "Difensore",
-   "tc": {
-    "gol": 0,
-    "pres": 2,
-    "y": 0,
-    "r": 0
-   }
-  },
-  {
    "id": "p_bag_18",
    "teamId": "t_baggese",
    "name": "Pintus Mattia",
@@ -4720,7 +4707,7 @@
    "teamId": "t_baggese",
    "name": "Pozzi Luca",
    "num": "",
-   "role": "Attaccante",
+   "role": "Centrocampista",
    "tc": {
     "gol": 1,
     "pres": 9,
@@ -4775,7 +4762,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 0,
+    "pres": 2,
     "y": 0,
     "r": 0
    }
@@ -10866,6 +10853,6 @@
    }
   ]
  },
- "updatedAt": "2026-11-16T08:56:44+00:00",
+ "updatedAt": "2026-11-16T11:56:40+00:00",
  "tcRound": 10
 }
