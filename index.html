@@ -1205,6 +1205,21 @@ html:not([data-curtab="home"]) .fld-ic,html:not([data-curtab="home"]) .fold-ic,h
 .mx-ib{width:34px;height:34px;border-radius:50%;border:0;background:var(--surface-2);color:var(--fg);display:inline-grid;place-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .mx-ib svg.i{width:16px;height:16px}
 .mx-ib:active{transform:scale(.94)}
+/* Leader della squadra */
+.ldr-1,.ldr-r{display:flex;align-items:baseline;gap:7px;min-width:0;border:0;background:none;padding:0;color:inherit;font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ldr-lab{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.ldr-1 b{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1.1;flex:none;color:var(--brand)}
+.ldr-1 span{font-size:13.5px;font-weight:650;min-width:0}
+.ldr-r{width:100%;justify-content:space-between;font-size:12.5px;color:var(--muted);padding:2px 0}
+.ldr-r .ellipsis{flex:1;min-width:0}
+.ldr-r .num{font-weight:700;flex:none}
+/* una riga per statistica: a sinistra il primo, a destra secondo e terzo */
+.ldr-b .ldr-grid{display:flex;flex-direction:column}
+.ldr-b .ldr-c{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.ldr-b .ldr-c:first-child{border-top:0;padding-top:2px}
+.ldr-b .ldr-lab{grid-column:1;grid-row:1}
+.ldr-b .ldr-1{grid-column:1;grid-row:2}
+.ldr-b .ldr-rs{grid-column:2;grid-row:1/3;display:flex;flex-direction:column;padding-left:12px;border-left:1px solid var(--line)}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1234,7 +1249,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.14";
+var APP_VERSION="2026-11-16.15";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -2832,11 +2847,30 @@ function teamNumbers(tid){
   out+=goalMap(tid);
   return out||'<div class="empty"><span class="muted">Ancora niente da mostrare.</span></div>';
 }
+/* Leader della squadra: per ogni statistica il primo in evidenza, poi secondo e terzo più piccoli */
+function leadersCard(tid){
+  var st=playerStats(), ps=S.players.filter(function(p){ return pTeam(p)===tid; }); if(ps.length<3) return '';
+  var games=S.matches.filter(function(m){ return played(m)&&involves(m,tid); }).length, t11=top11Season(), minP=Math.max(3,Math.ceil(games*.4));
+  var nm=function(p){ return sName({playerId:p.id},true); };
+  var top3=function(val,tie){ return ps.filter(function(p){ var v=val(p); return v!=null&&v>0; }).sort(function(a,b){ return val(b)-val(a) || tie(a,b) || a.name.localeCompare(b.name); }).slice(0,3).map(function(p){ return {p:p,v:val(p)}; }); };
+  var L=[
+    ["Gol",top3(function(p){ return st[p.id].gol; },function(a,b){ return st[a.id].pres-st[b.id].pres; }),String],
+    ["Presenze",top3(function(p){ return st[p.id].pres; },function(a,b){ return st[b.id].gol-st[a.id].gol; }),String],
+    ["Top 11",top3(function(p){ return t11[p.id]?t11[p.id].n:0; },function(a,b){ return (t11[b.id]?t11[b.id].mvp:0)-(t11[a.id]?t11[a.id].mvp:0); }),String],
+    ["Gol a partita",top3(function(p){ var x=st[p.id]; return x.pres>=minP&&x.gol>0?x.gol/x.pres:null; },function(a,b){ return st[b.id].gol-st[a.id].gol; }),function(v){ return v.toFixed(2).replace(".",","); }]
+  ].filter(function(x){ return x[1].length; });
+  if(!L.length) return '';
+  return '<section class="card ldr ldr-b"><div class="card-head"><h2>Leader</h2></div><div class="ldr-grid">'
+    +L.map(function(x){ var f=x[1][0], rest=x[1].slice(1);
+      return '<div class="ldr-c"><span class="ldr-lab">'+x[0]+'</span><button type="button" class="ldr-1" data-player="'+f.p.id+'"><b class="num">'+x[2](f.v)+'</b><span class="ellipsis">'+esc(nm(f.p))+'</span></button><div class="ldr-rs">'
+        +rest.map(function(o){ return '<button type="button" class="ldr-r" data-player="'+o.p.id+'"><span class="ellipsis">'+esc(nm(o.p))+'</span><span class="num">'+x[2](o.v)+'</span></button>'; }).join("")+'</div></div>'; }).join("")
++'</div></section>'; }
 function teamCards(tid){
   var my=me(), out='';
   out+=formCard(tid);
   out+=prjTeamCard(tid);
   out+=streakCard(tid);
+  out+=leadersCard(tid);
   if(tid!==my){
     var ms=S.matches.filter(function(m){return involves(m,my)&&involves(m,tid);}).sort(sortMatches);
     if(ms.length) out+='<section class="card flush"><div class="card-head" style="padding:10px 6px 4px"><h2>Contro '+esc(tname(my))+'</h2><span class="meta">andata e ritorno</span></div><div class="list">'+ms.map(boardRow).join("")+'</div></section>';
