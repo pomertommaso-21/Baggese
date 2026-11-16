@@ -1160,6 +1160,8 @@ html.rk-anim .rc-card .board .crest{transition:width .28s cubic-bezier(.25,.9,.3
 .t11-blank{display:block;width:var(--s);height:var(--s);border-radius:50%;background:rgba(255,255,255,.6);box-shadow:0 1px 2px rgba(0,0,0,.25)}
 .rkp .seg{width:100%}
 .rkp .seg button{flex:1 1 0;min-width:0;padding-left:2px;padding-right:2px;font-size:12.5px;white-space:nowrap}
+/* passaggio di mano tra la barra attaccata in alto e quella della pagina: niente animazione della barra in alto */
+body.notr .segfloat{transition:none!important}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1189,7 +1191,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.12";
+var APP_VERSION="2026-11-16.13";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1819,22 +1821,28 @@ function calJumpNow(){ var el=document.getElementById("calNext"); if(!(el && tab
    scivolando dal lato giusto (niente dissolvenza) */
 function partSwitch(pv,dir,pillDone){
   var v=document.querySelector("#app .view"), sg=v&&v.querySelector('.seg[aria-label="Vista partite"]'); if(!sg||pv===partView||partSwitch.busy) return;
-  var old=[], head=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) old.push(c); else head.push(c); if(c===sg||c.contains(sg)) seen=true; });
-  var bs=Array.prototype.slice.call(sg.querySelectorAll("button")), on=null; bs.forEach(function(b){ var y=b.getAttribute("data-pv")===pv; b.setAttribute("aria-pressed",String(y)); if(y) on=b; });
-  swPill(sg,on,pillDone); partSwitch.busy=true;
-  /* dal calendario (pagina scesa) a "Per giornata" (in cima): la barra attaccata in alto se ne va con la sua animazione mentre esce il contenuto */
-  var jumpTop=pv==="round"&&(window.scrollY||0)>4; if(jumpTop) document.body.classList.remove("segup");
+  var old=[], head=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) old.push(c); else if(!(c===sg||c.contains(sg))) head.push(c); if(c===sg||c.contains(sg)) seen=true; });
+  var press=function(seg){ var on=null; seg.querySelectorAll("button[data-pv]").forEach(function(b){ var y=b.getAttribute("data-pv")===pv; b.setAttribute("aria-pressed",String(y)); if(y) on=b; }); return on; };
+  var on=press(sg); swPill(sg,on,pillDone); partSwitch.busy=true;
+  /* se c'è la barra attaccata in alto, la pillola scorre anche lì (è quella che si sta guardando) */
+  var sf=$("segfloat"), up=document.body.classList.contains("segup"), sfSeg=up&&sf?sf.querySelector(".seg"):null;
+  if(sfSeg){ swPill(sfSeg,press(sfSeg),false); var sfx=sf.querySelector(".sdf"); if(sfx&&sfx.animate&&!swReduce()) sfx.animate([{opacity:1},{opacity:0}],{duration:SW_OUT,fill:"forwards"}); }
+  var jumpTop=pv==="round"&&(window.scrollY||0)>4;
   var swap=function(){ partView=pv; var tmp=document.createElement("div"); tmp.innerHTML=vPartite();
     var nsg=tmp.querySelector('.seg[aria-label="Vista partite"]'), fresh=[], s2=false; if(!nsg){ partSwitch.busy=false; render(); return; }
     Array.prototype.slice.call(tmp.children).forEach(function(c){ if(s2) fresh.push(c); if(c===nsg||c.contains(nsg)) s2=true; });
+    /* passaggio di mano: la barra attaccata in alto sparisce senza animazione e quella della pagina parte esattamente da lì */
+    var fromTop=sfSeg?sfSeg.getBoundingClientRect().top:null;
     old.forEach(function(n){ n.remove(); }); var frag=document.createDocumentFragment(); fresh.forEach(function(n){ frag.appendChild(n); }); v.insertBefore(frag,sg.nextSibling);
     if(pv==="mine") sideApply();
-    else { document.body.classList.remove("segup"); window.scrollTo(0,0); if($("rcVp")){ rkAuto(); rcLater(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } }); } var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips"); if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2; }
+    else { document.body.classList.add("notr"); document.body.classList.remove("segup"); window.scrollTo(0,0); requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.body.classList.remove("notr"); }); });
+      if($("rcVp")){ rkAuto(); rcLater(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } }); } var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips"); if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2; }
     fitNames(); segInd(v); swIn(fresh,dir);
-    /* il titolo in cima era fuori schermo: compare sfumando, senza scatti */
-    if(jumpTop&&!swReduce()) head.forEach(function(n){ if(n.animate) n.animate([{opacity:0},{opacity:1}],{duration:280,easing:"ease-out"}); });
-    /* sul calendario si scivola fino alla prossima partita (invece di saltarci), e poi compare la barra in alto */
-    if(pv==="mine") setTimeout(calGlide,120);
+    if(jumpTop&&!swReduce()){ var d=fromTop!=null?fromTop-sg.getBoundingClientRect().top:-30;
+      if(sg.animate) sg.animate([{transform:"translateY("+d.toFixed(1)+"px)"},{transform:"none"}],{duration:SW_IN,easing:SW_EASE});
+      head.forEach(function(n){ if(n.animate) n.animate([{opacity:0,transform:"translateY("+(d*.5).toFixed(1)+"px)"},{opacity:1,transform:"none"}],{duration:SW_IN,easing:SW_EASE}); }); }
+    /* sul calendario si scivola fino alla prossima partita e la barra si aggancia in alto quando ci arriva */
+    if(pv==="mine") setTimeout(calGlide,140);
     partSwitch.busy=false; };
   if(pillDone) swap(); else swOut(old,dir,swap);
 }
@@ -1843,11 +1851,14 @@ function calGlide(){ var el=document.getElementById("calNext"); if(!(el&&tab==="
   /* si prepara la barra in alto (ancora nascosta) per sapere quanto è alta */
   Object.keys(SEGPOS).forEach(function(k){ if(/\(in alto\)/.test(k)) delete SEGPOS[k]; });
   if(sf&&seg){ var sdf=seg.nextElementSibling; sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"')+(sdf&&sdf.classList.contains("sdf")?sdf.outerHTML.replace(/ aria-label="Casa o trasferta"/,' aria-label="Casa o trasferta (in alto)"'):""); }
-  var target=Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-(tbh+(sf?sf.offsetHeight:0)+10));
-  autoUntil=Date.now()+1400;
-  if(swReduce()){ window.scrollTo(0,target); segShow(); return; }
-  try { window.scrollTo({top:target,behavior:"smooth"}); } catch(e){ window.scrollTo(0,target); }
-  var t0=Date.now(), last=-1, chk=function(){ var y=window.scrollY||0; if((Math.abs(y-target)<2||y===last)&&Date.now()-t0>150){ segShow(); return; } last=y; if(Date.now()-t0<1300) setTimeout(chk,60); else segShow(); }; setTimeout(chk,80); }
+  var y0=window.scrollY||0, target=Math.max(0, el.getBoundingClientRect().top+y0-(tbh+(sf?sf.offsetHeight:0)+10)), dist=target-y0;
+  if(swReduce()||Math.abs(dist)<4){ window.scrollTo(0,target); segShow(); return; }
+  /* scorrimento nostro, morbido (accelera e rallenta), più lento se la strada è lunga */
+  var D=Math.max(520,Math.min(900,420+Math.abs(dist)*.4)), t0=performance.now(), pinned=document.body.classList.contains("segup"), lim=tbh+8;
+  autoUntil=Date.now()+D+500;
+  (function step(){ var t=Math.min(1,(performance.now()-t0)/D), e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; window.scrollTo(0,y0+dist*e);
+    if(!pinned&&seg&&seg.getBoundingClientRect().top<=lim){ pinned=true; document.body.classList.add("notr"); document.body.classList.add("segup"); requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.body.classList.remove("notr"); }); }); }
+    if(t<1) requestAnimationFrame(step); else if(!pinned) segShow(); })(); }
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
   crestN=0; shirtN=0; HIST=null; setAccent();
@@ -3371,7 +3382,8 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
     if(sf){ var hide=true; if(seg){ var tb=$("topbar"), lim=(tb?tb.offsetHeight:50); var gone=seg.getBoundingClientRect().bottom<lim;
         if(gone && acc<-6){ if(!document.body.classList.contains("segup")){ var sdf=seg.nextElementSibling; sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"')+(sdf&&sdf.classList.contains("sdf")?sdf.outerHTML.replace(/ aria-label="Casa o trasferta"/,' aria-label="Casa o trasferta (in alto)"'):""); } hide=false; }
         else if(gone && acc<=6 && document.body.classList.contains("segup")) hide=false; }
-      if(document.body.classList.contains("segup")===hide) document.body.classList.toggle("segup",!hide); }
+      /* durante uno scorrimento automatico (salto o scivolata alla prossima partita) la barra la decide chi scorre */
+      if(Date.now()>=autoUntil && document.body.classList.contains("segup")===hide) document.body.classList.toggle("segup",!hide); }
     if(document.body.classList.contains("scrolled")!==sc) document.body.classList.toggle("scrolled",sc);
     /* la barra delle schede scende scorrendo in giù e torna appena si risale (o in fondo alla pagina) */
     var atEnd=y+innerHeight>=document.documentElement.scrollHeight-4, nh=document.body.classList.contains("navhide");
