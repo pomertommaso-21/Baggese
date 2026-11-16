@@ -1153,7 +1153,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-15.3";
+var APP_VERSION="2026-11-16.1";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -3235,6 +3235,26 @@ function tabInd(){
   }
   TABPOS=[x,w];
 }
+/* Tocco mentre la pagina scorre ancora per inerzia: l'iPhone userebbe il primo tocco solo per fermarla.
+   - barre (in basso, in alto, "Baggese / Per giornata", filtro casa/trasferta): il tocco vale subito;
+   - contenuto della pagina: vale subito se la pagina sta rallentando, mentre se corre ancora veloce il tocco la ferma soltanto
+     (così toccando per fermare la pagina non si apre per sbaglio la partita che passa sotto il dito).
+   Con la pagina ferma non cambia nulla: il tocco normale funziona già. */
+(function(){
+  var lastT=-1e9, v=0, pos={}, st=null;
+  var BARS="nav.tabs,#segfloat,.topbar,#app .seg,#app .sdf", ACT="button,a[href],summary,label,[data-tab],[data-go],[data-view],[role=button]";
+  document.addEventListener("scroll",function(e){ var el=e.target, k=el===document?"w":(el.id||el.className||"x"), y=el===document?(window.scrollY||0):el.scrollTop, now=performance.now(), p=pos[k];
+    if(p&&now-p.t<200&&now>p.t){ var inst=Math.abs(y-p.y)/(now-p.t); v=v*.5+inst*.5; } else v=0;
+    pos[k]={y:y,t:now}; lastT=now; },{passive:true,capture:true});
+  document.addEventListener("touchstart",function(e){ st=null; if(e.touches.length!==1) return; var now=performance.now(); if(now-lastT>100) return;
+    var t=e.touches[0]; st={x:t.clientX,y:t.clientY,t:now,v:v}; },{passive:true,capture:true});
+  document.addEventListener("touchmove",function(e){ if(!st) return; var t=e.touches[0]; if(Math.abs(t.clientX-st.x)>10||Math.abs(t.clientY-st.y)>10) st=null; },{passive:true,capture:true});
+  document.addEventListener("touchend",function(e){ var s=st; st=null; if(!s||e.defaultPrevented||!e.cancelable) return; if(performance.now()-s.t>450) return;
+    var c=e.changedTouches[0], el=document.elementFromPoint(c.clientX,c.clientY); if(!el||el.closest("input,select,textarea")) return;
+    var a=el.closest(ACT); if(!a||a.disabled) return;
+    if(!a.closest(BARS) && s.v>.5) return;
+    e.preventDefault(); a.click(); },{passive:false,capture:true});
+})();
 /* Barra in basso: facendo scorrere il dito, la pillola segue il dito e illumina la sezione sotto;
    al rilascio si aggancia alla sezione più vicina e la apre. Tutto con transform, un aggiornamento per fotogramma */
 (function(){
