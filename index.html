@@ -1140,6 +1140,27 @@ nav.tabs button{transition:color .15s ease}
 .forb-r b{font-weight:600;color:var(--fg);opacity:.75}
 .cls-tools{display:flex;gap:6px;align-items:center;overflow:hidden;max-width:220px;transition:max-width .34s cubic-bezier(.25,.9,.3,1),margin .34s cubic-bezier(.25,.9,.3,1),opacity .2s ease}
 .cls-tools.off{max-width:0;margin-left:-6px;opacity:0;pointer-events:none}
+/* giornate in alto: il rosso passa da un numero all'altro di colpo, senza la dissolvenza che faceva vedere due numeri rossi */
+#roundChips .rchip{transition:transform .12s}
+/* riquadro della giornata: tutto scala con --rk (misura scelta con la maniglia o automatica) */
+.rc-card .board{padding:max(2px,calc(6px + (var(--rk,1) - 1)*34px)) 4px}
+@media (max-height:830px){.rc-card .board{padding:max(2px,calc(4px + (var(--rk,1) - 1)*34px)) 4px}}
+/* l'altezza la fanno soprattutto gli spazi tra le righe; stemmi e risultato crescono meno, i nomi restano tutti uguali */
+.rc-card .board .crest{--s:calc(28px*(1 + (var(--rk,1) - 1)*.5))!important}
+.rc-card .b-team .nm{font-size:calc(14px*var(--nmf,1))}
+.rc-card.nm2 .b-team .nm{white-space:normal;text-overflow:clip;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.15;overflow-wrap:normal;font-size:calc(14px*(1 + (var(--rk,1) - 1)*.6)*var(--nmf,1))}
+.rc-card .b-score{font-size:calc(20px*(1 + (var(--rk,1) - 1)*.5))}
+.rc-card .b-score small{font-size:calc(11.5px*(1 + (var(--rk,1) - 1)*.5))}
+html.rk-anim .rc-card .board,html.rk-anim .rc-card .b-team,html.rk-anim .rc-card .b-score{transition:padding .28s cubic-bezier(.25,.9,.3,1),font-size .28s cubic-bezier(.25,.9,.3,1)}
+html.rk-anim .rc-card .board .crest{transition:width .28s cubic-bezier(.25,.9,.3,1),height .28s cubic-bezier(.25,.9,.3,1)}
+.rc-card{padding-bottom:14px}
+.rc-grip{position:absolute;left:50%;bottom:0;width:64px;height:22px;transform:translateX(-50%);display:grid;place-items:center;z-index:3;touch-action:none;-webkit-tap-highlight-color:transparent}
+.rc-grip::after{content:"";width:26px;height:3px;border-radius:2px;background:var(--muted);opacity:.2;transition:opacity .2s,width .2s}
+html.rk-drag .rc-grip::after{opacity:.45;width:32px}
+/* giornate da giocare: "La giornata in breve" e "Top 11" ci sono già, in grigio, da compilare */
+.gb-off{filter:grayscale(1);opacity:.5;pointer-events:none}
+.gb-off .t11-tz-tx b{letter-spacing:.06em}
+.t11-blank{display:block;width:var(--s);height:var(--s);border-radius:50%;background:rgba(255,255,255,.6);box-shadow:0 1px 2px rgba(0,0,0,.25)}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1169,7 +1190,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.7";
+var APP_VERSION="2026-11-16.8";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1791,7 +1812,7 @@ function render(){
   if(typeof segInd==="function"){ segInd(document); tabInd(); }
   var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips");
   if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2;
-  if($("rcVp")) rcLater(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } });
+  if($("rcVp")){ rkAuto(); rcLater(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } }); }
 }
 
 /* ---------- home ---------- */
@@ -2021,6 +2042,12 @@ function prjFill(){
   if(tab==="classifica"&&clsSort==="prj"&&document.querySelector(".cls-main [data-prjwait]")) clsUpdate(function(){}); }
 /* ---------- giornata in breve ---------- */
 function posAfter(id,r){ var h=history(), a=h.by[id]; if(!a||r<1||r>h.L) return null; var x=a[r-1]; return x&&x.r===r?x.pos:null; }
+/* giornata da giocare (o non ancora completa): "La giornata in breve" e la Top 11 ci sono già, in grigio, con scritto che si compilano dopo */
+function roundBriefOff(r){ var ms=S.matches.filter(function(m){return +m.round===r;}); if(!ms.length) return '';
+  var head='<span class="fold-ic">'+icon("flash")+'</span><b class="gbt">La giornata<br>in breve</b><span class="fold-chev">'+icon("chev")+'</span><span class="fold-sub">si compila a fine giornata</span>';
+  var cols=[[0,0],[0,0,0,0],[0,0,0,0],[0]];
+  var t11='<div class="t11-tz"><span class="t11-tz-tx"><span class="t11-tz-ey">Top 11</span><b>–</b><span class="t11-tz-mvp"><span>da compilare</span></span></span><span class="t11-mini">'+cols.map(function(l){ return '<span class="t11-mc">'+l.map(function(){ return '<span class="t11-md"><span class="t11-blank" style="--s:13px"></span></span>'; }).join("")+'</span>'; }).join("")+'</span></div>';
+  return '<div class="gb fold duo gb-off" aria-hidden="true"><div class="gb-duo"><div class="fold-head">'+head+'</div>'+t11+'</div></div>'; }
 function roundBrief(r){
   var ms=S.matches.filter(function(m){return +m.round===r;}), pl=ms.filter(played);
   if(!pl.length || pl.length<ms.length-2 || r>lastPlayedRound()) return '';
@@ -2417,7 +2444,7 @@ function vPartite(){
     var rs=rounds(), nr=nextRound(); if(selRound===null||rs.indexOf(selRound)<0) selRound=nr;
     h+='<div class="chips" id="roundChips" role="group" aria-label="Giornata">'+rs.map(function(r){ var done=S.matches.some(function(m){return +m.round===r&&played(m);}); return '<button type="button" class="rchip'+(done?'':' future')+'" data-round="'+r+'" aria-pressed="'+(r===selRound)+'" aria-label="Giornata '+r+'">'+r+'</button>'; }).join("")+'</div>';
     slideDir=0;
-    h+='<div class="rc-vp" id="rcVp"><div class="rc-slot cur" data-r="'+selRound+'">'+roundCardHtml(selRound,true)+'</div></div><span class="tiny muted" style="text-align:center">Scorri a destra o a sinistra per cambiare giornata</span>';
+    h+='<div class="rc-vp" id="rcVp"><div class="rc-slot cur" data-r="'+selRound+'">'+roundCardHtml(selRound,true)+'</div><i class="rc-grip" id="rcGrip" aria-hidden="true"></i></div><span class="tiny muted" style="text-align:center">Scorri a destra o a sinistra per cambiare giornata</span>';
     return h;
   }
   var list=S.matches.filter(function(m){return involves(m,my);}).sort(sortMatches);
@@ -2862,7 +2889,7 @@ function roundCardHtml(r,cur){
   var tk=function(m){ var t=String(m.time||"").match(/^(\d{1,2})[:.](\d{2})/); return (m.date||"9999-99-99")+" "+(t?("0"+t[1]).slice(-2)+":"+t[2]:"99:99"); };
   var ms=S.matches.filter(function(m){return +m.round===r;}).sort(function(a,b){ var ka=tk(a), kb=tk(b); return ka<kb?-1:ka>kb?1:((involves(b,my)?1:0)-(involves(a,my)?1:0) || tname(a.homeId).localeCompare(tname(b.homeId))); });
   var dt=ms[0]&&ms[0].date;
-  return '<section class="card flush rc-card"'+(cur?' id="roundCard"':' aria-hidden="true"')+' data-r="'+r+'"><div class="card-head rc-head"><h2>'+r+'ª giornata<span class="meta">'+(r>15?'Ritorno':'Andata')+(dt?' · '+esc(fmtDate(dt)):'')+'</span></h2><div class="rnav"><button class="btn sm" type="button" data-rstep="-1" aria-label="Giornata precedente"'+(ri<=0?' disabled':'')+'>'+icon("left")+'</button><button class="btn sm" type="button" data-rstep="1" aria-label="Giornata successiva"'+(ri>=rs.length-1?' disabled':'')+'>'+icon("right")+'</button></div></div><div class="list">'+ms.map(function(m){ return boardRowSz(m,28); }).join("")+'</div>'+roundBrief(r)+'</section>';
+  return '<section class="card flush rc-card"'+(cur?' id="roundCard"':' aria-hidden="true"')+' data-r="'+r+'"><div class="card-head rc-head"><h2>'+r+'ª giornata<span class="meta">'+(r>15?'Ritorno':'Andata')+(dt?' · '+esc(fmtDate(dt)):'')+'</span></h2><div class="rnav"><button class="btn sm" type="button" data-rstep="-1" aria-label="Giornata precedente"'+(ri<=0?' disabled':'')+'>'+icon("left")+'</button><button class="btn sm" type="button" data-rstep="1" aria-label="Giornata successiva"'+(ri>=rs.length-1?' disabled':'')+'>'+icon("right")+'</button></div></div><div class="list">'+ms.map(function(m){ return boardRowSz(m,28); }).join("")+'</div>'+(roundBrief(r)||roundBriefOff(r))+'</section>';
 }
 var RC={busy:false,tok:0,anim:null};
 /* tre "posti" fissi (giornata prima, attuale, dopo): a fine scorrimento cambiano solo i ruoli,
@@ -3310,13 +3337,24 @@ function segInd(root){
   });
 }
 /* classifica: i nomi restano su una riga; quelli lunghi si rimpiccioliscono appena quanto basta */
-function fitNames(){ var ts=document.querySelectorAll(".crow .tn:not([data-fit]),.rc-card .nm:not([data-fit])"); if(!ts.length) return;
+/* riquadro della giornata: tutti i nomi della stessa grandezza. Se un nome non ci sta, si rimpiccioliscono tutti insieme
+   quanto basta (mai sotto il 60%), così ingrandendo o stringendo il riquadro le scritte restano coerenti tra loro */
+function rcFit(all){ var rg=document.createRange(), k=parseFloat(document.documentElement.style.getPropertyValue("--rk"))||1, two=k>=1.08;
+  document.querySelectorAll(all?".rc-card":".rc-card:not([data-nmf])").forEach(function(card){ var ns=card.querySelectorAll(".b-team .nm"); if(!ns.length) return;
+    card.style.removeProperty("--nmf"); card.classList.toggle("nm2",two); var r=1;
+    ns.forEach(function(t){ var aw=t.getBoundingClientRect().width; if(!(aw>0)) return; var tx=t.firstChild; if(!tx||tx.nodeType!==3) return;
+      if(two){ /* riquadro grande: i nomi possono andare su due righe, conta la parola più lunga */
+        var w=0, re=/\S+/g, m; while((m=re.exec(tx.data))){ rg.setStart(tx,m.index); rg.setEnd(tx,m.index+m[0].length); w=Math.max(w,rg.getBoundingClientRect().width); }
+        if(w>aw+.1) r=Math.min(r,aw/w); if(t.scrollHeight>t.clientHeight+1) r=Math.min(r,.9); }
+      else { rg.selectNodeContents(t); var tw=rg.getBoundingClientRect().width; if(tw>aw+.1) r=Math.min(r,aw/tw); } });
+    if(r<1) card.style.setProperty("--nmf",Math.max(.6,Math.floor(r*100)/100).toFixed(2)); card.setAttribute("data-nmf","1"); }); }
+function fitNames(){ rcFit(); var ts=document.querySelectorAll(".crow .tn:not([data-fit])"); if(!ts.length) return;
   /* il testo può sforare di frazioni di pixel (e mostrare i puntini) anche se scrollWidth non lo dice: si misura il testo vero */
   var rg=document.createRange(), ov=function(t){ if(t.scrollWidth>t.clientWidth+.5) return true; rg.selectNodeContents(t); return rg.getBoundingClientRect().width>t.getBoundingClientRect().width+.1; };
   var over=[]; ts.forEach(function(t){ t.setAttribute("data-fit","1"); if(ov(t)) over.push(t); });
   over.forEach(function(t){ t.classList.add("fit1"); }); var o2=over.filter(ov); o2.forEach(function(t){ t.classList.add("fit2"); }); o2.filter(ov).forEach(function(t){ t.classList.add("fit3"); }); }
 /* quando arriva il carattere vero i nomi cambiano larghezza: si rimisurano */
-function refitNames(){ document.querySelectorAll("[data-fit]").forEach(function(t){ t.removeAttribute("data-fit"); t.classList.remove("fit1","fit2","fit3"); }); fitNames(); }
+function refitNames(){ rcFit(true); document.querySelectorAll("[data-fit]").forEach(function(t){ t.removeAttribute("data-fit"); t.classList.remove("fit1","fit2","fit3"); }); fitNames(); }
 try { if(document.fonts){ document.fonts.ready.then(refitNames); if(document.fonts.addEventListener) document.fonts.addEventListener("loadingdone",refitNames); } } catch(e){}
 var TABPOS=null;
 function tabInd(){
@@ -3357,12 +3395,51 @@ function clsSwitch(cv,dir,pillDone){
   if(!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)) fresh.forEach(function(n){ if(n.animate) n.animate([{transform:"translate3d("+(dir>0?34:-34)+"px,0,0)",opacity:0},{transform:"none",opacity:1}],{duration:280,easing:"cubic-bezier(.25,.9,.3,1)"}); });
   segInd(v); fitNames();
 }
+/* Riquadro della giornata: misura su misura.
+   --rk è la scala delle righe (1 = misura di partenza). Senza scelte dell'utente il riquadro riempie lo spazio dello schermo
+   (tra i pulsanti in alto e la barra in basso); con la maniglia sotto il riquadro si allarga o si stringe e il telefono se lo ricorda.
+   Doppio tocco sulla maniglia: torna alla misura automatica. */
+var RK_MIN=.8, RK_MAX=1.4;
+function rkSaved(){ try { var v=parseFloat(localStorage.getItem("baggese-rk")); return v>=RK_MIN&&v<=RK_MAX?v:null; } catch(e){ return null; } }
+function rkSet(k){ document.documentElement.style.setProperty("--rk",k.toFixed(3)); }
+function rkMeasure(){ var c=document.querySelector("#rcVp .rc-slot.cur .rc-card"); return c?c.getBoundingClientRect().height:0; }
+/* quanti pixel cresce il riquadro per ogni punto di scala (misurato, non stimato) */
+function rkSlope(){ var root=document.documentElement, old=root.style.getPropertyValue("--rk")||"1", k=parseFloat(old)||1; rkSet(k); var a=rkMeasure(); rkSet(k+.1); var b=rkMeasure(); rkSet(k); return Math.max(40,(b-a)/.1); }
+function rkAutoK(){ var vp=$("rcVp"); if(!vp) return 1; var root=document.documentElement, anim=root.classList.contains("rk-anim"); root.classList.remove("rk-anim");
+  rkSet(1); var top=vp.getBoundingClientRect().top+(window.scrollY||0), nav=document.querySelector("nav.tabs"), navH=nav&&innerWidth<960?(innerHeight-nav.getBoundingClientRect().top):0;
+  var hint=vp.nextElementSibling, hintH=hint?hint.getBoundingClientRect().height+14:0;
+  var avail=innerHeight-top-Math.max(0,navH)-hintH-10, h1=rkMeasure(), k=1+(avail-h1)/rkSlope();
+  if(anim) root.classList.add("rk-anim"); return Math.max(RK_MIN,Math.min(1.3,k)); }
+function rkAuto(){ var vp=$("rcVp"); if(!vp) return; var sv=rkSaved(); if(sv){ rkSet(sv); refitNames(); return; }
+  var k=rkAutoK(); rkSet(k); refitNames();
+  /* con i nomi lunghi su due righe il riquadro può crescere un po': si ricontrolla e, se serve, si stringe quanto basta */
+  var nav=document.querySelector("nav.tabs"), lim=nav&&innerWidth<960?nav.getBoundingClientRect().top:innerHeight, hint=vp.nextElementSibling, hb=(hint?hint.getBoundingClientRect().height+14:0)+10;
+  var over=rkMeasure()+vp.getBoundingClientRect().top+hb-lim; if(over>2){ rkSet(Math.max(RK_MIN,k-over/rkSlope())); refitNames(); } }
+(function(){
+  var st=null, raf=0, lastTap=0;
+  function grip(e){ return e.target.closest&&e.target.closest("#rcGrip"); }
+  document.addEventListener("touchstart",function(e){ if(!grip(e)||e.touches.length!==1) return; e.stopPropagation();
+    var now=performance.now(), t=e.touches[0];
+    if(now-lastTap<320){ lastTap=0; try { localStorage.removeItem("baggese-rk"); } catch(x){}
+      var root=document.documentElement, cur=parseFloat(root.style.getPropertyValue("--rk"))||1; rkAuto(); var ka=parseFloat(root.style.getPropertyValue("--rk"))||1; rkSet(cur); void root.offsetHeight; root.classList.add("rk-anim"); rkSet(ka); haptic();
+      setTimeout(function(){ root.classList.remove("rk-anim"); refitNames(); if(!RC.busy){ rcSides(); rcSet(0,0); } },320); st=null; return; }
+    lastTap=now; var k=parseFloat(document.documentElement.style.getPropertyValue("--rk"))||1;
+    st={y:t.clientY,k0:k,k:k,slope:rkSlope(),on:false}; },{passive:true,capture:true});
+  document.addEventListener("touchmove",function(e){ if(!st) return; var dy=e.touches[0].clientY-st.y; if(!st.on){ if(Math.abs(dy)<4) return; st.on=true; document.documentElement.classList.add("rk-drag"); }
+    e.preventDefault(); e.stopPropagation(); var k=st.k0+dy/st.slope; if(k<RK_MIN) k=RK_MIN-(RK_MIN-k)*.25; if(k>RK_MAX) k=RK_MAX+(k-RK_MAX)*.25; st.k=k;
+    if(!raf) raf=requestAnimationFrame(function(){ raf=0; if(st) rkSet(st.k); }); },{passive:false,capture:true});
+  function end(){ if(!st) return; var s=st; st=null; if(raf){ cancelAnimationFrame(raf); raf=0; } document.documentElement.classList.remove("rk-drag"); if(!s.on) return;
+    var k=Math.max(RK_MIN,Math.min(RK_MAX,Math.round(s.k/.05)*.05)); document.documentElement.classList.add("rk-anim"); rkSet(k); haptic();
+    try { localStorage.setItem("baggese-rk",k.toFixed(2)); } catch(x){}
+    setTimeout(function(){ document.documentElement.classList.remove("rk-anim"); refitNames(); if(!RC.busy){ rcSides(); rcSet(0,0); } },300); }
+  document.addEventListener("touchend",end,{passive:true,capture:true}); document.addEventListener("touchcancel",end,{passive:true,capture:true});
+})();
 /* Sottosezioni: si passa da una all'altra trascinando il dito sul contenuto; la pillola segue il dito.
    Un solo aggiornamento per fotogramma; al rilascio la pillola va dritta alla sezione nuova e nessuno la riporta indietro */
 (function(){
   var st=null, raf=0;
   function hScroll(el){ for(var n=el;n&&n.id!=="app";n=n.parentElement){ if(n.scrollWidth>n.clientWidth+2){ var ox=getComputedStyle(n).overflowX; if(ox==="auto"||ox==="scroll") return true; } } return false; }
-  function segOf(){ if(tab==="classifica") return document.querySelector('#app .seg[aria-label="Classifica"]'); if(tab==="rosa") return document.querySelector("#app .rt-seg"); return null; }
+  function segOf(){ if(tab==="classifica") return document.querySelector('#app .seg[aria-label="Classifica"]'); if(tab==="rosa") return document.querySelector("#app .rt-seg"); if(tab==="partite") return document.querySelector('#app .seg[aria-label="Vista partite"]'); return null; }
   function moving(sg){ if(tab==="rosa"){ var pn=document.querySelector('#app [data-rpanel]:not([hidden])'); if(!pn) return []; pn.classList.remove("rt-in"); /* il pannello non ha una scatola sua (display:contents): si muovono i suoi blocchi */ return Array.prototype.slice.call(pn.children); }
     var row=sg.closest(".row")||sg, v=document.querySelector("#app .view"), out=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) out.push(c); if(c===row||c.contains(row)) seen=true; }); return out; }
   function geo(b){ return [b.offsetLeft,b.offsetTop,b.offsetWidth,b.offsetHeight]; }
@@ -3374,10 +3451,15 @@ function clsSwitch(cv,dir,pillDone){
     var cx=has?dx*.35:dx*.12, op=(1-Math.min(.5,Math.abs(cx)/260)).toFixed(3); s.mv.forEach(function(n){ n.style.transform="translate3d("+cx.toFixed(1)+"px,0,0)"; n.style.opacity=op; });
     s.p=p; s.ni=has?ni:-1; }
   document.addEventListener("touchstart",function(e){ st=null; if(e.touches.length!==1||$("dlg").open) return; var tg=e.target; if(!tg.closest||!tg.closest("#app .view")) return;
-    if(tg.closest(".seg,input,select,textarea,.crow.open .crow-det")||hScroll(tg)) return;
-    var sg=segOf(); if(!sg) return; var t=e.touches[0]; if(t.clientX<24) return;
+    var t=e.touches[0], round=tab==="partite"&&partView==="round";
+    /* Partite, vista "Per giornata": il riquadro della giornata scorre le giornate; per tornare a "Baggese" si parte dal bordo sinistro dello schermo */
+    var edge=round&&t.clientX<22&&!NAVBACK;
+    if(round&&!edge) return;   /* fuori dal bordo, in "Per giornata" il dito di lato cambia giornata (come sempre) */
+    if(!edge){ if(tg.closest(".seg,.sdf,#rcVp,#roundChips,input,select,textarea,.crow.open .crow-det")||hScroll(tg)) return; if(t.clientX<24) return; }
+    var sg=segOf(); if(!sg) return;
+    if(edge) e.stopPropagation();   /* il riquadro delle giornate non deve partire insieme */
     var bs=Array.prototype.slice.call(sg.querySelectorAll("button")), cur=-1; bs.forEach(function(b,i){ if(b.getAttribute("aria-pressed")==="true") cur=i; }); if(cur<0) return;
-    st={x:t.clientX,y:t.clientY,on:false,sg:sg,bs:bs,cur:cur,dx:0,lx:t.clientX,lt:performance.now(),v:0,hi:null}; },{passive:true});
+    st={x:t.clientX,y:t.clientY,on:false,sg:sg,bs:bs,cur:cur,dx:0,lx:t.clientX,lt:performance.now(),v:0,hi:null}; },{passive:true,capture:true});
   document.addEventListener("touchmove",function(e){ if(!st) return; var t=e.touches[0], dx=t.clientX-st.x, dy=t.clientY-st.y;
     if(!st.on){ if(Math.abs(dx)<10&&Math.abs(dy)<10) return; if(Math.abs(dy)*1.15>Math.abs(dx)){ st=null; return; }
       st.on=true; st.x=t.clientX-(dx>0?10:-10); st.g=st.bs.map(geo); st.ind=st.sg.querySelector(".seg-ind"); st.mv=moving(st.sg);
