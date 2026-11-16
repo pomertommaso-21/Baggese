@@ -1125,6 +1125,21 @@ nav.tabs.dragging button.hov svg.i{stroke-width:2.5}
 nav.tabs.dragging .tab-ind{box-shadow:inset 0 0 0 1px var(--lg-pill-line),inset 0 1px 0 var(--lg-hi),0 6px 18px rgba(0,0,0,.12)}
 nav.tabs button{transition:color .15s ease}
 .seg button.swhov{color:var(--fg)}
+.forb{padding:0 4px}
+.forb>summary{list-style:none;display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;padding:6px 0;-webkit-tap-highlight-color:transparent;width:max-content}
+.forb>summary::-webkit-details-marker{display:none}
+.forb>summary svg.i{width:13px;height:13px;transition:transform .25s ease;opacity:.7}
+.forb[open]>summary svg.i{transform:rotate(180deg)}
+.forb-dots{display:inline-flex;gap:3px}
+.forb-dots i,.forb-r i{flex:none;width:6px;height:6px;border-radius:50%;background:var(--zc);opacity:.55}
+.forb-dots i.over,.forb-r.over i{opacity:1}
+.forb-in{display:flex;flex-direction:column;gap:6px;padding:2px 0 4px;animation:forbIn .25s ease}
+@keyframes forbIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.forb-r{margin:0;display:flex;gap:7px;align-items:baseline;font-size:11.5px;line-height:1.45;color:var(--muted)}
+.forb-r i{transform:translateY(-1px)}
+.forb-r b{font-weight:600;color:var(--fg);opacity:.75}
+.cls-tools{display:flex;gap:6px;align-items:center;transition:opacity .2s ease}
+.cls-tools.off{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility 0s .2s}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1154,7 +1169,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.5";
+var APP_VERSION="2026-11-16.6";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1452,6 +1467,25 @@ function prevPos(id){ var h=history(), L=MVR||h.L; if(L<2) return null; var a=h.
 function noDown(){ return gir(G).cat==="Terza"; }
 function zoneOf(pos){ var n=S.teams.length; if(n<8||!pos) return null; var z=zRanges(); if(pos===1) return "promo"; if(pos<=z.po[1]) return "po"; if(!z.pl) return null; if(pos===n) return "rel"; if(pos>=z.pl[0]&&pos<=z.pl[1]) return "pl"; return null; }
 function zAttr(pos){ if(ZOFF) return ''; var z=zoneOf(pos); return z?' data-z="'+z+'" style="--zc:var(--z-'+z+')"':''; }
+/* Forbici: se oggi un distacco è oltre (o a un passo da) quello che fa saltare playoff o playout, una nota in fondo alla classifica lo dice.
+   Playoff: si giocano solo entro 9 punti dalla 2ª. Playout: non si giocano se tra le due squadre ci sono più di 6 punti.
+   "Vicina" = il distacco è a 2 punti o meno dal limite (7–9 per i playoff, 4–6 per i playout) */
+function forbNotes(rows){ var n=rows.length, c=gir(G).cat; if(n<8||c==="Terza") return ''; var P={}, T={}; rows.forEach(function(r){ P[r.pos]=+r.pts; T[r.pos]=r.id; }); if(P[2]==null) return '';
+  var nm=function(k){ return esc(tname(T[k])); }, out=[];
+  /* playoff: la squadra più in alto oltre i 9 punti dalla 2ª fa saltare lei e chi sta sotto; "vicina" = 7, 8 o 9 punti */
+  var ex=0; [3,4,5].some(function(k){ if(P[k]!=null&&P[2]-P[k]>9){ ex=k; return true; } return false; });
+  if(ex===3) out.push(['po',1,'Forbice playoff superata','La 2ª '+nm(2)+' ha '+(P[2]-P[3])+' punti sulla 3ª: se finisse così, niente playoff nel girone e la 2ª passerebbe direttamente al turno dopo.']);
+  else if(ex===4) out.push(['po',1,'Forbice playoff superata','La 4ª '+nm(4)+' è a '+(P[2]-P[4])+' punti dalla 2ª: se finisse così, playoff solo tra 2ª e 3ª.']);
+  else if(ex===5) out.push(['po',1,'Forbice playoff superata','La 5ª '+nm(5)+' è a '+(P[2]-P[5])+' punti dalla 2ª: se finisse così resterebbe fuori, playoff solo tra 3ª e 4ª e la vincente con la 2ª.']);
+  [3,4,5].some(function(k){ if(ex&&k>=ex) return true; var gp=P[2]-P[k]; if(P[k]!=null&&gp>=7&&gp<=9){ out.push(['po',0,'Forbice playoff vicina','La '+k+'ª '+nm(k)+' è a '+gp+' punti dalla 2ª '+nm(2)+': con più di 9 di distacco resterebbe fuori dai playoff.']); return true; } return false; });
+  var pairs=c==="Prima"?[[n-4,n-1],[n-3,n-2]]:[[n-2,n-1]];
+  pairs.forEach(function(q){ var hi=q[0], lo=q[1], gp=P[hi]-P[lo]; if(P[hi]==null||P[lo]==null) return;
+    var who='Tra '+hi+'ª '+nm(hi)+' e '+lo+'ª '+nm(lo)+' ci sono '+gp+(gp===1?' punto':' punti');
+    if(gp>6) out.push(['pl',1,'Forbice playout superata',who+': se finisse così il playout non si giocherebbe, la '+lo+'ª retrocederebbe e la '+hi+'ª sarebbe salva.']);
+    else if(gp>=4) out.push(['pl',0,'Forbice playout vicina',who+': con più di 6 il playout non si giocherebbe (la '+lo+'ª retrocederebbe, la '+hi+'ª salva).']); });
+  if(!out.length) return '';
+  var dots=out.map(function(o){ return '<i class="'+(o[1]?'over':'')+'" style="--zc:var(--z-'+o[0]+')"></i>'; }).join("");
+  return '<details class="forb"><summary><span class="forb-dots">'+dots+'</span>Forbice playoff e playout'+icon("chev")+'</summary><div class="forb-in">'+out.map(function(o){ return '<p class="forb-r'+(o[1]?' over':'')+'" style="--zc:var(--z-'+o[0]+')"><i></i><span><b>'+o[2]+'.</b> '+o[3]+'</span></p>'; }).join("")+'</div></details>'; }
 function zLegend(extra){ var n=S.teams.length; return '<div class="zleg"><span title="1°"><i style="background:var(--z-promo)"></i>Promozione</span><span title="2°–'+zRanges().po[1]+'°"><i style="background:var(--z-po)"></i>Playoff</span>'+(noDown()?'':'<span title="'+zRanges().pl[0]+'°–'+zRanges().pl[1]+'°"><i style="background:var(--z-pl)"></i>Playout</span><span title="'+n+'°"><i style="background:var(--z-rel)"></i>Retrocessione</span>')+(extra||'')+'</div>'; }
 function showArrows(){ try { return localStorage.getItem("baggese-arrows")!=="0"; } catch(e){ return true; } }
 function mvHtml(id,pos){ if(ZOFF||!showArrows()) return ''; var p=prevPos(id); if(p==null||!pos) return ''; var d=p-pos; if(d>0) return '<span class="mv up" title="Sale di '+d+' rispetto alla giornata prima">▲'+d+'</span>'; if(d<0) return '<span class="mv dn" title="Scende di '+(-d)+' rispetto alla giornata prima">▼'+(-d)+'</span>'; return ''; }
@@ -1955,8 +1989,15 @@ function prjHow(){ return t11Fd('Come si calcola','<div class="t11-calc"><p>Le p
    La freccia dice quante posizioni guadagna o perde rispetto a oggi; a destra l'esito più probabile.
    Toccando una riga si aprono tutte le probabilità. */
 var PRJ_OUT=[["c","Promozione","promo"],["po","Playoff","po"],["mid","Centro classifica",""],["pl","Playout","pl"],["rl","Retrocessione","rel"]];
+/* zone della classifica prevista: le forbici si applicano ai punti previsti, così chi resterebbe fuori perde il colore della zona */
+function prjZones(rows){ var n=rows.length, c=gir(G).cat, Z=rows.map(function(r,i){ return zoneOf(i+1); }); if(n<8||c==="Terza") return Z;
+  var P=function(k){ return Math.round(rows[k-1].e); }, ex=0; [3,4,5].some(function(k){ if(P(2)-P(k)>9){ ex=k; return true; } return false; });
+  if(ex) for(var k=ex;k<=5;k++) Z[k-1]=null;
+  (c==="Prima"?[[n-4,n-1],[n-3,n-2]]:[[n-2,n-1]]).forEach(function(q){ if(P(q[0])-P(q[1])>6){ Z[q[0]-1]=null; Z[q[1]-1]="rel"; } });
+  return Z; }
+function zAttrZ(z){ return z?' data-z="'+z+'" style="--zc:var(--z-'+z+')"':''; }
 function prjMain(){ var rows=prjRows(); if(!rows) return '<section class="card flush prjt" data-prjwait="1"><div class="prj-wait">Sto calcolando la proiezione…</div></section>';
-  var my=me(), down=!noDown();
+  var my=me(), down=!noDown(), PZ=prjZones(rows);
   return '<section class="card flush prjt"><div class="ct-head"><span>#</span><span style="text-align:left">Squadra</span><span>Pt</span><span>Esito</span></div><div class="list">'
     +rows.map(function(r,i){ var pos=i+1, tr=tableRow(r.id), now=tr&&tr.pos, d=now?now-pos:0;
       var mv=d>0?'<span class="mv up" title="Guadagna '+d+(d===1?' posizione':' posizioni')+'">▲'+d+'</span>':d<0?'<span class="mv dn" title="Perde '+(-d)+(d===-1?' posizione':' posizioni')+'">▼'+(-d)+'</span>':'<span class="mv eq" title="Stessa posizione di oggi">=</span>';
@@ -1967,7 +2008,7 @@ function prjMain(){ var rows=prjRows(); if(!rows) return '<section class="card f
         +'<span class="pd-d'+(d>0?' up':d<0?' dn':'')+'">'+(d>0?'▲ '+d+(d===1?' posizione':' posizioni'):d<0?'▼ '+(-d)+(d===-1?' posizione':' posizioni'):'stessa posizione')+'</span></div>'
         +'<div class="pd-grid" style="--n:'+outs.length+'">'+outs.map(function(o){ var v=r[o[0]], on=o===top; return '<div class="pd-c'+(on?' on':'')+(v<.01?' low':'')+(o[2]?'':' pd-mid')+'" style="--zc:'+(o[2]?'var(--z-'+o[2]+')':'color-mix(in srgb,var(--fg) 30%,transparent)')+'"><b>'+(v?pct(v):'0%')+'</b><span>'+SH[o[0]]+'</span></div>'; }).join('')+'</div>'
         +'<button type="button" class="pd-go" data-team="'+r.id+'">'+crest(r.id,22)+'<span>Scheda di '+esc(tname(r.id))+'</span>'+icon("right")+'</button></div></div>';
-      return '<div class="crow'+(r.id===my?' me':'')+'" data-tid="'+r.id+'"'+zAttr(pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(pos+'° previsto '+tname(r.id)+', '+Math.round(r.e)+' punti')+'"><span class="pcell"><span class="posn">'+pos+'</span></span><span class="nm">'+crest(r.id,24)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mv+'</span><span class="prj-pt">'+Math.round(r.e)+'</span><span class="prj-out'+(top[2]?' z-'+top[2]:'')+'"><b>'+pct(r[top[0]])+'</b><span>'+top[1]+'</span></span></button>'+det+'</div>'; }).join('')
+      return '<div class="crow'+(r.id===my?' me':'')+'" data-tid="'+r.id+'"'+zAttrZ(PZ[i])+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(pos+'° previsto '+tname(r.id)+', '+Math.round(r.e)+' punti')+'"><span class="pcell"><span class="posn">'+pos+'</span></span><span class="nm">'+crest(r.id,24)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mv+'</span><span class="prj-pt">'+Math.round(r.e)+'</span><span class="prj-out'+(top[2]?' z-'+top[2]:'')+'"><b>'+pct(r[top[0]])+'</b><span>'+top[1]+'</span></span></button>'+det+'</div>'; }).join('')
     +'</div></section>'+zLegend()+prjHow(); }
 /* una riga nella pagina della squadra */
 function prjLine(tid){ var rows=prjRows(); if(!rows) return '<span class="prl-ic">'+icon("chart")+'</span><span class="prl-tx"><b>Fine stagione</b><span>Sto calcolando la proiezione…</span></span>';
@@ -2514,13 +2555,14 @@ function last5Table(){
 function scopeTable(sc){ var lp=lastPlayedRound()||1; return sc==="last5"?last5Table():filteredTable(1,lp,sc); }
 
 function vClassifica(){
-  var tb=currentTable(), my=me();
+  var tb=currentTable(), my=me(), FN='';
   var cf=clsRange();
-  var fbtn=(clsView==="squadre")?'<button class="iconbtn" type="button" data-shr="t" aria-label="Condividi la classifica come immagine">'+icon("share")+'</button><button class="iconbtn" type="button" data-act="prog" aria-label="Classifica giornata per giornata">'+icon("clock")+'</button><button class="iconbtn arrbtn'+(showArrows()?' on':'')+'" type="button" data-act="arrows" aria-pressed="'+showArrows()+'" aria-label="'+(showArrows()?'Nascondi':'Mostra')+' le frecce di posizione">'+icon("updn")+'</button><button class="iconbtn'+(cf.active?' on':'')+'" type="button" data-act="clsFilter" aria-label="Filtra la classifica'+(cf.active?' (filtro attivo)':'')+'">'+icon("filter")+'</button>':'';
+  var ftools='<button class="iconbtn" type="button" data-shr="t" aria-label="Condividi la classifica come immagine">'+icon("share")+'</button><button class="iconbtn" type="button" data-act="prog" aria-label="Classifica giornata per giornata">'+icon("clock")+'</button><button class="iconbtn arrbtn'+(showArrows()?' on':'')+'" type="button" data-act="arrows" aria-pressed="'+showArrows()+'" aria-label="'+(showArrows()?'Nascondi':'Mostra')+' le frecce di posizione">'+icon("updn")+'</button><button class="iconbtn'+(cf.active?' on':'')+'" type="button" data-act="clsFilter" aria-label="Filtra la classifica'+(cf.active?' (filtro attivo)':'')+'">'+icon("filter")+'</button>';
+  var fbtn=(clsView==="squadre")?ftools:'';
   var h=header("Classifica",1);
   if (S.players.some(function(p){return p.teamId && p.teamId!==my;})){
     h+='<div class="seg" role="group" aria-label="Classifica"><button type="button" data-cls="squadre" aria-pressed="'+(clsView==="squadre")+'">Squadre</button><button type="button" data-cls="marcatori" aria-pressed="'+(clsView==="marcatori")+'">Marcatori</button>'+'</div>';
-    h=h.replace(/<div class="seg" role="group" aria-label="Classifica">[\s\S]*<\/div>$/,function(x){ return '<div class="row" style="gap:6px"><div class="grow">'+x.replace('class="seg"','class="seg" style="width:100%"')+'</div>'+fbtn+'</div>'; });
+    h=h.replace(/<div class="seg" role="group" aria-label="Classifica">[\s\S]*<\/div>$/,function(x){ return '<div class="row" style="gap:6px"><div class="grow">'+x.replace('class="seg"','class="seg" style="width:100%"')+'</div><span class="cls-tools'+(clsView==="squadre"?'':' off')+'">'+ftools+'</span></div>'; });   /* le icone restano anche in Marcatori (invisibili): così i pulsanti non cambiano larghezza */
     fbtn='';
     if (clsView==="marcatori") return h+vMarcatori();
   }
@@ -2555,13 +2597,14 @@ function vClassifica(){
   else if(sorted) h+='<span class="tiny muted">'+(clsSort==="gf"?'Ordinata per gol fatti: il miglior attacco in cima':'Ordinata per gol subiti: la miglior difesa in cima')+'. Tocca PT per tornare alla classifica.</span>';
   else if(scoped){ var mr=tb.rows.filter(function(r){return r.id===my;})[0], gr=gen.rows.filter(function(r){return r.id===my;})[0];
     h+='<span class="tiny muted">'+(clsScope==="last5"?'Forma: solo le ultime 5 partite di ogni squadra':clsScope==="home"?'Solo le partite giocate in casa':'Solo le partite giocate in trasferta')+(mr&&gr?': '+esc(tname(my))+' <b>'+mr.pos+'ª</b> (nella classifica vera '+gr.pos+'ª)':'')+'. Niente zone e frecce, non è la classifica ufficiale.</span>'; }
-  else h+=zLegend(four&&tcOk?'<span class="zok" title="Uguale alla classifica di Tuttocampo dopo la '+chk0.round+'ª giornata">'+icon("check")+'Come Tuttocampo</span>':'');
+  else h+=zLegend(four&&tcOk?'<span class="zok" title="Uguale alla classifica di Tuttocampo dopo la '+chk0.round+'ª giornata">'+icon("check")+'Come Tuttocampo</span>':''), FN=forbNotes(tb.rows);
   h+='</div>';
   }
   if(!cf.active){ h+=restCalendar(); h+=seasonRecords(); }
   if(tab==="classifica"&&!cf.active) setTimeout(prjStart,80);
   var tr=tableRow(my), pp=prevPos(my), asub=tr?esc(tname(my))+' '+tr.pos+'°'+(pp!=null&&pp!==tr.pos?(pp>tr.pos?', sale di '+(pp-tr.pos):', scende di '+(tr.pos-pp)):pp!=null?', stabile':''):'Posizione giornata per giornata';
   h+=foldCard("and","chart","Andamento",asub,'<div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div><div class="chart-wrap">'+(chartMode==="pts"?ptsChart(my):posChart(my))+'</div>');
+  h+=FN;   /* le note sulle forbici: in fondo, a margine */
   return h;
 }
 var progView="round", progRound=null;
@@ -3083,7 +3126,7 @@ document.addEventListener("click", function(e){
     openScopeMenu(b,ds.srt); return; }
   if(ds.srth){ var sv=ds.srth; clsUpdate(function(){ clsSort=sv; if(sv!=="pts") clsScope="all"; }); return; }
   if(ds.scopepick){ var sp=ds.scopepick, st=ds.srtv; closeScopeMenu(); clsUpdate(function(){ clsSort=st; clsScope=sp; }); return; }
-  if(ds.cls){ var cv=ds.cls; smooth(function(){ clsView=cv; render(); }); return; }
+  if(ds.cls){ if(ds.cls!==clsView) clsSwitch(ds.cls, ds.cls==="marcatori"?1:-1); return; }
   if(ds.fside){ openClsFilter.side=ds.fside; document.querySelectorAll("[data-fside]").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.fside===ds.fside)); }); return; }
   if(ds.fpre){ var lpp=lastPlayedRound(); if(ds.fpre==="and"){ $("fFrom").value=1; $("fTo").value=Math.min(15,lpp); } else { $("fFrom").value=Math.max(1,lpp-(+ds.fpre)+1); $("fTo").value=lpp; } return; }
   if(ds.teampick){ haptic(); openTeamGrid(); return; }
@@ -3288,6 +3331,27 @@ function tabInd(){
   }
   TABPOS=[x,w];
 }
+/* Classifica: Squadre <-> Marcatori senza ridisegnare la pagina. Si sostituisce solo quello che sta sotto i pulsanti,
+   che entra scivolando dal lato giusto; la pillola scorre fino al pulsante scelto (se non c'è già, dopo un trascinamento) */
+function clsSwitch(cv,dir,pillDone){
+  var v=document.querySelector("#app .view"), sg=v&&v.querySelector('.seg[aria-label="Classifica"]'); if(!sg){ clsView=cv; render(); return; }
+  var row=sg.closest(".row")||sg, old=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) old.push(c); if(c===row||c.contains(row)) seen=true; });
+  clsView=cv; var tmp=document.createElement("div"); tmp.innerHTML=vClassifica();
+  var nsg=tmp.querySelector('.seg[aria-label="Classifica"]'), nrow=nsg&&(nsg.closest(".row")||nsg), fresh=[], s2=false; if(!nrow){ render(); return; }
+  Array.prototype.slice.call(tmp.children).forEach(function(c){ if(s2) fresh.push(c); if(c===nrow||c.contains(nrow)) s2=true; });
+  var bs=Array.prototype.slice.call(sg.querySelectorAll("button")), on=null; bs.forEach(function(b){ var y=b.getAttribute("data-cls")===cv; b.setAttribute("aria-pressed",String(y)); if(y) on=b; });
+  var tl=row.querySelector(".cls-tools"); if(tl) tl.classList.toggle("off",cv!=="squadre");
+  var ind=sg.querySelector(".seg-ind");
+  if(ind&&on){ var g=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight]; if(!pillDone){ ind.style.transition="transform .32s cubic-bezier(.25,.9,.3,1),width .32s cubic-bezier(.25,.9,.3,1)"; ind.style.transform="translate("+g[0]+"px,"+g[1]+"px)"; ind.style.width=g[2]+"px"; }
+    ind.dataset.p=g.join(","); SEGPOS[(sg.getAttribute("aria-label")||"seg")+"|"+bs.length]=g; }
+  var y0=window.scrollY||0, rowTop=row.getBoundingClientRect().top+y0;
+  old.forEach(function(n){ n.remove(); });
+  var ref=row.nextSibling, frag=document.createDocumentFragment(); fresh.forEach(function(n){ frag.appendChild(n); }); v.insertBefore(frag,ref);
+  /* se si era scesi sotto i pulsanti, si resta subito sotto di loro */
+  var tbh=$("topbar")?$("topbar").offsetHeight:50; if(y0>rowTop-tbh) window.scrollTo(0,Math.max(0,rowTop-tbh-8));
+  if(!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)) fresh.forEach(function(n){ if(n.animate) n.animate([{transform:"translate3d("+(dir>0?34:-34)+"px,0,0)",opacity:0},{transform:"none",opacity:1}],{duration:280,easing:"cubic-bezier(.25,.9,.3,1)"}); });
+  segInd(v); fitNames();
+}
 /* Sottosezioni: si passa da una all'altra trascinando il dito sul contenuto; la pillola segue il dito.
    Un solo aggiornamento per fotogramma; al rilascio la pillola va dritta alla sezione nuova e nessuno la riporta indietro */
 (function(){
@@ -3330,7 +3394,7 @@ function tabInd(){
     if(!go){ s.mv.forEach(function(n){ n.style.transition="transform .34s cubic-bezier(.3,1.15,.4,1),opacity .25s ease"; n.style.transform=""; n.style.opacity=""; }); setTimeout(clean,360); return; }
     haptic(); var out=s.dx<0?-36:36;
     s.mv.forEach(function(n){ n.style.transition="transform .15s ease-in,opacity .15s ease-in"; n.style.transform="translate3d("+out+"px,0,0)"; n.style.opacity="0"; });
-    setTimeout(function(){ clean(); s.bs[s.ni].click(); },150);
+    setTimeout(function(){ clean(); var nb=s.bs[s.ni]; if(tab==="classifica"&&nb.getAttribute("data-cls")) clsSwitch(nb.getAttribute("data-cls"),s.dx<0?1:-1,true); else nb.click(); },150);
   }
   document.addEventListener("touchend",end,{passive:true}); document.addEventListener("touchcancel",end,{passive:true});
 })();
