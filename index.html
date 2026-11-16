@@ -1154,7 +1154,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.4";
+var APP_VERSION="2026-11-16.5";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1450,9 +1450,9 @@ var HIST=null;
 function history(){ if(HIST) return HIST; var L=lastPlayedRound(), o={}; for(var r=1;r<=L;r++) standings(r).forEach(function(x){ (o[x.id]=o[x.id]||[]).push({r:r,pos:x.pos,pts:x.pts}); }); HIST={L:L,by:o}; return HIST; }
 function prevPos(id){ var h=history(), L=MVR||h.L; if(L<2) return null; var a=h.by[id]; return a&&a[L-2]?a[L-2].pos:null; }
 function noDown(){ return gir(G).cat==="Terza"; }
-function zoneOf(pos){ var n=S.teams.length; if(n<8||!pos) return null; if(pos===1) return "promo"; if(pos<=5) return "po"; if(noDown()) return null; if(pos===n) return "rel"; if(pos>n-5) return "pl"; return null; }
+function zoneOf(pos){ var n=S.teams.length; if(n<8||!pos) return null; var z=zRanges(); if(pos===1) return "promo"; if(pos<=z.po[1]) return "po"; if(!z.pl) return null; if(pos===n) return "rel"; if(pos>=z.pl[0]&&pos<=z.pl[1]) return "pl"; return null; }
 function zAttr(pos){ if(ZOFF) return ''; var z=zoneOf(pos); return z?' data-z="'+z+'" style="--zc:var(--z-'+z+')"':''; }
-function zLegend(extra){ var n=S.teams.length; return '<div class="zleg"><span title="1°"><i style="background:var(--z-promo)"></i>Promozione</span><span title="2°–5°"><i style="background:var(--z-po)"></i>Playoff</span>'+(noDown()?'':'<span title="'+(n-4)+'°–'+(n-1)+'°"><i style="background:var(--z-pl)"></i>Playout</span><span title="'+n+'°"><i style="background:var(--z-rel)"></i>Retrocessione</span>')+(extra||'')+'</div>'; }
+function zLegend(extra){ var n=S.teams.length; return '<div class="zleg"><span title="1°"><i style="background:var(--z-promo)"></i>Promozione</span><span title="2°–'+zRanges().po[1]+'°"><i style="background:var(--z-po)"></i>Playoff</span>'+(noDown()?'':'<span title="'+zRanges().pl[0]+'°–'+zRanges().pl[1]+'°"><i style="background:var(--z-pl)"></i>Playout</span><span title="'+n+'°"><i style="background:var(--z-rel)"></i>Retrocessione</span>')+(extra||'')+'</div>'; }
 function showArrows(){ try { return localStorage.getItem("baggese-arrows")!=="0"; } catch(e){ return true; } }
 function mvHtml(id,pos){ if(ZOFF||!showArrows()) return ''; var p=prevPos(id); if(p==null||!pos) return ''; var d=p-pos; if(d>0) return '<span class="mv up" title="Sale di '+d+' rispetto alla giornata prima">▲'+d+'</span>'; if(d<0) return '<span class="mv dn" title="Scende di '+(-d)+' rispetto alla giornata prima">▼'+(-d)+'</span>'; return ''; }
 function prevLabel(id,pos){ if(ZOFF) return ''; var p=prevPos(id), h=history(); if(p==null||!pos) return ''; return '<span class="box">Dopo la '+((MVR||h.L)-1)+'ª: '+p+'°</span>'; }
@@ -1462,7 +1462,7 @@ function posChart(id,half){
   function x(r){ return L+(h.L===1?iw/2:(r-1)/(h.L-1)*iw); }
   function y(p){ return T+(p-1)*step; }
   var col=id===me()?'var(--brand)':'var(--fg)', g='';
-  [["promo",1,1],["po",2,5],["pl",n-4,n-1],["rel",n,n]].slice(0,noDown()?2:4).forEach(function(z){ g+='<rect x="'+L+'" y="'+(y(z[1])-step/2).toFixed(1)+'" width="'+iw+'" height="'+((z[2]-z[1]+1)*step).toFixed(1)+'" fill="var(--z-'+z[0]+')" opacity=".09"/>'; });
+  var zr=zRanges(); [["promo",1,1],["po",2,zr.po[1]]].concat(zr.pl?[["pl",zr.pl[0],zr.pl[1]],["rel",n,n]]:[]).forEach(function(z){ g+='<rect x="'+L+'" y="'+(y(z[1])-step/2).toFixed(1)+'" width="'+iw+'" height="'+((z[2]-z[1]+1)*step).toFixed(1)+'" fill="var(--z-'+z[0]+')" opacity=".09"/>'; });
   [1,5,10,n].forEach(function(p){ g+='<line class="grid" x1="'+L+'" x2="'+(L+iw)+'" y1="'+y(p).toFixed(1)+'" y2="'+y(p).toFixed(1)+'"/><text class="ax" x="'+(L-8)+'" y="'+(y(p)+4).toFixed(1)+'" text-anchor="end">'+p+'°</text>'; });
   a.forEach(function(o){ g+='<text class="ax" x="'+x(o.r).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle">'+o.r+'</text>'; });
   g+='<line class="xh" x1="0" x2="0" y1="'+T+'" y2="'+(T+ih)+'"/>';
@@ -1488,9 +1488,9 @@ function chartMove(e){
 }
 function goalsList(){ var n=S.teams.length||16; return [
   {k:"title",lab:"Vittoria del campionato",short:"Vittoria",pos:1,col:"var(--z-promo)",desc:"1° posto, promozione diretta",line:"promozione"},
-  {k:"playoff",lab:"Playoff",short:"Playoff",pos:5,col:"var(--z-po)",desc:"Dal 2° al 5° posto",line:"playoff"},
+  {k:"playoff",lab:"Playoff",short:"Playoff",pos:zRanges().po[1],col:"var(--z-po)",desc:"Dal 2° al "+zRanges().po[1]+"° posto",line:"playoff"},
   {k:"half",lab:"Prima metà",short:"Prima metà",pos:Math.floor(n/2),col:"var(--draw)",desc:"Almeno "+Math.floor(n/2)+"° posto",line:"metà classifica"},
-  {k:"safe",lab:"Salvezza diretta",short:"Salvezza",pos:Math.max(1,n-5),col:"var(--z-pl)",desc:"Almeno "+Math.max(1,n-5)+"°, senza passare dai playout",line:"salvezza"}
+  {k:"safe",lab:"Salvezza diretta",short:"Salvezza",pos:Math.max(1,(zRanges().pl?zRanges().pl[0]:n)-1),col:"var(--z-pl)",desc:"Almeno "+Math.max(1,(zRanges().pl?zRanges().pl[0]:n)-1)+"°, senza passare dai playout",line:"salvezza"}
 ].filter(function(g){ return !(noDown()&&g.k==="safe"); }); }
 function getGoal(){ var k="playoff"; try { k=localStorage.getItem("baggese-goal")||k; } catch(e){} var gl=goalsList(); return gl.filter(function(g){return g.k===k;})[0]||gl[1]; }
 function dec(x){ return (Math.round(x*10)/10).toFixed(1).replace(".",","); }
@@ -1854,41 +1854,93 @@ function openMatchView(id){
 }
 
 /* ---------- pronostici e proiezione di fine stagione (calcolati dall'app) ----------
-   Forza di ogni squadra = gol fatti e subiti a partita rispetto alla media del girone (con 3 partite "medie" in più,
-   così a inizio stagione nessuno sembra un fenomeno per una partita). Gol attesi in casa = media gol in casa × attacco
-   di chi gioca in casa × difesa di chi è fuori; lo stesso per chi è in trasferta. Le probabilità vengono dalla
-   distribuzione di Poisson, quella che descrive quanti gol si segnano in una partita. La forza è un po' smorzata (^0,8):
-   provato sulle partite già giocate di tutti i gironi, è la scelta che sbaglia di meno. */
+   Forza di ogni squadra = gol fatti e subiti rispetto a quelli che ci si aspettava contro QUEGLI avversari
+   (3 gol a una difesa di ferro valgono più di 3 gol all'ultima), con 3 partite "medie" in più così a inizio stagione
+   nessuno sembra un fenomeno per una partita. Gol attesi in casa = media gol in casa × attacco di chi gioca in casa ×
+   difesa di chi è fuori; lo stesso per chi è in trasferta; i gol seguono la distribuzione di Poisson, con i pareggi
+   un po' più frequenti (+15%), come succede davvero nei nostri gironi. La forza è smorzata (^0,9).
+   Tutte le scelte sono state provate sulle partite già giocate dei sei gironi (il modello vede le prime giornate e
+   indovina le successive): si tiene solo quello che sbaglia di meno. Dare più peso alle ultime partite peggiorava: scartato. */
+var PR_K=3, PR_EX=.9, PR_DRAW=.15, PR_UNC=.5;
 function prModel(upTo){
   var ms=S.matches.filter(function(m){ return played(m)&&(!upTo||(m.round&&+m.round<upTo)); }); if(ms.length<Math.max(6,S.teams.length/2)) return null;
   var hg=0, ag=0; ms.forEach(function(m){ hg+= +m.hg; ag+= +m.ag; });
-  var n=ms.length, muH=Math.max(.3,hg/n), muA=Math.max(.3,ag/n), avg=(muH+muA)/2, K=3, T={};
-  S.teams.forEach(function(t){ T[t.id]={gf:0,ga:0,g:0}; });
+  var n=ms.length, muH=Math.max(.3,hg/n), muA=Math.max(.3,ag/n), avg=(muH+muA)/2, K=PR_K, T={}, ids=[];
+  S.teams.forEach(function(t){ T[t.id]={gf:0,ga:0,g:0,a:1,d:1}; ids.push(t.id); });
   ms.forEach(function(m){ var h=T[m.homeId], a=T[m.awayId]; if(!h||!a) return; h.gf+= +m.hg; h.ga+= +m.ag; h.g++; a.gf+= +m.ag; a.ga+= +m.hg; a.g++; });
-  Object.keys(T).forEach(function(k){ var t=T[k]; t.att=Math.pow((t.gf+K*avg)/((t.g+K)*avg),.8); t.def=Math.pow((t.ga+K*avg)/((t.g+K)*avg),.8); });
+  /* forza corretta per gli avversari: si ricalcola qualche volta finché i numeri si assestano */
+  for(var it=0; it<12; it++){
+    var ef={}, ea={}; ids.forEach(function(id){ ef[id]=0; ea[id]=0; });
+    ms.forEach(function(m){ var h=T[m.homeId], a=T[m.awayId]; if(!h||!a) return;
+      ef[m.homeId]+=muH*a.d; ea[m.homeId]+=muA*a.a; ef[m.awayId]+=muA*h.d; ea[m.awayId]+=muH*h.a; });
+    var na={}, nd={}, sa=0, sd=0; ids.forEach(function(id){ var t=T[id]; na[id]=(t.gf+K*avg)/(ef[id]+K*avg); nd[id]=(t.ga+K*avg)/(ea[id]+K*avg); sa+=na[id]; sd+=nd[id]; });
+    sa/=ids.length; sd/=ids.length; ids.forEach(function(id){ T[id].a=na[id]/sa; T[id].d=nd[id]/sd; });
+  }
+  ids.forEach(function(id){ var t=T[id]; t.att=Math.pow(t.a,PR_EX); t.def=Math.pow(t.d,PR_EX); t.sa=t.gf+K*avg; t.sd=t.ga+K*avg; });
   return {muH:muH,muA:muA,T:T};
 }
 function prLam(mod,h,a){ var H=mod.T[h], A=mod.T[a]; if(!H||!A) return null; return [mod.muH*H.att*A.def, mod.muA*A.att*H.def]; }
-function prKey(){ return String(G)+'|'+S.matches.filter(played).length+'|'+S.matches.length; }
+function prKey(){ return String(G)+'|'+S.matches.filter(played).length+'|'+S.matches.length+'|'+(S.imported&&S.imported.round||0); }
 function pct(x){ var v=Math.round(x*100); return x>0&&v<1?'<1%':x<1&&v>99?'>99%':v+'%'; }
+/* zone del girone secondo il regolamento del Comitato Lombardia:
+   Prima: 1° promosso, playoff 2°–5°, playout 12°–15° (15ª-12ª e 14ª-13ª), ultima retrocede;
+   Seconda: 1° promosso, playoff 2°–5°, playout solo tra terzultima e penultima, ultima retrocede;
+   Terza: 1° promosso, playoff dal 2° al 7°, nessuna retrocessione */
+function zRanges(){ var n=S.teams.length, c=gir(G).cat, r={promo:[1,1],po:[2,c==="Terza"?7:5]};
+  if(c==="Prima"){ r.pl=[n-4,n-1]; r.rel=[n,n]; } else if(c!=="Terza"){ r.pl=[n-2,n-1]; r.rel=[n,n]; } return r; }
 /* proiezione di fine stagione: le partite che mancano giocate 5.000 volte, in un lavoratore a parte (la pagina non si ferma) */
 var PRJ={k:null,v:null,busy:false}, PRJ_N=5000;
-function prjWork(d){ var n=d.ids.length, N=d.N, pos=[], ept=new Array(n).fill(0), i, s, r;
-  for(i=0;i<n;i++){ pos.push(new Array(n).fill(0)); }
+function prjWork(d){ var n=d.ids.length, N=d.N, pos=[], out=[], ept=new Array(n).fill(0), i, j, s, r;
+  for(i=0;i<n;i++){ pos.push(new Array(n).fill(0)); out.push([0,0,0,0,0]); }
   /* numeri casuali "fissi" per gli stessi dati: riaprendo la proiezione le percentuali non ballano */
   var sd=d.seed>>>0, rnd=function(){ sd=(sd+0x6D2B79F5)>>>0; var t=sd; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return ((t^t>>>14)>>>0)/4294967296; };
   var pois=function(l){ var L=Math.exp(-l), k=0, p=1; do{ k++; p*=rnd(); } while(p>L); return k-1; };
-  for(s=0;s<N;s++){ var pt=d.pts.slice(), gd=d.gd.slice(), gf=d.gf.slice();
-    for(r=0;r<d.rem.length;r++){ var x=d.rem[r], a=pois(x[2]), b=pois(x[3]); gf[x[0]]+=a; gf[x[1]]+=b; gd[x[0]]+=a-b; gd[x[1]]+=b-a; if(a>b) pt[x[0]]+=3; else if(a<b) pt[x[1]]+=3; else { pt[x[0]]++; pt[x[1]]++; } }
+  var gauss=function(){ var u=1-rnd(), v=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(6.283185307179586*v); };
+  /* gamma con media 1 (metodo di Marsaglia e Tsang): quanto può sbagliare la stima della forza, più incerta se si hanno pochi gol */
+  var gam1=function(k){ var dd=k-1/3, c=1/Math.sqrt(9*dd), x, v, u; for(;;){ do{ x=gauss(); v=1+c*x; } while(v<=0); v=v*v*v; u=rnd(); if(u<1-.0331*x*x*x*x||Math.log(u)<.5*x*x+dd*(1-v+Math.log(v))) return dd*v/k; } };
+  var pD=function(lh,la){ var a=Math.exp(-lh), b=Math.exp(-la), t=a*b; for(var k=1;k<14;k++){ a*=lh/k; b*=la/k; t+=a*b; } return t; };
+  var u2=d.unc*d.unc, at=new Array(n), df=new Array(n), P=d.rules;
+  for(s=0;s<N;s++){ var pt=d.pts.slice(), gd=d.gd.slice(), gf=d.gf.slice(), hp=d.hp.slice(), hgd=d.hgd.slice(), tb=[];
+    for(i=0;i<n;i++){ at[i]=Math.pow(d.a0[i]*(u2?gam1(d.sa[i]/u2):1),d.ex); df[i]=Math.pow(d.d0[i]*(u2?gam1(d.sd[i]/u2):1),d.ex); tb.push(rnd()); }
+    for(r=0;r<d.rem.length;r++){ var x=d.rem[r], h=x[0], w=x[1], lh=d.muH*at[h]*df[w], la=d.muA*at[w]*df[h], D=pD(lh,la), Dp=D*(1+d.draw)/(1+d.draw*D), a, b, tries=0;
+      if(rnd()<Dp){ do{ a=pois(lh); b=pois(la); } while(a!==b && ++tries<60); if(a!==b) b=a; }
+      else { do{ a=pois(lh); b=pois(la); } while(a===b && ++tries<60); if(a===b) a++; }
+      gf[h]+=a; gf[w]+=b; gd[h]+=a-b; gd[w]+=b-a; hgd[h*n+w]+=a-b; hgd[w*n+h]+=b-a;
+      if(a>b){ pt[h]+=3; hp[h*n+w]+=3; } else if(a<b){ pt[w]+=3; hp[w*n+h]+=3; } else { pt[h]++; pt[w]++; hp[h*n+w]++; hp[w*n+h]++; } }
     var ord=[]; for(i=0;i<n;i++){ ord.push(i); ept[i]+=pt[i]; }
-    ord.sort(function(p,q){ return pt[q]-pt[p] || gd[q]-gd[p] || gf[q]-gf[p] || p-q; });
-    for(i=0;i<n;i++) pos[ord[i]][i]++; }
-  return {pos:pos,ept:ept.map(function(v){return v/N;}),N:N}; }
-function prjInput(){ var mod=prModel(); if(!mod) return null; var ids=S.teams.map(function(t){return t.id;}), ix={}; ids.forEach(function(id,i){ ix[id]=i; });
-  var st=standings(), pts=[], gd=[], gf=[]; ids.forEach(function(id){ var r=st.filter(function(x){return x.id===id;})[0]||{pts:0,gf:0,gs:0}; pts.push(r.pts); gd.push(r.gf-r.gs); gf.push(r.gf); });
-  var rem=[]; S.matches.forEach(function(m){ if(played(m)||ix[m.homeId]==null||ix[m.awayId]==null) return; var L=prLam(mod,m.homeId,m.awayId); if(L) rem.push([ix[m.homeId],ix[m.awayId],L[0],L[1]]); });
+    ord.sort(function(p,q){ return pt[q]-pt[p] || p-q; });
+    /* a pari punti: classifica avulsa (scontri diretti, poi differenza reti, gol fatti); due squadre pari al primo posto fanno lo spareggio */
+    for(i=0;i<n;){ j=i; while(j+1<n&&pt[ord[j+1]]===pt[ord[i]]) j++;
+      if(j>i){ var grp=ord.slice(i,j+1), mp={}, mg={};
+        grp.forEach(function(p){ mp[p]=0; mg[p]=0; grp.forEach(function(q){ if(p!==q){ mp[p]+=hp[p*n+q]; mg[p]+=hgd[p*n+q]; } }); });
+        if(i===0&&grp.length===2) grp.sort(function(p,q){ return tb[q]-tb[p]; });
+        else grp.sort(function(p,q){ return mp[q]-mp[p] || mg[q]-mg[p] || gd[q]-gd[p] || gf[q]-gf[p] || tb[q]-tb[p]; });
+        for(var q2=0;q2<grp.length;q2++) ord[i+q2]=grp[q2]; }
+      i=j+1; }
+    var res=new Array(n).fill(2), PT=function(k){ return pt[ord[k-1]]; };   /* 0 primo, 1 playoff, 2 centro, 3 playout, 4 retrocessa */
+    res[ord[0]]=0;
+    /* playoff: se la 2ª è avanti più di 9 punti su chi segue, chi è troppo lontano resta fuori ("forbice") */
+    var last=P.po[1]; if(P.forbice){ if(PT(2)-PT(3)>9) last=2; else if(PT(2)-PT(4)>9) last=3; else if(PT(2)-PT(5)>9) last=4; }
+    for(i=P.po[0];i<=last;i++) res[ord[i-1]]=1;
+    if(P.pl){ for(i=0;i<P.pl.length;i++){ var hi=P.pl[i][0], lo=P.pl[i][1];
+        /* playout: se il distacco è più di 6 punti non si gioca, la peggiore retrocede e l'altra è salva */
+        if(PT(hi)-PT(lo)>6){ res[ord[hi-1]]=2; res[ord[lo-1]]=4; } else { res[ord[hi-1]]=3; res[ord[lo-1]]=3; } }
+      res[ord[n-1]]=4; }
+    for(i=0;i<n;i++){ pos[ord[i]][i]++; out[i][res[i]]++; } }
+  return {pos:pos,out:out,ept:ept.map(function(v){return v/N;}),N:N}; }
+function prjInput(){ var mod=prModel(); if(!mod) return null; var ids=S.teams.map(function(t){return t.id;}), ix={}, n=ids.length; ids.forEach(function(id,i){ ix[id]=i; });
+  /* punti ufficiali: le penalizzazioni che Tuttocampo riporta si tolgono anche qui */
+  var st=standings(), pen={}, imp=importedRows(), ir=S.imported&&+S.imported.round;
+  if(imp.length&&ir){ var at=standings(ir); imp.forEach(function(x){ var c=at.filter(function(y){return y.id===x.id;})[0]; if(c&&+x.g===c.g&&+x.pts!==c.pts) pen[x.id]=+x.pts-c.pts; }); }
+  var pts=[], gd=[], gf=[], a0=[], d0=[], sa=[], sdv=[]; ids.forEach(function(id){ var r=st.filter(function(x){return x.id===id;})[0]||{pts:0,gf:0,gs:0}, t=mod.T[id]; pts.push(r.pts+(pen[id]||0)); gd.push(r.gf-r.gs); gf.push(r.gf); a0.push(t.a); d0.push(t.d); sa.push(t.sa); sdv.push(t.sd); });
+  var hp=new Array(n*n).fill(0), hgd=new Array(n*n).fill(0);
+  S.matches.forEach(function(m){ if(!played(m)) return; var h=ix[m.homeId], w=ix[m.awayId]; if(h==null||w==null) return; var a=+m.hg, b=+m.ag;
+    hgd[h*n+w]+=a-b; hgd[w*n+h]+=b-a; if(a>b) hp[h*n+w]+=3; else if(a<b) hp[w*n+h]+=3; else { hp[h*n+w]++; hp[w*n+h]++; } });
+  var rem=[]; S.matches.forEach(function(m){ if(played(m)||ix[m.homeId]==null||ix[m.awayId]==null) return; rem.push([ix[m.homeId],ix[m.awayId]]); });
   if(!rem.length) return null; var k=prKey(), seed=7; for(var q=0;q<k.length;q++) seed=(seed*31+k.charCodeAt(q))>>>0;
-  return {ids:ids,pts:pts,gd:gd,gf:gf,rem:rem,N:PRJ_N,seed:seed}; }
+  var z=zRanges(), rules={po:z.po,forbice:gir(G).cat!=="Terza"&&n>=8,pl:null};
+  if(z.pl){ rules.pl=gir(G).cat==="Prima"?[[n-4,n-1],[n-3,n-2]]:[[n-2,n-1]]; }
+  return {ids:ids,pts:pts,gd:gd,gf:gf,rem:rem,hp:hp,hgd:hgd,muH:mod.muH,muA:mod.muA,a0:a0,d0:d0,sa:sa,sd:sdv,ex:PR_EX,unc:PR_UNC,draw:PR_DRAW,rules:rules,N:PRJ_N,seed:seed}; }
 function prjStart(){ var k=prKey(); if(PRJ.k===k&&(PRJ.v||PRJ.busy)) return; var d=prjInput(); PRJ={k:k,v:null,busy:!!d}; if(!d){ prjFill(); return; }
   var done=function(res){ if(PRJ.k!==k) return; res.ids=d.ids; PRJ.v=res; PRJ.busy=false; prjFill(); };
   try { var src='var prjWork='+prjWork.toString()+';onmessage=function(e){postMessage(prjWork(e.data));};', url=URL.createObjectURL(new Blob([src],{type:"text/javascript"})), w=new Worker(url);
@@ -1896,9 +1948,9 @@ function prjStart(){ var k=prKey(); if(PRJ.k===k&&(PRJ.v||PRJ.busy)) return; var
   catch(e){ setTimeout(function(){ done(prjWork(d)); },30); } }
 /* dati della proiezione per ogni squadra, in ordine di punti previsti */
 function prjRows(){ var v=PRJ.k===prKey()&&PRJ.v; if(!v) return null; var n=v.ids.length, down=!noDown(), sum=function(i,a,b){ var t=0; for(var q=a;q<=b;q++) t+=v.pos[i][q]; return t/v.N; };
-  return v.ids.map(function(id,i){ var best=0; for(var q=1;q<n;q++) if(v.pos[i][q]>v.pos[i][best]) best=q; return {id:id,e:v.ept[i],c:sum(i,0,0),po:sum(i,1,4),mid:sum(i,5,down?n-6:n-1),pl:down?sum(i,n-5,n-2):0,rl:down?sum(i,n-1,n-1):0,best:best+1}; })
+  return v.ids.map(function(id,i){ var best=0, o=v.out[i]; for(var q=1;q<n;q++) if(v.pos[i][q]>v.pos[i][best]) best=q; return {id:id,e:v.ept[i],c:o[0]/v.N,po:o[1]/v.N,mid:o[2]/v.N,pl:down?o[3]/v.N:0,rl:down?o[4]/v.N:0,best:best+1}; })
     .sort(function(a,b){ return b.e-a.e || a.best-b.best; }); }
-function prjHow(){ return t11Fd('Come si calcola','<div class="t11-calc"><p>Le partite che mancano vengono giocate '+PRJ_N.toLocaleString("it-IT")+' volte. In ognuna i gol nascono dalla forza di attacco e difesa delle due squadre (gol fatti e subiti finora, con il vantaggio di giocare in casa); poi si conta quante volte ogni squadra finisce prima, ai playoff, ai playout o retrocessa.</p><p>Pt: i punti che farà in media a fine stagione; l’ordine è quello dei punti previsti. La freccia indica quante posizioni guadagna (▲) o perde (▼) rispetto alla classifica di oggi. Tocca una squadra per vedere tutte le probabilità.</p></div>'); }
+function prjHow(){ return t11Fd('Come si calcola','<div class="t11-calc"><p>Le partite che mancano vengono giocate '+PRJ_N.toLocaleString("it-IT")+' volte. In ognuna i gol nascono dalla forza di attacco e difesa delle due squadre: gol fatti e subiti finora, pesati in base agli avversari affrontati, con il vantaggio di giocare in casa e i pareggi frequenti come nei nostri gironi. Siccome dopo poche giornate la forza di una squadra è solo una stima, in ogni stagione simulata cambia un po’: così anche chi è indietro conserva le sue possibilità.</p><p>Si parte dai punti ufficiali (con le penalizzazioni) e valgono le regole del Comitato Lombardia: a pari punti scontri diretti, spareggio per il primo posto, playoff e playout che non si giocano se il distacco è troppo grande (più di 9 punti per i playoff, più di 6 per i playout).</p><p>Pt: i punti che farà in media a fine stagione; l’ordine è quello dei punti previsti. La freccia indica quante posizioni guadagna (▲) o perde (▼) rispetto alla classifica di oggi. Tocca una squadra per vedere tutte le probabilità.</p></div>'); }
 /* la classifica in versione "Proiezione": stesse righe, che scivolano verso il posto previsto.
    La freccia dice quante posizioni guadagna o perde rispetto a oggi; a destra l'esito più probabile.
    Toccando una riga si aprono tutte le probabilità. */
