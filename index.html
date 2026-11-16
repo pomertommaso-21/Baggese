@@ -1162,6 +1162,49 @@ html.rk-anim .rc-card .board .crest{transition:width .28s cubic-bezier(.25,.9,.3
 .rkp .seg button{flex:1 1 0;min-width:0;padding-left:2px;padding-right:2px;font-size:12.5px;white-space:nowrap}
 /* passaggio di mano tra la barra attaccata in alto e quella della pagina: niente animazione della barra in alto */
 body.notr .segfloat{transition:none!important}
+/* ===== interfaccia più leggera ===== */
+/* 1. calendario: niente quadratini per le date, niente pulsante calendario su ogni riga (resta, discreto, solo sulla prossima partita);
+      la prossima partita è segnata da una riga rossa a sinistra */
+#app .cal-row .ical{display:none}
+#app .cal-row.next .ical{display:inline-flex;border:0;background:none;color:var(--muted);width:36px;height:36px;margin-right:2px}
+#app .cal-row.next .ical svg.i{width:19px;height:19px}
+#app .cal-main{padding-left:11px}
+#app .cal-row .dtile{background:none;height:auto;min-width:34px;border-radius:0;align-items:flex-start;padding:0;color:var(--fg)}
+#app .cal-row .dtile b{font-size:19px}
+#app .cal-row.next{background:none;border-radius:0;margin:0;border-top-color:var(--line);box-shadow:inset 3px 0 0 var(--brand)}
+#app .cal-row.next .dtile{background:none;color:var(--brand)}
+#app .cal-row.next .dtile span{color:var(--muted)}
+#app .cal-row.next+.cal-row{border-top-color:var(--line)}
+/* 3. meno rosso: link, icone secondarie e pulsanti di servizio in neutro; il rosso resta a squadra, scelte e risultati */
+/* (la Home resta com'è) */
+html:not([data-curtab="home"]) .linkbtn{text-decoration-color:var(--line)}
+.fld-go{background:var(--surface-2);color:var(--fg)}
+html:not([data-curtab="home"]) .fld-ic,html:not([data-curtab="home"]) .fold-ic,html:not([data-curtab="home"]) .prl-ic{background:var(--surface-2);color:var(--muted)}
+.mx-fld-go{background:var(--fg);color:var(--bg)}
+.mh-when{color:var(--muted);background:var(--surface-2)}
+.gme-go{color:var(--fg)}
+/* 4. la tua squadra (Squadre): stesso aspetto, più compatta */
+.team-hero{padding:14px 16px;gap:12px}
+.team-hero .crest{--s:48px!important}
+.team-hero h1{font-size:22px!important}
+.team-hero .hero-star{width:36px;height:36px;border-radius:10px}
+.team-hero .hero-star svg.i{width:19px;height:19px}
+.team-hero .stats{gap:6px}
+.team-hero .stat{padding:7px 4px;border-radius:12px}
+.team-hero .stat b{font-size:18px}
+.team-hero .stat span{font-size:10px}
+/* 5. forma (Squadre): niente caselle; stemma, risultato e un puntino del colore dell'esito */
+[data-rpanel] .form-row .form-item{background:none;padding:2px 0;gap:5px}
+[data-rpanel] .form-row .form-item .crest{--s:30px!important}
+[data-rpanel] .form-row .res-dot{order:3;width:8px;height:8px;min-width:0;border-radius:50%;font-size:0;padding:0}
+[data-rpanel] .form-row .res-dot.r-V{background:var(--win)}
+[data-rpanel] .form-row .res-dot.r-N{background:var(--muted);opacity:.6}
+[data-rpanel] .form-row .res-dot.r-P{background:var(--loss)}
+/* 6. foglio della partita: Condividi e Modifica come icone accanto alla X */
+.mx-hd{display:inline-flex;align-items:center;gap:6px}
+.mx-ib{width:34px;height:34px;border-radius:50%;border:0;background:var(--surface-2);color:var(--fg);display:inline-grid;place-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mx-ib svg.i{width:16px;height:16px}
+.mx-ib:active{transform:scale(.94)}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1191,7 +1234,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.13";
+var APP_VERSION="2026-11-16.14";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1667,7 +1710,7 @@ function streakLine(tid){
 function formCard(tid,title){
   var fm=formOf(tid,5); if(!fm.length) return '';
 
-  return '<section class="card"><div class="card-head"><h2>'+esc(title||'Forma')+'</h2><span class="meta">ultime '+fm.length+' partite</span></div><div class="form-row">'+fm.map(function(m){ var rr=resultFor(m,tid), opp=m.homeId===tid?m.awayId:m.homeId; return '<button type="button" class="form-item" data-view="'+m.id+'" aria-label="'+esc(resLabel(rr)+' contro '+tname(opp)+' '+m.hg+' a '+m.ag)+'">'+crest(opp,34)+'<span class="res-dot r-'+rr+'">'+rr+'</span><span class="meta num" style="font-weight:700">'+esc(m.hg)+'–'+esc(m.ag)+'</span></button>'; }).join("")+'</div></section>';
+  return '<section class="card"><div class="card-head"><h2>'+esc(title||'Forma')+'</h2><span class="meta">ultime '+fm.length+' partite</span></div><div class="form-row">'+fm.map(function(m){ var rr=resultFor(m,tid), opp=m.homeId===tid?m.awayId:m.homeId; return '<button type="button" class="form-item" data-view="'+m.id+'" aria-label="'+esc(resLabel(rr)+' contro '+tname(opp)+' '+m.hg+' a '+m.ag)+'">'+crest(opp,34)+'<span class="res-dot r-'+rr+'">'+rr+'</span><span class="meta num fm-sc" data-r="'+rr+'" style="font-weight:700">'+esc(m.hg)+'–'+esc(m.ag)+'</span></button>'; }).join("")+'</div></section>';
 }
 function topScorers(tid,n){ var st=playerStats(); return S.players.filter(function(p){return pTeam(p)===tid && st[p.id].gol>0;}).sort(function(a,b){return st[b.id].gol-st[a.id].gol || a.name.localeCompare(b.name);}).slice(0,n||4).map(function(p){ return {p:p,g:st[p.id].gol}; }); }
 function scorersCard(tid,title){
@@ -1954,7 +1997,7 @@ function openMatchView(id){
   var hasMin=sc.length && sc.every(function(x){return minKey(x)<999;});
   var side=function(t){ var r=tableRow(t); return '<div class="mh-side'+(t===my?' me':'')+'">'+crest(t,60)+'<strong>'+esc(tname(t))+'</strong>'+(!pl&&r&&r.g?'<span class="mh-pos">'+r.pos+'° · '+r.pts+' pt</span>':'')+'</div>'; };
   var when=whenLabel(m.date), dt=fmtDate(m.date,m.time);
-  var h='<div class="row between"><span class="eyebrow muted">'+(m.round?m.round+'ª giornata · '+(+m.round>15?'Ritorno':'Andata'):'Partita')+'</span><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div>';
+  var h='<div class="row between" style="align-items:center"><span class="eyebrow muted">'+(m.round?m.round+'ª giornata · '+(+m.round>15?'Ritorno':'Andata'):'Partita')+'</span><span class="mx-hd"><button class="mx-ib" type="button" data-shr="m:'+m.id+'" aria-label="Condividi">'+icon("share")+'</button><button class="mx-ib" type="button" data-edit="'+m.id+'" aria-label="'+(pl?'Modifica risultato':'Inserisci risultato')+'">'+icon(pl?"edit":"plus")+'</button><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></span></div>';
   h+='<div class="mh">'+side(m.homeId)+'<div class="mh-mid">'
     +(pl?'<span class="mh-score num">'+esc(m.hg)+'<i>–</i>'+esc(m.ag)+'</span><span class="mh-st">Finale</span>'+(m.date?'<span class="mh-dt">'+esc(fmtDate(m.date))+'</span>':'')
        :(m.time?'<span class="mh-time num">'+esc(m.time)+'</span><span class="mh-dt">'+esc(m.date?fmtDate(m.date):'Data da definire')+'</span>':'<span class="mh-time sm">'+esc(m.date?fmtDate(m.date):'Da definire')+'</span><span class="mh-dt">orario da definire</span>')+(when?'<span class="mh-when">'+esc(when)+'</span>':''))
@@ -1972,7 +2015,6 @@ function openMatchView(id){
   }
   h+=matchField(m);
   if(!pl) h+=vsBlock(m);
-  h+='<div class="mx-act"><button class="mx-btn" type="button" data-shr="m:'+m.id+'">'+icon("share")+'<span>Condividi</span></button><button class="mx-btn" type="button" data-edit="'+m.id+'">'+icon(pl?"edit":"plus")+'<span>'+(pl?'Modifica risultato':'Inserisci risultato')+'</span></button></div>';
   $("dlgBody").innerHTML=h;
   showDlg();
 }
