@@ -1138,8 +1138,8 @@ nav.tabs button{transition:color .15s ease}
 .forb-r{margin:0;display:flex;gap:7px;align-items:baseline;font-size:11.5px;line-height:1.45;color:var(--muted)}
 .forb-r i{transform:translateY(-1px)}
 .forb-r b{font-weight:600;color:var(--fg);opacity:.75}
-.cls-tools{display:flex;gap:6px;align-items:center;transition:opacity .2s ease}
-.cls-tools.off{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility 0s .2s}
+.cls-tools{display:flex;gap:6px;align-items:center;overflow:hidden;max-width:220px;transition:max-width .34s cubic-bezier(.25,.9,.3,1),margin .34s cubic-bezier(.25,.9,.3,1),opacity .2s ease}
+.cls-tools.off{max-width:0;margin-left:-6px;opacity:0;pointer-events:none}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1169,7 +1169,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.6";
+var APP_VERSION="2026-11-16.7";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -3342,8 +3342,13 @@ function clsSwitch(cv,dir,pillDone){
   var bs=Array.prototype.slice.call(sg.querySelectorAll("button")), on=null; bs.forEach(function(b){ var y=b.getAttribute("data-cls")===cv; b.setAttribute("aria-pressed",String(y)); if(y) on=b; });
   var tl=row.querySelector(".cls-tools"); if(tl) tl.classList.toggle("off",cv!=="squadre");
   var ind=sg.querySelector(".seg-ind");
-  if(ind&&on){ var g=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight]; if(!pillDone){ ind.style.transition="transform .32s cubic-bezier(.25,.9,.3,1),width .32s cubic-bezier(.25,.9,.3,1)"; ind.style.transform="translate("+g[0]+"px,"+g[1]+"px)"; ind.style.width=g[2]+"px"; }
-    ind.dataset.p=g.join(","); SEGPOS[(sg.getAttribute("aria-label")||"seg")+"|"+bs.length]=g; }
+  /* in Marcatori i pulsanti si allungano fino a tutta la riga (e in Squadre si accorciano): la pillola segue il pulsante fotogramma per fotogramma */
+  if(ind&&on){ var sr=sg.getBoundingClientRect(), ir=ind.getBoundingClientRect(), x0=ir.left-sr.left-sg.clientLeft, w0=ir.width, t0=performance.now(), D=360, key=(sg.getAttribute("aria-label")||"seg")+"|"+bs.length;
+    ind.style.transition="none";
+    (function step(){ var t=Math.min(1,(performance.now()-t0)/D), e=1-Math.pow(1-t,3), x=x0+(on.offsetLeft-x0)*e, w=w0+(on.offsetWidth-w0)*e;
+      ind.style.transform="translate("+x.toFixed(1)+"px,"+on.offsetTop+"px)"; ind.style.width=w.toFixed(1)+"px";
+      if(t<1) requestAnimationFrame(step); else { var g=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight]; ind.style.transition=""; ind.dataset.p=g.join(","); SEGPOS[key]=g; } })();
+    ind.dataset.p=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight].join(","); }
   var y0=window.scrollY||0, rowTop=row.getBoundingClientRect().top+y0;
   old.forEach(function(n){ n.remove(); });
   var ref=row.nextSibling, frag=document.createDocumentFragment(); fresh.forEach(function(n){ frag.appendChild(n); }); v.insertBefore(frag,ref);
