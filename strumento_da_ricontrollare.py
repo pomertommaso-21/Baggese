@@ -17,6 +17,7 @@ def main():
     txt = open(sys.argv[1], encoding="utf-8").read()
     out = {}
     for code, body in re.findall(r"###(\w+)\n(.*?)(?=\n###|\Z)", txt, re.S):
+        if code not in A.GIRONI: continue   # per esempio "###END" in fondo al file
         d = json.load(open(A.GIRONI[code], encoding="utf-8")); book = A.Book(d)
         keys, note = [], []
         for l in body.splitlines():

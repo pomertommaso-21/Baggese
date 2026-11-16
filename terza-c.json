@@ -2537,6 +2537,14 @@
    "ag": 3,
    "scorers": [
     {
+     "teamId": "tc_yousport",
+     "playerId": "tc_yousport_20"
+    },
+    {
+     "teamId": "tc_yousport",
+     "playerId": "tc_yousport_20"
+    },
+    {
      "teamId": "tc_unionmulazzano",
      "playerId": "tc_unionmulazzano_12",
      "min": "45' 2T",
@@ -9479,7 +9487,7 @@
   }
  ],
  "imported": {
-  "at": "2026-11-15T20:36:49+00:00",
+  "at": "2026-11-16T09:20:10+00:00",
   "round": 10,
   "source": "Tuttocampo, dopo la 10ª giornata",
   "rows": [
@@ -9651,5 +9659,5 @@
   ]
  },
  "tcRound": 9,
- "updatedAt": "2026-11-15T20:36:49+00:00"
+ "updatedAt": "2026-11-16T09:20:10+00:00"
 }
