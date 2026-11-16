@@ -1242,12 +1242,12 @@ html:not([data-curtab="home"]) .fld-ic,html:not([data-curtab="home"]) .fold-ic,h
 .hm-ct b.hm-vs{font-size:18px;color:rgba(255,255,255,.75)}
 .hm-ct small{font-size:11px;color:rgba(255,255,255,.8);margin-top:2px;white-space:nowrap}
 .hm-ct small+small{margin-top:0}
-.hm-vsb{padding:12px 16px 14px;display:flex;flex-direction:column;gap:10px}
+.hm-vsb{padding:12px 14px 13px;display:flex;flex-direction:column;gap:9px}
 .hm-chips{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:8px}
 button.hm-chips{width:100%;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .hm-vsb .hm-chips{gap:6px}
 .hm-vsb .hm-chips .hm-lab{font-size:9.5px;letter-spacing:.05em}
-.hm-chips .c{display:flex;flex-direction:column;gap:3px;align-items:center;padding:8px 4px;border-radius:12px;background:var(--surface-2);min-width:0}
+.hm-chips .c{display:flex;flex-direction:column;gap:3px;align-items:center;padding:6px 4px;border-radius:12px;background:var(--surface-2);min-width:0}
 .hm-chips .pair{display:flex;gap:7px;align-items:baseline;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
 .hm-chips .pair .lo{color:var(--muted);font-weight:700}
 .hm-chips .pair i{font-style:normal;color:var(--line);font-weight:400}
@@ -1263,13 +1263,15 @@ button.hm-chips{width:100%;background:none;border:0;padding:0;font:inherit;color
 .hm-dots i.r-V{background:var(--win)}.hm-dots i.r-N{background:var(--muted);opacity:.55}.hm-dots i.r-P{background:var(--loss)}
 .hm-nt{display:flex;justify-content:center}
 .hm-note{font-size:11.5px;color:var(--muted);text-align:center}
-.hm-lr{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);align-items:center;gap:12px;padding:2px 0;width:100%;background:none;border:0;color:inherit;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.hm-lr>b{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;text-align:center}
+.hm-lr{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);align-items:center;gap:12px;padding:2px 0;width:100%;background:none;border:0;color:inherit;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.hm-cen{display:flex;flex-direction:column;align-items:center;gap:3px}
+.hm-cen b{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1}
+.hm-cen .res-pill{font-size:8.5px;padding:2px 6px;letter-spacing:.07em}
 .hm-sd{display:flex;align-items:center;gap:9px;min-width:0;font-size:14.5px;font-weight:600}
 .hm-sd.l{justify-content:flex-end;text-align:right}
 .hm-sd .crest{flex:none}
 .hm-sd.me{color:var(--brand);font-weight:700}
-.hm-scs{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);gap:12px;font-size:12px;color:var(--muted);line-height:1.45;margin-top:-6px}
+.hm-scs{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);gap:12px;font-size:12px;color:var(--muted);line-height:1.45;margin-top:-8px}
 .hm-scs .l{text-align:right}
 .hm-scs .t-sc{display:block;margin:0;font-size:inherit;color:inherit}
 .hm-meta{text-align:center;font-size:11.5px;color:var(--muted)}
@@ -1283,6 +1285,13 @@ button.hm-chips{width:100%;background:none;border:0;padding:0;font:inherit;color
 .hm-fm .form-row .res-dot.r-N{background:var(--muted);opacity:.6}
 .hm-fm .form-row .res-dot.r-P{background:var(--loss)}
 .home-grid .mini-row.me{background:color-mix(in srgb,var(--brand) 9%,transparent)}
+.home-grid .mini-row{padding:5px 8px;font-size:13.5px}
+.home-grid .mini-row .crest{--s:24px!important}
+.home-grid .mini-row b{font-size:16px}
+.home-grid .pline{margin:0}
+.home-grid{gap:12px}
+.home-grid .card{padding:16px;gap:11px}
+.home-grid .card .card-head h2{font-size:19px}
 .hm-sc{margin-top:2px}
 .hm-sc .ldr-1 b{font-size:26px}
 .hm-sc .ldr-1 span{font-size:15px}
@@ -1315,7 +1324,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.16";
+var APP_VERSION="2026-11-16.17";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1904,7 +1913,7 @@ function whenLabel(d){ var x=daysTo(d); if(x===null||x<0) return ""; if(x===0) r
 function nextRound(){ var r=null; S.matches.forEach(function(m){ if(!played(m)&&m.round&&(r===null||+m.round<r)) r=+m.round; }); if(r===null) S.matches.forEach(function(m){ if(m.round&&(r===null||+m.round>r)) r=+m.round; }); return r||1; }
 function rounds(){ var o={}; S.matches.forEach(function(m){ if(m.round) o[+m.round]=1; }); return Object.keys(o).map(Number).sort(function(a,b){return a-b;}); }
 function resLabel(r){ return {V:"Vittoria",N:"Pareggio",P:"Sconfitta"}[r]; }
-function syncChip(){ if(!S.updatedAt) return ""; var d=new Date(S.updatedAt); return '<span class="chip"><i></i>Dati aggiornati il '+d.toLocaleDateString("it-IT",{day:"numeric",month:"long"})+(mode==="local"?" · salvati su questo dispositivo":"")+'</span>'; }
+function syncChip(){ if(!S.updatedAt) return ""; var d=new Date(S.updatedAt); return '<span class="chip"><i></i>Aggiornato il '+d.toLocaleDateString("it-IT",{day:"numeric",month:"short"}).replace(".","")+(mode==="local"?" · salvati su questo dispositivo":"")+'</span>'; }
 function girSel(){ return '<span class="gline"><button type="button" class="gsel" data-act="pickGirone" aria-label="Cambia girone">'+esc(girLabel(G))+icon("chev")+'</button>'+(G!==MYG?'<button type="button" class="linkbtn gback" data-gir="'+MYG+'">Il tuo girone</button>':'')+'</span>'; }
 function header(title,sub,right){ if(sub===1) return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:4px">'+girSel()+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:6px">'+(sub?'<span class="eyebrow muted">'+esc(sub)+'</span>':'')+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; }
 
@@ -2024,11 +2033,10 @@ function vHome(){
   if (last){
     var r=resultFor(last,my);
     var lside=function(id,cls){ return '<span class="hm-sd '+cls+(id===my?' me':'')+'">'+(cls==='l'?'<span class="ellipsis">'+esc(tname(id))+'</span>'+crest(id,28):crest(id,28)+'<span class="ellipsis">'+esc(tname(id))+'</span>')+'</span>'; };
-    b2+='<div class="card-head"><h2>Ultimo risultato</h2><span class="res-pill r-'+r+'">'+resLabel(r)+'</span></div>'
-      +'<button type="button" class="hm-lr" data-view="'+last.id+'">'+lside(last.homeId,'l')+'<b class="num">'+esc(last.hg)+'–'+esc(last.ag)+'</b>'+lside(last.awayId,'r')+'</button>';
-    var sh=tsc(last,last.homeId), sa=tsc(last,last.awayId);
+    b2+='<div class="card-head"><h2>Ultimo risultato</h2><span class="meta">'+(last.round?last.round+'ª · ':'')+esc(fmtDate(last.date))+'</span></div>'
+      +'<button type="button" class="hm-lr" data-view="'+last.id+'">'+lside(last.homeId,'l')+'<span class="hm-cen"><b class="num">'+esc(last.hg)+'–'+esc(last.ag)+'</b><span class="res-pill r-'+r+'">'+resLabel(r)+'</span></span>'+lside(last.awayId,'r')+'</button>';
+    var sh=tsc(last,last.homeId).split('<br>').join(', '), sa=tsc(last,last.awayId).split('<br>').join(', ');
     if(sh||sa) b2+='<div class="hm-scs"><span class="l">'+sh+'</span><span></span><span class="r">'+sa+'</span></div>';
-    b2+='<span class="hm-meta">'+(last.round?last.round+'ª giornata · ':'')+esc(fmtDate(last.date))+'</span>';
   }
   var fc=formCard(my).replace(/^<section class="card[^"]*">/,'').replace(/<\/section>$/,'').replace(/^<div class="card-head">[\s\S]*?<\/div>/,'');
   if(fc) b2+='<div class="hm-fm'+(b2?'':' first')+'"><span class="hm-lab">Forma</span>'+fc+'</div>'+streakLine(my);
@@ -2064,7 +2072,7 @@ function hmNext(next){
   var and=null;
   if(+next.round>15) and=S.matches.filter(function(m){ return +m.round===+next.round-15 && involves(m,my) && involves(m,opp) && played(m); })[0];
   var note=and?'<button type="button" class="and-chip" data-view="'+and.id+'"><span class="meta">Andata</span>'+crest(and.homeId,22)+'<span class="num">'+esc(and.hg)+'–'+esc(and.ag)+'</span>'+crest(and.awayId,22)+'</button>'
-    :(+next.round<=15?'<span class="hm-note">Primo confronto · il ritorno alla '+(+next.round+15)+'ª giornata</span>':'');
+    :'';
   return '<section class="block span2 hm-blk"><div class="night hero hm-nx"><div class="hm-nh"><span>Prossima partita'+(next.round?' · '+next.round+'ª giornata':'')+'</span>'+(wl?'<span class="hm-when">'+wl+'</span>':'')+'</div>'
     +'<button type="button" class="hm-mu" data-view="'+next.id+'">'+sd(H,'l')+'<span class="hm-ct">'+mid+'</span>'+sd(A,'r')+'</button></div>'
     +'<div class="hm-vsb"><div class="hm-chips" style="--n:4">'+chip('Posizione',rh&&rh.g?rh.pos+'°':null,ra&&ra.g?ra.pos+'°':null,null)+chip('Punti',g(rh,'pts'),g(ra,'pts'),'high')+chip('Gol fatti',g(rh,'gf'),g(ra,'gf'),'high')+chip('Gol subiti',g(rh,'gs'),g(ra,'gs'),'low')+'</div>'
