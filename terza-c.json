@@ -4657,7 +4657,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 4,
+    "pres": 5,
     "y": 1,
     "r": 0
    }
@@ -4669,8 +4669,8 @@
    "num": "",
    "role": "Centrocampista",
    "tc": {
-    "gol": 2,
-    "pres": 7,
+    "gol": 3,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -4735,7 +4735,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 6,
+    "pres": 7,
     "y": 0,
     "r": 0
    }
@@ -4826,7 +4826,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 2,
+    "pres": 3,
     "y": 0,
     "r": 1
    }
@@ -4839,7 +4839,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 1,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -4878,7 +4878,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 3,
-    "pres": 9,
+    "pres": 10,
     "y": 0,
     "r": 0
    }
@@ -4891,7 +4891,7 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 9,
+    "pres": 10,
     "y": 0,
     "r": 0
    }
@@ -4904,7 +4904,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -4943,7 +4943,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 6,
+    "pres": 7,
     "y": 1,
     "r": 0
    }
@@ -4956,7 +4956,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 1,
-    "pres": 6,
+    "pres": 7,
     "y": 0,
     "r": 0
    }
@@ -4969,7 +4969,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 3,
+    "pres": 4,
     "y": 0,
     "r": 0
    }
@@ -4982,7 +4982,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 3,
-    "pres": 8,
+    "pres": 9,
     "y": 1,
     "r": 0
    }
@@ -5008,7 +5008,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 5,
-    "pres": 9,
+    "pres": 10,
     "y": 4,
     "r": 0
    }
@@ -5034,7 +5034,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 1,
-    "pres": 3,
+    "pres": 4,
     "y": 0,
     "r": 0
    }
@@ -5046,10 +5046,10 @@
    "num": "",
    "role": "Difensore",
    "tc": {
-    "gol": 0,
-    "pres": 6,
+    "gol": 1,
+    "pres": 7,
     "y": 0,
-    "r": 0
+    "r": 1
    }
   },
   {
@@ -5086,7 +5086,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 0,
+    "pres": 1,
     "y": 0,
     "r": 0
    }
@@ -5099,7 +5099,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -5112,7 +5112,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 2,
-    "pres": 6,
+    "pres": 7,
     "y": 0,
     "r": 0
    }
@@ -5164,7 +5164,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 1,
+    "pres": 2,
     "y": 0,
     "r": 0
    }
@@ -5177,7 +5177,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -5216,7 +5216,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -5255,7 +5255,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 1,
+    "pres": 2,
     "y": 0,
     "r": 0
    }
@@ -5268,7 +5268,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 1,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -5294,8 +5294,8 @@
    "role": "Attaccante",
    "tc": {
     "gol": 1,
-    "pres": 6,
-    "y": 0,
+    "pres": 7,
+    "y": 1,
     "r": 0
    }
   },
@@ -5320,7 +5320,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 1,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 1
    }
@@ -5333,7 +5333,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 6,
+    "pres": 7,
     "y": 1,
     "r": 1
    }
@@ -5346,7 +5346,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 4,
+    "pres": 5,
     "y": 0,
     "r": 0
    }
@@ -5372,7 +5372,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 1,
-    "pres": 4,
+    "pres": 5,
     "y": 0,
     "r": 0
    }
@@ -5385,7 +5385,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 1,
     "r": 0
    }
@@ -5398,7 +5398,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -5424,7 +5424,7 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 2,
+    "pres": 3,
     "y": 0,
     "r": 0
    }
@@ -5463,7 +5463,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -6190,7 +6190,7 @@
    "num": "22",
    "role": "Attaccante",
    "tc": {
-    "gol": 1,
+    "gol": 2,
     "pres": 7,
     "y": 0,
     "r": 0
@@ -6268,7 +6268,7 @@
    "num": "7",
    "role": "Attaccante",
    "tc": {
-    "gol": 7,
+    "gol": 8,
     "pres": 7,
     "y": 1,
     "r": 0
@@ -6425,7 +6425,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 2,
     "r": 1
    }
@@ -6438,7 +6438,7 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -6451,7 +6451,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 1,
-    "pres": 8,
+    "pres": 9,
     "y": 1,
     "r": 0
    }
@@ -6503,7 +6503,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 3,
+    "pres": 4,
     "y": 0,
     "r": 0
    }
@@ -6516,7 +6516,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 5,
-    "pres": 8,
+    "pres": 9,
     "y": 0,
     "r": 0
    }
@@ -6529,7 +6529,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -6542,7 +6542,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 3,
-    "pres": 8,
+    "pres": 9,
     "y": 0,
     "r": 0
    }
@@ -6555,7 +6555,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -6567,9 +6567,9 @@
    "num": "",
    "role": "Difensore",
    "tc": {
-    "gol": 2,
-    "pres": 6,
-    "y": 0,
+    "gol": 4,
+    "pres": 7,
+    "y": 1,
     "r": 1
    }
   },
@@ -6581,7 +6581,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 2,
+    "pres": 3,
     "y": 0,
     "r": 0
    }
@@ -6607,7 +6607,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 4,
+    "pres": 5,
     "y": 0,
     "r": 1
    }
@@ -6620,7 +6620,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 8,
+    "pres": 9,
     "y": 1,
     "r": 0
    }
@@ -6697,8 +6697,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 3,
-    "pres": 7,
+    "gol": 4,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -6711,7 +6711,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 1,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -6736,9 +6736,9 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 2,
-    "pres": 8,
-    "y": 0,
+    "gol": 3,
+    "pres": 9,
+    "y": 1,
     "r": 0
    }
   },
@@ -6775,8 +6775,8 @@
    "num": "",
    "role": "Centrocampista",
    "tc": {
-    "gol": 0,
-    "pres": 8,
+    "gol": 1,
+    "pres": 9,
     "y": 2,
     "r": 0
    }
@@ -6828,7 +6828,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 6,
+    "pres": 7,
     "y": 1,
     "r": 0
    }
@@ -6841,7 +6841,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 6,
+    "pres": 7,
     "y": 1,
     "r": 0
    }
@@ -6879,8 +6879,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 4,
-    "pres": 8,
+    "gol": 5,
+    "pres": 9,
     "y": 1,
     "r": 0
    }
@@ -6893,7 +6893,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 1,
-    "pres": 8,
+    "pres": 9,
     "y": 0,
     "r": 0
    }
@@ -6906,7 +6906,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 1,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -6919,7 +6919,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 4,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -6932,7 +6932,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 3,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -6958,8 +6958,8 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 2,
-    "y": 0,
+    "pres": 3,
+    "y": 1,
     "r": 0
    }
   },
@@ -6997,7 +6997,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -7010,7 +7010,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 9,
+    "pres": 10,
     "y": 3,
     "r": 0
    }
@@ -7023,8 +7023,8 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 8,
-    "y": 4,
+    "pres": 9,
+    "y": 5,
     "r": 1
    }
   },
@@ -7036,7 +7036,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -7191,7 +7191,7 @@
    "num": "",
    "role": "Difensore",
    "tc": {
-    "gol": 0,
+    "gol": 1,
     "pres": 2,
     "y": 0,
     "r": 0
@@ -7243,7 +7243,7 @@
    "num": "",
    "role": "Centrocampista",
    "tc": {
-    "gol": 6,
+    "gol": 7,
     "pres": 2,
     "y": 0,
     "r": 0
@@ -7295,7 +7295,7 @@
    "num": "",
    "role": "Difensore",
    "tc": {
-    "gol": 0,
+    "gol": 1,
     "pres": 1,
     "y": 0,
     "r": 0
@@ -7387,7 +7387,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 4,
-    "pres": 7,
+    "pres": 9,
     "y": 0,
     "r": 0
    }
@@ -7400,7 +7400,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 0,
+    "pres": 1,
     "y": 0,
     "r": 0
    }
@@ -7426,7 +7426,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 3,
-    "pres": 7,
+    "pres": 9,
     "y": 1,
     "r": 0
    }
@@ -7452,7 +7452,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 6,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -7465,7 +7465,7 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 1
    }
@@ -7478,7 +7478,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 2,
+    "pres": 3,
     "y": 0,
     "r": 0
    }
@@ -7490,8 +7490,8 @@
    "num": "",
    "role": "Centrocampista",
    "tc": {
-    "gol": 0,
-    "pres": 6,
+    "gol": 1,
+    "pres": 8,
     "y": 2,
     "r": 0
    }
@@ -7517,7 +7517,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 3,
+    "pres": 5,
     "y": 1,
     "r": 0
    }
@@ -7530,7 +7530,7 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 1,
+    "pres": 2,
     "y": 0,
     "r": 0
    }
@@ -7542,8 +7542,8 @@
    "num": "",
    "role": "Difensore",
    "tc": {
-    "gol": 1,
-    "pres": 6,
+    "gol": 2,
+    "pres": 8,
     "y": 2,
     "r": 0
    }
@@ -7555,8 +7555,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 11,
-    "pres": 7,
+    "gol": 14,
+    "pres": 9,
     "y": 4,
     "r": 0
    }
@@ -7569,7 +7569,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 2,
-    "pres": 7,
+    "pres": 9,
     "y": 2,
     "r": 0
    }
@@ -7582,7 +7582,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 3,
+    "pres": 4,
     "y": 0,
     "r": 0
    }
@@ -7595,7 +7595,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 3,
-    "pres": 7,
+    "pres": 9,
     "y": 2,
     "r": 0
    }
@@ -7608,7 +7608,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 4,
+    "pres": 5,
     "y": 0,
     "r": 0
    }
@@ -7621,7 +7621,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 1,
-    "pres": 6,
+    "pres": 7,
     "y": 2,
     "r": 0
    }
@@ -7634,7 +7634,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 1,
-    "pres": 6,
+    "pres": 7,
     "y": 1,
     "r": 0
    }
@@ -7647,7 +7647,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 9,
     "y": 0,
     "r": 0
    }
@@ -7673,7 +7673,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 9,
     "y": 0,
     "r": 0
    }
@@ -7686,7 +7686,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 0,
+    "pres": 1,
     "y": 0,
     "r": 0
    }
@@ -7815,7 +7815,7 @@
    "num": "4",
    "role": "Difensore",
    "tc": {
-    "gol": 1,
+    "gol": 2,
     "pres": 0,
     "y": 0,
     "r": 0
@@ -7906,7 +7906,7 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 3,
+    "gol": 4,
     "pres": 0,
     "y": 0,
     "r": 0
@@ -7984,7 +7984,7 @@
    "num": "",
    "role": "Centrocampista",
    "tc": {
-    "gol": 15,
+    "gol": 16,
     "pres": 0,
     "y": 0,
     "r": 0
@@ -8023,7 +8023,7 @@
    "num": "",
    "role": "Centrocampista",
    "tc": {
-    "gol": 3,
+    "gol": 4,
     "pres": 0,
     "y": 0,
     "r": 0
@@ -8050,7 +8050,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 1,
     "r": 1
    }
@@ -8062,8 +8062,8 @@
    "num": "",
    "role": "Centrocampista",
    "tc": {
-    "gol": 2,
-    "pres": 7,
+    "gol": 3,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -8076,7 +8076,7 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -8115,8 +8115,8 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
-    "y": 2,
+    "pres": 6,
+    "y": 3,
     "r": 0
    }
   },
@@ -8141,7 +8141,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -8153,8 +8153,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 3,
-    "pres": 7,
+    "gol": 4,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -8180,7 +8180,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 6,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -8192,8 +8192,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 4,
-    "pres": 5,
+    "gol": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -8206,7 +8206,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 1,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -8232,7 +8232,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 4,
+    "pres": 5,
     "y": 0,
     "r": 0
    }
@@ -8245,7 +8245,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 1,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -8271,7 +8271,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 0,
-    "pres": 4,
+    "pres": 5,
     "y": 0,
     "r": 0
    }
@@ -8284,7 +8284,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 1,
+    "pres": 2,
     "y": 0,
     "r": 0
    }
@@ -8297,7 +8297,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 6,
+    "pres": 7,
     "y": 0,
     "r": 0
    }
@@ -8349,7 +8349,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 3,
+    "pres": 4,
     "y": 0,
     "r": 0
    }
@@ -8414,7 +8414,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -8517,7 +8517,7 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 0,
+    "gol": 1,
     "pres": 1,
     "y": 0,
     "r": 0
@@ -8531,7 +8531,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 2,
-    "pres": 8,
+    "pres": 9,
     "y": 0,
     "r": 0
    }
@@ -8544,7 +8544,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 1,
-    "pres": 5,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -8557,7 +8557,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 2,
     "r": 0
    }
@@ -8570,7 +8570,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -8583,7 +8583,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 0,
-    "pres": 3,
+    "pres": 4,
     "y": 0,
     "r": 0
    }
@@ -8622,7 +8622,7 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 4,
+    "pres": 5,
     "y": 1,
     "r": 0
    }
@@ -8634,8 +8634,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 6,
-    "pres": 5,
+    "gol": 8,
+    "pres": 6,
     "y": 1,
     "r": 0
    }
@@ -8700,7 +8700,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 6,
+    "pres": 7,
     "y": 1,
     "r": 0
    }
@@ -8726,7 +8726,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -8739,7 +8739,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 1,
-    "pres": 2,
+    "pres": 3,
     "y": 0,
     "r": 0
    }
@@ -8778,7 +8778,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 1,
-    "pres": 6,
+    "pres": 7,
     "y": 0,
     "r": 0
    }
@@ -8803,8 +8803,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 4,
-    "pres": 4,
+    "gol": 6,
+    "pres": 5,
     "y": 1,
     "r": 0
    }
@@ -8817,7 +8817,7 @@
    "role": "Portiere",
    "tc": {
     "gol": 0,
-    "pres": 2,
+    "pres": 3,
     "y": 0,
     "r": 0
    }
@@ -8855,8 +8855,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 2,
-    "pres": 7,
+    "gol": 3,
+    "pres": 8,
     "y": 0,
     "r": 1
    }
@@ -8908,7 +8908,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 1,
-    "pres": 8,
+    "pres": 9,
     "y": 2,
     "r": 0
    }
@@ -8921,7 +8921,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 1,
     "r": 0
    }
@@ -8947,7 +8947,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 1,
-    "pres": 7,
+    "pres": 8,
     "y": 2,
     "r": 0
    }
@@ -8960,7 +8960,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 5,
+    "pres": 6,
     "y": 2,
     "r": 0
    }
@@ -8973,7 +8973,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 0,
-    "pres": 3,
+    "pres": 4,
     "y": 0,
     "r": 0
    }
@@ -8986,7 +8986,7 @@
    "role": "Attaccante",
    "tc": {
     "gol": 3,
-    "pres": 7,
+    "pres": 8,
     "y": 1,
     "r": 0
    }
@@ -8998,8 +8998,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 8,
-    "pres": 7,
+    "gol": 10,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -9012,7 +9012,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 2,
-    "pres": 1,
+    "pres": 2,
     "y": 0,
     "r": 0
    }
@@ -9024,8 +9024,8 @@
    "num": "",
    "role": "Centrocampista",
    "tc": {
-    "gol": 1,
-    "pres": 7,
+    "gol": 3,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -9050,8 +9050,8 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 1,
-    "pres": 5,
+    "gol": 2,
+    "pres": 6,
     "y": 0,
     "r": 0
    }
@@ -9064,7 +9064,7 @@
    "role": "Centrocampista",
    "tc": {
     "gol": 4,
-    "pres": 7,
+    "pres": 8,
     "y": 0,
     "r": 0
    }
@@ -9077,7 +9077,7 @@
    "role": "Difensore",
    "tc": {
     "gol": 2,
-    "pres": 6,
+    "pres": 7,
     "y": 0,
     "r": 0
    }
@@ -9336,7 +9336,7 @@
    "num": "",
    "role": "Attaccante",
    "tc": {
-    "gol": 2,
+    "gol": 4,
     "pres": 1,
     "y": 0,
     "r": 0
@@ -9658,6 +9658,6 @@
    }
   ]
  },
- "tcRound": 9,
- "updatedAt": "2026-11-16T09:20:10+00:00"
+ "tcRound": 10,
+ "updatedAt": "2026-11-16T09:42:59+00:00"
 }
