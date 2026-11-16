@@ -1153,15 +1153,13 @@ nav.tabs button{transition:color .15s ease}
 .rc-card .b-score small{font-size:calc(11.5px*(1 + (var(--rk,1) - 1)*.5))}
 html.rk-anim .rc-card .board,html.rk-anim .rc-card .b-team,html.rk-anim .rc-card .b-score{transition:padding .28s cubic-bezier(.25,.9,.3,1),font-size .28s cubic-bezier(.25,.9,.3,1)}
 html.rk-anim .rc-card .board .crest{transition:width .28s cubic-bezier(.25,.9,.3,1),height .28s cubic-bezier(.25,.9,.3,1)}
-.rc-vp{padding-bottom:14px}
-/* la maniglia sta sotto il riquadro, nello spazio tra il riquadro e la scritta: non tocca niente di quello che c'è dentro */
-.rc-grip{position:absolute;left:50%;bottom:-4px;width:72px;height:22px;transform:translateX(-50%);display:grid;place-items:center;z-index:3;touch-action:none;-webkit-tap-highlight-color:transparent}
-.rc-grip::after{content:"";width:26px;height:3px;border-radius:2px;background:var(--muted);opacity:.2;transition:opacity .2s,width .2s}
-html.rk-drag .rc-grip::after{opacity:.45;width:32px}
+
 /* giornate da giocare: "La giornata in breve" e "Top 11" ci sono già, in grigio, da compilare */
 .gb-off{filter:grayscale(1);opacity:.5;pointer-events:none}
 .gb-off .t11-tz-tx b{letter-spacing:.06em}
 .t11-blank{display:block;width:var(--s);height:var(--s);border-radius:50%;background:rgba(255,255,255,.6);box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.rkp .seg{width:100%}
+.rkp .seg button{flex:1 1 0;min-width:0;padding-left:2px;padding-right:2px;font-size:12.5px;white-space:nowrap}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1191,7 +1189,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.11";
+var APP_VERSION="2026-11-16.12";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1291,7 +1289,7 @@ function involves(m,id){ return m.homeId===id || m.awayId===id; }
 function fmtDate(d,t){ if(!d) return t||""; var p=d.split("-"); if(p.length!==3) return d; var dt=new Date(+p[0],+p[1]-1,+p[2]); var gg=["Dom","Lun","Mar","Mer","Gio","Ven","Sab"][dt.getDay()]; var mm=["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"][+p[1]-1]; return gg+" "+(+p[2])+" "+mm+(t? " · "+t : ""); }
 function sortMatches(a,b){ var ra=a.round||999, rb=b.round||999; if(ra!==rb) return ra-rb; return String(a.date||"9").localeCompare(String(b.date||"9")); }
 function resultFor(m,id){ if(!played(m)) return null; var g1=+(m.homeId===id? m.hg:m.ag), g2=+(m.homeId===id? m.ag:m.hg); return g1>g2?"V":g1<g2?"P":"N"; }
-var BK_KEYS=["baggese-follow","baggese-myteam","baggese-mygirone","baggese-theme","baggese-arrows","baggese-goal","baggese-acc"];
+var BK_KEYS=["baggese-follow","baggese-myteam","baggese-mygirone","baggese-theme","baggese-arrows","baggese-goal","baggese-acc","baggese-rk"];
 function bkCode(){ var o={}; BK_KEYS.forEach(function(k){ try { var v=localStorage.getItem(k); if(v!=null) o[k.slice(8)]=v; } catch(e){} });
   if(!o.follow&&FOL.length) o.follow=JSON.stringify(FOL); if(!o.myteam&&MYT) o.myteam=MYT; if(!o.mygirone&&MYG) o.mygirone=MYG;
   return "BAGGESE-"+btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/=+$/,""); }
@@ -1795,6 +1793,7 @@ function navBack(){ var nb=NAVBACK; if(!nb) return; NAVBACK=null; haptic();
    (attaccata sotto quella in alto) finché non si scorre in giù, poi si comporta come sempre */
 function segShow(){ var sf=$("segfloat"), seg=document.querySelector('#app .seg[aria-label="Vista partite"]'); if(!sf||!seg) return; var tb=$("topbar"), lim=tb?tb.offsetHeight:50;
   if(seg.getBoundingClientRect().bottom>=lim) return; var sdf=seg.nextElementSibling;
+  if(!document.body.classList.contains("segup")){ Object.keys(SEGPOS).forEach(function(k){ if(/\(in alto\)/.test(k)) delete SEGPOS[k]; }); }   /* la pillola della barra in alto parte già al suo posto */
   sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"')+(sdf&&sdf.classList.contains("sdf")?sdf.outerHTML.replace(/ aria-label="Casa o trasferta"/,' aria-label="Casa o trasferta (in alto)"'):"");
   document.body.classList.add("segup"); }
 /* animazione del cambio di sezione (uguale in tutta l'app): si muovono i blocchi veri (anche dentro i contenitori "invisibili"
@@ -1820,18 +1819,35 @@ function calJumpNow(){ var el=document.getElementById("calNext"); if(!(el && tab
    scivolando dal lato giusto (niente dissolvenza) */
 function partSwitch(pv,dir,pillDone){
   var v=document.querySelector("#app .view"), sg=v&&v.querySelector('.seg[aria-label="Vista partite"]'); if(!sg||pv===partView||partSwitch.busy) return;
-  var old=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) old.push(c); if(c===sg||c.contains(sg)) seen=true; });
+  var old=[], head=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) old.push(c); else head.push(c); if(c===sg||c.contains(sg)) seen=true; });
   var bs=Array.prototype.slice.call(sg.querySelectorAll("button")), on=null; bs.forEach(function(b){ var y=b.getAttribute("data-pv")===pv; b.setAttribute("aria-pressed",String(y)); if(y) on=b; });
   swPill(sg,on,pillDone); partSwitch.busy=true;
-  var swap=function(){ partView=pv; document.body.classList.remove("segup"); var tmp=document.createElement("div"); tmp.innerHTML=vPartite();
+  /* dal calendario (pagina scesa) a "Per giornata" (in cima): la barra attaccata in alto se ne va con la sua animazione mentre esce il contenuto */
+  var jumpTop=pv==="round"&&(window.scrollY||0)>4; if(jumpTop) document.body.classList.remove("segup");
+  var swap=function(){ partView=pv; var tmp=document.createElement("div"); tmp.innerHTML=vPartite();
     var nsg=tmp.querySelector('.seg[aria-label="Vista partite"]'), fresh=[], s2=false; if(!nsg){ partSwitch.busy=false; render(); return; }
     Array.prototype.slice.call(tmp.children).forEach(function(c){ if(s2) fresh.push(c); if(c===nsg||c.contains(nsg)) s2=true; });
     old.forEach(function(n){ n.remove(); }); var frag=document.createDocumentFragment(); fresh.forEach(function(n){ frag.appendChild(n); }); v.insertBefore(frag,sg.nextSibling);
-    if(pv==="mine"){ sideApply(); calJumpNow(); }
-    else { window.scrollTo(0,0); if($("rcVp")){ rkAuto(); rcLater(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } }); } var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips"); if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2; }
-    fitNames(); segInd(v); swIn(fresh,dir); partSwitch.busy=false; };
+    if(pv==="mine") sideApply();
+    else { document.body.classList.remove("segup"); window.scrollTo(0,0); if($("rcVp")){ rkAuto(); rcLater(function(){ if(!RC.busy){ rcSides(); rcSet(0,0); } }); } var rc=document.querySelector('#roundChips .rchip[aria-pressed="true"]'), strip=$("roundChips"); if(rc&&strip) strip.scrollLeft=rc.offsetLeft-strip.clientWidth/2+rc.clientWidth/2; }
+    fitNames(); segInd(v); swIn(fresh,dir);
+    /* il titolo in cima era fuori schermo: compare sfumando, senza scatti */
+    if(jumpTop&&!swReduce()) head.forEach(function(n){ if(n.animate) n.animate([{opacity:0},{opacity:1}],{duration:280,easing:"ease-out"}); });
+    /* sul calendario si scivola fino alla prossima partita (invece di saltarci), e poi compare la barra in alto */
+    if(pv==="mine") setTimeout(calGlide,120);
+    partSwitch.busy=false; };
   if(pillDone) swap(); else swOut(old,dir,swap);
 }
+function calGlide(){ var el=document.getElementById("calNext"); if(!(el&&tab==="partite"&&partView==="mine")) return;
+  var sf=$("segfloat"), seg=document.querySelector('#app .seg[aria-label="Vista partite"]'), tb=$("topbar"), tbh=tb?tb.offsetHeight:50;
+  /* si prepara la barra in alto (ancora nascosta) per sapere quanto è alta */
+  Object.keys(SEGPOS).forEach(function(k){ if(/\(in alto\)/.test(k)) delete SEGPOS[k]; });
+  if(sf&&seg){ var sdf=seg.nextElementSibling; sf.innerHTML=seg.outerHTML.replace(/ aria-label="Vista partite"/,' aria-label="Vista partite (in alto)"')+(sdf&&sdf.classList.contains("sdf")?sdf.outerHTML.replace(/ aria-label="Casa o trasferta"/,' aria-label="Casa o trasferta (in alto)"'):""); }
+  var target=Math.max(0, el.getBoundingClientRect().top+(window.scrollY||0)-(tbh+(sf?sf.offsetHeight:0)+10));
+  autoUntil=Date.now()+1400;
+  if(swReduce()){ window.scrollTo(0,target); segShow(); return; }
+  try { window.scrollTo({top:target,behavior:"smooth"}); } catch(e){ window.scrollTo(0,target); }
+  var t0=Date.now(), last=-1, chk=function(){ var y=window.scrollY||0; if((Math.abs(y-target)<2||y===last)&&Date.now()-t0>150){ segShow(); return; } last=y; if(Date.now()-t0<1300) setTimeout(chk,60); else segShow(); }; setTimeout(chk,80); }
 function render(){
   if(mode==="loading"){ $("tabs").innerHTML=""; return; }
   crestN=0; shirtN=0; HIST=null; setAccent();
@@ -2486,7 +2502,7 @@ function vPartite(){
     var rs=rounds(), nr=nextRound(); if(selRound===null||rs.indexOf(selRound)<0) selRound=nr;
     h+='<div class="chips" id="roundChips" role="group" aria-label="Giornata">'+rs.map(function(r){ var done=S.matches.some(function(m){return +m.round===r&&played(m);}); return '<button type="button" class="rchip'+(done?'':' future')+'" data-round="'+r+'" aria-pressed="'+(r===selRound)+'" aria-label="Giornata '+r+'">'+r+'</button>'; }).join("")+'</div>';
     slideDir=0;
-    h+='<div class="rc-vp" id="rcVp"><div class="rc-slot cur" data-r="'+selRound+'">'+roundCardHtml(selRound,true)+'</div><i class="rc-grip" id="rcGrip" aria-hidden="true"></i></div><span class="tiny muted" style="text-align:center">Scorri a destra o a sinistra per cambiare giornata</span>';
+    h+='<div class="rc-vp" id="rcVp"><div class="rc-slot cur" data-r="'+selRound+'">'+roundCardHtml(selRound,true)+'</div></div><span class="tiny muted" style="text-align:center">Scorri a destra o a sinistra per cambiare giornata</span>';
     return h;
   }
   var list=S.matches.filter(function(m){return involves(m,my);}).sort(sortMatches);
@@ -2783,10 +2799,15 @@ function teamCards(tid){
 /* ---------- gestione ---------- */
 function gDet(k,title,sub){ return '<details class="gdet" data-gk="'+k+'"'+(GOPEN[k]?' open':'')+'><summary><span><b>'+title+'</b><span class="meta">'+sub+'</span></span>'+icon("right")+'</summary><div class="gdet-body">'; }
 var GOPEN={};
+/* Gestione › Aspetto: grandezza del riquadro della giornata (Partite › Per giornata) */
+var RK_OPTS=[["auto","Automatico",null],["s","Compatto",.9],["m","Normale",1.05],["l","Grande",1.25]];
+function rkPicker(){ var sv=rkSaved(), cur="auto"; RK_OPTS.forEach(function(o){ if(o[2]!=null&&sv!=null&&Math.abs(o[2]-sv)<.02) cur=o[0]; });
+  return '<div class="col rkp" style="gap:6px;margin-top:14px"><b style="font-size:14px">Riquadro della giornata</b><span class="meta" style="margin-top:-4px">Partite › Per giornata. Automatico: si adatta al tuo schermo</span><div class="seg sm" role="group" aria-label="Riquadro della giornata">'
+    +RK_OPTS.map(function(o){ return '<button type="button" data-rk="'+o[0]+'" aria-pressed="'+(cur===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div></div>'; }
 function vGestione(){
   var h=header("Gestione",S.settings.season), my=me();
   h+='<section class="card"><button type="button" class="gme" data-act="follow">'+crest(my,44)+'<span class="col grow" style="gap:2px"><b>'+esc(tname(my))+'</b><span class="meta">'+(FOL.length>1?'Segui '+FOL.length+' squadre':'La tua squadra')+'</span></span><span class="gme-go">Cambia</span></button></section>';
-  var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div></section>';
+  var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div>'+rkPicker()+'</section>';
   h+='<section class="card"><div class="col" style="gap:2px"><b>Copia delle impostazioni</b><span class="meta">Squadre seguite, tema e preferenze</span></div><div class="row" style="gap:8px"><button class="btn sm" type="button" data-act="bkCopy">Copia il codice</button><button class="btn sm" type="button" data-act="bkRestore">Ripristina</button></div><span class="tiny muted">Salva il codice in Note: se cambi iPhone o rimetti l’app sulla Home, con “Ripristina” torna tutto com’era.</span></section>';
   var up=S.updatedAt?new Date(S.updatedAt).toLocaleDateString("it-IT",{day:"numeric",month:"long"}):"";
   h+='<section class="card"><div class="row between" style="gap:12px"><div class="col" style="gap:2px"><b>Dati</b><span class="meta">'+(up?'Aggiornati il '+up:'Non ancora aggiornati')+' · '+esc(girLabel(G))+'</span></div>'+(mode==="local"?'<button class="btn sm" type="button" data-act="refresh">Controlla</button>':'')+'</div><span class="tiny muted">Li aggiorna Claude quando gli scrivi “aggiorna tutto”: l’app li scarica da sola.</span></section>';
@@ -3180,6 +3201,7 @@ document.addEventListener("click", function(e){
   if(ds.pcat){ openTeamPicker.cat=ds.pcat; openTeamPicker.g=GIRONI.filter(function(g){return g.cat===ds.pcat;})[0].id; drawPicker(); return; }
   if(ds.pg){ openTeamPicker.g=ds.pg; drawPicker(); return; }
   if(ds.ics){ addToCalendar(ds.ics); return; }
+  if(ds.rk){ var o=RK_OPTS.filter(function(x){ return x[0]===ds.rk; })[0]; if(o){ try { if(o[2]==null) localStorage.removeItem("baggese-rk"); else localStorage.setItem("baggese-rk",o[2].toFixed(2)); } catch(e){} var sgk=b.closest(".seg"); if(sgk){ sgk.querySelectorAll("[data-rk]").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); segInd(sgk.parentNode); } haptic(); } return; }
   if(ds.themeset){ try { localStorage.setItem("baggese-theme",ds.themeset); } catch(e){} var tv=ds.themeset; smooth(function(){ applyTheme(tv); render(); }); return; }
   if(ds.go){ GOPEN[ds.go==="teams"?"teams":"import"]=true; tab="gestione"; render(); var target=$(ds.go==="teams"?"newTeam":"pasteBox"); if(target){ target.scrollIntoView({block:"center"}); target.focus(); } return; }
   if(ds.src){ tableSrc=ds.src; render(); return; }
@@ -3364,9 +3386,11 @@ $("dlg").addEventListener("click", function(e){ if(e.target===this) closeDlg(); 
 /* selettori: l'evidenziatore scivola dalla voce di prima a quella nuova */
 var SEGPOS={};
 function segInd(root){
-  (root||document).querySelectorAll(".seg").forEach(function(sg,i){
+  /* il nome per le animazioni deve essere unico in tutta la pagina, anche quando si aggiorna solo una parte */
+  var all=Array.prototype.slice.call(document.querySelectorAll(".seg"));
+  (root||document).querySelectorAll(".seg").forEach(function(sg){
     var on=sg.querySelector('button[aria-pressed="true"]'); if(!on) return;
-    if(!sg.closest("dialog")){ sg.style.viewTransitionName="seg"+i; sg.style.viewTransitionClass="segvt"; }
+    if(!sg.closest("dialog")){ sg.style.viewTransitionName="seg"+all.indexOf(sg); sg.style.viewTransitionClass="segvt"; }
     var key=(sg.getAttribute("aria-label")||"seg")+"|"+sg.querySelectorAll("button").length, ind=sg.querySelector(".seg-ind");
     if(!ind){ ind=document.createElement("i"); ind.className="seg-ind"; ind.setAttribute("aria-hidden","true"); sg.insertBefore(ind,sg.firstChild); sg.classList.add("has-ind"); }
     var pos=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight], old=SEGPOS[key];
@@ -3441,8 +3465,7 @@ function clsSwitch(cv,dir,pillDone){
 }
 /* Riquadro della giornata: misura su misura.
    --rk è la scala delle righe (1 = misura di partenza). Senza scelte dell'utente il riquadro riempie lo spazio dello schermo
-   (tra i pulsanti in alto e la barra in basso); con la maniglia sotto il riquadro si allarga o si stringe e il telefono se lo ricorda.
-   Doppio tocco sulla maniglia: torna alla misura automatica. */
+   (tra i pulsanti in alto e la barra in basso); in Gestione › Aspetto si può scegliere una misura fissa (Compatto, Normale, Grande). */
 var RK_MIN=.8, RK_MAX=1.4;
 function rkSaved(){ try { var v=parseFloat(localStorage.getItem("baggese-rk")); return v>=RK_MIN&&v<=RK_MAX?v:null; } catch(e){ return null; } }
 function rkSet(k){ document.documentElement.style.setProperty("--rk",k.toFixed(3)); }
@@ -3452,32 +3475,13 @@ function rkSlope(){ var root=document.documentElement, old=root.style.getPropert
 function rkAutoK(){ var vp=$("rcVp"); if(!vp) return 1; var root=document.documentElement, anim=root.classList.contains("rk-anim"); root.classList.remove("rk-anim");
   rkSet(1); var top=vp.getBoundingClientRect().top+(window.scrollY||0), nav=document.querySelector("nav.tabs"), navH=nav&&innerWidth<960?(innerHeight-nav.getBoundingClientRect().top):0;
   var hint=vp.nextElementSibling, hintH=hint?hint.getBoundingClientRect().height+14:0;
-  var avail=innerHeight-top-Math.max(0,navH)-hintH-24, h1=rkMeasure(), k=1+(avail-h1)/rkSlope();
+  var avail=innerHeight-top-Math.max(0,navH)-hintH-10, h1=rkMeasure(), k=1+(avail-h1)/rkSlope();
   if(anim) root.classList.add("rk-anim"); return Math.max(RK_MIN,Math.min(1.3,k)); }
 function rkAuto(){ var vp=$("rcVp"); if(!vp) return; var sv=rkSaved(); if(sv){ rkSet(sv); refitNames(); return; }
   var k=rkAutoK(); rkSet(k); refitNames();
   /* con i nomi lunghi su due righe il riquadro può crescere un po': si ricontrolla e, se serve, si stringe quanto basta */
-  var nav=document.querySelector("nav.tabs"), lim=nav&&innerWidth<960?nav.getBoundingClientRect().top:innerHeight, hint=vp.nextElementSibling, hb=(hint?hint.getBoundingClientRect().height+14:0)+24;
+  var nav=document.querySelector("nav.tabs"), lim=nav&&innerWidth<960?nav.getBoundingClientRect().top:innerHeight, hint=vp.nextElementSibling, hb=(hint?hint.getBoundingClientRect().height+14:0)+10;
   var over=rkMeasure()+vp.getBoundingClientRect().top+hb-lim; if(over>2){ rkSet(Math.max(RK_MIN,k-over/rkSlope())); refitNames(); } }
-(function(){
-  var st=null, raf=0, lastTap=0;
-  function grip(e){ return e.target.closest&&e.target.closest("#rcGrip"); }
-  document.addEventListener("touchstart",function(e){ if(!grip(e)||e.touches.length!==1) return; e.stopPropagation();
-    var now=performance.now(), t=e.touches[0];
-    if(now-lastTap<320){ lastTap=0; try { localStorage.removeItem("baggese-rk"); } catch(x){}
-      var root=document.documentElement, cur=parseFloat(root.style.getPropertyValue("--rk"))||1; rkAuto(); var ka=parseFloat(root.style.getPropertyValue("--rk"))||1; rkSet(cur); void root.offsetHeight; root.classList.add("rk-anim"); rkSet(ka); haptic();
-      setTimeout(function(){ root.classList.remove("rk-anim"); refitNames(); if(!RC.busy){ rcSides(); rcSet(0,0); } },320); st=null; return; }
-    lastTap=now; var k=parseFloat(document.documentElement.style.getPropertyValue("--rk"))||1;
-    st={y:t.clientY,k0:k,k:k,slope:rkSlope(),on:false}; },{passive:true,capture:true});
-  document.addEventListener("touchmove",function(e){ if(!st) return; var dy=e.touches[0].clientY-st.y; if(!st.on){ if(Math.abs(dy)<4) return; st.on=true; document.documentElement.classList.add("rk-drag"); }
-    e.preventDefault(); e.stopPropagation(); var k=st.k0+dy/st.slope; if(k<RK_MIN) k=RK_MIN-(RK_MIN-k)*.25; if(k>RK_MAX) k=RK_MAX+(k-RK_MAX)*.25; st.k=k;
-    if(!raf) raf=requestAnimationFrame(function(){ raf=0; if(st) rkSet(st.k); }); },{passive:false,capture:true});
-  function end(){ if(!st) return; var s=st; st=null; if(raf){ cancelAnimationFrame(raf); raf=0; } document.documentElement.classList.remove("rk-drag"); if(!s.on) return;
-    var k=Math.max(RK_MIN,Math.min(RK_MAX,Math.round(s.k/.05)*.05)); document.documentElement.classList.add("rk-anim"); rkSet(k); haptic();
-    try { localStorage.setItem("baggese-rk",k.toFixed(2)); } catch(x){}
-    setTimeout(function(){ document.documentElement.classList.remove("rk-anim"); refitNames(); if(!RC.busy){ rcSides(); rcSet(0,0); } },300); }
-  document.addEventListener("touchend",end,{passive:true,capture:true}); document.addEventListener("touchcancel",end,{passive:true,capture:true});
-})();
 /* Sottosezioni: si passa da una all'altra trascinando il dito sul contenuto; la pillola segue il dito.
    Un solo aggiornamento per fotogramma; al rilascio la pillola va dritta alla sezione nuova e nessuno la riporta indietro */
 (function(){
