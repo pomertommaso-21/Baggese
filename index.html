@@ -1271,15 +1271,19 @@ button.hm-chips{width:100%;background:none;border:0;padding:0;font:inherit;color
 .hm-sd.l{justify-content:flex-end;text-align:right}
 .hm-sd .crest{flex:none}
 .hm-sd.me{color:var(--brand);font-weight:700}
-.hm-scs{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);gap:12px;font-size:12px;color:var(--muted);line-height:1.45;margin-top:-8px}
+.hm-scs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;font-size:12px;color:var(--muted);line-height:1.45;margin-top:-10px;white-space:nowrap}
+.hm-scs .l,.hm-scs .r{overflow:hidden;text-overflow:ellipsis}
 .hm-scs .l{text-align:right}
 .hm-scs .t-sc{display:block;margin:0;font-size:inherit;color:inherit}
 .hm-meta{text-align:center;font-size:11.5px;color:var(--muted)}
-.hm-fm{display:flex;justify-content:space-between;align-items:center;margin-top:4px;padding-top:12px;border-top:1px solid var(--line)}
+.hm-fm{display:flex;flex-direction:column;gap:8px;margin-top:4px;padding-top:10px;border-top:1px solid var(--line)}
+.hm-fhd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hm-fhd .stk-line{margin:0;gap:4px 10px;font-size:11.5px;justify-content:flex-end}
 .hm-fm.first{border-top:0;padding-top:0;margin-top:0}
-.hm-fm .form-row{flex:1;margin-left:14px}
-.hm-fm .form-row .form-item{background:none;padding:2px 0;gap:5px}
-.hm-fm .form-row .form-item .crest{--s:28px!important}
+.hm-fm .form-row{margin:0}
+.hm-fm .form-row .form-item{background:none;padding:0;gap:3px}
+.hm-fm .form-row .fm-sc{font-size:13px}
+.hm-fm .form-row .form-item .crest{--s:24px!important}
 .hm-fm .form-row .res-dot{order:3;width:8px;height:8px;min-width:0;border-radius:50%;font-size:0;padding:0}
 .hm-fm .form-row .res-dot.r-V{background:var(--win)}
 .hm-fm .form-row .res-dot.r-N{background:var(--muted);opacity:.6}
@@ -1324,7 +1328,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.17";
+var APP_VERSION="2026-11-16.18";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -2035,11 +2039,12 @@ function vHome(){
     var lside=function(id,cls){ return '<span class="hm-sd '+cls+(id===my?' me':'')+'">'+(cls==='l'?'<span class="ellipsis">'+esc(tname(id))+'</span>'+crest(id,28):crest(id,28)+'<span class="ellipsis">'+esc(tname(id))+'</span>')+'</span>'; };
     b2+='<div class="card-head"><h2>Ultimo risultato</h2><span class="meta">'+(last.round?last.round+'ª · ':'')+esc(fmtDate(last.date))+'</span></div>'
       +'<button type="button" class="hm-lr" data-view="'+last.id+'">'+lside(last.homeId,'l')+'<span class="hm-cen"><b class="num">'+esc(last.hg)+'–'+esc(last.ag)+'</b><span class="res-pill r-'+r+'">'+resLabel(r)+'</span></span>'+lside(last.awayId,'r')+'</button>';
-    var sh=tsc(last,last.homeId).split('<br>').join(', '), sa=tsc(last,last.awayId).split('<br>').join(', ');
-    if(sh||sa) b2+='<div class="hm-scs"><span class="l">'+sh+'</span><span></span><span class="r">'+sa+'</span></div>';
+    var cg=function(x){ return x.split('<br>').join(', ').replace(/ [A-ZÀ-Ý]\.(?=,| ×|<|$)/g,''); };
+    var sh=cg(tsc(last,last.homeId)), sa=cg(tsc(last,last.awayId));
+    if(sh||sa) b2+='<div class="hm-scs"><span class="l">'+sh+'</span><span class="r">'+sa+'</span></div>';
   }
   var fc=formCard(my).replace(/^<section class="card[^"]*">/,'').replace(/<\/section>$/,'').replace(/^<div class="card-head">[\s\S]*?<\/div>/,'');
-  if(fc) b2+='<div class="hm-fm'+(b2?'':' first')+'"><span class="hm-lab">Forma</span>'+fc+'</div>'+streakLine(my);
+  if(fc) b2+='<div class="hm-fm'+(b2?'':' first')+'"><div class="hm-fhd"><span class="hm-lab">Forma</span>'+streakLine(my)+'</div>'+fc+'</div>';
   if(b2) h+='<section class="card">'+b2+'</section>';
   var b3='', tb=currentTable();
   if (tb.rows.length>1){
