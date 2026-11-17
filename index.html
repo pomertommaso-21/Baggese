@@ -1353,6 +1353,20 @@ button.hm-chips{width:100%;background:none;border:0;padding:0;font:inherit;color
 .tgl[aria-checked="true"]{background:var(--win)}
 .tgl[aria-checked="true"] i{transform:translateX(20px)}
 .tc-note{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--brand) 8%,var(--surface-2));font-size:13px}
+.sg{padding:0 !important;overflow:hidden;gap:0 !important}
+.srow{display:flex;align-items:center;gap:12px;width:100%;min-height:54px;padding:12px 16px;background:none;border:0;border-radius:0;color:inherit;font:inherit;text-align:left}
+.srow+.srow,.sg .srow+.gdet,.sg .gdet+.srow{border-top:1px solid var(--line)}
+.srow.col{flex-direction:column;align-items:stretch;gap:8px}
+.srow b{font-size:15px;font-weight:600}
+.srow>svg.i{width:18px;height:18px;color:var(--muted);flex:none}
+button.srow:active{background:var(--surface-2)}
+.srow .seg.sm{width:100%}
+.sg-v{font-size:14px;color:var(--muted);font-weight:500}
+.sg-ic{width:30px;height:30px;border-radius:9px;background:var(--surface-2);display:grid;place-items:center;flex:none}
+.sg-ic svg.i{width:16px;height:16px;color:var(--brand)}
+.sg-h{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 16px -4px}
+.sg-f{font-size:12.5px;line-height:1.45;color:var(--muted);margin:-4px 16px 0}
+.sg .gdet>summary b{font-size:15px;font-weight:600}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1382,7 +1396,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.27";
+var APP_VERSION="2026-11-16.28";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1959,6 +1973,7 @@ var IC={
  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.6 2.6-1.4 4.2H9.8L8.4 10.1z"/>',
  left:'<path d="M15 5l-7 7 7 7"/>', swap:'<path d="M7 4v13M3.5 13.5L7 17l3.5-3.5M17 20V7M13.5 10.5L17 7l3.5 3.5"/>', check:'<path d="M5 12.5l4.5 4.5L19 7"/>', chev:'<path d="M7 10l5 5 5-5"/>', clock:'<circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2"/>', updn:'<path d="M12 4.5l4 5H8z" stroke-linejoin="round"/><path d="M12 19.5l-4-5h8z" stroke-linejoin="round"/>', star:'<path d="M12 3.8l2.5 5.1 5.6.8-4.05 3.95.96 5.6L12 16.6l-5 2.65.96-5.6L3.9 9.7l5.6-.8z" stroke-linejoin="round"/>', calplus:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>', filter:'<path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/>', right:'<path d="M9 5l7 7-7 7"/>', chart:'<path d="M3.5 19.5h17"/><path d="M5 15.5l4.5-5 3.5 3 6-7"/><path d="M15.5 6.5H19V10"/>', flash:'<path d="M13.5 3 5.5 13.5h6L10.5 21l8-10.5h-6z" stroke-linejoin="round"/>', trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5v1.2A3.3 3.3 0 0 0 8.3 10.5M16 6h3v1.2a3.3 3.3 0 0 1-3.3 3.3M12 13v4M8.5 20h7M10 17h4"/>', share:'<path d="M12 3.5v11M8 7.5l4-4 4 4"/><path d="M7 11H5.5v9h13v-9H17"/>',
  alert:'<path d="M12 3.5 2.5 20h19z"/><path d="M12 10v4.5M12 17.5v.01"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
  paste:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6"/>'
 };
 function icon(k){ return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'; }
@@ -2006,7 +2021,7 @@ function shirtSvg(id){
 function crest(id,size,extra){ var src=LOGOS[id], rem=!src&&IDX[id]&&IDX[id].logo; if(rem) src=IDX[id].logo; if(!src&&LOCALCREST&&IDX[id]){ src=id+".png"; rem=true; } return '<span class="crest'+(extra?' '+extra:'')+'" style="--s:'+(size||32)+'px">'+(src?'<img src="'+esc(src)+'" alt="" decoding="async"'+(rem?' referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'contents\'"':'')+'>'+(rem?'<span style="display:none">'+crestSvg(id)+'</span>':''):crestSvg(id))+'</span>'; }
 
 /* helpers */
-var TABS=[["home","Home","home"],["partite","Partite","cal"],["classifica","Classifica","table"],["rosa","Squadre","team"],["gestione","Gestione","edit"]];
+var TABS=[["home","Home","home"],["partite","Partite","cal"],["classifica","Classifica","table"],["rosa","Squadre","team"],["gestione","Gestione","gear"]];
 function byName(a,b){ return a.name.localeCompare(b.name); }
 function pTeam(p){ return p.teamId||me(); }
 function curRosaTeam(){ return (rosaTeam && team(rosaTeam)) ? rosaTeam : me(); }
@@ -2022,7 +2037,7 @@ function girSel(){ return '<span class="gline"><button type="button" class="gsel
 function header(title,sub,right){ if(sub===1) return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:4px">'+girSel()+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; return '<div class="row between" style="align-items:flex-end;flex-wrap:wrap"><div class="col" style="gap:6px">'+(sub?'<span class="eyebrow muted">'+esc(sub)+'</span>':'')+'<h1>'+esc(title)+'</h1></div>'+(right||'')+'</div>'; }
 
 /* "Indietro": quando si apre una squadra (o la proiezione) da un'altra pagina, si ricorda da dove si veniva */
-var NAVBACK=null, TABLAB={home:"Home",partite:"Partite",classifica:"Classifica",rosa:"Squadre",gestione:"Gestione"};
+var NAVBACK=null, TABLAB={home:"Home",partite:"Partite",classifica:"Classifica",rosa:"Squadre",gestione:"Impostazioni"};
 function navPush(to){ NAVBACK={to:to,tab:tab,y:window.scrollY||0,clsView:clsView,clsSort:clsSort,clsScope:clsScope,partView:partView,selRound:selRound,rosaTeam:rosaTeam,rosaTab:rosaTab}; }
 function navLabel(){ if(!NAVBACK) return ''; return NAVBACK.tab==="rosa"?tname(NAVBACK.rosaTeam||curRosaTeam()):TABLAB[NAVBACK.tab]; }
 function navBack(){ var nb=NAVBACK; if(!nb) return; NAVBACK=null; haptic();
@@ -2116,7 +2131,7 @@ function render(){
   $("app").innerHTML='<div class="view">'+(NAVBACK?'<button type="button" class="navback" data-navback="1">'+icon("left")+'<span>'+esc(navLabel())+'</span></button>':'')+v()+'</div>';
   if(tab==="partite" && partView==="mine") sideApply();
   document.body.classList.remove("navhide");
-  var tt={home:[me(),tname(me())],partite:[null,"Partite"],classifica:[null,"Classifica"],rosa:[curRosaTeam(),tname(curRosaTeam())],gestione:[null,"Gestione"]}[tab];
+  var tt={home:[me(),tname(me())],partite:[null,"Partite"],classifica:[null,"Classifica"],rosa:[curRosaTeam(),tname(curRosaTeam())],gestione:[null,"Impostazioni"]}[tab];
   $("topbar").innerHTML=(tt[0]?crest(tt[0],26):'')+'<span class="ellipsis">'+esc(tt[1])+'</span>'; document.body.classList.remove("segup");
   /* la barra che compare risalendo si attacca sotto quella in alto: la misura va presa adesso (con o senza stemma l'altezza cambierebbe) */
   document.documentElement.style.setProperty("--tbh",$("topbar").offsetHeight+"px");
@@ -2903,7 +2918,7 @@ function vPartite(){
   var my=me();
   var h=header("Partite",1);
   h+='<div class="seg" role="group" aria-label="Vista partite"><button type="button" data-pv="mine" aria-pressed="'+(partView==="mine")+'">'+esc(tname(my))+'</button><button type="button" data-pv="round" aria-pressed="'+(partView==="round")+'">Per giornata</button></div>';
-  if(!S.matches.length) return h+'<div class="empty"><span class="muted">Nessuna partita ancora. Incolla risultati o calendario in Gestione, oppure aggiungi una partita.</span><button class="btn" type="button" data-go="import">'+icon("paste")+'Incolla i dati</button></div>';
+  if(!S.matches.length) return h+'<div class="empty"><span class="muted">Nessuna partita ancora. Incolla risultati o calendario in Impostazioni, oppure aggiungi una partita.</span><button class="btn" type="button" data-go="import">'+icon("paste")+'Incolla i dati</button></div>';
   if (partView==="round"){
     var rs=rounds(), nr=nextRound(); if(selRound===null||rs.indexOf(selRound)<0) selRound=nr;
     h+='<div class="chips" id="roundChips" role="group" aria-label="Giornata">'+rs.map(function(r){ var done=S.matches.some(function(m){return +m.round===r&&played(m);}); return '<button type="button" class="rchip'+(done?'':' future')+'" data-round="'+r+'" aria-pressed="'+(r===selRound)+'" aria-label="Giornata '+r+'">'+r+'</button>'; }).join("")+'</div>';
@@ -3059,7 +3074,7 @@ function vClassifica(){
     if (clsView==="stats") return h+vStats();
   } else if (clsView!=="squadre") clsView="squadre";
   if(fbtn) h+='<div class="row" style="justify-content:flex-end;margin-top:-8px">'+fbtn+'</div>';
-  if (tb.rows.length<2) return h+'<div class="empty"><span class="muted">Servono almeno due squadre. Incolla la classifica in Gestione e le squadre si creano da sole.</span><button class="btn primary" type="button" data-go="import">'+icon("paste")+'Incolla classifica</button></div>';
+  if (tb.rows.length<2) return h+'<div class="empty"><span class="muted">Servono almeno due squadre. Incolla la classifica in Impostazioni e le squadre si creano da sole.</span><button class="btn primary" type="button" data-go="import">'+icon("paste")+'Incolla classifica</button></div>';
   if(cf.active) h+='<div class="fchip"><span>Filtro: giornate '+cf.from+'–'+cf.to+' · '+SIDE_LAB[cf.side]+'</span><button type="button" data-act="clsReset" aria-label="Togli il filtro">'+icon("x")+'</button></div>';
   var calc=standings(), imp=importedRows();
   var chk0=(!cf.active&&clsScope==="all")?tcCheck(calc,imp):null;
@@ -3233,26 +3248,38 @@ var GOPEN={};
 /* Gestione › Aspetto: grandezza del riquadro della giornata (Partite › Per giornata) */
 var RK_OPTS=[["auto","Automatico",null],["s","Compatto",.9],["m","Normale",1.05],["l","Grande",1.25]];
 function rkPicker(){ var sv=rkSaved(), cur="auto"; RK_OPTS.forEach(function(o){ if(o[2]!=null&&sv!=null&&Math.abs(o[2]-sv)<.02) cur=o[0]; });
-  return '<div class="col rkp" style="gap:6px;margin-top:14px"><b style="font-size:14px">Riquadro della giornata</b><span class="meta" style="margin-top:-4px">Partite › Per giornata. Automatico: si adatta al tuo schermo</span><div class="seg sm" role="group" aria-label="Riquadro della giornata">'
+  return '<div class="col rkp" style="gap:8px"><b>Riquadro della giornata</b><div class="seg sm" role="group" aria-label="Riquadro della giornata">'
     +RK_OPTS.map(function(o){ return '<button type="button" data-rk="'+o[0]+'" aria-pressed="'+(cur===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div></div>'; }
+function sgRow(attr,title,sub,right){ return '<button type="button" class="srow" '+attr+'><span class="col grow" style="gap:2px"><b>'+title+'</b>'+(sub?'<span class="meta">'+sub+'</span>':'')+'</span>'+(right||'')+icon("right")+'</button>'; }
 function vGestione(){
-  var h=header("Gestione",S.settings.season), my=me();
-  h+='<section class="card"><button type="button" class="gme" data-act="follow">'+crest(my,44)+'<span class="col grow" style="gap:2px"><b>'+esc(tname(my))+'</b><span class="meta">'+(FOL.length>1?'Segui '+FOL.length+' squadre':'La tua squadra')+'</span></span><span class="gme-go">Cambia</span></button></section>';
-  var th=getTheme(); h+='<section class="card"><h2>Aspetto</h2><div class="seg" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div>'+rkPicker()+'</section>';
-  h+='<section class="card"><div class="col" style="gap:2px"><b>Copia delle impostazioni</b><span class="meta">Squadre seguite, tema e preferenze</span></div><div class="row" style="gap:8px"><button class="btn sm" type="button" data-act="bkCopy">Copia il codice</button><button class="btn sm" type="button" data-act="bkRestore">Ripristina</button></div><span class="tiny muted">Salva il codice in Note: se cambi iPhone o rimetti l’app sulla Home, con “Ripristina” torna tutto com’era.</span></section>';
+  var h=header("Impostazioni",S.settings.season), my=me();
+  /* la tua squadra */
+  h+='<section class="card sg"><button type="button" class="srow gme" data-act="follow">'+crest(my,40)+'<span class="col grow" style="gap:2px"><b>'+esc(tname(my))+'</b><span class="meta">'+(FOL.length>1?'Segui '+FOL.length+' squadre':'La tua squadra')+'</span></span><span class="sg-v">Cambia</span>'+icon("right")+'</button></section>';
+  /* aspetto */
+  var th=getTheme();
+  h+='<span class="sg-h">Aspetto</span><section class="card sg"><div class="srow col"><b>Tema</b><div class="seg sm" role="group" aria-label="Tema">'+[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(function(o){ return '<button type="button" data-themeset="'+o[0]+'" aria-pressed="'+(th===o[0])+'">'+o[1]+'</button>'; }).join('')+'</div></div><div class="srow col">'+rkPicker()+'</div></section><span class="sg-f">Riquadro della giornata: la misura delle partite in Partite › Per giornata. Automatico si adatta al tuo schermo.</span>';
+  /* dati */
   var up=S.updatedAt?new Date(S.updatedAt).toLocaleDateString("it-IT",{day:"numeric",month:"long"}):"";
-  h+='<section class="card"><div class="row between" style="gap:12px"><div class="col" style="gap:2px"><b>Dati</b><span class="meta">'+(up?'Aggiornati il '+up:'Non ancora aggiornati')+' · '+esc(girLabel(G))+'</span></div>'+(mode==="local"?'<button class="btn sm" type="button" data-act="refresh">Controlla</button>':'')+'</div><span class="tiny muted">Li aggiorna Claude quando gli scrivi “aggiorna tutto”: l’app li scarica da sola.</span></section>';
+  h+='<span class="sg-h">Dati del girone</span><section class="card sg"><div class="srow"><span class="col grow" style="gap:2px"><b>'+(up?'Aggiornati il '+up:'Non ancora aggiornati')+'</b><span class="meta">'+esc(girLabel(G))+'</span></span>'+(mode==="local"?'<button class="btn sm" type="button" data-act="refresh">Controlla</button>':'')+'</div>';
+  var foot='I dati li aggiorna Claude quando gli scrivi “aggiorna tutto”: l’app li scarica da sola.';
   if(mode==="local"){ var ne=edCount(), ke=keepEdits();
-    h+='<section class="card"><div class="row between" style="gap:12px"><div class="col" style="gap:2px"><b>Le tue modifiche</b><span class="meta">'+(ne?ne+(ne===1?' modifica tua':' modifiche tue')+' in questo girone':'Nessuna modifica tua in questo girone')+'</span></div><button type="button" class="tgl" data-act="keepEdits" role="switch" aria-checked="'+ke+'" aria-label="Le mie modifiche vincono su Tuttocampo"><i></i></button></div>'
-      +'<span class="tiny muted">'+(ke?'Quando arrivano dati nuovi da Tuttocampo, quello che hai cambiato tu resta com’è; il dato di Tuttocampo viene comunque salvato da parte.':'Le tue modifiche vengono sostituite dai dati di Tuttocampo a ogni aggiornamento.')+'</span>'
-      +(ne?'<button class="btn sm" type="button" data-act="tcSync" style="align-self:flex-start">Sincronizza con i dati di Tuttocampo</button>':'')+'</section>'; }
-  h+='<span class="eyebrow muted gadv">Avanzate · '+esc(girLabel(G))+'</span><section class="card flush gdets">';
-  h+=gDet("add","Inserisci a mano","Una partita o un giocatore")+'<div class="row" style="flex-wrap:wrap"><button class="btn" type="button" data-new="1">'+icon("plus")+'Partita</button><button class="btn" type="button" data-player="new">'+icon("plus")+'Giocatore</button></div></div></details>';
+    h+='<div class="srow"><span class="col grow" style="gap:2px"><b>Le mie modifiche vincono</b><span class="meta">'+(ne?ne+(ne===1?' modifica tua':' modifiche tue')+' in questo girone':'Nessuna modifica tua in questo girone')+'</span></span><button type="button" class="tgl" data-act="keepEdits" role="switch" aria-checked="'+ke+'" aria-label="Le mie modifiche vincono su Tuttocampo"><i></i></button></div>';
+    if(ne) h+=sgRow('data-act="tcSync"','Sincronizza con Tuttocampo','Rimette i dati di Tuttocampo al posto delle tue modifiche');
+    foot=(ke?'Quando arrivano dati nuovi, quello che hai cambiato tu resta com’è; il dato di Tuttocampo viene comunque salvato da parte. ':'Le tue modifiche vengono sostituite dai dati di Tuttocampo a ogni aggiornamento. ')+foot; }
+  h+='</section><span class="sg-f">'+foot+'</span>';
+  /* modifica a mano */
+  h+='<span class="sg-h">Modifica a mano</span><section class="card flush sg gdets">';
+  h+='<button type="button" class="srow" data-new="1"><b class="grow">Aggiungi una partita</b>'+icon("right")+'</button>';
+  h+='<button type="button" class="srow" data-player="new"><b class="grow">Aggiungi un giocatore</b>'+icon("right")+'</button>';
   h+=gDet("import","Incolla risultati e classifica","Dal comunicato o da Tuttocampo")+'<p class="small muted" style="margin:0">Apri il comunicato del giovedì della Delegazione di Milano oppure la pagina del girone su Tuttocampo, seleziona tutto (Ctrl+A), copia e incolla qui sotto. Vengono presi solo i dati del tuo girone.</p>'+(S.settings.tcLink?'<a class="btn" href="'+esc(S.settings.tcLink)+'" target="_blank" rel="noopener">Apri la pagina su Tuttocampo</a>':'')+'<label class="f">Testo copiato<textarea id="pasteBox" placeholder="Incolla qui il testo della pagina"></textarea></label><div class="grid2"><label class="f">Cosa contiene<select id="pasteMode"><option value="auto">Riconosci da solo</option><option value="res">Risultati o calendario</option><option value="tab">Classifica</option></select></label><label class="f">Giornata, se non indicata<input id="pasteRound" type="number" min="1" max="40" inputmode="numeric" placeholder="Es. 10"></label></div><button class="btn dark" type="button" data-act="parse">Analizza il testo</button><div id="preview"></div></div></details>';
   h+=gDet("teams","Squadre, colori e stemmi","Nomi, maglie e loghi")+'<p class="small muted" style="margin:0">Ogni squadra ha due colori e un disegno di maglia, usati per la maglietta nelle rose (e per lo stemma, se manca quello vero). Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id); return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '+esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '+esc(t.name)+'" data-kpat="'+t.id+'">'+PATS.map(function(p){return '<option value="'+p[0]+'"'+(p[0]===k.pat?' selected':'')+'>'+p[1]+'</option>';}).join("")+'</select><label class="btn sm" for="logo_'+t.id+'">Carica logo</label><input class="sr" id="logo_'+t.id+'" type="file" accept="image/*" data-logo="'+t.id+'">'+(LOGOS[t.id]?'<button class="btn sm" type="button" data-unlogo="'+t.id+'">Togli logo</button>':'')+'<button class="btn sm danger" type="button" aria-label="Elimina '+esc(t.name)+'" data-delteam="'+t.id+'"'+(t.id===me()?' disabled':'')+'>'+icon("x")+'</button></div></div>'; }).join("")+'</div><form class="row" id="addTeamForm"><input id="newTeam" aria-label="Nuova squadra" placeholder="Nome nuova squadra"><button class="btn" type="submit">'+icon("plus")+'Aggiungi</button></form><div id="delTeamConfirm"></div></div></details>';
-  h+=gDet("set","Impostazioni del girone","Stagione, nome e link")+'<label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label><label class="f">Campionato e girone<input id="setGirone" value="'+esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'+esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></div></details>';
-  h+=gDet("backup","Copia di sicurezza","Scarica o ripristina i dati")+'<p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'+((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')+'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></div></details>';
-  h+='</section><span class="tiny muted" style="text-align:center">Versione app '+APP_VERSION+'</span>';
+  h+=gDet("set","Stagione e girone","Nome del campionato e link a Tuttocampo")+'<label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label><label class="f">Campionato e girone<input id="setGirone" value="'+esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'+esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></div></details>';
+  h+='</section>';
+  /* copia e ripristino */
+  h+='<span class="sg-h">Copia e ripristino</span><section class="card flush sg gdets">';
+  h+=gDet("code","Codice delle impostazioni","Squadre seguite, tema e preferenze")+'<div class="row" style="gap:8px"><button class="btn sm" type="button" data-act="bkCopy">Copia il codice</button><button class="btn sm" type="button" data-act="bkRestore">Ripristina</button></div><span class="tiny muted">Salva il codice in Note: se cambi iPhone o rimetti l’app sulla Home, con “Ripristina” torna tutto com’era.</span></div></details>';
+  h+=gDet("backup","File con tutti i dati","Scarica o ripristina da file")+'<p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'+((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')+'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></div></details>';
+  h+='</section><span class="tiny muted" style="text-align:center;margin-top:4px">Versione app '+APP_VERSION+'</span>';
   return h;
 }
 
