@@ -1339,6 +1339,20 @@ button.hm-chips{width:100%;background:none;border:0;padding:0;font:inherit;color
 .rec-row .rec-sub{grid-area:sub;align-self:start;margin-top:1px}
 .rec-row .rec-val{grid-area:val;justify-self:end;align-self:center}
 .rec-row .rx-chev{grid-area:ch;align-self:center}
+/* rigori sbagliati e parati (16.25) */
+.pen-ed{display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:12px;background:var(--surface-2)}
+.pen-x{color:var(--loss);display:inline-flex;flex:none}.pen-x svg.i{width:14px;height:14px;stroke-width:3}
+.mv-pens li>span:last-child{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px}
+.pen-by{flex-basis:100%;font-size:12.5px;color:var(--muted)}
+.mv-pens ul.r li{flex-direction:row-reverse;text-align:right}.mv-pens ul.r li>span:last-child{justify-content:flex-end}
+.pen-line{display:flex;gap:16px;font-size:13.5px;color:var(--muted);padding:2px 2px}
+.pen-line b{color:var(--fg);font-family:var(--display);font-size:17px}
+/* interruttore */
+.tgl{flex:none;width:50px;height:30px;border-radius:999px;border:0;background:var(--line);position:relative;cursor:pointer;transition:background-color .2s}
+.tgl i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s cubic-bezier(.3,.9,.3,1)}
+.tgl[aria-checked="true"]{background:var(--win)}
+.tgl[aria-checked="true"] i{transform:translateX(20px)}
+.tc-note{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--brand) 8%,var(--surface-2));font-size:13px}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1368,7 +1382,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.24";
+var APP_VERSION="2026-11-16.25";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1550,7 +1564,7 @@ function switchGirone(g,cb){
   if(raw){ try { S=normalize(JSON.parse(raw)); ensureMyTeam(); loadLocalLogos(); if(cb) cb(); else render(); checkNewer(); return; } catch(e){} }
   fetch(gFile()+"?r=1",{cache:"no-cache"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
     if(G!==g) return false;
-    S=normalize(d); ensureMyTeam(); loadLocalLogos();
+    S=normalize(d); tcPut(normalize(d)); ensureMyTeam(); loadLocalLogos();
     try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
     return true;
   }, function(){ toast("Girone non disponibile offline"); return false; }).then(function(ok){ if(ok){ if(cb) cb(); else render(); } });
@@ -1562,14 +1576,60 @@ function fallbackLocal(){
   if (raw){ try { S=normalize(JSON.parse(raw)); } catch(e){ S=blank(); } ensureMyTeam(); loadLocalLogos(); render(); checkNewer(); return; }
   loadSeed(false); checkNewer();
 }
+/* rigore sbagliato: squadra di chi l'ha tirato (dal giocatore, oppure indicata da sola) */
+function tcItem(k,id){ var b=tcGet(); if(!b) return null; return (b[k]||[]).filter(function(x){return x.id===id;})[0]||null; }
+function tcDiffers(a,b,skip){ var ks={}; Object.keys(a).concat(Object.keys(b)).forEach(function(q){ if(skip.indexOf(q)<0) ks[q]=1; }); return Object.keys(ks).some(function(q){ return JSON.stringify(a[q]==null?null:a[q])!==JSON.stringify(b[q]==null?null:b[q]); }); }
+function penTeam(r){ if(r.playerId){ var p=S.players.filter(function(x){return x.id===r.playerId;})[0]; if(p) return pTeam(p); } return r.team||null; }
+/* Le tue modifiche vincono sui dati di Tuttocampo. Accanto ai dati del telefono resta la copia arrivata da Tuttocampo
+   (chiave …|tc): quando ne arriva una nuova si ricavano le tue modifiche confrontando i tuoi dati con la copia vecchia,
+   si parte dalla copia nuova e si riapplicano. "Sincronizza con Tuttocampo" (Gestione) le butta e rimette la copia. */
+var ED_SKIP={updatedAt:1,imported:1,tcRound:1};
+function tcKey(){ return lsKey()+"|tc"; }
+function tcGet(){ try { var r=localStorage.getItem(tcKey()); return r?JSON.parse(r):null; } catch(e){ return null; } }
+function tcPut(d){ try { localStorage.setItem(tcKey(),JSON.stringify(d)); } catch(e){} }
+function keepEdits(){ try { return localStorage.getItem("baggese-keepedits")!=="0"; } catch(e){ return true; } }
+function edDiff(base,cur){
+  var ed={}, n=0, js=JSON.stringify;
+  ["teams","matches","players"].forEach(function(k){
+    var bi={}, ci={}, o={mod:{},add:[],del:[]};
+    (base[k]||[]).forEach(function(x){ bi[x.id]=x; }); (cur[k]||[]).forEach(function(x){ ci[x.id]=x; });
+    (cur[k]||[]).forEach(function(x){ var b=bi[x.id]; if(!b){ o.add.push(x); n++; return; } var f={}, any=false;
+      Object.keys(x).forEach(function(q){ if(js(x[q])!==js(b[q])){ f[q]=x[q]; any=true; } }); Object.keys(b).forEach(function(q){ if(!(q in x)){ f[q]=null; any=true; } });
+      if(k==="matches"&&(("hg" in f)||("ag" in f))){ f.hg=x.hg; f.ag=x.ag; }   /* il risultato va tenuto intero */
+      if(any){ o.mod[x.id]=f; n++; } });
+    (base[k]||[]).forEach(function(x){ if(!ci[x.id]){ o.del.push(x.id); n++; } });
+    ed[k]=o; });
+  var sf={}; Object.keys(cur.settings||{}).forEach(function(q){ if(q!=="myTeamId"&&js(cur.settings[q])!==js((base.settings||{})[q])){ sf[q]=cur.settings[q]; n++; } });
+  ed.settings=sf; ed.n=n; return ed;
+}
+function edApply(base,ed){
+  var d=JSON.parse(JSON.stringify(base));
+  ["teams","matches","players"].forEach(function(k){ var o=ed[k]; if(!o) return;
+    d[k]=(d[k]||[]).filter(function(x){ return o.del.indexOf(x.id)<0; }).map(function(x){ var f=o.mod[x.id]; if(!f) return x; Object.keys(f).forEach(function(q){ if(f[q]===null) delete x[q]; else x[q]=f[q]; }); return x; });
+    o.add.forEach(function(x){ if(!d[k].some(function(y){ return y.id===x.id; })) d[k].push(x); }); });
+  Object.keys(ed.settings||{}).forEach(function(q){ d.settings[q]=ed.settings[q]; });
+  return d;
+}
+/* dati nuovi da Tuttocampo (data.json): diventano la copia; le tue modifiche, se le tieni, ci tornano sopra */
+function tcArrive(d){
+  var nb=normalize(d), ob=tcGet(), ed=(ob&&keepEdits())?edDiff(normalize(ob),S):null;
+  tcPut(nb); S=normalize(ed&&ed.n?edApply(nb,ed):nb); S.updatedAt=nb.updatedAt; return ed?ed.n:0;
+}
+function edCount(){ var b=tcGet(); return b?edDiff(normalize(b),S).n:0; }
+function tcSync(){ var b=tcGet(); if(!b) return false; S=normalize(b); ensureMyTeam(); try { localStorage.setItem(lsKey(),JSON.stringify(S)); } catch(e){} return true; }
 /* versione pubblicata su GitHub: dati e app più recenti sostituiscono quelli tenuti dal telefono */
 function stamp(x){ var t=Date.parse(x||""); return isNaN(t)?0:t; }
 function checkNewer(manual){
   if (window.claude){ if(manual){ render(); toast("Dati aggiornati"); } return Promise.resolve(); }
   var g0=G, p1=fetch(gFile()+"?r=1",{cache:"no-cache"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
-    if (G===g0 && S.teams.length && d && Array.isArray(d.teams) && stamp(d.updatedAt) > stamp(S.updatedAt)){
-      S=normalize(d); ensureMyTeam();
+    var ob=tcGet(), ok=G===g0 && S.teams.length && d && Array.isArray(d.teams);
+    /* prima volta con questa versione: se Tuttocampo non ha niente di nuovo, il file pubblicato diventa la copia (così le modifiche fatte finora restano tue) */
+    if(ok && !ob && !(stamp(d.updatedAt) > stamp(S.updatedAt))){ tcPut(normalize(d)); ob=tcGet(); }
+    if (ok && stamp(d.updatedAt) > stamp(ob?ob.updatedAt:S.updatedAt)){
+      if(!ob) tcPut(normalize(d));
+      var kept=ob?tcArrive(d):(S=normalize(d),0); ensureMyTeam();
       try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
+      if(kept) setTimeout(function(){ toast("Dati aggiornati: tenute "+kept+(kept===1?" tua modifica":" tue modifiche")); },2500);
       return true;
     } else if (manual) toast("Hai già i dati più recenti");
     return false;
@@ -1581,7 +1641,7 @@ function checkNewer(manual){
 document.addEventListener("visibilitychange",function(){ if(document.visibilityState==="visible" && mode==="local") checkNewer(); });
 function loadSeed(manual){
   fetch(gFile()+"?r=1",{cache:"no-cache"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
-    S=normalize(d); ensureMyTeam(); loadLocalLogos();
+    S=normalize(d); tcPut(normalize(d)); ensureMyTeam(); loadLocalLogos();
     try { localStorage.setItem(lsKey(), JSON.stringify(S)); } catch(e){}
     return 1;
   }, function(){ if(manual){ toast("data.json non trovato accanto all\u2019app"); return 0; } S=blank(); ensureMyTeam(); return 2; }).then(function(k){ if(k) render(); if(k===1&&manual) toast("Dati ricaricati da data.json"); });
@@ -2197,6 +2257,11 @@ function openMatchView(id){
       h+='<div class="mv-cols"><ul>'+col(m.homeId)+'</ul><ul class="r">'+col(m.awayId)+'</ul></div>';
     }
   }
+  if(pl&&(m.pens||[]).length){
+    var pn=function(id){ var p=S.players.filter(function(x){return x.id===id;})[0]; return p?'<button type="button" class="plink" data-player="'+p.id+'">'+esc(sName({playerId:p.id}))+'</button>':''; };
+    var pcol=function(team){ var L=m.pens.filter(function(r){ return penTeam(r)===team; }); return L.map(function(r){ return '<li><span class="pen-x" aria-hidden="true">'+icon("x")+'</span><span>'+(r.min?'<span class="num muted">'+esc(r.min)+'’</span> ':'')+(r.playerId?pn(r.playerId):'<span class="muted">Tiratore non indicato</span>')+' <span class="tag">'+(r.how==="fuori"?'fuori':r.how==="palo"?'palo':r.how==="sbagliato"?'sbagliato':'parato')+'</span>'+(r.keeperId?'<span class="pen-by">parato da '+pn(r.keeperId)+'</span>':'')+'</span></li>'; }).join(""); };
+    h+='<span class="eyebrow muted" style="margin-top:2px">Rigori sbagliati</span><div class="mv-cols mv-pens"><ul>'+pcol(m.homeId)+'</ul><ul class="r">'+pcol(m.awayId)+'</ul></div>';
+  }
   h+=matchField(m);
   if(!pl) h+=vsBlock(m);
   $("dlgBody").innerHTML=h;
@@ -2684,9 +2749,16 @@ function top11(r){
   var minGa=Math.min.apply(null,all2.map(function(x){return x.ga;})), cs=all2.filter(function(x){ return x.ga===minGa; });
   /* porta inviolata: difensori più presenti della squadra (valgono metà del portiere) */
   cs.forEach(function(x){ S.players.filter(function(p){ return p.teamId===x.tid&&p.role==="Difensore"; }).sort(function(p,q){return pres(q)-pres(p);}).slice(0,4).forEach(function(d){ var c=cand(d,x.tid,x.opp); if(!c.cs){ c.cs=true; c.ga=x.ga; c.res=c.res||x.res; c.pts+=x.v/2; } }); });
-  /* portiere: quello della squadra più in basso in classifica che non ha preso gol */
-  var gk=null, src=cs.slice().sort(function(a,b){ return pos[b.tid]-pos[a.tid] || b.v-a.v; })[0];
-  if(src){ var k0=S.players.filter(function(p){ return p.teamId===src.tid&&p.role==="Portiere"; }).sort(function(p,q){return pres(q)-pres(p);})[0]; if(k0){ gk=cand(k0,src.tid,src.opp); gk.cs=true; gk.ga=src.ga; gk.res=src.res; gk.pts+=src.v; } }
+  /* portiere: quello della squadra più in basso in classifica che non ha preso gol;
+     un rigore parato vale 2,4 × la forza di chi l'ha tirato e si somma alla porta inviolata: chi para può entrare anche se ha preso gol */
+  var SV={}; ms.forEach(function(m){ (m.pens||[]).forEach(function(pe){ var k=pe.how==="parato"&&pe.keeperId&&byId[pe.keeperId]; if(!k) return; var kt=pTeam(k), st=kt===m.homeId?m.awayId:m.homeId, o=SV[k.id]=SV[k.id]||{n:0,v:0,tid:kt,opp:st}; o.n++; o.v+=2.4*oppF(st); }); });
+  var gk=null, src=cs.slice().sort(function(a,b){ return pos[b.tid]-pos[a.tid] || b.v-a.v; })[0], gks=[];
+  if(src){ var k0=S.players.filter(function(p){ return p.teamId===src.tid&&p.role==="Portiere"; }).sort(function(p,q){return pres(q)-pres(p);})[0]; if(k0) gks.push({p:k0,tid:src.tid,opp:src.opp,cs:true,ga:src.ga,res:src.res,v:src.v}); }
+  Object.keys(SV).forEach(function(id){ if(gks.some(function(g){return g.p.id===id;})) return; var o=SV[id], csx=cs.filter(function(x){return x.tid===o.tid;})[0], rr=all2.filter(function(x){return x.tid===o.tid;})[0];
+    gks.push({p:byId[id],tid:o.tid,opp:o.opp,cs:!!csx,ga:rr?rr.ga:0,res:rr?rr.res:"",v:csx?csx.v:0}); });
+  gks.forEach(function(g){ g.tot=g.v+(SV[g.p.id]?SV[g.p.id].v:0); });
+  var gb=gks.sort(function(a,b){ return b.tot-a.tot; })[0];
+  if(gb){ gk=cand(gb.p,gb.tid,gb.opp); gk.cs=gb.cs; gk.ga=gb.ga; gk.res=gb.res; gk.pts+=gb.tot; gk.sv=SV[gb.p.id]?SV[gb.p.id].n:0; }
   if(!gk) return null;
   /* il modulo: tra quelli veri, quello che fa entrare più punti (deciso dai dati della giornata) */
   var MODS=[[4,4,2],[4,3,3],[3,5,2],[3,4,3],[4,5,1],[5,3,2],[5,4,1]];
@@ -2706,10 +2778,11 @@ function top11(r){
   var all=sel.concat([gk]), mvp=all.slice().sort(function(a,b){return b.pts-a.pts;})[0];
   return {f:[cnt.Difensore,cnt.Centrocampista,cnt.Attaccante], lines:lines, mvp:mvp, all:all, pos:pos};
 }
-function t11Tag(c){ return c.g?(c.g===1?'1 gol':c.g===2?'doppietta':c.g===3?'tripletta':c.g+' gol')+(c.pen&&c.g===c.pen?' (rig.)':''):c.cs?(c.ga?(c.ga===1?'1 gol subito':c.ga+' gol subiti'):'porta inviolata'):c.fill?(c.res==="V"?'vittoria':'pareggio'):''; }
+function t11Tag(c){ if(c.sv) return (c.sv===1?'rigore parato':c.sv+' rigori parati')+(c.cs&&!c.ga?' · porta inviolata':'');
+  return c.g?(c.g===1?'1 gol':c.g===2?'doppietta':c.g===3?'tripletta':c.g+' gol')+(c.pen&&c.g===c.pen?' (rig.)':''):c.cs?(c.ga?(c.ga===1?'1 gol subito':c.ga+' gol subiti'):'porta inviolata'):c.fill?(c.res==="V"?'vittoria':'pareggio'):''; }
 /* quante volte ogni giocatore è entrato nella Top 11 (e in quali giornate) */
 var T11S={k:null,v:null};
-function top11Season(){ var L=lastPlayedRound(), k=String(G)+'|'+L+'|'+S.matches.filter(played).length+'|'+S.players.length; if(T11S.k===k) return T11S.v;
+function top11Season(){ var L=lastPlayedRound(), k=String(G)+'|'+L+'|'+S.matches.filter(played).length+'|'+S.players.length+'|'+S.matches.reduce(function(t,m){ return t+(m.pens||[]).length; },0); if(T11S.k===k) return T11S.v;
   var by={}; for(var r=1;r<=L;r++){ var t=top11(r); if(!t) continue; t.all.forEach(function(c){ var x=by[c.p.id]=by[c.p.id]||{p:c.p,tid:c.tid,n:0,rs:[],mvp:0}; x.n++; x.rs.push(r); if(c===t.mvp) x.mvp++; }); }
   T11S={k:k,v:by}; return by; }
 /* posizione di un giocatore per presenze in Top 11 (a pari presenze stessa posizione) */
@@ -2734,7 +2807,7 @@ function openTop11(r){
       var sy=(i===0?SY.mvp:'')+(c.g&&c.dec>=2?SY.dec:c.g&&c.dec===1?SY.pari:'');
       return '<button type="button" class="t11-r" data-player="'+c.p.id+'">'+crest(c.tid,24)+'<span class="t11-r-tx"><span class="t11-r-nm"><b>'+esc(sn)+'</b> '+esc(fn)+'</span><span class="t11-r-why">'+why(c)+'</span></span><span class="t11-r-sy">'+sy+'</span><span class="t11-r-pt num">'+c.pts.toFixed(1).replace(".",",")+'</span></button>'; }).join("")
     +t11Fd('Legenda','<div class="t11-leg"><span>'+SY.mvp+'Migliore in campo</span><span>'+SY.dec+'Gol decisivo per la vittoria</span><span>'+SY.pari+'Gol che vale il pareggio</span></div>')
-    +t11Fd('Metodo di calcolo','<div class="t11-calc"><p>L’indice parte dalla classifica prima della giornata. Ogni gol vale 3 punti, moltiplicati per la forza dell’avversario: da ×1,3 contro la prima a ×0,7 contro l’ultima; il rigore vale 2,4. Il gol che cambia il risultato ha un bonus per ogni punto conquistato.</p><p>Il portiere è quello della squadra più in basso in classifica che non ha subito gol; i difensori senza reti entrano, se servono, dalle squadre con la porta inviolata, scegliendo chi ha più presenze.</p><p>Il modulo è quello, tra i moduli reali (4‑4‑2, 4‑3‑3, 3‑5‑2, 3‑4‑3…), che totalizza l’indice più alto.</p></div>')+'</div></div></div>';
+    +t11Fd('Metodo di calcolo','<div class="t11-calc"><p>L’indice parte dalla classifica prima della giornata. Ogni gol vale 3 punti, moltiplicati per la forza dell’avversario: da ×1,3 contro la prima a ×0,7 contro l’ultima; il rigore vale 2,4. Il gol che cambia il risultato ha un bonus per ogni punto conquistato.</p><p>Il portiere è quello della squadra più in basso in classifica che non ha subito gol; un rigore parato gli vale 2,4 punti (per la forza di chi l’ha tirato), così può entrare anche chi ha preso gol; i difensori senza reti entrano, se servono, dalle squadre con la porta inviolata, scegliendo chi ha più presenze.</p><p>Il modulo è quello, tra i moduli reali (4‑4‑2, 4‑3‑3, 3‑5‑2, 3‑4‑3…), che totalizza l’indice più alto.</p></div>')+'</div></div></div>';
   $("dlgBody").innerHTML=h; showDlg();
 }
 /* anteprima nella scheda della giornata: un mini campo con gli stemmi, si tocca per aprire */
@@ -3168,6 +3241,10 @@ function vGestione(){
   h+='<section class="card"><div class="col" style="gap:2px"><b>Copia delle impostazioni</b><span class="meta">Squadre seguite, tema e preferenze</span></div><div class="row" style="gap:8px"><button class="btn sm" type="button" data-act="bkCopy">Copia il codice</button><button class="btn sm" type="button" data-act="bkRestore">Ripristina</button></div><span class="tiny muted">Salva il codice in Note: se cambi iPhone o rimetti l’app sulla Home, con “Ripristina” torna tutto com’era.</span></section>';
   var up=S.updatedAt?new Date(S.updatedAt).toLocaleDateString("it-IT",{day:"numeric",month:"long"}):"";
   h+='<section class="card"><div class="row between" style="gap:12px"><div class="col" style="gap:2px"><b>Dati</b><span class="meta">'+(up?'Aggiornati il '+up:'Non ancora aggiornati')+' · '+esc(girLabel(G))+'</span></div>'+(mode==="local"?'<button class="btn sm" type="button" data-act="refresh">Controlla</button>':'')+'</div><span class="tiny muted">Li aggiorna Claude quando gli scrivi “aggiorna tutto”: l’app li scarica da sola.</span></section>';
+  if(mode==="local"){ var ne=edCount(), ke=keepEdits();
+    h+='<section class="card"><div class="row between" style="gap:12px"><div class="col" style="gap:2px"><b>Le tue modifiche</b><span class="meta">'+(ne?ne+(ne===1?' modifica tua':' modifiche tue')+' in questo girone':'Nessuna modifica tua in questo girone')+'</span></div><button type="button" class="tgl" data-act="keepEdits" role="switch" aria-checked="'+ke+'" aria-label="Le mie modifiche vincono su Tuttocampo"><i></i></button></div>'
+      +'<span class="tiny muted">'+(ke?'Quando arrivano dati nuovi da Tuttocampo, quello che hai cambiato tu resta com’è; il dato di Tuttocampo viene comunque salvato da parte.':'Le tue modifiche vengono sostituite dai dati di Tuttocampo a ogni aggiornamento.')+'</span>'
+      +(ne?'<button class="btn sm" type="button" data-act="tcSync" style="align-self:flex-start">Sincronizza con i dati di Tuttocampo</button>':'')+'</section>'; }
   h+='<span class="eyebrow muted gadv">Avanzate · '+esc(girLabel(G))+'</span><section class="card flush gdets">';
   h+=gDet("add","Inserisci a mano","Una partita o un giocatore")+'<div class="row" style="flex-wrap:wrap"><button class="btn" type="button" data-new="1">'+icon("plus")+'Partita</button><button class="btn" type="button" data-player="new">'+icon("plus")+'Giocatore</button></div></div></details>';
   h+=gDet("import","Incolla risultati e classifica","Dal comunicato o da Tuttocampo")+'<p class="small muted" style="margin:0">Apri il comunicato del giovedì della Delegazione di Milano oppure la pagina del girone su Tuttocampo, seleziona tutto (Ctrl+A), copia e incolla qui sotto. Vengono presi solo i dati del tuo girone.</p>'+(S.settings.tcLink?'<a class="btn" href="'+esc(S.settings.tcLink)+'" target="_blank" rel="noopener">Apri la pagina su Tuttocampo</a>':'')+'<label class="f">Testo copiato<textarea id="pasteBox" placeholder="Incolla qui il testo della pagina"></textarea></label><div class="grid2"><label class="f">Cosa contiene<select id="pasteMode"><option value="auto">Riconosci da solo</option><option value="res">Risultati o calendario</option><option value="tab">Classifica</option></select></label><label class="f">Giornata, se non indicata<input id="pasteRound" type="number" min="1" max="40" inputmode="numeric" placeholder="Es. 10"></label></div><button class="btn dark" type="button" data-act="parse">Analizza il testo</button><div id="preview"></div></div></details>';
@@ -3210,7 +3287,7 @@ function openMatch(id){
   var m = id ? S.matches.filter(function(x){return x.id===id;})[0] : null;
   var my=me();
   var draft = m ? JSON.parse(JSON.stringify(m)) : {id:null, round:"", date:"", time:"", homeId:my, awayId:"", hg:"", ag:"", scorers:[], cards:[]};
-  draft.scorers=draft.scorers||[]; draft.cards=draft.cards||[];
+  draft.scorers=draft.scorers||[]; draft.cards=draft.cards||[]; draft.pens=draft.pens||[];
   openMatch.draft=draft;
   drawMatch();
   showDlg();
@@ -3222,6 +3299,8 @@ function drawMatch(){
   var pOpts=function(sel){ return '<option value="">Giocatore…</option>'+S.players.filter(function(p){return pTeam(p)===my;}).sort(function(a,b){return (+a.num||99)-(+b.num||99);}).map(function(p){return '<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+esc((p.num?p.num+" · ":"")+p.name)+'</option>';}).join(""); };
   var mine=d.homeId===my||d.awayId===my;
   var h='<div class="row between"><h2>'+(d.id?'Partita':'Nuova partita')+'</h2><button class="btn" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div>';
+  var tm=d.id?tcItem("matches",d.id):null, cur=d.id?S.matches.filter(function(x){return x.id===d.id;})[0]:null;
+  if(tm&&cur&&tcDiffers(tm,cur,["pens"])) h+='<div class="tc-note"><span>Hai modificato questa partita · su Tuttocampo <b class="num">'+(tm.hg!==""&&tm.hg!=null?esc(tm.hg)+'–'+esc(tm.ag):'da giocare')+'</b></span><button class="btn sm" type="button" data-act="tcRestoreM">Usa il dato di Tuttocampo</button></div>';
   h+='<div class="grid3"><label class="f">Giornata<input id="mRound" type="number" min="1" max="40" inputmode="numeric" value="'+esc(d.round)+'"></label><label class="f">Data<input id="mDate" type="date" value="'+esc(d.date)+'"></label><label class="f">Ora<input id="mTime" type="time" value="'+esc(d.time)+'"></label></div>';
   h+='<div class="grid2"><label class="f">In casa<select id="mHome">'+opts(d.homeId)+'</select></label><label class="f">In trasferta<select id="mAway">'+opts(d.awayId)+'</select></label></div>';
   h+='<div class="grid2"><label class="f">Gol casa<input id="mHg" type="number" min="0" max="30" inputmode="numeric" placeholder="–" value="'+esc(d.hg)+'"></label><label class="f">Gol trasferta<input id="mAg" type="number" min="0" max="30" inputmode="numeric" placeholder="–" value="'+esc(d.ag)+'"></label></div><span class="tiny muted">Lascia vuoti i gol se la partita è ancora da giocare.</span>';
@@ -3231,6 +3310,15 @@ function drawMatch(){
       h+='<span class="small" style="font-weight:600">Marcatori '+esc(tname(my))+'</span>'+d.scorers.map(function(s,i){ if(sTeam(s)!==my || s.og) return ''; return '<div class="row"><select aria-label="Marcatore" data-sc="'+i+'" class="grow">'+(s.playerId||!s.name?'':'<option value="" selected>'+esc(s.name)+'</option>')+pOpts(s.playerId)+'</select><input aria-label="Minuto" data-scmin="'+i+'" type="text" placeholder="Min" value="'+esc(s.min||"")+'" style="width:84px;flex:none"><button class="btn" type="button" aria-label="Rimuovi marcatore" data-scdel="'+i+'">'+icon("x")+'</button></div>'; }).join("")+'<button class="btn ghost" type="button" data-act="addSc">'+icon("plus")+'Marcatore</button>';
       h+='<span class="small" style="font-weight:600">Cartellini</span>'+d.cards.map(function(c,i){ return '<div class="row"><select aria-label="Giocatore ammonito o espulso" data-cd="'+i+'" class="grow">'+pOpts(c.playerId)+'</select><select aria-label="Tipo cartellino" data-cdt="'+i+'" style="width:110px;flex:none"><option value="y"'+(c.type!=="r"?' selected':'')+'>Giallo</option><option value="r"'+(c.type==="r"?' selected':'')+'>Rosso</option></select><button class="btn" type="button" aria-label="Rimuovi cartellino" data-cddel="'+i+'">'+icon("x")+'</button></div>'; }).join("")+'<button class="btn ghost" type="button" data-act="addCd">'+icon("plus")+'Cartellino</button>';
     }
+  }
+  /* rigori sbagliati: chi lo sbaglia (una delle due squadre) e, se parato, il portiere dell'altra */
+  if(d.homeId&&d.awayId){
+    var tOpts=function(t,sel,lab){ var ps=S.players.filter(function(p){return pTeam(p)===t;}).sort(byName); return '<option value="">'+lab+'</option>'+ps.map(function(p){return '<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+esc(p.name)+'</option>';}).join(""); };
+    var bothOpts=function(sel){ return '<option value="">Chi lo sbaglia…</option>'+[d.homeId,d.awayId].map(function(t){ return '<optgroup label="'+esc(tname(t))+'"><option value="t:'+t+'"'+('t:'+t===sel?' selected':'')+'>'+esc(tname(t))+' · giocatore non indicato</option>'+S.players.filter(function(p){return pTeam(p)===t;}).sort(byName).map(function(p){return '<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+esc(p.name)+'</option>';}).join("")+'</optgroup>'; }).join(""); };
+    h+='<span class="small" style="font-weight:600">Rigori sbagliati</span>'+d.pens.map(function(r,i){ var st=penTeam(r), other=st?(st===d.homeId?d.awayId:d.homeId):null;
+      return '<div class="pen-ed"><div class="row"><select aria-label="Chi sbaglia il rigore" data-pn="'+i+'" class="grow">'+bothOpts(r.playerId||(r.team?'t:'+r.team:''))+'</select><input aria-label="Minuto" data-pnmin="'+i+'" type="text" placeholder="Min" value="'+esc(r.min||"")+'" style="width:70px;flex:none"><button class="btn" type="button" aria-label="Rimuovi rigore" data-pndel="'+i+'">'+icon("x")+'</button></div>'
+        +'<div class="row"><select aria-label="Esito" data-pnk="'+i+'" style="width:130px;flex:none"><option value="parato"'+(!r.how||r.how==="parato"?' selected':'')+'>Parato</option><option value="fuori"'+(r.how==="fuori"?' selected':'')+'>Fuori</option><option value="palo"'+(r.how==="palo"?' selected':'')+'>Palo o traversa</option><option value="sbagliato"'+(r.how==="sbagliato"?' selected':'')+'>Non indicato</option></select>'
+        +(!r.how||r.how==="parato"?'<select aria-label="Portiere che para" data-pngk="'+i+'" class="grow">'+(other?tOpts(other,r.keeperId,'Parato da…'):'<option value="">Prima scegli chi lo sbaglia</option>')+'</select>':'')+'</div></div>'; }).join("")+'<button class="btn sm" type="button" data-act="addPen" style="align-self:flex-start">'+icon("plus")+'Rigore sbagliato</button>';
   }
   h+='<p class="small" id="mErr" style="color:var(--loss);margin:0" hidden></p><button class="btn primary" type="button" data-act="saveMatch">Salva</button>';
   if (d.id) h+='<div id="mDelZone"><button class="btn danger" type="button" data-act="askDelMatch" style="width:100%">Elimina partita</button></div>';
@@ -3245,13 +3333,19 @@ function readDraft(){
   document.querySelectorAll("[data-scmin]").forEach(function(el){ d.scorers[+el.dataset.scmin].min=el.value; });
   document.querySelectorAll("[data-cd]").forEach(function(el){ d.cards[+el.dataset.cd].playerId=el.value; });
   document.querySelectorAll("[data-cdt]").forEach(function(el){ d.cards[+el.dataset.cdt].type=el.value; });
+  document.querySelectorAll("[data-pn]").forEach(function(el){ var r=d.pens[+el.dataset.pn], v=el.value, was=penTeam(r);
+    if(/^t:/.test(v)){ r.playerId=""; r.team=v.slice(2); } else { r.playerId=v; delete r.team; }
+    if(penTeam(r)!==was) r.keeperId=""; });
+  document.querySelectorAll("[data-pnmin]").forEach(function(el){ d.pens[+el.dataset.pnmin].min=el.value; });
+  document.querySelectorAll("[data-pnk]").forEach(function(el){ var r=d.pens[+el.dataset.pnk]; r.how=el.value; if(el.value!=="parato") r.keeperId=""; });
+  document.querySelectorAll("[data-pngk]").forEach(function(el){ d.pens[+el.dataset.pngk].keeperId=el.value; });
 }
 function saveMatch(){
   readDraft(); var d=openMatch.draft, err=$("mErr");
   if(!d.homeId||!d.awayId){ err.textContent="Scegli entrambe le squadre."; err.hidden=false; return; }
   if(d.homeId===d.awayId){ err.textContent="Le due squadre devono essere diverse."; err.hidden=false; return; }
   if((d.hg==="")!==(d.ag==="")){ err.textContent="Inserisci i gol di entrambe le squadre, oppure lasciali vuoti tutti e due."; err.hidden=false; return; }
-  d.scorers=d.scorers.filter(function(s){return s.playerId||s.name||s.og;}); d.cards=d.cards.filter(function(c){return c.playerId;});
+  d.scorers=d.scorers.filter(function(s){return s.playerId||s.name||s.og;}); d.cards=d.cards.filter(function(c){return c.playerId;}); d.pens=(d.pens||[]).filter(function(r){return r.playerId||r.team;}); if(!d.pens.length) delete d.pens;
   if(!d.id){ d.id=uid("m"); S.matches.push(d); }
   else S.matches=S.matches.map(function(m){return m.id===d.id?d:m;});
   closeDlg(); save(); toast("Partita salvata");
@@ -3263,6 +3357,8 @@ function openPlayerView(id){
   var h='<div class="row between"><span class="eyebrow muted">Giocatore</span><button class="btn sm" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div>';
   h+='<div class="ps-head">'+crest(tid,60,tid===me()?'lit':'')+'<div class="col grow"><h2>'+esc(p.name)+'</h2><span class="meta">'+[p.num?'Numero '+esc(p.num):'',esc(p.role||''),'<button type="button" class="plink" data-team="'+tid+'">'+esc(tname(tid))+'</button>'].filter(Boolean).join(' · ')+'</span></div></div>';
   h+='<div class="stats light"><div class="stat"><b>'+s.gol+'</b><span>Gol</span></div><div class="stat"><b>'+(s.pres||'–')+'</b><span>Presenze</span></div><div class="stat"><b>'+s.y+'</b><span>Gialli</span></div><div class="stat"><b>'+s.r+'</b><span>Rossi</span></div></div>';
+  var pMiss=0, pSave=0; S.matches.forEach(function(m){ (m.pens||[]).forEach(function(r){ if(r.playerId===id) pMiss++; if(r.keeperId===id) pSave++; }); });
+  if(pMiss||pSave) h+='<div class="pen-line">'+(pSave?'<span><b class="num">'+pSave+'</b> '+(pSave===1?'rigore parato':'rigori parati')+'</span>':'')+(pMiss?'<span><b class="num">'+pMiss+'</b> '+(pMiss===1?'rigore sbagliato':'rigori sbagliati')+'</span>':'')+'</div>';
   if(s.gol>0){
     var better=0, same=0; S.players.forEach(function(q){ if(st[q.id].gol>s.gol) better++; else if(st[q.id].gol===s.gol && q.id!==id) same++; });
     var tb=S.players.filter(function(q){return pTeam(q)===tid && st[q.id].gol>s.gol;}).length;
@@ -3388,8 +3484,8 @@ function openPlayer(id){
   var p = id==="new" ? {id:null,num:"",name:"",role:"Centrocampista"} : S.players.filter(function(x){return x.id===id;})[0];
   if(!p) return;
   openPlayer.cur=p;
-  var roles=["Portiere","Difensore","Centrocampista","Attaccante"];
-  $("dlgBody").innerHTML='<div class="row between"><h2>'+(p.id?'Giocatore':'Nuovo giocatore')+'</h2><button class="btn" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div><form id="playerForm" style="display:flex;flex-direction:column;gap:12px"><div class="row"><label class="f" style="width:90px;flex:none">Numero<input id="pNum" type="number" min="1" max="99" inputmode="numeric" value="'+esc(p.num)+'"></label><label class="f grow">Nome e cognome<input id="pName" required value="'+esc(p.name)+'"></label></div><label class="f">Ruolo<select id="pRole">'+roles.map(function(r){return '<option'+(r===p.role?' selected':'')+'>'+r+'</option>';}).join("")+'</select></label><button class="btn primary" type="submit">Salva</button></form>'+(p.id?'<div id="pDelZone"><button class="btn danger" type="button" data-act="askDelPlayer" style="width:100%">Elimina giocatore</button></div>':'');
+  var roles=["Portiere","Difensore","Centrocampista","Attaccante"], tpl=p.id?tcItem("players",p.id):null;
+  $("dlgBody").innerHTML='<div class="row between"><h2>'+(p.id?'Giocatore':'Nuovo giocatore')+'</h2><button class="btn" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div>'+(tpl&&tcDiffers(tpl,p,[])?'<div class="tc-note"><span>Hai modificato questo giocatore · su Tuttocampo <b>'+esc(tpl.name)+'</b>'+(tpl.role?' · '+esc(tpl.role):'')+'</span><button class="btn sm" type="button" data-act="tcRestoreP">Usa il dato di Tuttocampo</button></div>':'')+'<form id="playerForm" style="display:flex;flex-direction:column;gap:12px"><div class="row"><label class="f" style="width:90px;flex:none">Numero<input id="pNum" type="number" min="1" max="99" inputmode="numeric" value="'+esc(p.num)+'"></label><label class="f grow">Nome e cognome<input id="pName" required value="'+esc(p.name)+'"></label></div><label class="f">Ruolo<select id="pRole">'+roles.map(function(r){return '<option'+(r===p.role?' selected':'')+'>'+r+'</option>';}).join("")+'</select></label><button class="btn primary" type="submit">Salva</button></form>'+(p.id?'<div id="pDelZone"><button class="btn danger" type="button" data-act="askDelPlayer" style="width:100%">Elimina giocatore</button></div>':'');
   showDlg();
   setTimeout(function(){ var n=$("pName"); if(n&&!p.id) n.focus(); },30);
 }
@@ -3620,6 +3716,7 @@ document.addEventListener("click", function(e){
   if(ds.player){ if(ds.player==="new") openPlayer("new"); else openPlayerView(ds.player); return; }
   if(ds.scdel!=null){ readDraft(); openMatch.draft.scorers.splice(+ds.scdel,1); drawMatch(); return; }
   if(ds.cddel!=null){ readDraft(); openMatch.draft.cards.splice(+ds.cddel,1); drawMatch(); return; }
+  if(ds.pndel!=null){ readDraft(); openMatch.draft.pens.splice(+ds.pndel,1); drawMatch(); return; }
   if(ds.delteam){
     var tid=ds.delteam, cnt=S.matches.filter(function(m){return involves(m,tid);}).length;
     $("delTeamConfirm").innerHTML='<div class="note row" style="flex-wrap:wrap"><span class="grow">Eliminare <strong>'+esc(tname(tid))+'</strong>'+(cnt?' e le sue '+cnt+' partite':'')+'?</span><button class="btn danger" type="button" data-act="delTeam" data-id="'+tid+'">Elimina</button><button class="btn" type="button" data-act="cancelDel">Annulla</button></div>';
@@ -3644,6 +3741,11 @@ document.addEventListener("click", function(e){
     case "clsReset": clsF={from:0,to:0,side:"all"}; closeDlg(); render(); break;
     case "addSc": readDraft(); openMatch.draft.scorers.push({playerId:"",min:"",teamId:me()}); drawMatch(); break;
     case "addCd": readDraft(); openMatch.draft.cards.push({playerId:"",type:"y"}); drawMatch(); break;
+    case "tcRestoreM": { var d0=openMatch.draft, t0=tcItem("matches",d0.id), c0=S.matches.filter(function(x){return x.id===d0.id;})[0]; if(!t0||!c0) break;
+      var nm=JSON.parse(JSON.stringify(t0)), keep=(c0.pens||[]).filter(function(r){ return r.src!=="tc"; }); if(keep.length||nm.pens) nm.pens=(nm.pens||[]).concat(keep);
+      S.matches=S.matches.map(function(x){ return x.id===d0.id?nm:x; }); closeDlg(); save(); toast("Partita riportata come su Tuttocampo"); break; }
+    case "tcRestoreP": { var p0=openPlayer.cur, tp=p0&&tcItem("players",p0.id); if(!tp) break; S.players=S.players.map(function(x){ return x.id===p0.id?JSON.parse(JSON.stringify(tp)):x; }); closeDlg(); save(); toast("Giocatore riportato come su Tuttocampo"); break; }
+    case "addPen": readDraft(); openMatch.draft.pens.push({playerId:"",how:"parato",keeperId:"",min:""}); drawMatch(); break;
     case "saveMatch": saveMatch(); break;
     case "askDelMatch": $("mDelZone").innerHTML='<div class="note row" style="flex-wrap:wrap"><span class="grow">Eliminare questa partita?</span><button class="btn danger" type="button" data-act="delMatch">Elimina</button><button class="btn" type="button" data-act="cancelDelMatch">Annulla</button></div>'; break;
     case "cancelDelMatch": drawMatch(); break;
@@ -3663,6 +3765,9 @@ document.addEventListener("click", function(e){
       var lk=$("setLink").value.trim(); S.settings.tcLink=/^https:\/\//i.test(lk)?lk:"";
       save(); toast("Impostazioni salvate"); break;
     case "reseed": loadSeed(true); break;
+    case "keepEdits": try { localStorage.setItem("baggese-keepedits",keepEdits()?"0":"1"); } catch(e){} render(); toast(keepEdits()?"Le tue modifiche vincono su Tuttocampo":"Tuttocampo sostituisce le tue modifiche"); break;
+    case "tcSync": { var nE=edCount(); $("dlgBody").innerHTML='<div class="row between"><h2>Sincronizza con Tuttocampo</h2><button class="btn" type="button" data-act="close" aria-label="Chiudi">'+icon("x")+'</button></div><p class="small" style="margin:0">'+nE+(nE===1?' modifica tua viene sostituita':' modifiche tue vengono sostituite')+' dai dati arrivati da Tuttocampo, in '+esc(girLabel(G))+'. Non si può annullare.</p><div class="row" style="gap:8px;justify-content:flex-end"><button class="btn" type="button" data-act="close">Annulla</button><button class="btn danger" type="button" data-act="tcSyncGo">Sincronizza</button></div>'; showDlg(); break; }
+    case "tcSyncGo": closeDlg(); if(tcSync()){ render(); toast("Dati di Tuttocampo ripristinati"); } else toast("Copia di Tuttocampo non ancora disponibile: aggiorna prima i dati"); break;
     case "refresh": checkNewer(true); break;
     case "backup":
       if(!downloads){ try{ var bl=new Blob([JSON.stringify(S,null,1)],{type:"application/json"}), a=document.createElement("a"); a.href=URL.createObjectURL(bl); a.download="data.json"; document.body.appendChild(a); a.click(); a.remove(); toast("Copia scaricata come data.json"); }catch(e){ toast("Download non riuscito"); } return; }

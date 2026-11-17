@@ -19,3 +19,13 @@ Aggiornamenti leggeri (dopo ogni giornata)
 Pubblicare (dal 12/11/2026)
 - Non caricare su main: carica sul ramo "prova" (git push origin HEAD:prova). Il workflow "Collaudo e pubblicazione" prova l'app con collaudo.js (ogni girone, ogni scheda, iPhone piccolo e grande, chiaro e scuro, computer) e solo se va tutto bene la porta su main, che va online.
 - Stemmi: 192 px, dalla fonte Tuttocampo da 500 px (workflow temporaneo, vedi commit "Stemmi in alta risoluzione").
+
+## Rigori parati e sbagliati
+
+Tuttocampo li scrive solo nella "Cronaca partita" (es. "🧤 Rigore parato (FC Corsico)", "❌ Rigore sbagliato da Fornari (Velasca)").
+
+1. Nel Chrome dell'utente apri `https://www.tuttocampo.it/robots.txt`, incolla `strumento_leggi_rigori.js` e lancia `RIGORI("<girone>", 1, <ultima giornata>)`. Una pagina alla volta con pausa; se si ferma, rilancialo e riparte.
+2. Scarica `__lr.out` in un file di righe e prova: `python3 strumento_rigori_in_dati.py righe.txt <file del girone>.json`.
+3. Se torna, aggiungi `--scrivi`. I rigori presi da Tuttocampo sono segnati `src:"tc"` e vengono sostituiti a ogni nuova lettura; quelli inseriti a mano dall'app restano.
+
+Per "Rigore parato" Tuttocampo indica solo la squadra del portiere: il portiere viene preso dalla formazione della partita, o in mancanza dal portiere con più presenze; il tiratore resta "non indicato".

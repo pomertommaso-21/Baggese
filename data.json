@@ -2113,7 +2113,16 @@
      "playerId": "p_vil_10"
     }
    ],
-   "cards": []
+   "cards": [],
+   "pens": [
+    {
+     "src": "tc",
+     "team": "t_velasca",
+     "how": "sbagliato",
+     "playerId": "p_vel_18",
+     "min": "43"
+    }
+   ]
   },
   {
    "id": "m21_8",
@@ -3224,7 +3233,16 @@
      "playerId": "p_bag_16"
     }
    ],
-   "cards": []
+   "cards": [],
+   "pens": [
+    {
+     "src": "tc",
+     "team": "t_baggese",
+     "how": "parato",
+     "keeperId": "p_cor_12",
+     "min": "52"
+    }
+   ]
   },
   {
    "id": "m25_2",
@@ -3409,7 +3427,16 @@
      "playerId": "p_tri_30"
     }
    ],
-   "cards": []
+   "cards": [],
+   "pens": [
+    {
+     "src": "tc",
+     "team": "t_ardor",
+     "how": "sbagliato",
+     "playerId": "p_ard_26",
+     "min": "89"
+    }
+   ]
   },
   {
    "id": "m25_6",
@@ -10853,6 +10880,6 @@
    }
   ]
  },
- "updatedAt": "2026-11-16T11:56:40+00:00",
+ "updatedAt": "2026-11-17T14:32:05+00:00",
  "tcRound": 10
 }
