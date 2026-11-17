@@ -1140,6 +1140,8 @@ nav.tabs button{transition:color .15s ease}
 .forb-r b{font-weight:600;color:var(--fg);opacity:.75}
 .cls-tools{display:flex;gap:6px;align-items:center;overflow:hidden;max-width:220px;transition:max-width .34s cubic-bezier(.25,.9,.3,1),margin .34s cubic-bezier(.25,.9,.3,1),opacity .2s ease}
 .cls-tools.off{max-width:0;margin-left:-6px;opacity:0;pointer-events:none}
+.cls-tools.hdr{max-width:none;gap:4px;margin-bottom:2px;transition:opacity .2s ease,visibility 0s}
+.cls-tools.hdr.off{max-width:none;margin-left:0;visibility:hidden;transition:opacity .2s ease,visibility 0s .2s}
 /* giornate in alto: il rosso passa da un numero all'altro di colpo, senza la dissolvenza che faceva vedere due numeri rossi */
 #roundChips .rchip{transition:transform .12s}
 /* riquadro della giornata: tutto scala con --rk (misura scelta con la maniglia o automatica) */
@@ -1299,6 +1301,17 @@ button.hm-chips{width:100%;background:none;border:0;padding:0;font:inherit;color
 .hm-sc{margin-top:2px}
 .hm-sc .ldr-1 b{font-size:26px}
 .hm-sc .ldr-1 span{font-size:15px}
+.rx.rx-bad .rec-val b{color:var(--loss)}
+/* righe di Statistiche: numero chiave a destra (16.19) */
+.fold.fvx .fold-head{grid-template-columns:auto minmax(0,1fr) auto auto}
+.fold.fvx .fold-ic{width:auto;height:auto;background:none;color:var(--muted)}
+.fold.fvx .fold-ic svg.i{width:20px;height:20px}
+.fold.fvx .fold-tx b{font-size:15.5px}
+.fval{display:flex;flex-direction:column;align-items:flex-end;line-height:1;white-space:nowrap}
+.fval b{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-.02em}
+.fval span{font-size:11px;color:var(--muted);margin-top:3px}
+.fold.fvx .fold-chev{width:auto;height:auto;background:none!important;opacity:.55}
+.fold.fvx .fold-chev svg.i{width:16px;height:16px}
 </style>
 <script>document.documentElement.classList.add("segjs");</script>
 </head>
@@ -1328,7 +1341,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.18";
+var APP_VERSION="2026-11-16.19";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -2359,10 +2372,12 @@ function seasonRecords(){
   if(tw&&tw.n>=2){ var ttie=tl.filter(function(x){return x.n===tw.n;}).length-1;
     var trk=rank(tl,function(x){return x.n;},function(x,pos,v){ return '<button type="button" data-player="'+x.p.id+'" class="rx-r'+(x.tid===my?' me':'')+'"><span class="rx-p'+(pos===1?' first':'')+'">'+pos+'</span>'+crest(x.tid,24)+'<span class="rx-n"><span class="ellipsis">'+esc(x.p.name)+'</span><span class="rx-s rx-wrap">'+esc(tname(x.tid))+(x.mvp?' · <span class="rx-star">'+icon("star")+'</span> '+(x.mvp===1?'1&nbsp;volta':x.mvp+'&nbsp;volte')+' migliore in&nbsp;campo':'')+'</span></span><b class="num">'+v+'</b></button>'; });
     h+=recRow(crest(tw.tid,30),'Più volte in Top 11',esc(tw.p.name)+' <span class="muted">· '+esc(tname(tw.tid))+'</span>',(tw.rs.length<=6?'giornate '+t11List(tw.rs):'in '+tw.n+' giornate su '+lastPlayedRound())+(ttie?' · a pari con '+(ttie===1?'un altro':'altri '+ttie):''),tw.n,'volte',tw.tid===my,trk); }
-  return foldCard("rec","trophy","Record e curiosità",tz[0],'<div class="list rec">'+h+'</div><span class="tiny muted">Fino alla '+lastPlayedRound()+'ª giornata. Tocca un record per vedere la classifica.</span>');
+  var f1=h.match(/<span class="rec-lab">([^<]*)<\/span><span class="rec-main">([\s\S]*?)<\/span><span class="rec-sub">[\s\S]*?<span class="rec-val"><b class="num">([^<]*)<\/b><span>([^<]*)<\/span>/);
+  var rsub=f1?f1[2].replace(/<span class="muted">[\s\S]*?<\/span>/g,'').trim()+' · '+f1[1].toLowerCase():tz[0];
+  return foldCard("rec","trophy","Record e curiosità",rsub,'<div class="list rec">'+h+'</div><span class="tiny muted">Fino alla '+lastPlayedRound()+'ª giornata. Tocca un record per vedere la classifica.</span>',f1?[f1[3],f1[4]]:null);
 }
 function foldOpen(k){ try { return localStorage.getItem("baggese-fold-"+k)==="1"; } catch(e){ return false; } }
-function foldCard(k,ic,title,sub,body){ var op=foldOpen(k); return '<section class="card fold'+(op?' open':'')+'"><button type="button" class="fold-head" data-fold="'+k+'" aria-expanded="'+op+'"><span class="fold-ic">'+icon(ic)+'</span><span class="fold-tx"><b>'+title+'</b><span class="fold-sub">'+sub+'</span></span><span class="fold-chev">'+icon("chev")+'</span></button><div class="fold-body"><div class="fold-in">'+body+'</div></div></section>'; }
+function foldCard(k,ic,title,sub,body,val){ var op=foldOpen(k); return '<section class="card fold'+(val?' fvx':'')+(op?' open':'')+'"><button type="button" class="fold-head" data-fold="'+k+'" aria-expanded="'+op+'"><span class="fold-ic">'+icon(ic)+'</span><span class="fold-tx"><b>'+title+'</b><span class="fold-sub">'+sub+'</span></span>'+(val?'<span class="fval"><b class="num">'+val[0]+'</b><span>'+val[1]+'</span></span>':'')+'<span class="fold-chev">'+icon("chev")+'</span></button><div class="fold-body"><div class="fold-in">'+body+'</div></div></section>'; }
 function foldAnim(f,op){ var b=f.querySelector(".fold-body"); if(!b) return; var h0=b.getBoundingClientRect().height; f.classList.toggle("open",op);
   if(!op){ f.classList.add("closing"); clearTimeout(f._c); f._c=setTimeout(function(){ f.classList.remove("closing"); },380); }
   if(matchMedia("(prefers-reduced-motion: reduce)").matches){ return; }
@@ -2394,6 +2409,31 @@ function crestPair(m,sz){ return '<span class="cpair">'+crest(m.homeId,sz||24)+c
 function recRow(cr,lab,main,sub,val,unit,mine,rk){
   return '<div class="rx'+(mine?' me':'')+'"><button type="button" class="rec-row" data-rx="1" aria-expanded="false">'+cr+'<span class="rec-mid"><span class="rec-lab">'+lab+'</span><span class="rec-main">'+main+'</span><span class="rec-sub">'+sub+'</span></span><span class="rec-val"><b class="num">'+val+'</b><span>'+unit+'</span></span><span class="rx-chev">'+icon("chev")+'</span></button><div class="rx-body"><div class="rx-list">'+rk+'</div></div></div>';
 }
+/* Serie in corso in tutto il girone, nello stile di Record e curiosità */
+function liveStreaks(){
+  var ms=S.matches.filter(played).sort(sortMatches); if(ms.length<6) return '';
+  var per={}, my=me();
+  ms.forEach(function(m){ [[m.homeId,+m.hg,+m.ag],[m.awayId,+m.ag,+m.hg]].forEach(function(x){ (per[x[0]]=per[x[0]]||[]).push({m:m,gf:x[1],gs:x[2]}); }); });
+  function cur(test){ var c=[];
+    Object.keys(per).forEach(function(id){ var li=per[id], n=0, from=null; for(var i=li.length-1;i>=0;i--){ if(test(li[i])){ n++; from=li[i].m.round; } else break; } if(n) c.push({id:id,n:n,from:from,all:n===li.length}); });
+    c.sort(function(a,b){ return b.n-a.n || (b.id===my?1:0)-(a.id===my?1:0) || tname(a.id).localeCompare(tname(b.id)); });
+    if(c.length) c[0].tie=c.filter(function(x){return x.n===c[0].n;}).length-1; return c; }
+  function since(x){ return x.all?'da inizio campionato':'dalla '+x.from+'ª giornata'; }
+  function rank(list){ var out=[], pos=0, prev=null; list.slice(0,6).forEach(function(x,i){ if(x.n!==prev){ pos=i+1; prev=x.n; } out.push('<button type="button" data-team="'+x.id+'" style="--i:'+i+'" class="rx-r'+(x.id===my?' me':'')+'"><span class="rx-p'+(pos===1?' first':'')+'">'+pos+'</span>'+crest(x.id,24)+'<span class="rx-n"><span class="ellipsis">'+esc(tname(x.id))+'</span><span class="rx-s">'+since(x)+'</span></span><b class="num">'+x.n+'</b></button>'); }); return out.join(''); }
+  var h='', tz=[];
+  function item(lab,test,min,unit,bad){ var c=cur(test).filter(function(x){return x.n>=min;}); if(!c.length) return; var w=c[0];
+    if(!bad&&(!tz.length||w.n>tz[1])) tz=[esc(tname(w.id))+' · '+lab.toLowerCase(),w.n,unit];
+    h+=recRow(crest(w.id,30),lab,esc(tname(w.id)),since(w)+(w.tie?' · a pari con '+(w.tie===1?'un’altra squadra':'altre '+w.tie):''),w.n,unit,w.id===my,rank(c)).replace('class="rx','class="rx'+(bad?' rx-bad':'')); }
+  item('Vittorie di fila',function(g){return g.gf>g.gs;},2,'vittorie');
+  item('Senza perdere',function(g){return g.gf>=g.gs;},3,'partite');
+  item('In gol di fila',function(g){return g.gf>0;},3,'partite');
+  item('Porta inviolata',function(g){return g.gs===0;},2,'partite');
+  item('Sconfitte di fila',function(g){return g.gf<g.gs;},2,'sconfitte',1);
+  item('Senza vincere',function(g){return g.gf<=g.gs;},3,'partite',1);
+  item('Senza segnare',function(g){return g.gf===0;},2,'partite',1);
+  if(!h) return '';
+  return foldCard("live","flash","Serie in corso",tz[0]||'Le serie aperte del girone','<div class="list rec">'+h+'</div><span class="tiny muted">Dopo la '+lastPlayedRound()+'ª giornata. Tocca una serie per vedere tutte le squadre.</span>',tz.length?[tz[1],tz[2]]:null);
+}
 /* apre la classifica di un record; ne resta aperta una sola */
 function hAnim(it,b,op){ var h0=b.getBoundingClientRect().height; it.classList.toggle("open",op);
   if(!op){ it.classList.add("closing"); clearTimeout(it._c); it._c=setTimeout(function(){ it.classList.remove("closing"); },360); }
@@ -2419,16 +2459,16 @@ function restCalendar(){
   }).filter(function(x){return x.avg!=null;});
   if(!L.length) return '';
   function lab(d){ return d>=1.5?'facile':d<=-1.5?'difficile':'nella media'; }
-  var mine=L.filter(function(x){return x.id===my;})[0], h='', tz='Chi ha le prossime 6 partite più facili';
+  var mine=L.filter(function(x){return x.id===my;})[0], h='', tz='Chi ha le prossime 6 partite più facili', calV=null;
   if(mine){
     var nx=mine.opp.slice(0,6), low=nx.filter(function(o){return o.pos>half;}).length;
-    tz=(lab(mine.d).charAt(0).toUpperCase()+lab(mine.d).slice(1))+'<span class="fold-cr">'+nx.map(function(o){ return crest(o.id,19); }).join('')+'</span>';
+    tz=(lab(mine.d).charAt(0).toUpperCase()+lab(mine.d).slice(1))+' per la '+esc(tname(my)); calV=[dec(mine.avg)+'°','media avv.'];
     h+='<p class="rcal-say"><b>'+esc(tname(my))+'</b>: calendario '+lab(mine.d)+'. '+(nx.length>1?(low===nx.length?'Tutte le prossime '+nx.length+' sono':low+' delle prossime '+nx.length+' sono')+' nella metà bassa della classifica.':'')+'</p>';
     h+='<div class="rcal-next">'+nx.map(function(o){ return '<button type="button" class="rcal-o" data-view="'+o.m.id+'">'+crest(o.id,34)+'<b class="num">'+o.pos+'°</b><span>'+(o.home?'casa':'fuori')+'</span></button>'; }).join('')+'</div>';
   }
   var srt=L.slice().sort(function(a,b){ return b.avg-a.avg || a.pos-b.pos; });
   h+='<div class="rcal-list"><div class="rcal-cap"><span>Tutte, dalla più facile</span><span>media</span></div>'+srt.map(function(x,i){ return '<button type="button" class="st-row'+(x.id===my?' me':'')+'" data-team="'+x.id+'"><span class="posn">'+(i+1)+'</span>'+crest(x.id,28)+'<span class="st-nm"><span class="ellipsis">'+esc(tname(x.id))+'</span><span class="st-sub">'+x.pos+'° in classifica · '+lab(x.d)+'</span></span><b class="num">'+dec(x.avg)+'°</b></button>'; }).join('')+'</div>';
-  return foldCard("cal","cal","Calendario in arrivo",tz,h+'<span class="tiny muted">La media è la posizione in classifica di oggi delle prossime 6 avversarie: più è alta, più il calendario è facile.</span>');
+  return foldCard("cal","cal","Calendario in arrivo",tz,h+'<span class="tiny muted">La media è la posizione in classifica di oggi delle prossime 6 avversarie: più è alta, più il calendario è facile.</span>',calV);
 }
 
 /* ---------- condividi come immagine ---------- */
@@ -2831,14 +2871,15 @@ function vClassifica(){
   var tb=currentTable(), my=me(), FN='';
   var cf=clsRange();
   var ftools='<button class="iconbtn" type="button" data-shr="t" aria-label="Condividi la classifica come immagine">'+icon("share")+'</button><button class="iconbtn" type="button" data-act="prog" aria-label="Classifica giornata per giornata">'+icon("clock")+'</button><button class="iconbtn arrbtn'+(showArrows()?' on':'')+'" type="button" data-act="arrows" aria-pressed="'+showArrows()+'" aria-label="'+(showArrows()?'Nascondi':'Mostra')+' le frecce di posizione">'+icon("updn")+'</button><button class="iconbtn'+(cf.active?' on':'')+'" type="button" data-act="clsFilter" aria-label="Filtra la classifica'+(cf.active?' (filtro attivo)':'')+'">'+icon("filter")+'</button>';
-  var fbtn=(clsView==="squadre")?ftools:'';
-  var h=header("Classifica",1);
-  if (S.players.some(function(p){return p.teamId && p.teamId!==my;})){
-    h+='<div class="seg" role="group" aria-label="Classifica"><button type="button" data-cls="squadre" aria-pressed="'+(clsView==="squadre")+'">Squadre</button><button type="button" data-cls="marcatori" aria-pressed="'+(clsView==="marcatori")+'">Marcatori</button>'+'</div>';
-    h=h.replace(/<div class="seg" role="group" aria-label="Classifica">[\s\S]*<\/div>$/,function(x){ return '<div class="row" style="gap:6px"><div class="grow">'+x.replace('class="seg"','class="seg" style="width:100%"')+'</div><span class="cls-tools'+(clsView==="squadre"?'':' off')+'">'+ftools+'</span></div>'; });   /* le icone restano anche in Marcatori (invisibili): così i pulsanti non cambiano larghezza */
+  var fbtn=(clsView==="squadre")?ftools:'', hasSeg=S.players.some(function(p){return p.teamId && p.teamId!==my;});
+  /* con tre viste i pulsanti della classifica stanno accanto al titolo; in Marcatori e Statistiche spariscono */
+  var h=hasSeg?'<div class="col" style="gap:4px">'+girSel()+'<div class="row between" style="align-items:center;gap:8px"><h1>Classifica</h1><span class="cls-tools hdr'+(clsView==="squadre"?'':' off')+'">'+ftools+'</span></div></div>':header("Classifica",1);
+  if (hasSeg){
+    h+='<div class="seg" role="group" aria-label="Classifica"><button type="button" data-cls="squadre" aria-pressed="'+(clsView==="squadre")+'">Squadre</button><button type="button" data-cls="marcatori" aria-pressed="'+(clsView==="marcatori")+'">Marcatori</button><button type="button" data-cls="stats" aria-pressed="'+(clsView==="stats")+'">Statistiche</button>'+'</div>';
     fbtn='';
     if (clsView==="marcatori") return h+vMarcatori();
-  }
+    if (clsView==="stats") return h+vStats();
+  } else if (clsView!=="squadre") clsView="squadre";
   if(fbtn) h+='<div class="row" style="justify-content:flex-end;margin-top:-8px">'+fbtn+'</div>';
   if (tb.rows.length<2) return h+'<div class="empty"><span class="muted">Servono almeno due squadre. Incolla la classifica in Gestione e le squadre si creano da sole.</span><button class="btn primary" type="button" data-go="import">'+icon("paste")+'Incolla classifica</button></div>';
   if(cf.active) h+='<div class="fchip"><span>Filtro: giornate '+cf.from+'–'+cf.to+' · '+SIDE_LAB[cf.side]+'</span><button type="button" data-act="clsReset" aria-label="Togli il filtro">'+icon("x")+'</button></div>';
@@ -2873,12 +2914,18 @@ function vClassifica(){
   else h+=zLegend(four&&tcOk?'<span class="zok" title="Uguale alla classifica di Tuttocampo dopo la '+chk0.round+'ª giornata">'+icon("check")+'Come Tuttocampo</span>':''), FN=forbNotes(tb.rows);
   h+='</div>';
   }
-  if(!cf.active){ h+=restCalendar(); h+=seasonRecords(); }
   if(tab==="classifica"&&!cf.active) setTimeout(prjStart,80);
-  var tr=tableRow(my), pp=prevPos(my), asub=tr?esc(tname(my))+' '+tr.pos+'°'+(pp!=null&&pp!==tr.pos?(pp>tr.pos?', sale di '+(pp-tr.pos):', scende di '+(tr.pos-pp)):pp!=null?', stabile':''):'Posizione giornata per giornata';
-  h+=foldCard("and","chart","Andamento",asub,'<div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div><div class="chart-wrap">'+(chartMode==="pts"?ptsChart(my):posChart(my))+'</div>');
+  if(!S.players.some(function(p){return p.teamId && p.teamId!==my;})) h+=vStats();   /* senza la scelta Squadre/Marcatori/Statistiche restano in fondo */
   h+=FN;   /* le note sulle forbici: in fondo, a margine */
   return h;
+}
+/* Classifica › Statistiche: serie in corso, record, calendario in arrivo, andamento */
+function vStats(){
+  var my=me(), tr=tableRow(my), pp=prevPos(my), h='';
+  h+=liveStreaks(); h+=seasonRecords(); h+=restCalendar();
+  var trend=tr&&pp!=null?(pp!==tr.pos?(pp>tr.pos?'sale di '+(pp-tr.pos):'scende di '+(tr.pos-pp)):'stabile'):'';
+  h+=foldCard("and","chart","Andamento","Giornata per giornata",'<div class="seg sm" role="group" aria-label="Grafico"><button type="button" data-cmode="pos" aria-pressed="'+(chartMode==="pos")+'">Posizione</button><button type="button" data-cmode="pts" aria-pressed="'+(chartMode==="pts")+'">Punti</button></div><div class="chart-wrap">'+(chartMode==="pts"?ptsChart(my):posChart(my))+'</div>',tr&&tr.g?[tr.pos+'°',trend]:null);
+  return h||'<p class="meta">Le statistiche compaiono dopo le prime giornate.</p>';
 }
 var progView="round", progRound=null;
 function openProg(keep){
@@ -3424,7 +3471,7 @@ document.addEventListener("click", function(e){
     openScopeMenu(b,ds.srt); return; }
   if(ds.srth){ var sv=ds.srth; clsUpdate(function(){ clsSort=sv; if(sv!=="pts") clsScope="all"; }); return; }
   if(ds.scopepick){ var sp=ds.scopepick, st=ds.srtv; closeScopeMenu(); clsUpdate(function(){ clsSort=st; clsScope=sp; }); return; }
-  if(ds.cls){ if(ds.cls!==clsView) clsSwitch(ds.cls, ds.cls==="marcatori"?1:-1); return; }
+  if(ds.cls){ if(ds.cls!==clsView){ var CO=["squadre","marcatori","stats"]; clsSwitch(ds.cls, CO.indexOf(ds.cls)>CO.indexOf(clsView)?1:-1); } return; }
   if(ds.fside){ openClsFilter.side=ds.fside; document.querySelectorAll("[data-fside]").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.fside===ds.fside)); }); return; }
   if(ds.fpre){ var lpp=lastPlayedRound(); if(ds.fpre==="and"){ $("fFrom").value=1; $("fTo").value=Math.min(15,lpp); } else { $("fFrom").value=Math.max(1,lpp-(+ds.fpre)+1); $("fTo").value=lpp; } return; }
   if(ds.teampick){ haptic(); openTeamGrid(); return; }
@@ -3650,7 +3697,7 @@ function clsSwitch(cv,dir,pillDone){
   if(clsSwitch.busy||cv===clsView) return;
   var row=sg.closest(".row")||sg, old=[], seen=false; Array.prototype.forEach.call(v.children,function(c){ if(seen) old.push(c); if(c===row||c.contains(row)) seen=true; });
   var bs=Array.prototype.slice.call(sg.querySelectorAll("button")), on=null; bs.forEach(function(b){ var y=b.getAttribute("data-cls")===cv; b.setAttribute("aria-pressed",String(y)); if(y) on=b; });
-  var tl=row.querySelector(".cls-tools"); if(tl) tl.classList.toggle("off",cv!=="squadre");
+  var tl=v.querySelector(".cls-tools"); if(tl) tl.classList.toggle("off",cv!=="squadre");
   var ind=sg.querySelector(".seg-ind");
   /* in Marcatori i pulsanti si allungano fino a tutta la riga (e in Squadre si accorciano): la pillola segue il pulsante fotogramma per fotogramma */
   if(ind&&on){ var sr=sg.getBoundingClientRect(), ir=ind.getBoundingClientRect(), x0=ir.left-sr.left-sg.clientLeft, w0=ir.width, t0=performance.now(), D=SW_OUT+SW_IN-80, key=(sg.getAttribute("aria-label")||"seg")+"|"+bs.length;
@@ -3706,7 +3753,7 @@ function rkAuto(){ var vp=$("rcVp"); if(!vp) return; var sv=rkSaved(); if(sv){ r
     var hi=has&&p>.5?ni:s.cur; if(hi!==s.hi){ if(s.hi!=null) s.bs[s.hi].classList.remove("swhov"); s.bs[hi].classList.add("swhov"); s.hi=hi; }
     var cx=has?dx*.35:dx*.12, op=(1-Math.min(.5,Math.abs(cx)/260)).toFixed(3); s.mv.forEach(function(n){ n.style.transform="translate3d("+cx.toFixed(1)+"px,0,0)"; n.style.opacity=op; });
     s.p=p; s.ni=has?ni:-1; }
-  document.addEventListener("touchstart",function(e){ st=null; if(e.touches.length!==1||$("dlg").open) return; var tg=e.target; if(!tg.closest||!tg.closest("#app .view")) return;
+  document.addEventListener("touchstart",function(e){ st=null; if(e.touches.length!==1||$("dlg").open) return; var tg=e.target; if(!tg.closest||!(tg.closest("#app .view")||(!tg.closest("nav,dialog,#topbar,#segfloat,.toast")&&(tg===document.body||tg===document.documentElement||tg.closest("#app"))))) return;   /* anche nello spazio vuoto sotto una pagina corta */
     var t=e.touches[0], round=tab==="partite"&&partView==="round";
     /* Partite, vista "Per giornata": il riquadro della giornata scorre le giornate; per tornare a "Baggese" si parte dal bordo sinistro dello schermo */
     var edge=round&&t.clientX<22&&!NAVBACK;
