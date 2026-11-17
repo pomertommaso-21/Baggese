@@ -1382,7 +1382,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.26";
+var APP_VERSION="2026-11-16.27";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -2750,12 +2750,13 @@ function top11(r){
   /* porta inviolata: difensori più presenti della squadra (valgono metà del portiere) */
   cs.forEach(function(x){ S.players.filter(function(p){ return p.teamId===x.tid&&p.role==="Difensore"; }).sort(function(p,q){return pres(q)-pres(p);}).slice(0,4).forEach(function(d){ var c=cand(d,x.tid,x.opp); if(!c.cs){ c.cs=true; c.ga=x.ga; c.res=c.res||x.res; c.pts+=x.v/2; } }); });
   /* portiere: quello della squadra più in basso in classifica che non ha preso gol;
-     un rigore parato vale 2,4 × la forza di chi l'ha tirato e si somma alla porta inviolata: chi para può entrare anche se ha preso gol */
-  var SV={}; ms.forEach(function(m){ (m.pens||[]).forEach(function(pe){ var k=pe.how==="parato"&&pe.keeperId&&byId[pe.keeperId]; if(!k) return; var kt=pTeam(k), st=kt===m.homeId?m.awayId:m.homeId, o=SV[k.id]=SV[k.id]||{n:0,v:0,tid:kt,opp:st}; o.n++; o.v+=2.4*oppF(st); }); });
+     un rigore parato vale come un gol evitato (3 × la forza di chi l'ha tirato) più il bonus per i punti salvati, come il gol decisivo;
+     per chi para conta anche la sua partita (risultato e gol subiti), quindi può entrare anche se ha preso gol */
+  var SV={}; ms.forEach(function(m){ (m.pens||[]).forEach(function(pe){ var k=pe.how==="parato"&&pe.keeperId&&byId[pe.keeperId]; if(!k) return; var kt=pTeam(k), st=kt===m.homeId?m.awayId:m.homeId, o=SV[k.id]=SV[k.id]||{n:0,v:0,tid:kt,opp:st}, kf=kt===m.homeId?+m.hg:+m.ag, ka=kt===m.homeId?+m.ag:+m.hg, pp=function(f,a){ return f>a?3:f===a?1:0; }, of=oppF(st); o.n++; o.v+=3*of+(pp(kf,ka)-pp(kf,ka+1))*1.5*of; }); });
   var gk=null, src=cs.slice().sort(function(a,b){ return pos[b.tid]-pos[a.tid] || b.v-a.v; })[0], gks=[];
   if(src){ var k0=S.players.filter(function(p){ return p.teamId===src.tid&&p.role==="Portiere"; }).sort(function(p,q){return pres(q)-pres(p);})[0]; if(k0) gks.push({p:k0,tid:src.tid,opp:src.opp,cs:true,ga:src.ga,res:src.res,v:src.v}); }
   Object.keys(SV).forEach(function(id){ if(gks.some(function(g){return g.p.id===id;})) return; var o=SV[id], csx=cs.filter(function(x){return x.tid===o.tid;})[0], rr=all2.filter(function(x){return x.tid===o.tid;})[0];
-    gks.push({p:byId[id],tid:o.tid,opp:o.opp,cs:!!csx,ga:rr?rr.ga:0,res:rr?rr.res:"",v:csx?csx.v:0}); });
+    gks.push({p:byId[id],tid:o.tid,opp:o.opp,cs:!!csx,ga:rr?rr.ga:0,res:rr?rr.res:"",v:csx?csx.v:rr?rr.v:0}); });
   gks.forEach(function(g){ g.tot=g.v+(SV[g.p.id]?SV[g.p.id].v:0); });
   var gb=gks.sort(function(a,b){ return b.tot-a.tot; })[0];
   if(gb){ gk=cand(gb.p,gb.tid,gb.opp); gk.cs=gb.cs; gk.ga=gb.ga; gk.res=gb.res; gk.pts+=gb.tot; gk.sv=SV[gb.p.id]?SV[gb.p.id].n:0; }
@@ -2807,7 +2808,7 @@ function openTop11(r){
       var sy=(i===0?SY.mvp:'')+(c.g&&c.dec>=2?SY.dec:c.g&&c.dec===1?SY.pari:'');
       return '<button type="button" class="t11-r" data-player="'+c.p.id+'">'+crest(c.tid,24)+'<span class="t11-r-tx"><span class="t11-r-nm"><b>'+esc(sn)+'</b> '+esc(fn)+'</span><span class="t11-r-why">'+why(c)+'</span></span><span class="t11-r-sy">'+sy+'</span><span class="t11-r-pt num">'+c.pts.toFixed(1).replace(".",",")+'</span></button>'; }).join("")
     +t11Fd('Legenda','<div class="t11-leg"><span>'+SY.mvp+'Migliore in campo</span><span>'+SY.dec+'Gol decisivo per la vittoria</span><span>'+SY.pari+'Gol che vale il pareggio</span></div>')
-    +t11Fd('Metodo di calcolo','<div class="t11-calc"><p>L’indice parte dalla classifica prima della giornata. Ogni gol vale 3 punti, moltiplicati per la forza dell’avversario: da ×1,3 contro la prima a ×0,7 contro l’ultima; il rigore vale 2,4. Il gol che cambia il risultato ha un bonus per ogni punto conquistato.</p><p>Il portiere è quello della squadra più in basso in classifica che non ha subito gol; un rigore parato gli vale 2,4 punti (per la forza di chi l’ha tirato), così può entrare anche chi ha preso gol; i difensori senza reti entrano, se servono, dalle squadre con la porta inviolata, scegliendo chi ha più presenze.</p><p>Il modulo è quello, tra i moduli reali (4‑4‑2, 4‑3‑3, 3‑5‑2, 3‑4‑3…), che totalizza l’indice più alto.</p></div>')+'</div></div></div>';
+    +t11Fd('Metodo di calcolo','<div class="t11-calc"><p>L’indice parte dalla classifica prima della giornata. Ogni gol vale 3 punti, moltiplicati per la forza dell’avversario: da ×1,3 contro la prima a ×0,7 contro l’ultima; il rigore vale 2,4. Il gol che cambia il risultato ha un bonus per ogni punto conquistato.</p><p>Il portiere è quello della squadra più in basso in classifica che non ha subito gol; un rigore parato vale come un gol evitato: 3 punti per la forza di chi l’ha tirato, più il bonus per i punti salvati se senza quella parata il risultato sarebbe cambiato; per chi para conta anche la sua partita (risultato e gol subiti), così può entrare anche chi ha preso gol; i difensori senza reti entrano, se servono, dalle squadre con la porta inviolata, scegliendo chi ha più presenze.</p><p>Il modulo è quello, tra i moduli reali (4‑4‑2, 4‑3‑3, 3‑5‑2, 3‑4‑3…), che totalizza l’indice più alto.</p></div>')+'</div></div></div>';
   $("dlgBody").innerHTML=h; showDlg();
 }
 /* anteprima nella scheda della giornata: un mini campo con gli stemmi, si tocca per aprire */
