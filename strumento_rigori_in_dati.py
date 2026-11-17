@@ -1,8 +1,9 @@
 """Aggiunge alle partite i rigori parati e sbagliati letti con strumento_leggi_rigori.js.
 Uso: python3 strumento_rigori_in_dati.py righe-rigori.txt <file del girone .json> [--scrivi]
 Ogni rigore diventa {team, playerId?, how, keeperId?, min, src:"tc"} in matches[].pens:
-- "Rigore parato (SQUADRA)": la squadra è quella del portiere; il portiere è il primo della sua formazione nel tabellino
-  (riga K), altrimenti il portiere con più presenze; chi ha tirato non è indicato.
+- "Rigore parato (SQUADRA)": SQUADRA è quella che ha tirato (come per "sbagliato da NOME (SQUADRA)"; verificato con
+  Corsico–Baggese della 10ª del girone O); il portiere è quello dell'altra squadra, il primo della sua formazione nel
+  tabellino (riga K), altrimenti il portiere con più presenze; chi ha tirato non è indicato.
 - "Rigore sbagliato da NOME (SQUADRA)": chi ha tirato è NOME di SQUADRA; com'è andato non è indicato ("sbagliato").
 I rigori già messi da Tuttocampo (src "tc") vengono sostituiti; quelli inseriti a mano restano."""
 import json, re, sys
@@ -56,7 +57,8 @@ def main():
         r = {"src": "tc"}
         if re.search(r"rigore parato", ev, re.I):
             kd = re.search(r"parato da ([^(]+)\(", ev)
-            r.update(team=other, how="parato", keeperId=(by_surname(tid, kd.group(1).strip(), "Portiere") if kd else None) or keeper(key, tid))
+            if kd: r.update(team=other, how="parato", keeperId=by_surname(tid, kd.group(1).strip(), "Portiere") or keeper(key, tid))
+            else: r.update(team=tid, how="parato", keeperId=keeper(key, other))
         elif re.search(r"rigore sbagliato", ev, re.I):
             sd = re.search(r"sbagliato da ([^(]+)\(", ev)
             pid = by_surname(tid, sd.group(1).strip()) if sd else None

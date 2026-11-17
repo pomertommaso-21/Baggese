@@ -1382,7 +1382,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.25";
+var APP_VERSION="2026-11-16.26";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -3313,7 +3313,7 @@ function drawMatch(){
   }
   /* rigori sbagliati: chi lo sbaglia (una delle due squadre) e, se parato, il portiere dell'altra */
   if(d.homeId&&d.awayId){
-    var tOpts=function(t,sel,lab){ var ps=S.players.filter(function(p){return pTeam(p)===t;}).sort(byName); return '<option value="">'+lab+'</option>'+ps.map(function(p){return '<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+esc(p.name)+'</option>';}).join(""); };
+    var tOpts=function(t,sel,lab){ var ps=S.players.filter(function(p){return pTeam(p)===t;}).sort(byName), o=function(L){ return L.map(function(p){return '<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+esc(p.name)+'</option>';}).join(""); }, gk=ps.filter(function(p){return p.role==="Portiere";}), ot=ps.filter(function(p){return p.role!=="Portiere";}); return '<option value="">'+lab+'</option>'+(gk.length?'<optgroup label="Portieri">'+o(gk)+'</optgroup><optgroup label="Altri giocatori">'+o(ot)+'</optgroup>':o(ps)); };
     var bothOpts=function(sel){ return '<option value="">Chi lo sbaglia…</option>'+[d.homeId,d.awayId].map(function(t){ return '<optgroup label="'+esc(tname(t))+'"><option value="t:'+t+'"'+('t:'+t===sel?' selected':'')+'>'+esc(tname(t))+' · giocatore non indicato</option>'+S.players.filter(function(p){return pTeam(p)===t;}).sort(byName).map(function(p){return '<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+esc(p.name)+'</option>';}).join("")+'</optgroup>'; }).join(""); };
     h+='<span class="small" style="font-weight:600">Rigori sbagliati</span>'+d.pens.map(function(r,i){ var st=penTeam(r), other=st?(st===d.homeId?d.awayId:d.homeId):null;
       return '<div class="pen-ed"><div class="row"><select aria-label="Chi sbaglia il rigore" data-pn="'+i+'" class="grow">'+bothOpts(r.playerId||(r.team?'t:'+r.team:''))+'</select><input aria-label="Minuto" data-pnmin="'+i+'" type="text" placeholder="Min" value="'+esc(r.min||"")+'" style="width:70px;flex:none"><button class="btn" type="button" aria-label="Rimuovi rigore" data-pndel="'+i+'">'+icon("x")+'</button></div>'
@@ -3783,6 +3783,7 @@ document.addEventListener("toggle", function(e){ var d=e.target; if(d.classList&
 document.addEventListener("input", function(e){ if(e.target.id==="tpSearch"){ openTeamPicker.q=e.target.value; drawPicker(); } });
 document.addEventListener("change", function(e){
   var t=e.target;
+  if(t.dataset && (t.dataset.pn!=null || t.dataset.pnk!=null) && openMatch.draft && $("dlg").open){ var dl=$("dlg"), y=dl.scrollTop; readDraft(); drawMatch(); dl.scrollTop=y; return; }
   if(t.dataset && t.dataset.pi!=null && parsed){ parsed.items[+t.dataset.pi].on=t.checked; return; }
   if(t.dataset && (t.dataset.kc1||t.dataset.kc2||t.dataset.kpat)){ var kid=t.dataset.kc1||t.dataset.kc2||t.dataset.kpat, ktm=team(kid); if(ktm){ var kk=kit(kid); ktm.kit={c1:kk.c1,c2:kk.c2,pat:kk.pat}; if(t.dataset.kc1) ktm.kit.c1=hex(t.value,kk.c1); if(t.dataset.kc2) ktm.kit.c2=hex(t.value,kk.c2); if(t.dataset.kpat) ktm.kit.pat=t.value; save(); } return; }
   if(t.dataset && t.dataset.logo){ processLogo(t.files&&t.files[0], t.dataset.logo); t.value=""; return; }

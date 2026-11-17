@@ -3237,9 +3237,9 @@
    "pens": [
     {
      "src": "tc",
-     "team": "t_baggese",
+     "team": "t_corsico",
      "how": "parato",
-     "keeperId": "p_cor_12",
+     "keeperId": "p_bag_5",
      "min": "52"
     }
    ]
@@ -10880,6 +10880,6 @@
    }
   ]
  },
- "updatedAt": "2026-11-17T14:32:05+00:00",
+ "updatedAt": "2026-11-17T15:12:20+00:00",
  "tcRound": 10
 }
