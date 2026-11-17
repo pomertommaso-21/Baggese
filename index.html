@@ -1363,7 +1363,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.21";
+var APP_VERSION="2026-11-16.22";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -1981,6 +1981,12 @@ function swReduce(){ return window.matchMedia&&matchMedia("(prefers-reduced-moti
 function swOut(nodes,dir,cb){ var bx=swBoxes(nodes); if(swReduce()||!bx.length||!bx[0].animate){ cb(); return; }
   bx.forEach(function(n){ n.animate([{transform:"none",opacity:1},{transform:"translate3d("+(dir>0?-26:26)+"px,0,0)",opacity:.12}],{duration:SW_OUT,easing:"cubic-bezier(.4,0,1,1)",fill:"forwards"}); });
   setTimeout(cb,SW_OUT); }
+/* Classifica: le tre viste scorrono come pagine, senza dissolvenza: quella vecchia esce tutta di lato, la nuova entra dall'altro */
+var CS_OUT=170, CS_IN=360;
+function csOut(nodes,dir,cb,from){ var bx=swBoxes(nodes); if(swReduce()||!bx.length||!bx[0].animate){ cb(); return; } var W=innerWidth;
+  bx.forEach(function(n){ n.animate([{transform:"translate3d("+(from||0)+"px,0,0)"},{transform:"translate3d("+(dir>0?-W:W)+"px,0,0)"}],{duration:CS_OUT,easing:"cubic-bezier(.45,0,1,.6)",fill:"forwards"}); });
+  setTimeout(cb,CS_OUT); }
+function csIn(nodes,dir){ if(swReduce()) return; var W=innerWidth; swBoxes(nodes).forEach(function(n){ if(n.animate) n.animate([{transform:"translate3d("+(dir>0?W:-W)+"px,0,0)"},{transform:"none"}],{duration:CS_IN,easing:"cubic-bezier(.15,.75,.25,1)"}); }); }
 function swIn(nodes,dir){ if(swReduce()) return; swBoxes(nodes).forEach(function(n){ if(n.animate) n.animate([{transform:"translate3d("+(dir>0?40:-40)+"px,0,0)",opacity:.12},{opacity:1,offset:.5},{transform:"none",opacity:1}],{duration:SW_IN,easing:SW_EASE}); }); }
 function swPill(sg,on,done){ var ind=sg.querySelector(".seg-ind"); if(!ind||!on) return; var g=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight];
   if(!done){ ind.style.transition="transform "+(SW_OUT+SW_IN-120)+"ms "+SW_EASE+",width "+(SW_OUT+SW_IN-120)+"ms "+SW_EASE; ind.style.transform="translate("+g[0]+"px,"+g[1]+"px)"; ind.style.width=g[2]+"px"; }
@@ -3795,9 +3801,9 @@ function clsSwitch(cv,dir,pillDone){
   var ind=sg.querySelector(".seg-ind");
   /* la pillola scorre con una transizione CSS (la muove la scheda grafica): non si ferma anche se intanto la pagina lavora */
   if(ind&&on&&!pillDone){ var g=[on.offsetLeft,on.offsetTop,on.offsetWidth,on.offsetHeight], key=(sg.getAttribute("aria-label")||"seg")+"|"+bs.length;
-    ind.style.transition="transform "+(SW_OUT+SW_IN-80)+"ms cubic-bezier(.22,.8,.24,1),width "+(SW_OUT+SW_IN-80)+"ms cubic-bezier(.22,.8,.24,1)";
+    ind.style.transition="transform "+(CS_OUT+CS_IN-60)+"ms cubic-bezier(.22,.8,.24,1),width "+(CS_OUT+CS_IN-60)+"ms cubic-bezier(.22,.8,.24,1)";
     ind.style.transform="translate("+g[0]+"px,"+g[1]+"px)"; ind.style.width=g[2]+"px"; ind.dataset.p=g.join(","); SEGPOS[key]=g;
-    clearTimeout(ind._t); ind._t=setTimeout(function(){ ind.style.transition=""; },SW_OUT+SW_IN); }
+    clearTimeout(ind._t); ind._t=setTimeout(function(){ ind.style.transition=""; },CS_OUT+CS_IN); }
   clsSwitch.busy=true;
   var go=function(){ var was=clsView; clsView=cv; var tmp=pre; delete CLS_CACHE[cv];
     var nsg=tmp.querySelector('.seg[aria-label="Classifica"]'), nrow=nsg&&(nsg.closest(".row")||nsg), fresh=[], s2=false; if(!nrow){ clsSwitch.busy=false; render(); return; }
@@ -3807,9 +3813,9 @@ function clsSwitch(cv,dir,pillDone){
     var frag=document.createDocumentFragment(); fresh.forEach(function(n){ frag.appendChild(n); }); v.insertBefore(frag,row.nextSibling);
     /* se si era scesi sotto i pulsanti, si resta subito sotto di loro */
     var tbh=$("topbar")?$("topbar").offsetHeight:50; if(y0>rowTop-tbh) window.scrollTo(0,Math.max(0,rowTop-tbh-8));
-    segInd(v); fitNames(); swIn(fresh,dir); clsSwitch.busy=false;
-    setTimeout(function(){ if(tab==="classifica"&&clsView==="squadre"&&!clsRange().active) prjStart(); clsPrepSoon(); },SW_IN+60); };
-  if(pillDone) go(); else swOut(old,dir,go);
+    segInd(v); fitNames(); csIn(fresh,dir); clsSwitch.busy=false;
+    setTimeout(function(){ if(tab==="classifica"&&clsView==="squadre"&&!clsRange().active) prjStart(); clsPrepSoon(); },CS_IN+60); };
+  if(pillDone) go(); else csOut(old,dir,go);
 }
 /* Riquadro della giornata: misura su misura.
    --rk è la scala delle righe (1 = misura di partenza). Senza scelte dell'utente il riquadro riempie lo spazio dello schermo
@@ -3844,7 +3850,7 @@ function rkAuto(){ var vp=$("rcVp"); if(!vp) return; var sv=rkSaved(); if(sv){ r
     var a=s.g[s.cur], b=has?s.g[ni]:a, x=a[0]+(b[0]-a[0])*p, w=a[2]+(b[2]-a[2])*p;
     if(s.ind){ s.ind.style.transform="translate("+x.toFixed(1)+"px,"+a[1]+"px)"; s.ind.style.width=w.toFixed(1)+"px"; }
     var hi=has&&p>.5?ni:s.cur; if(hi!==s.hi){ if(s.hi!=null) s.bs[s.hi].classList.remove("swhov"); s.bs[hi].classList.add("swhov"); s.hi=hi; }
-    var cx=has?dx*.35:dx*.12, op=(1-Math.min(.5,Math.abs(cx)/260)).toFixed(3); s.mv.forEach(function(n){ n.style.transform="translate3d("+cx.toFixed(1)+"px,0,0)"; n.style.opacity=op; });
+    var pg=tab==="classifica", cx=has?dx*(pg?.6:.35):dx*.12, op=pg?"":(1-Math.min(.5,Math.abs(cx)/260)).toFixed(3); s.mv.forEach(function(n){ n.style.transform="translate3d("+cx.toFixed(1)+"px,0,0)"; n.style.opacity=op; });
     s.p=p; s.ni=has?ni:-1; }
   document.addEventListener("touchstart",function(e){ st=null; if(e.touches.length!==1||$("dlg").open) return; var tg=e.target; if(!tg.closest||!(tg.closest("#app .view")||(!tg.closest("nav,dialog,#topbar,#segfloat,.toast")&&(tg===document.body||tg===document.documentElement||tg.closest("#app"))))) return;   /* anche nello spazio vuoto sotto una pagina corta */
     var t=e.touches[0], round=tab==="partite"&&partView==="round";
@@ -3875,9 +3881,9 @@ function rkAuto(){ var vp=$("rcVp"); if(!vp) return; var sv=rkSaved(); if(sv){ r
       setTimeout(function(){ s.ind.style.willChange=""; },320); }
     var clean=function(){ s.mv.forEach(function(n){ n.style.transition=""; n.style.transform=""; n.style.opacity=""; n.style.animation=""; n.style.willChange=""; }); };
     if(!go){ s.mv.forEach(function(n){ n.style.transition="transform .34s cubic-bezier(.3,1.15,.4,1),opacity .25s ease"; n.style.transform=""; n.style.opacity=""; }); setTimeout(clean,360); return; }
-    haptic(); var out=s.dx<0?-36:36;
-    s.mv.forEach(function(n){ n.style.transition="transform .15s ease-in,opacity .15s ease-in"; n.style.transform="translate3d("+out+"px,0,0)"; n.style.opacity="0"; });
-    setTimeout(function(){ clean(); var nb=s.bs[s.ni]; if(tab==="classifica"&&nb.getAttribute("data-cls")) clsSwitch(nb.getAttribute("data-cls"),s.dx<0?1:-1,true); else if(tab==="partite"&&nb.getAttribute("data-pv")) partSwitch(nb.getAttribute("data-pv"),s.dx<0?1:-1,true); else nb.click(); },150);
+    haptic(); var pg=tab==="classifica", out=pg?(s.dx<0?-innerWidth:innerWidth):(s.dx<0?-36:36), dur=pg?CS_OUT:150;
+    s.mv.forEach(function(n){ n.style.transition=pg?"transform "+dur+"ms cubic-bezier(.45,0,1,.6)":"transform .15s ease-in,opacity .15s ease-in"; n.style.transform="translate3d("+out+"px,0,0)"; if(!pg) n.style.opacity="0"; });
+    setTimeout(function(){ clean(); var nb=s.bs[s.ni]; if(tab==="classifica"&&nb.getAttribute("data-cls")) clsSwitch(nb.getAttribute("data-cls"),s.dx<0?1:-1,true); else if(tab==="partite"&&nb.getAttribute("data-pv")) partSwitch(nb.getAttribute("data-pv"),s.dx<0?1:-1,true); else nb.click(); },dur);
   }
   document.addEventListener("touchend",end,{passive:true}); document.addEventListener("touchcancel",end,{passive:true});
 })();
