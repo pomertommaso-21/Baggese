@@ -977,8 +977,13 @@ img{-webkit-user-drag:none}
 .srt{align-self:flex-start;margin-top:-6px}
 .srt-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:-6px}.srt-row .srt{margin-top:0}
 .srt-row .zok{font-size:11.5px;margin-left:0;white-space:nowrap}
-.srt-gf .ct-head span:nth-child(4),.srt-gf .crow .c:nth-child(4){color:var(--fg);font-weight:800}
-.srt-gs .ct-head span:nth-child(5),.srt-gs .crow .c:nth-child(5){color:var(--fg);font-weight:800}
+.srt-gf .ct-head [data-srth="gf"],.srt-gs .ct-head [data-srth="gs"]{color:var(--fg)}
+/* Attacco e Difesa: in evidenza i gol fatti o subiti, come i punti nella classifica normale */
+.srt-gf .crow .gfc,.srt-gs .crow .gsc{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--fg)}
+.srt-gf .crow .pts,.srt-gs .crow .pts{font-family:inherit;font-weight:400;font-size:14px;letter-spacing:0;color:var(--fg)}
+.srt-gf .crow.me .pts,.srt-gs .crow.me .pts{color:inherit}
+.srt-gf .crow.me .gfc,.srt-gs .crow.me .gsc{color:var(--brand)}
+.gonly .ct-head,.gonly .crow-main{grid-template-columns:25px minmax(0,1fr) 34px 34px 36px}
 #clsChips{margin:-4px -2px -4px}
 #clsChips .rchip{min-width:36px;height:36px;border-radius:10px;font-size:15px}
 .pg-wrap{overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none}
@@ -1363,7 +1368,7 @@ function getTheme(){ try { return localStorage.getItem("baggese-theme")||"auto";
 })();
 function applyTheme(v){ var r=document.documentElement; if(v==="light"||v==="dark") r.setAttribute("data-theme",v); else r.removeAttribute("data-theme"); var ms=document.querySelectorAll('meta[name="theme-color"]'); for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content"); ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.22";
+var APP_VERSION="2026-11-16.23";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -3003,7 +3008,7 @@ function vClassifica(){
   if(innerWidth>=720) h+='<section class="card flush only-wide"><div class="tbl"><table><thead><tr><th>#</th><th class="name">Squadra</th><th>Pt</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Gol</th><th>DR</th>'+(tb.src==="calc"?'<th>Forma</th>':'')+'</tr></thead><tbody>'+tb.rows.map(function(r){ var dr=(+r.gf||0)-(+r.gs||0); return '<tr'+(r.id===my?' class="me"':'')+zAttr(r.pos)+'><td><span class="pcell"><span class="posn">'+r.pos+'</span></span></td><td class="name"><button type="button" class="tbtn" data-team="'+r.id+'">'+crest(r.id,30)+'<span>'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</button></td><td class="pts">'+r.pts+'</td><td>'+r.g+'</td><td>'+r.v+'</td><td>'+r.n+'</td><td>'+r.p+'</td><td>'+r.gf+':'+r.gs+'</td><td>'+(dr>0?"+":dr<0?"−":"")+Math.abs(dr)+'</td>'+(tb.src==="calc"?'<td><span class="fdots">'+(forms[r.id]||[]).map(function(f){return '<span class="r-'+f+'">'+f+'</span>';}).join("")+'</span></td>':'')+'</tr>'; }).join("")+'</tbody></table></div></section>';
   ZOFF=false; MVR=null;
   if(cf.active) h+='<span class="tiny muted">Classifica calcolata solo sulle partite dalla '+cf.from+'ª alla '+cf.to+'ª giornata, '+SIDE_LAB[cf.side]+'. Niente zone e frecce, perché non è la classifica ufficiale.</span>';
-  else if(sorted) h+='<span class="tiny muted">'+(clsSort==="gf"?'Ordinata per gol fatti: il miglior attacco in cima':'Ordinata per gol subiti: la miglior difesa in cima')+'. Tocca PT per tornare alla classifica.</span>';
+  else if(sorted) h+='<span class="tiny muted">'+(clsSort==="gf"?'Ordinata per gol fatti: il miglior attacco in cima':'Ordinata per gol subiti: la miglior difesa in cima')+'. Tocca Punti per tornare alla classifica.</span>';
   else if(scoped){ var mr=tb.rows.filter(function(r){return r.id===my;})[0], gr=gen.rows.filter(function(r){return r.id===my;})[0];
     h+='<span class="tiny muted">'+(clsScope==="last5"?'Forma: solo le ultime 5 partite di ogni squadra':clsScope==="home"?'Solo le partite giocate in casa':'Solo le partite giocate in trasferta')+(mr&&gr?': '+esc(tname(my))+' <b>'+mr.pos+'ª</b> (nella classifica vera '+gr.pos+'ª)':'')+'. Niente zone e frecce, non è la classifica ufficiale.</span>'; }
   else h+=zLegend(four&&tcOk?'<span class="zok" title="Uguale alla classifica di Tuttocampo dopo la '+chk0.round+'ª giornata">'+icon("check")+'Come Tuttocampo</span>':''), FN=forbNotes(tb.rows);
@@ -3040,10 +3045,10 @@ function posGrid(){
 }
 function compactTable(tb,forms,sortable){
   var my=me(), th=function(k,l){ return sortable?'<button type="button" class="th'+(clsSort===k?' on':'')+'" data-srth="'+k+'" aria-pressed="'+(clsSort===k)+'" aria-label="Ordina per '+(k==="gf"?'gol fatti':k==="gs"?'gol subiti':'punti')+'">'+l+'</button>':'<span>'+l+'</span>'; };
-  var vns=sortable&&(clsScope==="home"||clsScope==="away");
-  return '<section class="card flush only-narrow'+(sortable&&clsSort!=="pts"?' srt-'+clsSort:'')+(vns?' vns':'')+'"><div class="ct-head"><span>#</span><span style="text-align:left">Squadra</span>'+(vns?'<span>V</span><span>N</span><span>S</span>':'<span>G</span>')+th("gf","GF")+th("gs","GS")+(vns?'':'<span>DR</span>')+th("pts","Pt")+'</div><div class="list">'+tb.rows.map(function(r){
+  var gonly=sortable&&(clsSort==="gf"||clsSort==="gs"), vns=!gonly&&sortable&&(clsScope==="home"||clsScope==="away");   /* Attacco e Difesa: solo gol fatti, gol subiti e differenza reti */
+  return '<section class="card flush only-narrow'+(sortable&&clsSort!=="pts"?' srt-'+clsSort:'')+(vns?' vns':'')+(gonly?' gonly':'')+'"><div class="ct-head"><span>#</span><span style="text-align:left">Squadra</span>'+(gonly?(clsSort==="gs"?th("gs","GS")+th("gf","GF"):th("gf","GF")+th("gs","GS"))+'<span>DR</span>':(vns?'<span>V</span><span>N</span><span>S</span>':'<span>G</span>')+th("gf","GF")+th("gs","GS")+(vns?'':'<span>DR</span>')+th("pts","Pt"))+'</div><div class="list">'+tb.rows.map(function(r){
     var dr=(+r.gf||0)-(+r.gs||0), f=forms[r.id]||[];
-    return '<div class="crow'+(r.id===my?' me':'')+'" data-tid="'+r.id+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,24)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span>'+(vns?'<span class="c">'+r.v+'</span><span class="c">'+r.n+'</span><span class="c">'+r.p+'</span>':'<span class="c">'+r.g+'</span>')+'<span class="c">'+r.gf+'</span><span class="c">'+r.gs+'</span>'+(vns?'':'<span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span>')+'<span class="pts">'+r.pts+'</span></button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
+    return '<div class="crow'+(r.id===my?' me':'')+'" data-tid="'+r.id+'"'+zAttr(r.pos)+'><button type="button" class="crow-main" data-exp="1" aria-expanded="false" aria-label="'+esc(r.pos+'° '+tname(r.id)+', '+r.pts+' punti')+'"><span class="pcell"><span class="posn">'+r.pos+'</span></span><span class="nm">'+crest(r.id,24)+'<span class="tn">'+esc(tname(r.id))+'</span>'+mvHtml(r.id,r.pos)+'</span>'+(gonly?(clsSort==="gs"?'<span class="c gsc">'+r.gs+'</span><span class="c gfc">'+r.gf+'</span>':'<span class="c gfc">'+r.gf+'</span><span class="c gsc">'+r.gs+'</span>')+'<span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span>':(vns?'<span class="c">'+r.v+'</span><span class="c">'+r.n+'</span><span class="c">'+r.p+'</span>':'<span class="c">'+r.g+'</span>')+'<span class="c gfc">'+r.gf+'</span><span class="c gsc">'+r.gs+'</span>'+(vns?'':'<span class="c dr">'+(dr>0?'+':dr<0?'−':'')+Math.abs(dr)+'</span>')+'<span class="pts">'+r.pts+'</span>')+'</button><div class="crow-det"><span class="box"><b>'+r.v+'</b> V · <b>'+r.n+'</b> N · <b>'+r.p+'</b> P</span>'+prevLabel(r.id,r.pos)+''+(f.length?'<span class="box fdots">'+f.map(function(x){return '<span class="r-'+x+'">'+x+'</span>';}).join("")+'</span>':'')+'<button type="button" class="linkbtn" data-team="'+r.id+'">Scheda squadra</button></div></div>';
   }).join("")+'</div></section>';
 }
 function vMarcatori(){
