@@ -2,7 +2,8 @@
 # Le modifiche si caricano sul ramo "prova": qui l'app viene provata in un browser vero
 # (ogni girone, ogni scheda, iPhone piccolo e grande, chiaro e scuro, computer).
 # Solo se il collaudo è superato la versione passa al ramo "main", cioè va online.
-# I tre controlli partono insieme; il browser di prova resta salvato da una volta all'altra.
+# I tre controlli partono insieme, dentro l'ambiente ufficiale di Playwright che ha già i browser
+# e tutti i pacchetti di sistema: così non c'è niente da installare e niente che resti appeso.
 name: Collaudo e pubblicazione
 on:
   push:
@@ -17,42 +18,28 @@ jobs:
     name: ${{ matrix.nome }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    container:
+      image: mcr.microsoft.com/playwright:v1.49.1-noble
     strategy:
       fail-fast: true
       matrix:
         include:
           - nome: Collaudo dei gironi
-            browser: chromium
             prova: node collaudo.js
           - nome: Collaudo con Safari
-            browser: webkit
             prova: node collaudo_safari.js
           - nome: Prove dell'app
-            browser: chromium
             prova: CI=1 node test/prove.js
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Browser di prova salvato
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: pw-1.49.1-${{ matrix.browser }}
-      - name: Prepara il browser di prova
-        run: |
-          set -o pipefail
-          npm i --no-save playwright@1.49.1 typescript@6.0.3 >/dev/null
-          # se il sistema sta già aggiornando i pacchetti per conto suo, si ferma quell'aggiornamento e si aspetta che finisca
-          sudo systemctl stop unattended-upgrades apt-daily.service apt-daily-upgrade.service 2>/dev/null || true
-          for i in $(seq 1 60); do sudo fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock >/dev/null 2>&1 || break; echo "aspetto che finisca un altro aggiornamento dei pacchetti..."; sleep 5; done
-          timeout -k 10 300 npx playwright install ${{ matrix.browser }}
-          timeout -k 10 480 sudo -E env "PATH=$PATH" npx playwright install-deps ${{ matrix.browser }} 2>&1 | tail -n 25
+      - name: Prepara le prove
+        run: npm i --no-save playwright@1.49.1 typescript@6.0.3 >/dev/null
       - name: ${{ matrix.nome }}
+        env:
+          HOME: /root
         run: |
-          python3 -m http.server 8765 >/dev/null 2>&1 &
-          for i in $(seq 1 40); do curl -sf http://localhost:8765/ >/dev/null && break; sleep 0.5; done
+          node test/server.js 8765 &
+          for i in $(seq 1 40); do node -e "require('http').get('http://localhost:8765/',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))" && break; sleep 0.5; done
           ${{ matrix.prova }}
   pubblica:
     name: Pubblica (solo se il collaudo è superato)
