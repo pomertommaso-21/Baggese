@@ -52,7 +52,7 @@ jobs:
       - name: ${{ matrix.nome }}
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &
-          sleep 1
+          for i in $(seq 1 40); do curl -sf http://localhost:8765/ >/dev/null && break; sleep 0.5; done
           ${{ matrix.prova }}
   pubblica:
     name: Pubblica (solo se il collaudo è superato)
