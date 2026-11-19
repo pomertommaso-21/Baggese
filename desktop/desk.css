@@ -1,0 +1,95 @@
+/* ===== Versione desktop: layout dedicato ===== */
+html.dk body{min-width:1024px}
+html.dk #app{max-width:1440px;margin:0 auto;padding-left:clamp(28px,3vw,48px);padding-right:clamp(28px,3vw,48px)}
+html.dk .segfloat{display:none!important}
+/* intestazione della panoramica */
+.dk-top{display:flex;align-items:center;gap:18px;padding:8px 0 18px}
+.dk-top h1{font-size:40px;letter-spacing:-.03em;line-height:1.02;margin:2px 0 0}
+.dk-eb{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.dk-kpis{display:grid;grid-template-columns:repeat(4,auto);gap:0;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow)}
+.dk-kpis div{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px 22px;border-left:1px solid var(--line)}
+.dk-kpis div:first-child{border-left:0}
+.dk-kpis b{font-family:var(--display);font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.dk-kpis span{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* due colonne: contenuti + colonna fissa */
+.dk-home{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 380px;grid-template-rows:auto auto 1fr;gap:20px;align-items:stretch}
+.dk-hero{grid-column:1/3;grid-row:1;display:flex;flex-direction:column}
+.dk-hero>*{flex:1}
+.dk-tbw{grid-column:3;grid-row:1/3;display:flex;flex-direction:column}
+.dk-tbw>.card{flex:1}
+.dk-lrw{grid-column:1/3;grid-row:2;display:flex;flex-direction:column}
+.dk-lrw>.card{flex:1}
+.dk-lr .dk-lr-b{flex:1}
+.dk-ca{grid-column:1;grid-row:3}.dk-cb{grid-column:2;grid-row:3}.dk-cc{grid-column:3;grid-row:3}
+.dk-col{display:flex;flex-direction:column;gap:20px;min-width:0}
+.dk-col>.card:last-child{flex:1}
+.dk-cc>.dk-rd{flex:1}
+.dk-cc>.dk-t11{flex:none!important}
+/* prossima partita più ampia */
+.dk-home .hm-nx{padding:22px 26px!important}
+.dk-home .hm-mu{margin-top:18px}
+.dk-home .hm-ns b{font-size:22px}
+.dk-home .hm-ct b{font-size:34px}
+.dk-home .hm-vsb{padding:16px 26px 18px}
+/* ultimo risultato */
+.dk-lr-b{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:20px;width:100%;background:none;border:0;padding:6px 0 2px;color:inherit;font:inherit;cursor:pointer}
+.dk-lr-t{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;min-width:0}
+.dk-lr-t b{font-size:17px;font-weight:700}
+.dk-lr-t.me b{color:var(--brand)}
+.dk-lr-t>span{font-size:12.5px;color:var(--muted);line-height:1.35}
+.dk-lr-c{display:flex;flex-direction:column;align-items:center;gap:6px}
+.dk-lr-c b{font-family:var(--display);font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1}
+/* marcatori della squadra */
+.dk-sc{display:flex;flex-direction:column}
+.dk-sc-r{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px 2px;background:none;border:0;border-top:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}
+.dk-sc-r.first{border-top:0}
+.dk-sc-r .ellipsis{font-weight:600}
+.dk-sc-n{font-family:var(--display);font-size:18px;font-weight:800;color:var(--brand)}
+/* prossime partite */
+.dk-fx{display:flex;flex-direction:column}
+.dk-fx-r{display:flex;align-items:center;gap:12px;padding:9px 2px;background:none;border:0;border-top:1px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer}
+.dk-fx-r:first-child{border-top:0}
+.dk-fx-r .col{min-width:0;gap:1px}
+.dk-fx-d{display:flex;flex-direction:column;align-items:center;width:38px;line-height:1.05}
+.dk-fx-d b{font-family:var(--display);font-size:19px;font-weight:800}
+.dk-fx-d span{font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.05em}
+/* classifica nella colonna */
+.dk-tb-h,.dk-tb-r{display:grid;grid-template-columns:26px minmax(0,1fr) 26px 34px 30px;align-items:center;gap:6px}
+.dk-tb-h{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:4px 8px 2px}
+.dk-tb-h span:nth-child(n+3){text-align:right}
+.dk-tb-r{width:100%;padding:2px 8px;min-height:26px;background:none;border:0;border-radius:9px;color:inherit;font:inherit;font-size:13.5px;text-align:left;cursor:pointer}
+.dk-tb-r>span:nth-child(n+3),.dk-tb-r>b{text-align:right}
+.dk-tb-r>span:nth-child(n+3){color:var(--muted);font-size:12.5px}
+.dk-tb-r.me{background:color-mix(in srgb,var(--brand) 9%,transparent);color:var(--brand);font-weight:700}
+.dk-tb-r:hover{background:var(--surface-2)}
+.dk-tb-n{display:flex;align-items:center;gap:8px;min-width:0}
+.dk-tb .hm-goal{margin-bottom:4px}
+.dk-rd .list{padding:0;margin-top:-6px}
+.dk-rd .board{padding:9px 0;gap:8px}
+.dk-rd .board:first-child{border-top:0}
+.dk-rd .b-team{font-size:13.5px;gap:8px}
+.dk-rd .b-team .nm{display:block;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.dk-t11{display:flex!important;flex-direction:row!important;align-items:center;gap:12px;width:100%;text-align:left;border:0;color:inherit;font:inherit;cursor:pointer;padding:14px 16px}
+.dk-t11 b{font-size:15px}
+.dk-t11>svg.i{color:var(--muted)}
+/* Partite › Per giornata: le partite in due colonne */
+html.dk .rc-card .list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}
+html.dk .rc-card .board{border-top:1px solid var(--line)}
+/* Squadre: tre colonne */
+@media (min-width:1280px){ html.dk .two{grid-template-columns:repeat(3,minmax(0,1fr))} }
+/* schede (partita, giocatore, Top 11...): pannello che entra da destra, la pagina resta visibile */
+html.dk dialog{position:fixed;inset:0 0 0 auto;margin:0;width:520px;max-width:520px;height:100vh;max-height:100vh;border-radius:24px 0 0 24px;overflow-y:auto}
+html.dk dialog::backdrop{background:rgba(5,10,20,.32)}
+html.dk dialog[open]{animation:dkIn .34s cubic-bezier(.32,.72,0,1)}
+html.dk dialog.closing{animation:dkOut .24s cubic-bezier(.32,.72,0,1) forwards}
+html.dk dialog .dlg{padding:26px 28px}
+html.dk dialog .dlg::before{display:none}
+@keyframes dkIn{from{transform:translateX(100%)}to{transform:none}}
+@keyframes dkOut{from{transform:none}to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){ html.dk dialog[open],html.dk dialog.closing{animation:none} }
+.dk-stk{border-top:1px solid var(--line);padding-top:10px;margin-top:2px;font-size:13px}
+.dk-home .form-row{gap:8px}
+.dk-col{display:flex;flex-direction:column;gap:20px;min-width:0}
+html.dk #app .tiny.muted[style*="center"]{display:none}
+.dk-hero .hm-blk{display:flex;flex-direction:column}
+.dk-hero .hm-vsb{flex:1;display:flex;flex-direction:column;justify-content:center}

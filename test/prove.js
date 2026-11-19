@@ -171,6 +171,22 @@ function server() {
     await misura('Classifica › Squadre', () => document.querySelector('[data-cls="squadre"]').click());
     await p.ctx.close(); });
 
+  await sezione('Versione desktop', async () => {
+    const c = await b.newContext({ viewport: { width: 1440, height: 900 }, serviceWorkers: 'block', timezoneId: 'Europe/Rome' });
+    await c.addInitScript(() => { try { localStorage.setItem('baggese-myteam', 't_baggese'); localStorage.setItem('baggese-mygirone', 'O'); } catch (e) {} });
+    await c.route(/open-meteo/, r => r.abort());
+    const p = await c.newPage(); p.on('pageerror', e => errori.push('desktop: ' + e.message)); await p.goto(BASE + 'desktop.html'); await p.waitForTimeout(3000);
+    await p.evaluate(() => { const d = document.getElementById('dlg'); if (d && d.open) d.close(); });
+    const v = await p.evaluate(() => { const q = s => document.querySelector(s), r = s => q(s) && q(s).getBoundingClientRect();
+      return { home: !!q('.dk-home'), righe: document.querySelectorAll('.dk-tb-r').length, allineati: r('.dk-lrw') && r('.dk-tbw') && Math.abs(r('.dk-lrw').bottom - r('.dk-tbw').bottom) < 2 && Math.abs(r('.dk-ca').bottom - r('.dk-cc').bottom) < 2 }; });
+    ok(v.home && v.righe > 1 && v.allineati, 'panoramica con classifica e schede allineate', v);
+    await p.evaluate(() => document.querySelector('.dk-lr-b, .dk-rd .board').click()); await p.waitForTimeout(900);
+    const dr = await p.evaluate(() => { const d = document.getElementById('dlg'), r = d.getBoundingClientRect(); return d.open && Math.round(r.right) === innerWidth; });
+    ok(dr, 'le schede si aprono come pannello a destra');
+    await p.evaluate(() => document.getElementById('dlg').close());
+    for (const t of ['partite', 'classifica', 'rosa', 'gestione']) { await p.evaluate(t => document.querySelector('nav.tabs [data-tab="' + t + '"]').click(), t); await p.waitForTimeout(900); ok(await p.evaluate(t => document.querySelector('nav.tabs [aria-current="page"]').dataset.tab === t, t), 'desktop: ' + t); }
+    await c.close(); });
+
   ok(!errori.length, 'nessun errore JavaScript durante le prove', errori.slice(0, 5));
   await b.close(); srv.close();
   const no = esiti.filter(e => !e[0]);
