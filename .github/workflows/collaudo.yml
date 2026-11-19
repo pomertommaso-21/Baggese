@@ -25,7 +25,8 @@ jobs:
       - name: Prepara il browser di prova
         run: |
           npm i --no-save playwright@1.49.1 typescript@6.0.3 >/dev/null
-          npx playwright install --with-deps chromium webkit >/dev/null
+          # a volte l'installazione del browser resta appesa: si ferma dopo 4 minuti e si riprova (fino a 3 volte)
+          for i in 1 2 3; do timeout 240 npx playwright install --with-deps chromium webkit >/dev/null && break; echo "installazione del browser lenta, riprovo ($i)"; done
       - name: Collaudo dell'app
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &
