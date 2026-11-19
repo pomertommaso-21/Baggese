@@ -1409,7 +1409,7 @@ function applyTheme(v){ var r=document.documentElement;
   for(var i=0;i<ms.length;i++){ if(!ms[i].dataset.orig) ms[i].dataset.orig=ms[i].getAttribute("content");
   ms[i].setAttribute("content", v==="light"?"#F1F1F3":v==="dark"?"#0B0B0D":ms[i].dataset.orig); } }
 applyTheme(getTheme());
-var APP_VERSION="2026-11-16.31";
+var APP_VERSION="2026-11-16.32";
 var DOC_PATH = "stagioni/s2026-27";
 var LS_KEY = "baggese-2026-27";
 /* gironi: uno per file, caricato solo quando serve */
@@ -3339,7 +3339,7 @@ function vRosa(){
       +esc(tname(tid))+'"><span>'+esc(tname(tid))+'</span><span class="tsel-ch">'+icon("chev")+'</span></button></h1></div>'+(IDX[tid]?starBtn(tid,"hero-star"):'')+'</div><div class="stats"><div class="stat"><b>'
       +(row&&row.g?row.pos+'°':'–')+'</b><span>Posizione</span></div><div class="stat"><b>'+(row?row.pts:'–')+'</b><span>Punti</span></div><div class="stat"><b>'+(row?row.v+'-'+row.n+'-'+row.p:'–')
       +'</b><span>V-N-P</span></div><div class="stat"><b>'+(row?row.gf+':'+row.gs:'–')+'</b><span>Gol</span></div></div></section>';
-  var RT=[["pan","Panoramica"],["par","Partite"],["ros","Rosa"],["num","Statistiche"]];
+  var RT=[["pan","Panoramica"],["par","Partite"],["ros","Rosa"],["num","Numeri"]];
   h+='<div class="rt-anchor"></div><div class="rt-stick"><div class="seg sm rt-seg" role="group" aria-label="Sezioni della squadra">'+RT.map(function(x){ return '<button type="button" data-rtab="'+x[0]+'" aria-pressed="'+(rosaTab===x[0])+'">'+x[1]+'</button>'; }).join("")+'</div></div>';
   var panel=function(k,html){ return '<div class="rt-panel" data-rpanel="'+k+'"'+(rosaTab===k?'':' hidden')+'>'+html+'</div>'; };
   h+=panel("pan",teamCards(tid));
@@ -3413,21 +3413,22 @@ function leadersCard(tid){
         +rest.map(function(o){ return '<button type="button" class="ldr-r" data-player="'+o.p.id+'"><span class="ellipsis">'+esc(nm(o.p))+'</span><span class="num">'+x[2](o.v)+'</span></button>'; }).join("")+'</div></div>'; }).join("")
 +'</div></section>'; }
 function teamCards(tid){
+  /* ordine: prima quello che cambia ogni settimana (forma, calendario, serie), poi proiezione e leader, in fondo andamento e campo */
   var my=me(), out='';
   out+=formCard(tid);
-  out+=prjTeamCard(tid);
-  out+=streakCard(tid);
-  out+=leadersCard(tid);
   if(tid!==my){
+    /* la prossima partita della squadra che stai guardando (per la tua squadra c'è già in Home; se è contro la tua, c'è già nel riquadro sotto) */
+    var nx=S.matches.filter(function(m){return involves(m,tid)&&!played(m);}).sort(sortMatches)[0];
+    if(nx&&!involves(nx,my)) out+='<section class="card flush"><div class="card-head" style="padding:10px 6px 4px"><h2>Prossima partita</h2><span class="meta">'+nx.round+'ª giornata</span></div><div class="list">'+boardRow(nx)+'</div></section>';
     var ms=S.matches.filter(function(m){return involves(m,my)&&involves(m,tid);}).sort(sortMatches);
     if(ms.length) out+='<section class="card flush"><div class="card-head" style="padding:10px 6px 4px"><h2>Contro '+esc(tname(my))+'</h2><span class="meta">andata e ritorno</span></div><div class="list">'+ms.map(boardRow).join("")+'</div></section>';
-  } else {
-    var nx=S.matches.filter(function(m){return involves(m,my)&&!played(m);}).sort(sortMatches)[0];
-    if(nx) out+='<section class="card flush"><div class="card-head" style="padding:10px 6px 4px"><h2>Prossima partita</h2><span class="meta">'+nx.round+'ª giornata</span></div><div class="list">'+boardRow(nx)+'</div></section>';
   }
   out+=teamCalCard(tid);
-  out+=campoCard(tid);
+  out+=streakCard(tid);
+  out+=prjTeamCard(tid);
+  out+=leadersCard(tid);
   out+='<section class="card"><div class="card-head"><h2>Andamento</h2><span class="meta">posizione dopo ogni giornata</span></div>'+posChart(tid,true)+'</section>';
+  out+=campoCard(tid);
   return '<div class="two">'+out+'</div>';
 }
 
@@ -3464,6 +3465,16 @@ function vGestione(){
   h+='<button type="button" class="srow" data-player="new"><b class="grow">Aggiungi un giocatore</b>'+icon("right")+'</button>';
   h+=gDet("import","Incolla risultati e classifica","Dal comunicato o da Tuttocampo")+'<p class="small muted" style="margin:0">Apri il comunicato del giovedì della Delegazione di Milano oppure la pagina del girone su Tuttocampo, seleziona tutto (Ctrl+A), copia e incolla qui sotto. Vengono presi solo i dati del tuo girone.</p>'
       +(S.settings.tcLink?'<a class="btn" href="'+esc(S.settings.tcLink)+'" target="_blank" rel="noopener">Apri la pagina su Tuttocampo</a>':'')+'<label class="f">Testo copiato<textarea id="pasteBox" placeholder="Incolla qui il testo della pagina"></textarea></label><div class="grid2"><label class="f">Cosa contiene<select id="pasteMode"><option value="auto">Riconosci da solo</option><option value="res">Risultati o calendario</option><option value="tab">Classifica</option></select></label><label class="f">Giornata, se non indicata<input id="pasteRound" type="number" min="1" max="40" inputmode="numeric" placeholder="Es. 10"></label></div><button class="btn dark" type="button" data-act="parse">Analizza il testo</button><div id="preview"></div></div></details>';
+  h+='</section>';
+  /* copia e ripristino */
+  h+='<span class="sg-h">Copia e ripristino</span><section class="card flush sg gdets">';
+  h+=gDet("code","Codice delle impostazioni","Squadre seguite, tema e preferenze")+'<div class="row" style="gap:8px"><button class="btn sm" type="button" data-act="bkCopy">Copia il codice</button><button class="btn sm" type="button" data-act="bkRestore">Ripristina</button></div><span class="tiny muted">Salva il codice in Note: se cambi iPhone o rimetti l’app sulla Home, con “Ripristina” torna tutto com’era.</span></div></details>';
+  h+=gDet("backup","File con tutti i dati","Scarica o ripristina da file")+'<p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'
+      +((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')
+      +'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></div></details>';
+  h+='</section>';
+  /* cose che si usano di rado: in fondo */
+  h+='<span class="sg-h">Girone e squadre</span><section class="card flush sg gdets">';
   h+=gDet("teams","Squadre, colori e stemmi","Nomi, maglie e loghi")+'<p class="small muted" style="margin:0">Ogni squadra ha due colori e un disegno di maglia, usati per la maglietta nelle rose (e per lo stemma, se manca quello vero). Puoi cambiarli o caricare il logo vero: viene ridimensionato e messo nella stessa cornice tonda di tutti gli altri.</p><div class="list">'+S.teams.slice().sort(byName).map(function(t){ var k=kit(t.id);
     return '<div class="team-edit">'+crest(t.id,48)+'<input aria-label="Nome squadra" data-rename="'+t.id+'" value="'+esc(t.name)+'"><div class="ctrls"><input type="color" aria-label="Colore principale di '
         +esc(t.name)+'" data-kc1="'+t.id+'" value="'+k.c1+'"><input type="color" aria-label="Secondo colore di '+esc(t.name)+'" data-kc2="'+t.id+'" value="'+k.c2+'"><select aria-label="Disegno della maglia di '
@@ -3473,13 +3484,6 @@ function vGestione(){
   h+=gDet("set","Stagione e girone","Nome del campionato e link a Tuttocampo")+'<label class="f">Stagione<input id="setSeason" value="'+esc(S.settings.season)+'"></label><label class="f">Campionato e girone<input id="setGirone" value="'
       +esc(S.settings.girone)+'"></label><label class="f">Link della squadra su Tuttocampo<input id="setLink" type="url" placeholder="https://www.tuttocampo.it/…" value="'
       +esc(S.settings.tcLink)+'"></label><button class="btn" type="button" data-act="saveSettings">Salva impostazioni</button></div></details>';
-  h+='</section>';
-  /* copia e ripristino */
-  h+='<span class="sg-h">Copia e ripristino</span><section class="card flush sg gdets">';
-  h+=gDet("code","Codice delle impostazioni","Squadre seguite, tema e preferenze")+'<div class="row" style="gap:8px"><button class="btn sm" type="button" data-act="bkCopy">Copia il codice</button><button class="btn sm" type="button" data-act="bkRestore">Ripristina</button></div><span class="tiny muted">Salva il codice in Note: se cambi iPhone o rimetti l’app sulla Home, con “Ripristina” torna tutto com’era.</span></div></details>';
-  h+=gDet("backup","File con tutti i dati","Scarica o ripristina da file")+'<p class="small muted" style="margin:0">Scarica tutti i dati in un file e ripristinali quando vuoi.</p><div class="row" style="flex-wrap:wrap">'
-      +((downloads||mode==="local")?'<button class="btn" type="button" data-act="backup">Scarica copia</button>':'')+(mode==="local"?'<button class="btn" type="button" data-act="reseed">Ricarica data.json</button>':'')
-      +'<label class="btn" for="restoreFile" style="cursor:pointer">Ripristina da file</label><input id="restoreFile" class="sr" type="file" accept=".json,application/json"></div><div id="restoreConfirm"></div></div></details>';
   h+='</section><span class="tiny muted" style="text-align:center;margin-top:4px">Versione app '+APP_VERSION+'</span>';
   return h;
 }
