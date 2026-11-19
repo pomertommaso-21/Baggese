@@ -25,8 +25,10 @@ jobs:
       - name: Prepara il browser di prova
         run: |
           npm i --no-save playwright@1.49.1 typescript@6.0.3 >/dev/null
-          # a volte l'installazione dei pacchetti di sistema resta appesa: dopo 7 minuti si ferma e si scaricano solo i browser
-          timeout -k 10 420 npx playwright install --with-deps chromium webkit >/dev/null || { echo "installazione lenta: riprovo senza i pacchetti di sistema"; sudo pkill -f apt-get || true; sleep 3; npx playwright install chromium webkit >/dev/null; }
+          # l'installazione resta appesa se il sistema sta già aggiornando i pacchetti per conto suo: si ferma quell'aggiornamento e si aspetta che finisca
+          sudo systemctl stop unattended-upgrades apt-daily.service apt-daily-upgrade.service 2>/dev/null || true
+          for i in $(seq 1 60); do sudo fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock >/dev/null 2>&1 || break; echo "aspetto che finisca un altro aggiornamento dei pacchetti..."; sleep 5; done
+          timeout -k 10 480 npx playwright install --with-deps chromium webkit >/dev/null
       - name: Collaudo dell'app
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &
