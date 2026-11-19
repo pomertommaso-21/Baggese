@@ -32,5 +32,6 @@ jobs:
           sleep 1
           node collaudo.js
           node collaudo_safari.js
+          CI=1 node test/prove.js
       - name: Pubblica (solo se il collaudo è superato)
         run: git push origin HEAD:main
