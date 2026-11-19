@@ -28,7 +28,8 @@ jobs:
           # l'installazione resta appesa se il sistema sta già aggiornando i pacchetti per conto suo: si ferma quell'aggiornamento e si aspetta che finisca
           sudo systemctl stop unattended-upgrades apt-daily.service apt-daily-upgrade.service 2>/dev/null || true
           for i in $(seq 1 60); do sudo fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock >/dev/null 2>&1 || break; echo "aspetto che finisca un altro aggiornamento dei pacchetti..."; sleep 5; done
-          timeout -k 10 480 npx playwright install --with-deps chromium webkit >/dev/null
+          timeout -k 10 300 npx playwright install chromium webkit
+          timeout -k 10 480 sudo -E env "PATH=$PATH" npx playwright install-deps chromium webkit 2>&1 | tail -n 25
       - name: Collaudo dell'app
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &
